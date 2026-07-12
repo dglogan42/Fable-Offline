@@ -263,6 +263,54 @@ Loops are not only for code. Same pattern for memos, financial checks, research 
 
 ---
 
+## 10. Self-improvement (skills, not weight updates)
+
+**Trigger:** `/improve`, `--improve`, or post-loop self-improve. Also when the harness asks you to propose or apply a skill.
+
+**What self-improving means offline**
+
+- **Not** self-learning: the local model does not update its weights from experience.
+- **Yes** self-improving *system*: memory + **skills** + loops compound so cycle N is smarter than cycle 1.
+
+Workshop stack mapped offline:
+
+1. Ship an agent → this CLI + manual  
+2. Memory → `memory/` lessons and cycle logs  
+3. Autonomy → `/loop` (Section 9)  
+4. Proactive / scheduled → re-run loops or `--improve` on demand  
+5. **Self-improving agents (tools + skills)** → `skills/*.md` written after verified work, reloaded into context  
+
+### 10.1 Skills
+
+A **skill** is a short, reusable procedure with:
+
+- `WHEN_TO_USE` — when to fire  
+- Steps that are checkable  
+- Optional checks / failure modes  
+
+Skills live under `skills/` and are injected into the system prompt. Prefer an existing matching skill over inventing a new process.
+
+### 10.2 Self-improve procedure (harness)
+
+1. Read memory + recent cycle artifacts + existing skills.  
+2. Propose 1–3 **new or upgraded** skills that encode a verified win or prevent a verified failure.  
+3. Grade each proposal in a **fresh context** (maker ≠ grader applies to skills too).  
+4. Write only **accepted** skills to disk.  
+5. Next run loads them automatically.
+
+### 10.3 What not to skill-ify
+
+- One-off chat fluff  
+- Secrets or private user data  
+- Vague slogans already covered by Sections 1–8  
+- Uncheckable advice  
+
+### 10.4 Tools (offline harness)
+
+The harness provides system tools (not cloud APIs): read/write memory, list/write skills, run executor/verifier/improver roles. When proposing tools in text, only reference capabilities that exist locally.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -282,22 +330,23 @@ spent. Otherwise end the cycle cleanly for the next run.
 **How to use this offline:**
 
 1. **CLI agent (recommended):**
-   - `python fable5_offline_agent.py` — chat with Sections 1–8
-   - `python fable5_offline_agent.py --loop "your goal"` — full loop harness (Sections 9+)
-   - In chat: `/loop your goal` · `/memory` · `/help` · `quit`
+   - `python fable5_offline_agent.py` — chat (Sections 1–8 + skills)
+   - `python fable5_offline_agent.py --loop "your goal"` — loop harness (Section 9); self-improves after
+   - `python fable5_offline_agent.py --improve` — skill library growth (Section 10)
+   - In chat: `/loop` · `/improve` · `/skills` · `/memory` · `/help` · `quit`
 
 2. **Ollama / Open WebUI / LM Studio:**
    - Use this file as system prompt for one-shot rigor.
-   - For real loops, use the CLI harness so executor and verifier stay in separate contexts.
+   - For real loops and self-improve, use the CLI harness (separate verifier contexts + skills/).
 
 3. **Developers:**
    - Point any OpenAI-compatible client at `http://localhost:11434/v1`
-   - Implement maker ≠ grader as two API calls; persist `memory/`.
+   - Persist `memory/` and `skills/`; maker ≠ grader as separate API calls.
 
-This turns a good local model into a proper thinking machine — and a loop that can improve across cycles. No cloud. No limits. No bullshit.
+This turns a good local model into a proper thinking machine — loops that verify, and a system that compounds via skills. No cloud. No limits. No bullshit.
 
-**Warning:** Reasoning mode is token-heavy. Loop mode multiplies cost by cycles × (executor + verifier). Use loops when multi-step accuracy matters more than speed.
+**Warning:** Reasoning is token-heavy. Loops multiply cost by cycles × (executor + verifier). Self-improve adds another propose + grade pass. Use when multi-step accuracy and compounding matter more than speed.
 
 ---
 
-*Offline agent package: rigorous reasoning + loop engineering for local models.*
+*Offline agent: rigorous reasoning + loop engineering + self-improving skills for local models.*

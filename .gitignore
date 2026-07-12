@@ -1,3 +1,7 @@
+# =============================================================================
+# Fable 5 Offline Agent — .gitignore (Windows / macOS / Linux)
+# =============================================================================
+
 # --- Python ---
 __pycache__/
 *.py[cod]
@@ -5,6 +9,7 @@ __pycache__/
 *.so
 .Python
 *.pyo
+*.pyd
 
 # Virtual environments
 .venv/
@@ -13,6 +18,7 @@ env/
 ENV/
 .env/
 .virtualenv/
+.conda/
 
 # Packaging / build
 build/
@@ -23,6 +29,7 @@ dist/
 pip-wheel-metadata/
 *.manifest
 *.spec
+MANIFEST
 
 # Test / lint / type / coverage
 .pytest_cache/
@@ -34,7 +41,9 @@ htmlcov/
 .tox/
 .nox/
 .hypothesis/
+.dmypy.json
 pyrightconfig.json
+.python-version
 
 # Pip / install noise
 pip-log.txt
@@ -47,9 +56,11 @@ pip-delete-this-directory.txt
 *.pem
 *.key
 *.p12
+*.pfx
 credentials.json
 secrets/
 .secrets/
+*.token
 
 # --- IDE / editor ---
 .idea/
@@ -62,6 +73,7 @@ secrets/
 .settings/
 *.sublime-project
 *.sublime-workspace
+.fleet/
 
 # --- OS ---
 .DS_Store
@@ -72,10 +84,13 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 *.lnk
+.Spotlight-V100
+.Trashes
 
 # OneDrive / sync junk (Windows)
 ~$*
 *.tmp
+*.temp
 
 # --- Logs & scratch ---
 *.log
@@ -85,6 +100,7 @@ temp/
 .cache/
 *.bak
 *.orig
+*.old
 
 # Jupyter
 .ipynb_checkpoints/
@@ -92,16 +108,22 @@ temp/
 # --- Local models & third-party agent state ---
 *.gguf
 *.bin
+*.safetensors
 models/
 .openclaw/
 .ollama/
 
-# --- Fable 5 runtime (generated on this machine) ---
-# Loop memory, cycle logs, and lessons are local state — do not commit.
-# Keep the empty directory via .gitkeep only.
+# --- Fable 5 runtime (machine-local; do not commit) ---
+# Loop memory, cycle logs, lessons, self-improve logs
 memory/*
 !memory/.gitkeep
 
-# Optional local overrides (keep defaults in repo)
+# Skills: ship shared skills; ignore only local drafts / sandboxes
+skills/*.draft.md
+skills/_local/
+skills/**/__pycache__/
+
+# Optional local overrides (defaults stay in repo)
 local_config.py
 local_config.json
+.fable5.local.*
