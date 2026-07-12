@@ -216,6 +216,7 @@ def knowledge_root() -> Path:
     (root / "legal").mkdir(parents=True, exist_ok=True)
     (root / "education").mkdir(parents=True, exist_ok=True)
     (root / "privacy").mkdir(parents=True, exist_ok=True)
+    (root / "urban-planning").mkdir(parents=True, exist_ok=True)
     return root
 
 

@@ -157,6 +157,7 @@ knowledge/education/_local/
 knowledge/education/**/*-raw*.txt
 knowledge/education/lpu-raw-*.txt
 knowledge/privacy/_local/
+knowledge/urban-planning/_local/
 # Dropped empty AEM clientlib stubs / forensic JS dumps (keep curated .md only)
 clientlib-dependencies*.js
 *.lc-d41d8cd98f00b204e9800998ecf8427e-lc.min.js

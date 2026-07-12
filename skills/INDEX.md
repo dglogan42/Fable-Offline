@@ -17,3 +17,4 @@ Loaded into context on every run so the system compounds without retraining weig
 - **privacy-design-planner**: [Privacy design planner (agentic AI)](privacy-design-planner.md)
 - **privacy-host-map**: [Privacy & third-party host map](privacy-host-map.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
+- **urban-planner-competencies**: [Urban planner competencies](urban-planner-competencies.md)

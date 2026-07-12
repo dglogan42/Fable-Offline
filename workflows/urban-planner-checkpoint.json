@@ -1,0 +1,25 @@
+{
+  "name": "urban-planner-checkpoint",
+  "description": "Coach urban planner competencies: audit four areas, growth plan, one concrete artifact task — not professional advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Framework: technical, communication, design/strategic, management. Not legal or planning consent advice."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill urban-planner-competencies and knowledge/urban-planning/competencies.md, produce a checkpoint: (1) verdict on strength/gap clusters (2) 1-5 scores across the four competence areas if user evidence exists, else a diagnostic questionnaire (3) 90-day growth plan with one technical + one interpersonal focus (4) single concrete artifact to build this month (5) explicit non-claims. If user mentioned a degree/webinar (e.g. Master of Urban Design), map it with map-programme and do not treat marketing as competence.",
+      "criteria": [
+        "Verdict first on strength and gap clusters",
+        "All four competence areas addressed",
+        "At least one technical and one interpersonal growth focus",
+        "One concrete artifact task with verify-how",
+        "No invented zoning law or consent approval",
+        "Not professional planning advice disclaimer present"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

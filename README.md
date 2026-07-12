@@ -23,6 +23,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
 | **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
+| **Urban planning** | Planner competency framework · skill audit · growth plans (`knowledge/urban-planning/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -70,6 +71,7 @@ Fable-Offline/
 ├── knowledge/legal/             # playbook.md shipped; matters/_local gitignored
 ├── knowledge/education/         # Credential claim notes (e.g. LPU)
 ├── knowledge/privacy/           # Third-party host / privacy maps
+├── knowledge/urban-planning/    # Planner competency framework
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -190,6 +192,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `lpu-full-audit` | Scrape LPU pages → education claim audit + HITL |
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
+| `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 
 ## Broker scrape, user model & audit
 
@@ -289,6 +292,30 @@ Curated knowledge:
 | [`knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md`](knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md) | UoA Eloqua webinar LP: pixel, lead form, Ads gclid |
 
 **Not legal advice.** Re-verify with live Network capture and the published privacy policy before decisions.
+
+## Urban planner competencies
+
+Four-area practice framework for study and career coaching (not professional registration advice):
+
+1. **Technical & analytical** — GIS, data/stats, CAD/3D, regulatory knowledge  
+2. **Communication & interpersonal** — engagement, presentation, mediation, teams  
+3. **Design & strategic** — vision, master planning, project evaluation  
+4. **Management & organisation** — decisions, leadership  
+
+```bash
+python fable5_offline_agent.py --automate urban-planner-checkpoint
+# Chat: "Audit my urban planner skills against the four areas: [paste experience]"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/urban-planner-competencies.md` |
+| Knowledge | `knowledge/urban-planning/competencies.md` |
+| Workflow | `workflows/urban-planner-checkpoint.json` |
+
+Cross-links: programme marketing → `education-claim-audit` / privacy maps (e.g. UoA PG webinars); planning-assistant agents → HITL + no invented zoning.
+
+**Not legal or planning consent advice.**
 
 ## Multi-agent team & roadmap
 
@@ -480,6 +507,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
 - **Education mode** — credential/accreditation claim audit (not educational or medical advice).
 - **Privacy mode** — host maps + design planner for privacy-aware agentic AI (not legal advice).
+- **Urban planner competencies** — GIS-to-stakeholder framework for learning and skill audits (not professional advice).
 
 ## License
 

@@ -596,6 +596,26 @@ PURPOSE → privacy-design-planner → privacy-host-map → engineer verify → 
 
 ---
 
+## 19. Urban planner competencies
+
+**Trigger:** urban planning / urban design careers, skill audits, PG study (e.g. Master of Urban Design), planning-assistant agent design.
+
+### 19.1 Four areas
+1. **Technical & analytical** — GIS, data/stats, CAD/3D, regulatory knowledge  
+2. **Communication & interpersonal** — engagement, presentation, mediation, teams  
+3. **Design & strategic** — vision, master planning/revitalisation, project evaluation  
+4. **Management & organisation** — decision making, leadership  
+
+### 19.2 Skill & knowledge
+- Skill: `urban-planner-competencies`  
+- Framework: `knowledge/urban-planning/competencies.md`  
+- Workflow: `urban-planner-checkpoint`  
+
+### 19.3 Boundaries
+Not legal or planning consent advice. Do not invent zoning rules. Programme marketing ≠ competence (use `education-claim-audit` / privacy maps when relevant).
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -629,6 +649,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md
    - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
    - Privacy: `--privacy` · `/privacy` · `--automate privacy-design-plan` · knowledge/privacy/
+   - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · knowledge/urban-planning/
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**
