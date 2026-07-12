@@ -153,6 +153,9 @@ knowledge/legal/_local/
 knowledge/legal/matters/
 knowledge/legal/**/*confidential*
 knowledge/brokers/_local/
+knowledge/education/_local/
+knowledge/education/**/*-raw*.txt
+knowledge/education/lpu-raw-*.txt
 
 # Optional private soul / program overrides (defaults stay in repo)
 SOUL.local.md

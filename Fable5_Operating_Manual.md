@@ -540,6 +540,25 @@ Inspired by in-house legal automation (clause review, NDA triage, vendor check, 
 
 ---
 
+## 17. Education & credential claim audits
+
+**Trigger:** `/education`, `--education`, school/university HTML dump, “accredited PhD/MA,” fast-track doctorate, health coaching board prep, tuition-credit funnels.
+
+### 17.1 Knowledge
+- Curated notes under `knowledge/education/` (e.g. `lpu-credential-claims.md` for Lifestyle Prescriptions® University).
+- Scrapes: `--scrape URL --scrape-dir education`.
+
+### 17.2 Skill
+`education-claim-audit`: separate **operate license**, **institutional accreditation**, **partner degree validation**, and **professional board** pathways. Verdict labels: Insufficient evidence / Marketing only / Partially verified / Red flags.
+
+### 17.3 Automations
+- `education-claim-audit` — scored engineer audit  
+- `lpu-full-audit` — scrape LPU pages → claim audit → HITL  
+
+**Not educational, career, or medical advice.** Primary registers beat marketing logos.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -571,6 +590,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Edge vs luck: skill `edge-vs-luck` · `--automate edge-audit`
    - Broker: `--scrape URL` · `--broker` · `--automate broker-full-audit` · knowledge/brokers/
    - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md
+   - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**

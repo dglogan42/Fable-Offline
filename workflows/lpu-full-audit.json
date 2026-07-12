@@ -1,0 +1,27 @@
+{
+  "name": "lpu-full-audit",
+  "description": "Scrape LPU marketing + accreditation pages, then education claim audit + HITL",
+  "steps": [
+    {
+      "type": "note",
+      "text": "LPU full audit: scrape public pages + claim hygiene. Not educational or medical advice."
+    },
+    {
+      "type": "scrape",
+      "urls": [
+        "https://www.lifestyleprescriptions.org/",
+        "https://www.lifestyleprescription.tv/accreditation"
+      ],
+      "out_dir": "knowledge/education"
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill education-claim-audit and knowledge/education/lpu-credential-claims.md plus any scrape-*.md under knowledge/education/, produce a full claim audit of Lifestyle Prescriptions University:\n1) Verdict first\n2) Claims vs evidence table\n3) Who issues M.A./Ph.D. (LPU brand vs EIU-Paris validation)\n4) ASIC / Wyoming / NBHWC / IBLM status map\n5) Funding urgency claims\n6) Primary register checks next\n7) One concrete risk of trusting marketing as-is\nDo not invent accreditations. Not educational or medical advice."
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge audit is not a recommendation to enroll or pay tuition",
+      "detail": "Human confirms this is claim hygiene only; primary verification still required."
+    }
+  ]
+}

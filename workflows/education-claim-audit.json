@@ -1,0 +1,26 @@
+{
+  "name": "education-claim-audit",
+  "description": "Engineer-audit education/credential marketing (accreditation, degrees, board pathways) — not educational advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Treat school marketing as sales copy. Guilty of framing until primary accreditor/state/board registers verify."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill education-claim-audit and knowledge/education/ (especially lpu-credential-claims.md if present), audit Lifestyle Prescriptions University / similar education marketing. Cover entity, who issues degrees, ASIC vs regional accreditation, Wyoming license, EIU-Paris validation, NBHWC, IBLM pending vs homepage, funding claims. Do not invent approvals. Not educational or medical advice.",
+      "criteria": [
+        "Verdict label correct (Insufficient evidence / Marketing only / Partially verified / Red flags)",
+        "Who issues the diploma distinguished from brand marketing",
+        "Accreditation types mapped (operate license vs institutional vs validation vs CE)",
+        "IBLM or other board pending vs approved inconsistency called out if present",
+        "Next verification steps name specific primary sources",
+        "One concrete risk of trusting the page as-is",
+        "No recommendation to enroll as 'safe' or 'regionally equivalent' without evidence"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

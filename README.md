@@ -21,6 +21,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
+| **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -32,6 +33,8 @@ The *system* around the model improves (soul, memory, skills, workflows), not th
 **Broker mode:** entity-first CFD/forex client model — verify licences on primary registers, distrust “0 pip / 1:300” marketing, no live-order automation without explicit consent. **Not financial advice.**
 
 **Legal mode:** offline playbook-driven contract review, NDA triage, vendor checks, briefs, and templated responses (GREEN/YELLOW/RED). Configure `knowledge/legal/playbook.md`. **Not legal advice** — licensed attorney review required before any real-matter use.
+
+**Education mode:** audits school/degree marketing (who issues the diploma, ASIC vs regional accreditation, state operate licenses, NBHWC/IBLM pathways). Example snapshot: Lifestyle Prescriptions® University in `knowledge/education/lpu-credential-claims.md`. **Not educational or medical advice.**
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -62,6 +65,7 @@ Fable-Offline/
 ├── workflows/                   # Automation recipes (*.json)
 ├── knowledge/brokers/           # Curated reg notes (scrapes gitignored)
 ├── knowledge/legal/             # playbook.md shipped; matters/_local gitignored
+├── knowledge/education/         # Credential claim notes (e.g. LPU)
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -135,6 +139,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/team <task>` | Multi-agent: research → write → critic |
 | `/broker [prompt]` | Broker user-model + claim audit (local knowledge) |
 | `/legal [prompt]` | Legal playbook: contract / NDA / vendor / brief / respond |
+| `/education [prompt]` | Education/credential claim audit (local knowledge) |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
 | `/automate <name>` | Run workflow recipe |
@@ -176,6 +181,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `legal-vendor-check` | Vendor stack Clear / Conditional / Block |
 | `legal-brief` | Daily / topic / incident brief |
 | `legal-respond` | Draft DSAR / hold / pushback templates + HITL |
+| `education-claim-audit` | Engineer scored school/credential claim audit |
+| `lpu-full-audit` | Scrape LPU pages → education claim audit + HITL |
 
 ## Broker scrape, user model & audit
 
@@ -224,6 +231,22 @@ python fable5_offline_agent.py --scrape https://example.com/terms --scrape-dir l
 | **respond** | Draft DSAR ack, hold notice, or clause pushback |
 
 **Not legal advice.** All real-matter outputs require licensed attorney review before signature or send.
+
+## Education & credential claim audit
+
+Audits “accredited degree / certification” marketing the same way broker mode audits licences: **type of recognition first**, logos second.
+
+```bash
+# Curated LPU snapshot already in repo
+python fable5_offline_agent.py --education
+
+# Scrape + full audit workflow
+python fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
+python fable5_offline_agent.py --automate education-claim-audit
+python fable5_offline_agent.py --automate lpu-full-audit
+```
+
+Example: **Lifestyle Prescriptions® University** (`knowledge/education/lpu-credential-claims.md`) — homepage markets accredited M.A./Ph.D. and IBLM/NBHWC paths; accreditation page cites **ASIC UK**, **Wyoming** proprietary license, **EIU-Paris** degree validation, NBHWC program approval, and **IBLM approval pending**. Snapshot verdict: marketing / insufficient evidence for US-regional-equivalent PhD claims. **Re-verify on primary registers.** Not educational or medical advice.
 
 ## Multi-agent team & roadmap
 
@@ -371,7 +394,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -413,6 +436,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Agentic engineer path** — 6-month / 12-stage roadmap; multi-agent supervisor; HITL.
 - **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
 - **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
+- **Education mode** — credential/accreditation claim audit (not educational or medical advice).
 
 ## License
 
@@ -422,4 +446,4 @@ Copyright © **2026 David Logan**.
 
 You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided the copyright and permission notice are included in all copies or substantial portions of the Software. The Software is provided **“AS IS”**, without warranty of any kind, express or implied.
 
-**Disclaimer:** Broker mode is **not financial advice**. Legal mode is **not legal advice** and does not create an attorney–client relationship. Outputs require human verification (and licensed counsel for legal matters) before real-world use.
+**Disclaimer:** Broker mode is **not financial advice**. Legal mode is **not legal advice** and does not create an attorney–client relationship. Education mode is **not educational, career, or medical advice**. Outputs require human verification (and licensed counsel for legal matters) before real-world use.

@@ -10,6 +10,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **broker-user-model**: [Broker user model (disciplined retail CFD client)](broker-user-model.md)
 - **build-and-automate**: [Build and automate (offline)](build-and-automate.md)
 - **edge-vs-luck**: [Edge vs luck (Fooled by Randomness)](edge-vs-luck.md)
+- **education-claim-audit**: [Education & credential claim audit](education-claim-audit.md)
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
 - **legal-playbook**: [Legal playbook (contract / NDA / vendor)](legal-playbook.md)
 - **loop-engineer**: [Loop engineer](loop-engineer.md)

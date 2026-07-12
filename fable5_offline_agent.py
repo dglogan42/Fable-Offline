@@ -214,6 +214,7 @@ def knowledge_root() -> Path:
     root.mkdir(parents=True, exist_ok=True)
     (root / "brokers").mkdir(parents=True, exist_ok=True)
     (root / "legal").mkdir(parents=True, exist_ok=True)
+    (root / "education").mkdir(parents=True, exist_ok=True)
     return root
 
 
@@ -268,8 +269,9 @@ def load_system_prompt(
     hermes: bool = False,
     broker_mode: bool = False,
     legal_mode: bool = False,
+    education_mode: bool = False,
 ) -> str:
-    """Manual + soul + active skills (+ broker/legal knowledge when relevant)."""
+    """Manual + soul + active skills (+ broker/legal/education knowledge when relevant)."""
     core = load_manual_core()
     soul = load_soul()
     skills = read_skills_bundle(limit_chars=5000)
@@ -303,6 +305,16 @@ def load_system_prompt(
         know = read_knowledge_bundle("legal", limit_chars=8000)
         if know.strip():
             parts.append("\n\n---\n## Local legal playbook & notes\n\n" + know)
+    if education_mode:
+        parts.append(
+            "\n\n---\n## Education claim audit mode\n"
+            "Apply skill education-claim-audit. Treat school marketing as claims. "
+            "Distinguish state operate license, institutional accreditation, partner degree "
+            "validation, and professional board pathways. Not educational, career, or medical advice.\n"
+        )
+        know = read_knowledge_bundle("education", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local education knowledge (scraped / curated)\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -1838,7 +1850,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | scrape | hitl | team | engineer
+           broker | legal | education | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -1970,6 +1982,22 @@ def run_automate(
                     prefix="LegalMode: ",
                 )
                 results.append("legal → done")
+            elif stype == "education":
+                esys = load_system_prompt(education_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill education-claim-audit and knowledge/education/, audit "
+                    "credential/accreditation marketing claims. Not educational or medical advice."
+                )
+                print("\n[education claim audit]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": esys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="EduMode: ",
+                )
+                results.append("education → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2192,7 +2220,7 @@ def print_banner() -> None:
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
-    print("Commands: /team /broker /legal /build /automate /engineer /loop /hermes /help quit\n")
+    print("Commands: /team /broker /legal /education /build /automate /loop /hermes /help quit\n")
 
 
 def print_help() -> None:
@@ -2204,7 +2232,8 @@ Commands
   /team <task>       Multi-agent: research → write → critic (supervisor)
   /broker [prompt]   Broker user-model + claim audit (uses knowledge/brokers/)
   /legal [prompt]    Legal playbook: contract/NDA/vendor/brief/respond (knowledge/legal/)
-  /scrape <url>      Fetch URL text into knowledge/brokers/ (or --scrape-dir legal)
+  /education [prompt] Education/credential claim audit (knowledge/education/)
+  /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
   /workflows         List automation recipes
@@ -2231,10 +2260,11 @@ CLI
   {py} fable5_offline_agent.py --team "Research X and write a one-page brief"
   {py} fable5_offline_agent.py --broker
   {py} fable5_offline_agent.py --legal "Review this NDA: [paste]"
-  {py} fable5_offline_agent.py --scrape https://www.ecmarkets.co.nz/regulations-licences/
+  {py} fable5_offline_agent.py --education
+  {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
-  {py} fable5_offline_agent.py --automate legal-nda-triage
+  {py} fable5_offline_agent.py --automate lpu-full-audit
   {py} fable5_offline_agent.py --build "tiny flask hello app"
   {py} fable5_offline_agent.py --doctor
 
@@ -2333,6 +2363,26 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Legal mode error: {e}\n"))
+            continue
+        if low.startswith("/education"):
+            prompt = user_input[10:].strip() or (
+                "Using skill education-claim-audit and knowledge/education/ (incl. "
+                "lpu-credential-claims.md if present), audit credential marketing. "
+                "Verdict first. Not educational or medical advice."
+            )
+            try:
+                esys = load_system_prompt(education_mode=True)
+                print(ui("\n[education claim audit]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": esys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="EduMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Education mode error: {e}\n"))
             continue
         if low.startswith("/scrape"):
             url = user_input[7:].strip()
@@ -2565,6 +2615,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Legal playbook mode: contract/NDA/vendor/brief/respond (knowledge/legal/)",
     )
     parser.add_argument(
+        "--education",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Education/credential claim audit using knowledge/education/",
+    )
+    parser.add_argument(
         "--scrape",
         metavar="URL",
         action="append",
@@ -2671,6 +2729,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         if (
             args.broker is None
             and args.legal is None
+            and args.education is None
             and not args.automate
             and not args.team
         ):
@@ -2716,6 +2775,25 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": lsys}, {"role": "user", "content": prompt}],
                 prefix="LegalMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.education is not None:
+        prompt = (args.education or "").strip() or (
+            "Using skill education-claim-audit and knowledge/education/ (especially "
+            "lpu-credential-claims.md), produce a credential/accreditation claim audit. "
+            "Verdict first. Map accreditation types. Flag pending vs approved board pathways. "
+            "Not educational or medical advice."
+        )
+        try:
+            esys = load_system_prompt(education_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": esys}, {"role": "user", "content": prompt}],
+                prefix="EduMode: ",
             )
             return 0
         except Exception as e:
