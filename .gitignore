@@ -58,10 +58,19 @@ pip-delete-this-directory.txt
 *.key
 *.p12
 *.pfx
+*.jks
 credentials.json
 secrets/
 .secrets/
 *.token
+*.secret
+*secret*
+!*secret*.md.example
+api_keys.*
+**/id_rsa
+**/id_ed25519
+*.openai
+*.anthropic
 
 # --- IDE / editor ---
 .idea/
@@ -131,10 +140,19 @@ skills/**/__pycache__/
 # User-only private workflows (seeded public recipes stay tracked)
 workflows/_local/
 
-# Knowledge: keep curated .md; ignore bulky raw HTML scrapes
+# Knowledge: keep curated .md; ignore bulky raw scrapes + private matter files
 knowledge/**/*.html
 knowledge/**/*-raw.html
+knowledge/**/*-raw.txt
 knowledge/**/scrape-*.html
+knowledge/**/scrape-*.md
+knowledge/**/scrape-*.txt
+knowledge/**/*.pdf
+knowledge/**/*.docx
+knowledge/legal/_local/
+knowledge/legal/matters/
+knowledge/legal/**/*confidential*
+knowledge/brokers/_local/
 
 # Optional private soul / program overrides (defaults stay in repo)
 SOUL.local.md
@@ -145,3 +163,4 @@ program.local.md
 local_config.py
 local_config.json
 .fable5.local.*
+config.local.*

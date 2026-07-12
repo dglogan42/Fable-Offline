@@ -213,6 +213,7 @@ def knowledge_root() -> Path:
     root = root.expanduser().resolve()
     root.mkdir(parents=True, exist_ok=True)
     (root / "brokers").mkdir(parents=True, exist_ok=True)
+    (root / "legal").mkdir(parents=True, exist_ok=True)
     return root
 
 
@@ -262,8 +263,13 @@ def scrape_url_to_knowledge(url: str, out_dir: Optional[Path] = None) -> Path:
     return path
 
 
-def load_system_prompt(*, hermes: bool = False, broker_mode: bool = False) -> str:
-    """Manual + soul + active skills (+ broker knowledge when relevant)."""
+def load_system_prompt(
+    *,
+    hermes: bool = False,
+    broker_mode: bool = False,
+    legal_mode: bool = False,
+) -> str:
+    """Manual + soul + active skills (+ broker/legal knowledge when relevant)."""
     core = load_manual_core()
     soul = load_soul()
     skills = read_skills_bundle(limit_chars=5000)
@@ -286,6 +292,17 @@ def load_system_prompt(*, hermes: bool = False, broker_mode: bool = False) -> st
         know = read_knowledge_bundle("brokers", limit_chars=6000)
         if know.strip():
             parts.append("\n\n---\n## Local broker knowledge (scraped)\n\n" + know)
+    if legal_mode:
+        parts.append(
+            "\n\n---\n## Legal playbook mode\n"
+            "Apply skill legal-playbook. Use knowledge/legal/playbook.md positions for "
+            "GREEN/YELLOW/RED flags. Procedures: review-contract, triage-nda, vendor-check, "
+            "brief, respond. Not legal advice. Licensed attorney must review all real-matter outputs. "
+            "Do not invent statutes, case law, or party facts.\n"
+        )
+        know = read_knowledge_bundle("legal", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local legal playbook & notes\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -1820,7 +1837,8 @@ def run_automate(
 ) -> None:
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
-    Steps: build | hermes | loop | improve | compress | shell | note | llm
+    Steps: build | hermes | loop | improve | compress | shell | note | llm |
+           broker | legal | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -1934,6 +1952,24 @@ def run_automate(
                     prefix="BrokerMode: ",
                 )
                 results.append("broker → done")
+            elif stype == "legal":
+                lsys = load_system_prompt(legal_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill legal-playbook and knowledge/legal/playbook.md, run the "
+                    "appropriate procedure (review-contract, triage-nda, vendor-check, brief, "
+                    "or respond). GREEN/YELLOW/RED where applicable. Not legal advice. "
+                    "Attorney review required before any real-matter use."
+                )
+                print("\n[legal playbook]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": lsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="LegalMode: ",
+                )
+                results.append("legal → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2156,7 +2192,7 @@ def print_banner() -> None:
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
-    print("Commands: /team /build /automate /engineer /loop /hermes /roadmap /help quit\n")
+    print("Commands: /team /broker /legal /build /automate /engineer /loop /hermes /help quit\n")
 
 
 def print_help() -> None:
@@ -2167,7 +2203,8 @@ Commands
   /roadmap           6-month agentic engineer roadmap (ROADMAP.md)
   /team <task>       Multi-agent: research → write → critic (supervisor)
   /broker [prompt]   Broker user-model + claim audit (uses knowledge/brokers/)
-  /scrape <url>      Fetch URL text into knowledge/brokers/
+  /legal [prompt]    Legal playbook: contract/NDA/vendor/brief/respond (knowledge/legal/)
+  /scrape <url>      Fetch URL text into knowledge/brokers/ (or --scrape-dir legal)
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
   /workflows         List automation recipes
@@ -2193,9 +2230,11 @@ CLI
   {py} fable5_offline_agent.py --roadmap
   {py} fable5_offline_agent.py --team "Research X and write a one-page brief"
   {py} fable5_offline_agent.py --broker
+  {py} fable5_offline_agent.py --legal "Review this NDA: [paste]"
   {py} fable5_offline_agent.py --scrape https://www.ecmarkets.co.nz/regulations-licences/
   {py} fable5_offline_agent.py --automate broker-full-audit
-  {py} fable5_offline_agent.py --automate broker-user-session
+  {py} fable5_offline_agent.py --automate legal-contract-review
+  {py} fable5_offline_agent.py --automate legal-nda-triage
   {py} fable5_offline_agent.py --build "tiny flask hello app"
   {py} fable5_offline_agent.py --doctor
 
@@ -2274,6 +2313,26 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Broker mode error: {e}\n"))
+            continue
+        if low.startswith("/legal"):
+            prompt = user_input[6:].strip() or (
+                "Using skill legal-playbook and knowledge/legal/playbook.md, explain available "
+                "procedures (review-contract, triage-nda, vendor-check, brief, respond) and wait "
+                "for document text or a specific task. Not legal advice."
+            )
+            try:
+                lsys = load_system_prompt(legal_mode=True)
+                print(ui("\n[legal playbook]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": lsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="LegalMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Legal mode error: {e}\n"))
             continue
         if low.startswith("/scrape"):
             url = user_input[7:].strip()
@@ -2498,10 +2557,24 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Broker user-model + claim audit using knowledge/brokers/",
     )
     parser.add_argument(
+        "--legal",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Legal playbook mode: contract/NDA/vendor/brief/respond (knowledge/legal/)",
+    )
+    parser.add_argument(
         "--scrape",
         metavar="URL",
         action="append",
-        help="Scrape URL into knowledge/brokers/ (repeatable)",
+        help="Scrape URL into knowledge/ (default brokers/; use --scrape-dir)",
+    )
+    parser.add_argument(
+        "--scrape-dir",
+        default="brokers",
+        metavar="SUBDIR",
+        help="knowledge/ subdir for --scrape (default: brokers; use legal for contracts)",
     )
     parser.add_argument(
         "--criteria",
@@ -2582,14 +2655,25 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.scrape:
         knowledge_root()
+        scrape_sub = (args.scrape_dir or "brokers").strip().strip("/\\") or "brokers"
+        # Prevent path escape from knowledge root
+        if ".." in scrape_sub or Path(scrape_sub).is_absolute():
+            print(ui("✗ --scrape-dir must be a relative subdir under knowledge/ (e.g. brokers, legal)"))
+            return 1
+        out_dir = knowledge_root() / scrape_sub
         for url in args.scrape:
             try:
-                p = scrape_url_to_knowledge(url)
+                p = scrape_url_to_knowledge(url, out_dir=out_dir)
                 print(ui(f"✓ scraped → {p}"))
             except Exception as e:
                 print(ui(f"✗ scrape failed {url}: {e}"))
                 return 1
-        if args.broker is None and not args.automate and not args.team:
+        if (
+            args.broker is None
+            and args.legal is None
+            and not args.automate
+            and not args.team
+        ):
             return 0
 
     system = load_system_prompt()
@@ -2613,6 +2697,25 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": bsys}, {"role": "user", "content": prompt}],
                 prefix="BrokerMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.legal is not None:
+        prompt = (args.legal or "").strip() or (
+            "Using skill legal-playbook and knowledge/legal/playbook.md, list procedures "
+            "(review-contract, triage-nda, vendor-check, brief, respond) and how to flag "
+            "GREEN/YELLOW/RED. If no document was provided, ask for text. Not legal advice. "
+            "Attorney review required for real matters."
+        )
+        try:
+            lsys = load_system_prompt(legal_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": lsys}, {"role": "user", "content": prompt}],
+                prefix="LegalMode: ",
             )
             return 0
         except Exception as e:

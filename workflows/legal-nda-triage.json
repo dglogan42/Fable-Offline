@@ -1,0 +1,19 @@
+{
+  "name": "legal-nda-triage",
+  "description": "Rapid NDA pre-screen: standard approval / counsel review / full review — not legal advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Provide NDA text via chat or knowledge/legal/. Category + flags only; attorney decides signature."
+    },
+    {
+      "type": "legal",
+      "prompt": "Run skill legal-playbook procedure **triage-nda** using knowledge/legal/playbook.md.\nIf NDA text is missing, request mutual/one-way form text.\nOutput:\n1) Primary category: Standard approval path | Counsel review | Full review\n2) Checklist gates with GREEN/YELLOW/RED\n3) Three concrete next steps\n4) Counsel gate\nNot legal advice. Do not invent enforceability conclusions."
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge NDA triage is not approval to sign",
+      "detail": "Human confirms counsel reviews before execution."
+    }
+  ]
+}

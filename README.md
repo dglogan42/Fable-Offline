@@ -20,6 +20,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Roadmap** | 6-month agentic engineer path (`ROADMAP.md`) — build real things, order matters |
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
+| **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -29,6 +30,8 @@ The *system* around the model improves (soul, memory, skills, workflows), not th
 **Edge vs luck:** the market manufactures convincing hot streaks and backtests by chance. Default verdict on small samples is *insufficient evidence* — treat skill claims as guilty of luck until large, out-of-sample, honestly tested numbers force otherwise.
 
 **Broker mode:** entity-first CFD/forex client model — verify licences on primary registers, distrust “0 pip / 1:300” marketing, no live-order automation without explicit consent. **Not financial advice.**
+
+**Legal mode:** offline playbook-driven contract review, NDA triage, vendor checks, briefs, and templated responses (GREEN/YELLOW/RED). Configure `knowledge/legal/playbook.md`. **Not legal advice** — licensed attorney review required before any real-matter use.
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -47,7 +50,7 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 
 ```
 Fable-Offline/
-├── fable5_offline_agent.py      # CLI: chat, team, broker, scrape, build, automate…
+├── fable5_offline_agent.py      # CLI: chat, team, broker, legal, scrape, build, automate…
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
 ├── program.md                   # Loop-engineer constraints (Karpathy-style)
@@ -55,15 +58,18 @@ Fable-Offline/
 ├── requirements.txt
 ├── fable5 / fable5.cmd          # Launchers
 ├── scripts/                     # install + platform wrappers
-├── skills/                      # Skill library (incl. broker + edge + loops)
+├── skills/                      # Skill library (broker, legal, edge, loops…)
 ├── workflows/                   # Automation recipes (*.json)
-├── knowledge/brokers/           # Scraped regulation notes (e.g. EC Markets)
+├── knowledge/brokers/           # Curated reg notes (scrapes gitignored)
+├── knowledge/legal/             # playbook.md shipped; matters/_local gitignored
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
-├── .gitignore
+├── .gitignore                   # Secrets, memory, scrapes, private legal
 └── README.md
 ```
+
+**Do not commit secrets:** `.env`, keys, tokens, raw contract PDFs, and `knowledge/legal/matters/` are gitignored. Ship only the public playbook template and curated notes.
 
 
 ## Requirements
@@ -128,6 +134,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/roadmap` | Show 6-month agentic engineer roadmap |
 | `/team <task>` | Multi-agent: research → write → critic |
 | `/broker [prompt]` | Broker user-model + claim audit (local knowledge) |
+| `/legal [prompt]` | Legal playbook: contract / NDA / vendor / brief / respond |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
 | `/automate <name>` | Run workflow recipe |
@@ -164,6 +171,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `broker-full-audit` | Scrape EC Markets pages → broker audit + user model + HITL |
 | `broker-user-session` | Disciplined retail CFD user coaching |
 | `broker-claim-audit` | Engineer scored claim audit |
+| `legal-contract-review` | Clause flags GREEN/YELLOW/RED vs playbook + HITL |
+| `legal-nda-triage` | NDA pre-screen categories + HITL |
+| `legal-vendor-check` | Vendor stack Clear / Conditional / Block |
+| `legal-brief` | Daily / topic / incident brief |
+| `legal-respond` | Draft DSAR / hold / pushback templates + HITL |
 
 ## Broker scrape, user model & audit
 
@@ -179,6 +191,39 @@ python fable5_offline_agent.py --automate broker-user-session
 ```
 
 Curated snapshot: `knowledge/brokers/ec-markets-regulation.md` (entity **EC Markets Financial Limited**, co. **2446590**, FSPR **FSP197465**, claimed AFSL **414198**, multi-regulator marketing, leverage inconsistencies 1:30/1:100 vs 1:300). **Re-verify on official registers** before any real decision. Not financial advice.
+
+## Legal playbook (contract / NDA / vendor)
+
+Offline counterpart to playbook-driven legal ops: clause review, NDA triage, vendor checks, briefs, and draft responses. Configure positions in `knowledge/legal/playbook.md`.
+
+```bash
+# Edit your standard positions, ranges, and escalation triggers
+# knowledge/legal/playbook.md
+
+# Legal mode (paste contract/NDA in the prompt or chat)
+python fable5_offline_agent.py --legal "triage-nda: [paste NDA text]"
+python fable5_offline_agent.py --legal "review-contract: [paste MSA sections]"
+
+# Workflows
+python fable5_offline_agent.py --automate legal-contract-review
+python fable5_offline_agent.py --automate legal-nda-triage
+python fable5_offline_agent.py --automate legal-vendor-check
+python fable5_offline_agent.py --automate legal-brief
+python fable5_offline_agent.py --automate legal-respond
+
+# Optional: scrape a public policy page into knowledge/legal/
+python fable5_offline_agent.py --scrape https://example.com/terms --scrape-dir legal
+```
+
+| Procedure | Output |
+|-----------|--------|
+| **review-contract** | Verdict + GREEN/YELLOW/RED clause table + redlines |
+| **triage-nda** | Standard approval path · Counsel review · Full review |
+| **vendor-check** | Clear / Conditional / Block + gaps |
+| **brief** | daily / topic / incident memo (sources + unknowns) |
+| **respond** | Draft DSAR ack, hold notice, or clause pushback |
+
+**Not legal advice.** All real-matter outputs require licensed attorney review before signature or send.
 
 ## Multi-agent team & roadmap
 
@@ -200,7 +245,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments can go in `workflows/_local/` (gitignored).
 
@@ -326,7 +371,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--scrape` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -367,6 +412,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Edge vs luck** — Fooled-by-Randomness style checklist (LLN, OOS, multiple testing, survivorship, regression to the mean).
 - **Agentic engineer path** — 6-month / 12-stage roadmap; multi-agent supervisor; HITL.
 - **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
+- **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
 
 ## License
 
@@ -374,4 +420,6 @@ This project is free software under the **[MIT License](LICENSE)**.
 
 Copyright © **2026 David Logan**.
 
-You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided the copyright and permission notice are included. The Software is provided **“AS IS”**, without warranty of any kind.
+You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided the copyright and permission notice are included in all copies or substantial portions of the Software. The Software is provided **“AS IS”**, without warranty of any kind, express or implied.
+
+**Disclaimer:** Broker mode is **not financial advice**. Legal mode is **not legal advice** and does not create an attorney–client relationship. Outputs require human verification (and licensed counsel for legal matters) before real-world use.

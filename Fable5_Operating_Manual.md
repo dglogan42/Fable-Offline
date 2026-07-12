@@ -502,6 +502,44 @@ Skill `broker-user-model`: disciplined retail client — entity-first, cost hone
 
 ---
 
+## 16. Legal playbook (contract / NDA / compliance ops)
+
+**Trigger:** `/legal`, `--legal`, contract or NDA paste, vendor MSA/DPA review, legal brief, DSAR/hold draft response.
+
+Inspired by in-house legal automation (clause review, NDA triage, vendor check, briefs, templated responds) adapted for **offline** Fable — **not legal advice** and **not a substitute for licensed counsel**.
+
+### 16.1 Playbook & knowledge
+- Edit positions in `knowledge/legal/playbook.md` (standard / acceptable / escalate).
+- Matter notes and scrapes: `knowledge/legal/*.md` via paste or `--scrape URL --scrape-dir legal`.
+- Skill: `legal-playbook`.
+
+### 16.2 Procedures (map user intent)
+| Procedure | Use |
+|-----------|-----|
+| **review-contract** | Clause-by-clause GREEN / YELLOW / RED + redlines |
+| **triage-nda** | Standard approval path · Counsel review · Full review |
+| **vendor-check** | MSA/DPA/SLA stack → Clear / Conditional / Block |
+| **brief** | daily / topic / incident (sources + unknowns only) |
+| **respond** | Draft DSAR ack, hold notice, clause pushback (placeholders) |
+
+### 16.3 Flag system
+- **GREEN** — matches playbook standard  
+- **YELLOW** — negotiable / playbook gap / counsel judgment  
+- **RED** — escalation trigger (outside range or missing critical protection)
+
+### 16.4 Automations
+- `legal-contract-review` · `legal-nda-triage` · `legal-vendor-check` · `legal-brief` · `legal-respond`
+
+### 16.5 Hard rules
+- No invented statutes, case law, or party facts  
+- Mark unknowns  
+- Every real-matter output ends with **attorney review required**  
+- HITL on sign/send-style workflows  
+
+**Not legal advice.**
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -532,6 +570,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - In chat: `/roadmap` · `/team` · `/build` · `/automate` · `/engineer` · `/hermes` · `/loop`
    - Edge vs luck: skill `edge-vs-luck` · `--automate edge-audit`
    - Broker: `--scrape URL` · `--broker` · `--automate broker-full-audit` · knowledge/brokers/
+   - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**

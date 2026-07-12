@@ -1,0 +1,15 @@
+{
+  "name": "legal-respond",
+  "description": "Draft templated legal-ops response (DSAR ack, hold notice, clause pushback) — not legal advice",
+  "steps": [
+    {
+      "type": "legal",
+      "prompt": "Run skill legal-playbook procedure **respond**.\nDraft one templated response matching user intent (DSAR acknowledgment, legal hold/preservation notice, or standard RED-clause pushback).\nUse placeholders [PARTY] [DATE] [MATTER]. Neutral tone. No admissions. No fake citations.\nMark as draft for counsel edit. Not legal advice."
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge draft must be edited/approved by counsel before send",
+      "detail": "Do not send external legal communications without human counsel."
+    }
+  ]
+}

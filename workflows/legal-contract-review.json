@@ -1,0 +1,19 @@
+{
+  "name": "legal-contract-review",
+  "description": "Clause-by-clause contract review with GREEN/YELLOW/RED flags against knowledge/legal/playbook.md — not legal advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Paste the contract (or key sections) into the next legal step prompt or run with --legal after pasting in chat. Attorney review required."
+    },
+    {
+      "type": "legal",
+      "prompt": "Run skill legal-playbook procedure **review-contract** against knowledge/legal/playbook.md (and any other knowledge/legal/*.md).\nIf the user has not pasted contract text, ask for: document type, parties if known, and the full text or material clauses.\nIf text is present in this conversation or knowledge files, produce:\n1) Verdict first (Approve path / Negotiate / Escalate / Insufficient text)\n2) Parties / law / term summary\n3) Clause flag table (Topic | Flag | Issue | Redline)\n4) Top RED items detailed\n5) Missing sections vs playbook\n6) Counsel gate line\nDo not invent law. Not legal advice."
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge this is not legal advice and counsel must review before signature",
+      "detail": "Human confirms outputs are triage/draft only."
+    }
+  ]
+}

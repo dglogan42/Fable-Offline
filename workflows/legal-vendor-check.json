@@ -1,0 +1,15 @@
+{
+  "name": "legal-vendor-check",
+  "description": "Vendor MSA/DPA/SLA stack status: Clear / Conditional / Block — not legal advice",
+  "steps": [
+    {
+      "type": "legal",
+      "prompt": "Run skill legal-playbook procedure **vendor-check** against knowledge/legal/playbook.md.\nAssess contract stack completeness, data roles, security, liability, exit, auto-renew.\nOutput status Clear | Conditional | Block, gaps table, RED/YELLOW list, counsel gate.\nIf documents are missing, list exactly what to collect. Not legal advice."
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge vendor-check is not procurement approval",
+      "detail": "Human confirms counsel/security sign-off still required for Block or Conditional."
+    }
+  ]
+}

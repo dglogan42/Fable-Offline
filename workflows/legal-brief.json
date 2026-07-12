@@ -1,0 +1,10 @@
+{
+  "name": "legal-brief",
+  "description": "Legal ops brief (daily / topic / incident) from notes + playbook — not legal advice",
+  "steps": [
+    {
+      "type": "legal",
+      "prompt": "Run skill legal-playbook procedure **brief**.\nDefault mode: topic (or daily/incident if user specified).\nUse only user notes, memory, and knowledge/legal/*.md — no invented case law.\nOutput structured brief with sources used and unknowns list.\nNot legal advice."
+    }
+  ]
+}
