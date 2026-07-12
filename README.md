@@ -22,7 +22,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
 | **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
-| **Privacy** | Third-party host maps · LOAD/CONFIG/CLICK/BUNDLE · tag/iframe hygiene (`knowledge/privacy/`) |
+| **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -37,7 +37,7 @@ The *system* around the model improves (soul, memory, skills, workflows), not th
 
 **Education mode:** audits school/degree marketing (who issues the diploma, ASIC vs regional accreditation, state operate licenses, NBHWC/IBLM pathways). Example snapshot: Lifestyle Prescriptions® University in `knowledge/education/lpu-credential-claims.md`. **Not educational or medical advice.**
 
-**Privacy mode:** third-party host maps from HTML/JS (tag managers, search SaaS, iframes, public keys). Skill `privacy-host-map`; example `knowledge/privacy/akl-libraries-third-party-hosts.md`. **Not legal advice.**
+**Privacy mode:** third-party host maps (`privacy-host-map`) plus **agentic design planner** (`privacy-design-planner`) for review programmes and privacy-aware agents. Knowledge: host maps, `DESIGN_PLANNER.md`, `design-privacy-agent.md`. **Not legal advice.**
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -189,6 +189,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `education-claim-audit` | Engineer scored school/credential claim audit |
 | `lpu-full-audit` | Scrape LPU pages → education claim audit + HITL |
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
+| `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 
 ## Broker scrape, user model & audit
 
@@ -254,14 +255,19 @@ python fable5_offline_agent.py --automate lpu-full-audit
 
 Example: **Lifestyle Prescriptions® University** (`knowledge/education/lpu-credential-claims.md`) — homepage markets accredited M.A./Ph.D. and IBLM/NBHWC paths; accreditation page cites **ASIC UK**, **Wyoming** proprietary license, **EIU-Paris** degree validation, NBHWC program approval, and **IBLM approval pending**. Snapshot verdict: marketing / insufficient evidence for US-regional-equivalent PhD claims. **Re-verify on primary registers.** Not educational or medical advice.
 
-## Privacy / third-party host maps
+## Privacy / third-party host maps + design planner
 
-**Skill:** `privacy-host-map` — agentic procedures `map-hosts` · `map-tags` · `map-tension` · `key-hygiene` · `write-knowledge`.
+| Skill | Role |
+|-------|------|
+| **`privacy-host-map`** | Evidence: `map-hosts` · `map-tags` · `map-tension` · `key-hygiene` · `write-knowledge` |
+| **`privacy-design-planner`** | Design/plan: `design-system` · `plan-review` · `plan-from-knowledge` · **`design-agent`** · `plan-compound` · `brief` |
 
 ```bash
 python fable5_offline_agent.py --privacy
+python fable5_offline_agent.py --privacy "design-agent: offline privacy mapper"
 python fable5_offline_agent.py --privacy "map-hosts: [paste HTML head/footer]"
 python fable5_offline_agent.py --automate privacy-host-map
+python fable5_offline_agent.py --automate privacy-design-plan
 ```
 
 | Tag | Meaning |
@@ -271,11 +277,16 @@ python fable5_offline_agent.py --automate privacy-host-map
 | **CLICK** | User-initiated outbound link |
 | **BUNDLE** | String in minified JS only — not a confirmed call |
 
+**Agentic stack:** purpose → design planner → host map → engineer verify → write `knowledge/privacy/` → HITL.
+
 Curated knowledge:
 
 | Note | Scope |
 |------|--------|
-| [`knowledge/privacy/akl-libraries-third-party-hosts.md`](knowledge/privacy/akl-libraries-third-party-hosts.md) | Auckland Libraries catalogue guide: GTM, Adobe Launch, Coveo, Shielded Site (`staticcdn.co.nz`), Qualtrics/OCLC/EBSCO links |
+| [`knowledge/privacy/DESIGN_PLANNER.md`](knowledge/privacy/DESIGN_PLANNER.md) | Template, phases P0–P4, engineer criteria block |
+| [`knowledge/privacy/design-privacy-agent.md`](knowledge/privacy/design-privacy-agent.md) | Seed design for Fable privacy agentic AI |
+| [`knowledge/privacy/akl-libraries-third-party-hosts.md`](knowledge/privacy/akl-libraries-third-party-hosts.md) | Auckland Libraries: GTM, Adobe, Coveo, Shielded |
+| [`knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md`](knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md) | UoA Eloqua webinar LP: pixel, lead form, Ads gclid |
 
 **Not legal advice.** Re-verify with live Network capture and the published privacy policy before decisions.
 
@@ -468,7 +479,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
 - **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
 - **Education mode** — credential/accreditation claim audit (not educational or medical advice).
-- **Privacy mode** — third-party host maps LOAD/CONFIG/CLICK/BUNDLE (not legal advice).
+- **Privacy mode** — host maps + design planner for privacy-aware agentic AI (not legal advice).
 
 ## License
 

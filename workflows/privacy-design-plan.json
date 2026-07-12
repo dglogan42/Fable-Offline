@@ -1,0 +1,37 @@
+{
+  "name": "privacy-design-plan",
+  "description": "Agentic privacy design planner: brief → plan from knowledge → architecture + risk register + phased roadmap — not legal advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Planner role first. Use knowledge/privacy maps as evidence. Not legal advice; not a DPIA."
+    },
+    {
+      "type": "privacy",
+      "prompt": "Using skill privacy-host-map, briefly summarize existing knowledge/privacy/* host maps (AKL libraries, UoA Eloqua if present) as evidence inputs for a design planner. LOAD/CONFIG/CLICK/BUNDLE only where known. Not legal advice."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill privacy-design-planner and knowledge/privacy/DESIGN_PLANNER.md plus any host maps, produce a full privacy design plan for a privacy-aware agentic AI that can (1) map third-party hosts from HTML and (2) plan reviews without claiming legal compliance. Include purpose, data inventory for the agent, trust boundaries, agent loop, HITL gates, risk register, P0-P3 phases, verification plan, and first engineer cycle. Cite local knowledge files.",
+      "criteria": [
+        "Purpose one sentence",
+        "Data categories listed or UNKNOWN",
+        "Processors first- vs third-party for the agent and for example sites",
+        "Data-flow or trust-boundary diagram present",
+        "HITL gates for high-risk actions",
+        "Phased plan P0-P3 with exit criteria",
+        "Verification steps concrete",
+        "No invented legal compliance conclusions",
+        "Artifact paths under knowledge/privacy or workflows specified"
+      ],
+      "min_score": 8,
+      "max_cycles": 5,
+      "self_improve": false
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge plan is design-only; not legal advice or production approval",
+      "detail": "Human confirms before any real-world data processing changes."
+    }
+  ]
+}

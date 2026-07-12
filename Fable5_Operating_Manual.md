@@ -559,14 +559,17 @@ Inspired by in-house legal automation (clause review, NDA triage, vendor check, 
 
 ---
 
-## 18. Privacy & third-party host maps
+## 18. Privacy maps & design planner (agentic)
 
-**Trigger:** `/privacy`, `--privacy`, HTML dump with many scripts/iframes, “what tracks this page?”, Shielded Site / tag-manager questions.
+**Trigger:** `/privacy`, `--privacy`, HTML dumps, “what tracks this page?”, design a privacy-aware agent, plan a review programme.
 
-### 18.1 Skill
-`privacy-host-map`: procedures **map-hosts**, **map-tags**, **map-tension**, **key-hygiene**, **write-knowledge**.
+### 18.1 Skills
+| Skill | Role |
+|-------|------|
+| **privacy-host-map** | Evidence: **map-hosts**, **map-tags**, **map-tension**, **key-hygiene**, **write-knowledge** |
+| **privacy-design-planner** | Design/plan: **design-system**, **plan-review**, **plan-from-knowledge**, **design-agent**, **plan-compound**, **brief** |
 
-### 18.2 Classification (required)
+### 18.2 Classification (required on evidence maps)
 | Tag | Meaning |
 |-----|---------|
 | LOAD | Resource load on page |
@@ -575,13 +578,21 @@ Inspired by in-house legal automation (clause review, NDA triage, vendor check, 
 | BUNDLE | String in minified JS only — not a confirmed call |
 
 ### 18.3 Knowledge
-- Curated maps under `knowledge/privacy/` (e.g. `akl-libraries-third-party-hosts.md`).
-- Scrapes optional: `--scrape URL --scrape-dir privacy`.
+- Host maps: `knowledge/privacy/*-third-party-hosts.md`  
+- Planner template: `knowledge/privacy/DESIGN_PLANNER.md`  
+- Seed agent design: `knowledge/privacy/design-privacy-agent.md`  
+- Scrapes optional: `--scrape URL --scrape-dir privacy`
 
-### 18.4 Automations
-- `privacy-host-map` — scored engineer map against skill + knowledge  
+### 18.4 Agentic stack
+```text
+PURPOSE → privacy-design-planner → privacy-host-map → engineer verify → write knowledge → HITL
+```
 
-**Not legal advice.** Not a penetration test. Network tab beats static guesses.
+### 18.5 Automations
+- `privacy-host-map` — scored host map  
+- `privacy-design-plan` — plan from knowledge + architecture + risks + HITL  
+
+**Not legal advice.** Not a penetration test. Not a DPIA substitute. Network tab beats static guesses.
 
 ---
 
@@ -617,7 +628,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Broker: `--scrape URL` · `--broker` · `--automate broker-full-audit` · knowledge/brokers/
    - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md
    - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
-   - Privacy: `--privacy` · `/privacy` · `--automate privacy-host-map` · knowledge/privacy/
+   - Privacy: `--privacy` · `/privacy` · `--automate privacy-design-plan` · knowledge/privacy/
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**

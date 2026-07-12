@@ -319,15 +319,17 @@ def load_system_prompt(
             parts.append("\n\n---\n## Local education knowledge (scraped / curated)\n\n" + know)
     if privacy_mode:
         parts.append(
-            "\n\n---\n## Privacy host map mode\n"
-            "Apply skill privacy-host-map. Classify third parties as LOAD / CONFIG / CLICK / BUNDLE. "
+            "\n\n---\n## Privacy mode (host map + design planner)\n"
+            "Apply skills **privacy-host-map** (evidence: LOAD/CONFIG/CLICK/BUNDLE) and "
+            "**privacy-design-planner** (design briefs, phases, agent architecture, risk register). "
             "Do not treat minified JS host strings as confirmed network calls. "
             "Map sensitive widgets (e.g. Shielded Site) separately from parent-page tags. "
-            "Not legal advice. Not a penetration test.\n"
+            "For multi-step programmes or privacy-aware agent design, plan before mapping bulk sites. "
+            "Not legal advice. Not a penetration test. Not a DPIA substitute.\n"
         )
-        know = read_knowledge_bundle("privacy", limit_chars=8000)
+        know = read_knowledge_bundle("privacy", limit_chars=9000)
         if know.strip():
-            parts.append("\n\n---\n## Local privacy knowledge (host maps)\n\n" + know)
+            parts.append("\n\n---\n## Local privacy knowledge (maps + design)\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2014,10 +2016,11 @@ def run_automate(
             elif stype == "privacy":
                 psys = load_system_prompt(privacy_mode=True)
                 prompt = step.get("prompt") or (
-                    "Using skill privacy-host-map and knowledge/privacy/, produce a third-party "
-                    "host privacy map. LOAD/CONFIG/CLICK/BUNDLE. Not legal advice."
+                    "Using skills privacy-host-map and privacy-design-planner with "
+                    "knowledge/privacy/, produce a third-party host map and/or design plan. "
+                    "LOAD/CONFIG/CLICK/BUNDLE for evidence. Not legal advice."
                 )
-                print("\n[privacy host map]\n")
+                print("\n[privacy mode — map + design planner]\n")
                 stream_chat(
                     client,
                     [
@@ -2262,7 +2265,7 @@ Commands
   /broker [prompt]   Broker user-model + claim audit (uses knowledge/brokers/)
   /legal [prompt]    Legal playbook: contract/NDA/vendor/brief/respond (knowledge/legal/)
   /education [prompt] Education/credential claim audit (knowledge/education/)
-  /privacy [prompt]  Third-party host / privacy map (knowledge/privacy/)
+  /privacy [prompt]  Privacy host map + design planner (knowledge/privacy/)
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
@@ -2297,6 +2300,7 @@ CLI
   {py} fable5_offline_agent.py --automate legal-contract-review
   {py} fable5_offline_agent.py --automate lpu-full-audit
   {py} fable5_offline_agent.py --automate privacy-host-map
+  {py} fable5_offline_agent.py --automate privacy-design-plan
   {py} fable5_offline_agent.py --build "tiny flask hello app"
   {py} fable5_offline_agent.py --doctor
 
@@ -2418,13 +2422,13 @@ def chat_repl(client, system: str) -> None:
             continue
         if low.startswith("/privacy"):
             prompt = user_input[8:].strip() or (
-                "Using skill privacy-host-map and knowledge/privacy/ (incl. "
-                "akl-libraries-third-party-hosts.md if present), produce a third-party host map. "
-                "Verdict first. LOAD/CONFIG/CLICK/BUNDLE. Not legal advice."
+                "Using skills privacy-host-map and privacy-design-planner with knowledge/privacy/, "
+                "default to a host map if HTML was provided; otherwise outline a design plan from "
+                "DESIGN_PLANNER.md and existing maps. Verdict first. Not legal advice."
             )
             try:
                 psys = load_system_prompt(privacy_mode=True)
-                print(ui("\n[privacy host map]\n"))
+                print(ui("\n[privacy mode — map + design planner]\n"))
                 stream_chat(
                     client,
                     [
@@ -2680,7 +2684,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         const="",
         default=None,
         metavar="PROMPT",
-        help="Third-party host / privacy map using knowledge/privacy/",
+        help="Privacy host map + design planner using knowledge/privacy/",
     )
     parser.add_argument(
         "--scrape",
@@ -2863,10 +2867,11 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.privacy is not None:
         prompt = (args.privacy or "").strip() or (
-            "Using skill privacy-host-map and knowledge/privacy/ (especially "
-            "akl-libraries-third-party-hosts.md), produce a third-party host privacy map. "
-            "Verdict first. Classify LOAD/CONFIG/CLICK/BUNDLE. Cover tags, search SaaS, "
-            "iframes/Shielded, key hygiene, next Network checks. Not legal advice."
+            "Using skills privacy-host-map and privacy-design-planner with knowledge/privacy/ "
+            "(host maps + DESIGN_PLANNER.md + design-privacy-agent.md), produce either: "
+            "(1) a host map if the user is auditing a page, or (2) a design plan for a "
+            "privacy-aware agentic AI if designing. Prefer plan-from-knowledge when maps exist. "
+            "Verdict first. LOAD/CONFIG/CLICK/BUNDLE for evidence. Not legal advice."
         )
         try:
             psys = load_system_prompt(privacy_mode=True)
