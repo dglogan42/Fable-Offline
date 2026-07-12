@@ -68,6 +68,11 @@ ALLOW_SHELL = os.environ.get("FABLE5_ALLOW_SHELL", "").strip().lower() in {
     "yes",
     "on",
 }
+# Engineer loop: require min score 1-10 on each success criterion (default 8)
+ENGINEER_MIN_SCORE = int(os.environ.get("FABLE5_ENGINEER_MIN_SCORE", "8"))
+# Bilevel outer loop every N cycles (0 = off)
+BILEVEL_EVERY = int(os.environ.get("FABLE5_BILEVEL_EVERY", "3"))
+PROGRAM_FILE = os.environ.get("FABLE5_PROGRAM", "program.md")
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
 USE_ASCII = os.environ.get("FABLE5_ASCII", "").strip() in {"1", "true", "yes"}
 # ===============================================
@@ -954,6 +959,29 @@ OPEN:
 - <remaining work, or "none">
 """
 
+ENGINEER_EXECUTOR_ROLE = """You are the MAKER in a Fable 5 LOOP ENGINEER session.
+A prompt is one instruction. A loop is a goal you keep working toward without babysitting.
+
+Protocol every cycle (PLAN → DO → VERIFY later by a separate agent):
+1. PLAN  — single next step only (fix the weakest open criterion first).
+2. DO    — produce or improve the work for that step only.
+3. Do NOT declare FINAL yourself. A separate verifier scores criteria.
+
+You never grade your own homework as final. Read LOOP_STATE for what already failed.
+
+Output exactly:
+CYCLE: <n>
+PLAN: <one next step>
+UNIT: <bounded unit name>
+ARTIFACT:
+<the work product>
+CLAIMS:
+- <checkable claim>
+OPEN:
+- <remaining weakness to fix next>
+WEAKEST: <name the weakest criterion you are targeting this cycle>
+"""
+
 VERIFIER_ROLE = """You are the VERIFIER in a Fable 5 offline loop.
 You are NOT the maker. You have a fresh context: only the goal, success condition,
 artifact, and claims. You do not trust the maker's private reasoning.
@@ -967,17 +995,51 @@ And one line: SAME_FAILURE: yes|no  (true if this looks like the same failed uni
 Be harsh on unsupported claims. Prefer evidence over eloquence.
 """
 
+ENGINEER_VERIFIER_ROLE = """You are the CHECKER in a Fable 5 LOOP ENGINEER session (sub-agent, fresh context).
+Maker is never the grader. Be brutally honest.
+
+Score EACH success criterion 1-10. List exactly what is still weak.
+Never inflate scores to be nice.
+
+Format exactly:
+CRITERION: <name or quote>
+SCORE: <1-10>
+WEAK: <what is missing or wrong>
+
+(repeat for each criterion)
+
+OVERALL: PASS or FAIL
+SUCCESS_MET: yes|no   (yes only if EVERY criterion is >= MIN_SCORE given)
+SAME_FAILURE: yes|no
+WEAKEST: <criterion with lowest score>
+MIN_SCORE_REQUIRED: <echo the min score>
+"""
+
+BILEVEL_ROLE = """You are the OUTER (bilevel) loop for Fable 5 Loop Engineer.
+You do not do the task. You watch the INNER loop's search process.
+If the maker keeps falling into the same priors/patterns, break the pattern.
+
+Output exactly:
+PATTERN: <stuck search pattern you observe>
+FORCE_EXPLORE: <one concrete direction the next unit MUST try instead>
+CONSTRAINT: <what to forbid next cycle>
+"""
+
 
 def parse_executor_output(text: str) -> dict:
     unit = ""
     m = re.search(r"^UNIT:\s*(.+)$", text, re.M)
     if m:
         unit = m.group(1).strip()
+    plan_m = re.search(r"^PLAN:\s*(.+)$", text, re.M)
+    weak_m = re.search(r"^WEAKEST:\s*(.+)$", text, re.M)
     art_m = re.search(r"ARTIFACT:\s*\n(.*?)(?=\nCLAIMS:|\Z)", text, re.S | re.I)
-    claims_m = re.search(r"CLAIMS:\s*\n(.*?)(?=\nOPEN:|\Z)", text, re.S | re.I)
-    open_m = re.search(r"OPEN:\s*\n(.*)\Z", text, re.S | re.I)
+    claims_m = re.search(r"CLAIMS:\s*\n(.*?)(?=\nOPEN:|\nWEAKEST:|\Z)", text, re.S | re.I)
+    open_m = re.search(r"OPEN:\s*\n(.*?)(?=\nWEAKEST:|\Z)", text, re.S | re.I)
     return {
         "unit": unit or "(unit not labeled)",
+        "plan": (plan_m.group(1).strip() if plan_m else ""),
+        "weakest": (weak_m.group(1).strip() if weak_m else ""),
         "artifact": (art_m.group(1).strip() if art_m else text.strip()),
         "claims": (claims_m.group(1).strip() if claims_m else "(no claims listed)"),
         "open": (open_m.group(1).strip() if open_m else ""),
@@ -996,6 +1058,118 @@ def same_failure(verdict: str) -> bool:
     return bool(re.search(r"SAME_FAILURE:\s*yes", verdict, re.I))
 
 
+def parse_criteria_scores(verdict: str) -> list[tuple[str, int]]:
+    scores: list[tuple[str, int]] = []
+    blocks = re.split(r"(?=^CRITERION:)", verdict, flags=re.M)
+    for b in blocks:
+        cm = re.search(r"^CRITERION:\s*(.+)$", b, re.M)
+        sm = re.search(r"^SCORE:\s*(\d+)", b, re.M)
+        if cm and sm:
+            scores.append((cm.group(1).strip(), int(sm.group(1))))
+    return scores
+
+
+def engineer_all_clear(verdict: str, min_score: int = ENGINEER_MIN_SCORE) -> bool:
+    scores = parse_criteria_scores(verdict)
+    if not scores:
+        return success_met(verdict) and overall_pass(verdict)
+    return all(s >= min_score for _, s in scores) and success_met(verdict)
+
+
+def load_program() -> str:
+    path = _resolve(PROGRAM_FILE)
+    if not path.is_file():
+        path = SCRIPT_DIR / "program.md"
+        if not path.is_file():
+            path.write_text(DEFAULT_PROGRAM_MD, encoding="utf-8", newline="\n")
+    if path.is_file():
+        return path.read_text(encoding="utf-8")
+    return DEFAULT_PROGRAM_MD
+
+
+DEFAULT_PROGRAM_MD = """# program.md — Loop Engineer constraints (Karpathy-style)
+
+You explore under these constraints. The human writes purpose once; the loop executes.
+
+## Objective
+Improve the deliverable against SUCCESS CRITERIA. Prefer one change per cycle.
+
+## Allowed to change
+- The artifact under construction (workspace or stated deliverable)
+- LOOP_STATE (via harness) records of tries/failures
+
+## Not allowed
+- Weakening the success criteria to make the test pass
+- Claiming success without a separate verifier gate
+- Repeating a failed unit without a new strategy
+
+## Explore
+- Fix the WEAKEST criterion first
+- If stuck in the same pattern twice, force a different approach (bilevel outer loop may inject this)
+
+## Stop
+- SUCCESS: every criterion ≥ min score and SUCCESS_MET: yes
+- HARD LIMIT: max cycles or retry ceiling → stop and report
+"""
+
+
+def loop_state_path() -> Path:
+    return memory_root() / "LOOP_STATE.md"
+
+
+def read_loop_state() -> str:
+    p = loop_state_path()
+    if not p.exists():
+        return "(no prior loop state — first cycle)"
+    return p.read_text(encoding="utf-8")
+
+
+def write_loop_state(
+    *,
+    goal: str,
+    cycle: int,
+    unit: str,
+    plan: str,
+    verdict: str,
+    stop: Optional[str],
+    tried: list[str],
+    failed: list[str],
+    next_action: str,
+) -> None:
+    """Persistent state so tomorrow's run resumes instead of starting from zero."""
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    scores = parse_criteria_scores(verdict)
+    score_lines = "\n".join(f"- {n}: {s}/10" for n, s in scores) or "- (no per-criterion scores)"
+    body = (
+        f"# LOOP_STATE\n\n"
+        f"- **Updated:** {stamp}\n"
+        f"- **Goal:** {goal}\n"
+        f"- **Last cycle:** {cycle}\n"
+        f"- **Last unit:** {unit}\n"
+        f"- **Last plan:** {plan or '(n/a)'}\n"
+        f"- **Stop:** {stop or 'continue'}\n\n"
+        f"## Scores (last verifier)\n{score_lines}\n\n"
+        f"## Tried\n"
+        + ("\n".join(f"- {t}" for t in tried[-20:]) or "- (none)")
+        + "\n\n## Failed\n"
+        + ("\n".join(f"- {t}" for t in failed[-20:]) or "- (none)")
+        + f"\n\n## Next\n- {next_action}\n\n"
+        f"## Last verifier excerpt\n```\n{verdict[:1500]}\n```\n"
+    )
+    loop_state_path().write_text(body, encoding="utf-8", newline="\n")
+
+
+def loop_preflight_print(goal: str) -> None:
+    """Honest gates: when a loop earns its cost (article checklist)."""
+    print(ui("Loop preflight — a loop earns its cost only if:"))
+    print("  1. Task repeats (or is high-stakes multi-step) — not a one-line Q&A")
+    print("  2. Verification is automated or strict criteria (not self-cheer)")
+    print("  3. Token budget can absorb re-reads / retries")
+    print("  4. Agent has tools or checkable artifacts (not blind iteration)")
+    print(ui(f"  Goal: {goal[:120]}"))
+    print(ui("  Three make-or-break parts: VERIFIER · STATE · STOP\n"))
+
+
 def run_loop(
     client,
     system: str,
@@ -1006,40 +1180,66 @@ def run_loop(
     retry_ceiling: int = RETRY_CEILING,
     self_improve: bool = DEFAULT_SELF_IMPROVE,
     hermes: bool = False,
+    engineer: bool = False,
+    criteria: Optional[list[str]] = None,
+    min_score: int = ENGINEER_MIN_SCORE,
 ) -> None:
     success_condition = success_condition or (
         "The goal is met with checkable evidence; key claims pass independent verification; "
         "remaining open items are empty or explicitly deferred with reason."
     )
-    title = "FABLE 5 HERMES LOOP — soul · rag · repair · stop" if hermes else (
-        "FABLE 5 LOOP ENGINE — offline · maker ≠ grader"
-    )
+    if engineer and criteria:
+        success_condition = (
+            success_condition
+            + "\n\nSUCCESS CRITERIA (score each 1-10; all must be ≥ "
+            + str(min_score)
+            + "):\n"
+            + "\n".join(f"- {c}" for c in criteria)
+        )
+
+    if engineer:
+        title = "FABLE 5 LOOP ENGINEER — plan·do·verify·state·stop"
+    elif hermes:
+        title = "FABLE 5 HERMES LOOP — soul · rag · repair · stop"
+    else:
+        title = "FABLE 5 LOOP ENGINE — offline · maker ≠ grader"
+
     print(ui("╔════════════════════════════════════════════════════════════╗"))
     print(ui(f"║  {title[:56]:<56}║"))
     print(ui("╚════════════════════════════════════════════════════════════╝"))
     print(f"Platform: {PLATFORM_LABEL}")
     print(f"Model:    {MODEL_NAME}")
-    print(f"Mode:     {'HERMES' if hermes else 'standard loop'}")
+    mode = "ENGINEER" if engineer else ("HERMES" if hermes else "standard loop")
+    print(f"Mode:     {mode}")
     print(f"Goal:     {goal}")
-    print(f"Success:  {success_condition}")
+    print(f"Success:  {success_condition[:200]}{'…' if len(success_condition) > 200 else ''}")
     print(f"Budget:   {max_cycles} cycles · retry ceiling {retry_ceiling}")
+    if engineer:
+        print(f"Min score:{min_score}/10 per criterion · program: {PROGRAM_FILE}")
+        print(f"Bilevel:  every {BILEVEL_EVERY} cycles" if BILEVEL_EVERY else "Bilevel:  off")
+        loop_preflight_print(goal)
     if hermes:
         print(f"RAG top-K:{RAG_TOP_K}  ·  Soul: {SOUL_FILE}")
-    print(f"Memory:   {memory_root()}\n")
+    print(f"Memory:   {memory_root()}")
+    print(f"State:    {loop_state_path()}\n")
 
     fail_streak = 0
     prev_unit = ""
     final_stop = "budget"
     repair_patch = ""
+    bilevel_patch = ""
     last_cycle = 0
+    tried: list[str] = []
+    failed: list[str] = []
+    program = load_program() if engineer else ""
 
     for cycle in range(1, max_cycles + 1):
         last_cycle = cycle
         print(ui(f"{'─' * 60}"))
         print(ui(f"▶ Cycle {cycle}/{max_cycles}"))
         print(ui(f"{'─' * 60}"))
-        # Hermes smart RAG vs full dump
-        if hermes:
+        # Hermes / engineer: smart RAG; else fuller dump
+        if hermes or engineer:
             mem = retrieve_relevant_memory(
                 f"{goal}\n{prev_unit}\n{success_condition}",
                 top_k=RAG_TOP_K,
@@ -1047,6 +1247,7 @@ def run_loop(
         else:
             mem = read_memory_bundle()
 
+        state = read_loop_state() if engineer else ""
         skills_ctx = read_skills_bundle(limit_chars=2500)
         exec_user = (
             f"GOAL:\n{goal}\n\n"
@@ -1055,45 +1256,59 @@ def run_loop(
             f"FAIL STREAK ON SIMILAR UNIT: {fail_streak}\n"
             f"PREVIOUS UNIT: {prev_unit or '(none)'}\n\n"
             f"ACTIVE SKILLS (apply if relevant):\n{skills_ctx or '(none)'}\n\n"
-            f"{'RETRIEVED MEMORY (smart RAG)' if hermes else 'MEMORY'}:\n{mem}\n\n"
+            f"{'RETRIEVED MEMORY (smart RAG)' if (hermes or engineer) else 'MEMORY'}:\n{mem}\n\n"
         )
+        if engineer:
+            exec_user += f"PROGRAM.MD (constraints):\n{program[:3000]}\n\n"
+            exec_user += f"LOOP_STATE (what already tried — do not repeat blindly):\n{state}\n\n"
         if repair_patch:
             exec_user += f"LIVE REPAIR FROM PREVIOUS FAIL:\n{repair_patch}\n\n"
-        if hermes:
+        if bilevel_patch:
+            exec_user += f"BILEVEL OUTER LOOP (break search priors):\n{bilevel_patch}\n\n"
+        if hermes and not engineer:
             exec_user += (
                 "HERMES RULES: one bounded unit; stop when success is evidence-backed; "
                 "do not narrate the whole archive.\n"
             )
+        if engineer:
+            exec_user += (
+                "ENGINEER RULES: PLAN→DO only this cycle; fix WEAKEST first; "
+                "never call FINAL yourself; one change preferred.\n"
+            )
         exec_user += "Do ONE bounded unit now. Output in the required shape."
-        print("\n[executor]\n")
+        print("\n[executor / maker]\n")
+        role = ENGINEER_EXECUTOR_ROLE if engineer else EXECUTOR_ROLE
         exec_text = stream_chat(
             client,
             [
-                {"role": "system", "content": system + "\n\n" + EXECUTOR_ROLE},
+                {"role": "system", "content": system + "\n\n" + role},
                 {"role": "user", "content": exec_user},
             ],
             prefix="Executor: ",
         )
         parsed = parse_executor_output(exec_text)
         unit = parsed["unit"]
+        tried.append(f"c{cycle}: {unit}")
 
         # Fresh context — verifier never sees executor reasoning trail
         ver_user = (
             f"GOAL:\n{goal}\n\n"
-            f"SUCCESS CONDITION:\n{success_condition}\n\n"
+            f"SUCCESS CONDITION / CRITERIA:\n{success_condition}\n\n"
+            f"MIN_SCORE: {min_score}\n"
             f"UNIT CLAIMED:\n{unit}\n\n"
             f"ARTIFACT:\n{parsed['artifact']}\n\n"
             f"CLAIMS TO GRADE:\n{parsed['claims']}\n\n"
             f"OPEN ITEMS FROM MAKER:\n{parsed['open']}\n\n"
             f"PRIOR FAIL STREAK: {fail_streak}\n"
             f"PREVIOUS UNIT: {prev_unit or '(none)'}\n"
-            "Grade only from the artifact and claims. No benefit of the doubt from missing work."
+            "Grade only from the artifact. No benefit of the doubt. Maker is never the grader."
         )
-        print("\n[verifier — fresh context]\n")
+        print("\n[verifier — fresh context / sub-agent]\n")
+        vrole = ENGINEER_VERIFIER_ROLE if engineer else VERIFIER_ROLE
         verdict = stream_chat(
             client,
             [
-                {"role": "system", "content": VERIFIER_ROLE},
+                {"role": "system", "content": vrole},
                 {"role": "user", "content": ver_user},
             ],
             temperature=0.2,
@@ -1101,41 +1316,78 @@ def run_loop(
         )
 
         stop_reason: Optional[str] = None
-        passed = overall_pass(verdict)
-        done = success_met(verdict)
+        if engineer:
+            passed = overall_pass(verdict) or bool(parse_criteria_scores(verdict))
+            done = engineer_all_clear(verdict, min_score)
+            # Treat not-all-clear as fail for streak purposes
+            if not done:
+                passed = False if parse_criteria_scores(verdict) else overall_pass(verdict)
+        else:
+            passed = overall_pass(verdict)
+            done = success_met(verdict)
+
         stuck = same_failure(verdict) or (
             bool(prev_unit)
             and unit.lower()[:50] == prev_unit.lower()[:50]
-            and not passed
+            and not done
         )
 
-        if passed and done:
+        if done:
             stop_reason = "success"
             fail_streak = 0
             repair_patch = ""
-        elif not passed:
+            bilevel_patch = ""
+            next_action = "Goal met. Stop."
+        elif not done and (not passed or engineer):
             fail_streak = fail_streak + 1 if stuck or fail_streak > 0 else 1
             if not stuck and prev_unit and unit.lower()[:50] != prev_unit.lower()[:50]:
-                fail_streak = 1  # new failing unit resets streak base
+                fail_streak = 1
+            failed.append(f"c{cycle}: {unit}")
             if fail_streak >= retry_ceiling:
                 stop_reason = "retry_ceiling"
-            elif hermes:
-                # Hermes: detect error → repair prompt/strategy before next unit
-                try:
-                    repair_patch = live_repair(
-                        client,
-                        goal=goal,
-                        unit=unit,
-                        artifact=parsed["artifact"],
-                        verdict=verdict,
-                        fail_streak=fail_streak,
-                    )
-                except Exception as e:
-                    repair_patch = f"(repair failed: {e})"
+                next_action = "Escalate to human — same unit not converging."
+            else:
+                next_action = parsed.get("open") or "Fix weakest criterion next cycle."
+                if hermes or engineer:
+                    try:
+                        repair_patch = live_repair(
+                            client,
+                            goal=goal,
+                            unit=unit,
+                            artifact=parsed["artifact"],
+                            verdict=verdict,
+                            fail_streak=fail_streak,
+                        )
+                    except Exception as e:
+                        repair_patch = f"(repair failed: {e})"
+                # Bilevel outer loop: meta-search when stuck in patterns
+                if engineer and BILEVEL_EVERY > 0 and cycle % BILEVEL_EVERY == 0:
+                    print(ui("\n[bilevel outer loop — meta-search]\n"))
+                    try:
+                        bilevel_patch = stream_chat(
+                            client,
+                            [
+                                {"role": "system", "content": BILEVEL_ROLE},
+                                {
+                                    "role": "user",
+                                    "content": (
+                                        f"GOAL: {goal}\nCYCLE: {cycle}\n"
+                                        f"TRIED:\n" + "\n".join(tried[-12:]) + "\n"
+                                        f"FAILED:\n" + "\n".join(failed[-12:]) + "\n"
+                                        f"LAST VERDICT:\n{verdict[:2000]}\n"
+                                        f"STATE:\n{state[:2000]}\n"
+                                    ),
+                                },
+                            ],
+                            temperature=0.4,
+                            prefix="Bilevel: ",
+                        )
+                    except Exception as e:
+                        bilevel_patch = f"(bilevel failed: {e})"
         else:
-            # Pass on this unit but goal not fully met — continue
             fail_streak = 0
             repair_patch = ""
+            next_action = "Continue toward remaining open items."
 
         append_cycle_log(
             cycle,
@@ -1147,11 +1399,23 @@ def run_loop(
             stop_reason,
         )
         maybe_write_lesson(client, system, goal, cycle, verdict, parsed["artifact"])
+        if engineer or hermes:
+            write_loop_state(
+                goal=goal,
+                cycle=cycle,
+                unit=unit,
+                plan=parsed.get("plan", ""),
+                verdict=verdict,
+                stop=stop_reason,
+                tried=tried,
+                failed=failed,
+                next_action=next_action,
+            )
         prev_unit = unit
 
         if stop_reason == "success":
             final_stop = "success"
-            print(ui("\n✓ Loop self-stopped: success condition met (verifier confirmed).\n"))
+            print(ui("\n✓ Loop self-stopped: success condition met (verifier gate).\n"))
             break
         if stop_reason == "retry_ceiling":
             final_stop = "retry_ceiling"
@@ -1164,9 +1428,9 @@ def run_loop(
             break
         if cycle == max_cycles:
             final_stop = "budget"
-            print(ui(f"\n⏸ Loop self-stopped: cycle budget ({max_cycles}) spent.\n"))
+            print(ui(f"\n⏸ Loop self-stopped: hard limit {max_cycles} cycles — report and stop.\n"))
         else:
-            print(ui(f"\n→ Cycle complete. Fail streak={fail_streak}. Continuing…\n"))
+            print(ui(f"\n→ ITERATING. Fail streak={fail_streak}. Continuing…\n"))
 
     # Final synthesis for the human
     print(ui(f"{'─' * 60}"))
@@ -1513,6 +1777,24 @@ def run_automate(
                 goal = step.get("goal") or extra_goal or "scaffold a minimal project"
                 out = run_build(client, system, goal, name=step.get("name"))
                 results.append(f"build → {out}")
+            elif stype == "engineer":
+                goal = step.get("goal") or extra_goal or "complete the engineered goal"
+                crit = step.get("criteria")
+                if isinstance(crit, str):
+                    crit = [c.strip() for c in crit.split(",") if c.strip()]
+                run_loop(
+                    client,
+                    load_system_prompt(hermes=True),
+                    goal,
+                    success_condition=step.get("success"),
+                    max_cycles=int(step.get("max_cycles", DEFAULT_MAX_CYCLES)),
+                    hermes=True,
+                    engineer=True,
+                    criteria=crit,
+                    min_score=int(step.get("min_score", ENGINEER_MIN_SCORE)),
+                    self_improve=bool(step.get("self_improve", False)),
+                )
+                results.append("engineer → done")
             elif stype == "hermes":
                 goal = step.get("goal") or extra_goal or "complete the automated goal"
                 run_loop(
@@ -1599,7 +1881,7 @@ def print_banner() -> None:
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}")
-    print("Commands: /build /automate /loop /hermes /improve /workflows /help quit\n")
+    print("Commands: /build /automate /engineer /loop /hermes /improve /help quit\n")
 
 
 def print_help() -> None:
@@ -1611,6 +1893,7 @@ Commands
   /automate <name>   Run workflow recipe from workflows/*.json
   /workflows         List automation recipes
   /loop <goal>       Standard loop (executor + fresh verifier + memory)
+  /engineer <goal>   Loop like an engineer: PLAN→DO→VERIFY·STATE·STOP (Karpathy-style)
   /hermes <goal>     Hermes loop: SOUL + smart RAG + live repair + self-stop
   /improve [focus]   Self-improve: propose skills, verify, write skills/
   /skills            List skill library
@@ -1629,14 +1912,16 @@ Build & automate (offline)
 CLI
   {py} fable5_offline_agent.py --build "tiny flask hello app"
   {py} fable5_offline_agent.py --automate daily-review
+  {py} fable5_offline_agent.py --engineer "rewrite this memo until criteria hit 8+"
   {py} fable5_offline_agent.py --hermes "your goal"
   {py} fable5_offline_agent.py --loop "your goal"
   {py} fable5_offline_agent.py --improve
   {py} fable5_offline_agent.py --doctor
 
 Env
-  FABLE5_MODEL  FABLE5_SOUL  FABLE5_RAG_TOP_K  FABLE5_WORKFLOWS  FABLE5_WORKSPACE
-  FABLE5_ALLOW_SHELL  FABLE5_MEMORY  FABLE5_SKILLS  FABLE5_SELF_IMPROVE  FABLE5_ASCII
+  FABLE5_MODEL  FABLE5_SOUL  FABLE5_PROGRAM  FABLE5_ENGINEER_MIN_SCORE  FABLE5_BILEVEL_EVERY
+  FABLE5_RAG_TOP_K  FABLE5_WORKFLOWS  FABLE5_WORKSPACE  FABLE5_ALLOW_SHELL
+  FABLE5_MEMORY  FABLE5_SKILLS  FABLE5_SELF_IMPROVE  FABLE5_ASCII
 """
     )
 
@@ -1764,7 +2049,37 @@ def chat_repl(client, system: str) -> None:
                 messages = refresh_chat_system(messages)
             except Exception as e:
                 print(ui(f"\n❌ Hermes error: {e}\n"))
-            print("Back to chat. Try /hermes, /loop, or /improve.\n")
+            print("Back to chat. Try /hermes, /engineer, /loop, or /improve.\n")
+            continue
+        if low.startswith("/engineer"):
+            goal = user_input[9:].strip()
+            if not goal:
+                goal = input("Engineer goal: ").strip()
+            if not goal:
+                print("No goal — cancelled.\n")
+                continue
+            crit_raw = input(
+                "Success criteria (comma-separated, or Enter for defaults): "
+            ).strip()
+            criteria = (
+                [c.strip() for c in crit_raw.split(",") if c.strip()]
+                if crit_raw
+                else None
+            )
+            try:
+                run_loop(
+                    client,
+                    load_system_prompt(hermes=True),
+                    goal,
+                    hermes=True,
+                    engineer=True,
+                    criteria=criteria,
+                    min_score=ENGINEER_MIN_SCORE,
+                )
+                messages = refresh_chat_system(messages)
+            except Exception as e:
+                print(ui(f"\n❌ Engineer error: {e}\n"))
+            print("Back to chat. Try /engineer, /hermes, or /build.\n")
             continue
         if low.startswith("/loop"):
             goal = user_input[5:].strip()
@@ -1824,6 +2139,22 @@ def main(argv: Optional[list[str]] = None) -> int:
         "--automate",
         metavar="WORKFLOW",
         help="Run automation recipe (name or path under workflows/)",
+    )
+    parser.add_argument(
+        "--engineer",
+        metavar="GOAL",
+        help="Loop like an engineer: PLAN→DO→VERIFY, LOOP_STATE, stop gates, optional bilevel",
+    )
+    parser.add_argument(
+        "--criteria",
+        metavar="LIST",
+        help="Comma-separated success criteria for --engineer (scored 1-10)",
+    )
+    parser.add_argument(
+        "--min-score",
+        type=int,
+        default=ENGINEER_MIN_SCORE,
+        help=f"Min score per criterion for --engineer (default {ENGINEER_MIN_SCORE})",
     )
     parser.add_argument("--success", metavar="COND", help="Checkable success condition for --loop/--hermes")
     parser.add_argument("--max-cycles", type=int, default=DEFAULT_MAX_CYCLES)
@@ -1935,6 +2266,37 @@ def main(argv: Optional[list[str]] = None) -> int:
         do_improve = False
     if args.self_improve:
         do_improve = True
+
+    if args.engineer:
+        crit = (
+            [c.strip() for c in args.criteria.split(",") if c.strip()]
+            if args.criteria
+            else [
+                "Deliverable is complete and usable without follow-up questions",
+                "Every number/claim is re-derived or labeled as unverified",
+                "Weakest risk is named concretely",
+            ]
+        )
+        try:
+            run_loop(
+                client,
+                load_system_prompt(hermes=True),
+                args.engineer,
+                success_condition=args.success,
+                max_cycles=args.max_cycles,
+                retry_ceiling=args.retry_ceiling,
+                self_improve=do_improve,
+                hermes=True,
+                engineer=True,
+                criteria=crit,
+                min_score=args.min_score,
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            print(f"Make sure Ollama is running. Try: ollama run {MODEL_NAME}")
+            print("Or: python fable5_offline_agent.py --doctor")
+            return 1
 
     if args.hermes:
         try:

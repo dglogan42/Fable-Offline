@@ -149,16 +149,43 @@ Any "no": fix it, then send. Not the other way around.
 
 ## 9. Loop engineering (when work needs more than one pass)
 
-**Trigger:** the user invokes a **loop** (`/loop`, multi-step goal, "keep going until…", long refactor, multi-claim analysis), or the harness runs a scheduled cycle. Dormant for single-shot Q&A (Section 3.3).
+**Trigger:** `/loop`, `/engineer`, `/hermes`, multi-step goal, "keep going until…", or a scheduled workflow. Dormant for single-shot Q&A (Section 3.3).
 
-**Core idea:** You are not writing a longer monologue. You are running a **policy** with six parts every cycle:
+**Prompt vs loop:** A prompt is one instruction — ask, answer, human decides next. A **loop** is a **purpose defined once**: the agent discovers work, plans, does, checks, and feeds results back until the gate says stop.
 
-1. **Trigger** — cycle starts (user `/loop`, CLI flag, or "continue").
-2. **Rules load** — this manual + project constraints + memory from prior cycles.
-3. **Executor** — do **ONE bounded unit** of work toward the goal (not "make progress"; a named, checkable step).
-4. **Verifier** — grade the **artifact** in a **fresh context** (maker is never the grader).
-5. **Memory write** — record progress, failures, and lessons for the next cycle.
-6. **Stop check** — success / escalate / park / go again.
+### 9.0 Three parts that make or break a loop
+
+1. **Verifier** — a real gate (pass/fail, metric, score ≥ bar). Without it you have the agent agreeing with itself. **Maker is never the grader** (fresh context).
+2. **State** — what was tried, what failed, what is next (`memory/LOOP_STATE.md`). Without state, every cycle restarts from zero and repeats mistakes.
+3. **Stop condition** — success when the goal is met, **or** hard limit (max cycles / retry ceiling) then report. No exit = burn tokens forever.
+
+### 9.0b Do you need a heavy loop?
+
+Earn the cost only when:
+
+1. Task is multi-step or repeats (not a one-line Q&A).
+2. Verification is strict or automatable (criteria, tests, builds).
+3. Token budget can absorb re-reads and retries.
+4. There are checkable artifacts (not blind iteration).
+
+Miss one → prefer one good prompt or chat.
+
+**Core cycle policy:**
+
+1. **Trigger** — cycle starts (`/loop`, `/engineer`, schedule).
+2. **Rules load** — manual + `program.md` + skills + state + memory.
+3. **PLAN → DO** — one bounded unit (fix weakest criterion first).
+4. **VERIFY** — separate agent scores criteria / pass-fail.
+5. **State write** — record tried / failed / next.
+6. **Stop** — success · retry ceiling · cycle budget · or iterate.
+
+### 9.0c Loop engineer mode (`/engineer`)
+
+Karpathy-style offline loop: human writes purpose + criteria (`program.md`); agent runs experiments against a **gate it cannot weaken**.
+
+- PLAN → DO → VERIFY (scores 1–10) → DECIDE (FINAL only if all ≥ min score).
+- Optional **bilevel** outer loop every N cycles: break stuck search priors (meta-search), not smarter weights.
+- Comprehension debt & cognitive surrender stay human problems — the loop does not think for you.
 
 ### 9.1 Goals, boundaries, verification — not step-by-step micromanagement
 
@@ -413,6 +440,7 @@ spent. Otherwise end the cycle cleanly for the next run.
 1. **CLI agent (recommended):**
    - `python fable5_offline_agent.py` — chat (Sections 1–8 + soul + skills)
    - `python fable5_offline_agent.py --loop "your goal"` — loop harness (Section 9)
+   - `python fable5_offline_agent.py --engineer "goal"` — loop like an engineer (Section 9.0c)
    - `python fable5_offline_agent.py --hermes "your goal"` — Hermes behaviors (Section 11)
    - `python fable5_offline_agent.py --build "tiny CLI"` — multi-file scaffold (Section 12)
    - `python fable5_offline_agent.py --automate daily-review` — workflow recipe (Section 12)

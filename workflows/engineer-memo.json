@@ -1,0 +1,22 @@
+{
+  "name": "engineer-memo",
+  "description": "Loop-engineer a decision memo until criteria score 8+",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Purpose once. Verifier + state + stop. Loop like an engineer."
+    },
+    {
+      "type": "engineer",
+      "goal": "Write a one-page decision memo with verdict first, three concrete risks, and one recommendation. Re-derive any numbers.",
+      "criteria": [
+        "Verdict first and actionable",
+        "Three concrete risks named",
+        "Numbers re-derived or labeled unverified"
+      ],
+      "min_score": 8,
+      "max_cycles": 5,
+      "self_improve": false
+    }
+  ]
+}

@@ -15,9 +15,12 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Hermes** | Soul-steered loop: **SOUL.md** · smart RAG (top-K memory) · self-stop · live repair · memory compress |
 | **Build** | Multi-file project scaffold under `workspace/build-*/` (PLAN + FILE blocks) |
 | **Automate** | Multi-step JSON recipes in `workflows/` (build → hermes → improve → …) |
+| **Engineer** | **Loop like an engineer**: purpose once · PLAN→DO→VERIFY · **LOOP_STATE** · stop gates · optional bilevel |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
+
+**Prompt vs loop:** a prompt is one instruction. A loop is a goal the agent keeps working toward — discover, plan, do, verify, feed back — until success or a hard limit. Three make-or-break parts: **verifier**, **state**, **stop**.
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -36,9 +39,10 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 
 ```
 Fable-Offline/
-├── fable5_offline_agent.py      # CLI: chat, build, automate, hermes, loops, doctor
+├── fable5_offline_agent.py      # CLI: chat, build, automate, engineer, hermes, loops
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
+├── program.md                   # Loop-engineer constraints (Karpathy-style)
 ├── requirements.txt
 ├── fable5                       # Unix launcher
 ├── fable5.cmd                   # Windows launcher
@@ -49,11 +53,13 @@ Fable-Offline/
 │   ├── INDEX.md
 │   ├── build-and-automate.md
 │   ├── hermes-loop.md
+│   ├── loop-engineer.md
 │   └── rederive-numbers.md
 ├── workflows/                   # Automation recipes (*.json)
 │   ├── hello-project.json
 │   ├── daily-review.json
-│   └── rigor-check.json
+│   ├── rigor-check.json
+│   └── engineer-memo.json
 ├── workspace/                   # Build outputs (gitignored; .gitkeep kept)
 ├── memory/                      # Runtime memory (gitignored; .gitkeep kept)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -104,13 +110,15 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 .\fable5.cmd --doctor
 .\fable5.cmd --build "minimal Python CLI that greets and exits"
 .\fable5.cmd --automate daily-review
+.\fable5.cmd --engineer "Ship a decision memo" --criteria "Verdict first,Three risks,Numbers checked"
 .\fable5.cmd --hermes "Re-derive: revenue $4.0M to $4.2M is a 20% gain"
 
 # macOS / Linux
 ./fable5
 ./fable5 --doctor
 ./fable5 --build "minimal Python CLI that greets and exits"
-./fable5 --automate daily-review
+./fable5 --automate engineer-memo
+./fable5 --engineer "Ship a decision memo" --min-score 8
 ./fable5 --hermes "Re-derive: revenue $4.0M to $4.2M is a 20% gain"
 ```
 
@@ -124,6 +132,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/workflows` | List automation recipes |
 | `/loop <goal>` | Multi-cycle loop (+ self-improve after, by default) |
 | `/hermes <goal>` | Hermes loop: soul + smart RAG + live repair + self-stop |
+| `/engineer <goal>` | Loop engineer: PLAN→DO→VERIFY · LOOP_STATE · score gates |
 | `/improve [focus]` | Self-improve: write verified skills from memory |
 | `/skills` | List / show skill library |
 | `/soul` | Show SOUL.md |
@@ -147,6 +156,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `hello-project` | Build a tiny multi-file hello CLI |
 | `daily-review` | Compress memory → self-improve skills |
 | `rigor-check` | Short Hermes loop on a numeric claim |
+| `engineer-memo` | Loop-engineer a decision memo to score ≥ 8 |
 
 Workflow step types: `build` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note`.
 
@@ -163,6 +173,27 @@ set FABLE5_ALLOW_SHELL=1
 ```
 
 Only allowlisted commands run (python/pip/ollama, limited git, simple `ls`/`dir`/`echo`). Builds cannot write outside `workspace/`.
+
+## Loop like an engineer
+
+```bash
+./fable5 --engineer "Rewrite this decision memo until it is shippable" \
+  --criteria "Verdict first,Three concrete risks,Numbers re-derived or labeled" \
+  --min-score 8 --max-cycles 6
+
+# Chat: /engineer <goal>  then optional comma-separated criteria
+```
+
+| Piece | Offline implementation |
+|-------|------------------------|
+| **Verifier** | Fresh-context sub-agent scores each criterion 1–10 (maker ≠ grader) |
+| **State** | `memory/LOOP_STATE.md` — tried, failed, next (resume tomorrow) |
+| **Stop** | All scores ≥ min **or** hard limit (cycles / retry ceiling) |
+| **program.md** | Constraints the loop must respect (human-written purpose) |
+| **Bilevel** | Every `FABLE5_BILEVEL_EVERY` cycles, outer loop breaks stuck search patterns |
+| **Preflight** | Printed checklist: only run heavy loops when they earn the cost |
+
+Inspired by loop-engineering practice (Karpathy-style experiment loops, Cherny-style “write loops not prompts”) — adapted fully offline. The loop does not delete thinking; it removes you as the bottleneck on measurable work.
 
 ## Hermes mode
 
@@ -216,6 +247,9 @@ Runtime artifacts: `memory/` — **gitignored**.
 | `FABLE5_MEMORY` | `memory` | Memory directory (`~` allowed) |
 | `FABLE5_SKILLS` | `skills` | Skill library directory |
 | `FABLE5_SOUL` | `SOUL.md` | Identity / steering file |
+| `FABLE5_PROGRAM` | `program.md` | Loop-engineer constraints |
+| `FABLE5_ENGINEER_MIN_SCORE` | `8` | Min 1–10 score per criterion |
+| `FABLE5_BILEVEL_EVERY` | `3` | Outer meta-loop period (`0` = off) |
 | `FABLE5_WORKFLOWS` | `workflows` | Automation recipe directory |
 | `FABLE5_WORKSPACE` | `workspace` | Build output directory |
 | `FABLE5_ALLOW_SHELL` | unset | `1` = run allowlisted shell steps |
@@ -247,7 +281,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--build` · `--automate` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -281,7 +315,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 ## Credits
 
 - **Reasoning rules** — Fable 5–style rigorous operating manual (community prompt lineage).
-- **Loop engineering** — Goals, boundaries, verification, fresh-context graders, stop rules.
+- **Loop engineering** — Verifier · state · stop; PLAN→DO→VERIFY; Karpathy-style `program.md`; optional bilevel meta-search.
 - **Self-improvement** — Memory + skills compound around a frozen local model.
 - **Hermes behaviors** — Soul file, smart RAG, self-stopping loops, live repair, memory compression.
 - **Build & automate** — Multi-file scaffolds and multi-step offline workflow recipes.
