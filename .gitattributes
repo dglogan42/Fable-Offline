@@ -1,0 +1,14 @@
+# Cross-platform line endings for Fable 5 Offline Agent
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+*.sh    text eol=lf
+*.ps1   text eol=lf
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+
+# Keep shell scripts executable on checkout where supported
+fable5              text eol=lf
+scripts/*.sh        text eol=lf

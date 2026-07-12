@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Fable 5 Offline Agent launcher — macOS / Linux
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT"
+
+pick_python() {
+  if [[ -n "${FABLE5_PYTHON:-}" && -x "${FABLE5_PYTHON}" ]]; then
+    echo "${FABLE5_PYTHON}"
+    return
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    command -v python3
+    return
+  fi
+  if command -v python >/dev/null 2>&1; then
+    command -v python
+    return
+  fi
+  echo "error: Python 3 not found. Install Python 3.10+ and retry." >&2
+  exit 1
+}
+
+PY="$(pick_python)"
+export PYTHONUTF8=1
+export PYTHONIOENCODING=utf-8
+
+if ! "$PY" -c "import openai" >/dev/null 2>&1; then
+  echo "Installing dependencies..."
+  "$PY" -m pip install -r "$ROOT/requirements.txt"
+fi
+
+exec "$PY" "$ROOT/fable5_offline_agent.py" "$@"
