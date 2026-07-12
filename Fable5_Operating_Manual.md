@@ -311,6 +311,50 @@ The harness provides system tools (not cloud APIs): read/write memory, list/writ
 
 ---
 
+## 11. Hermes behaviors (self-building agent loop, offline)
+
+**Trigger:** `/hermes`, `--hermes`, or when SOUL.md Hermes rules are active.
+
+Inspired by self-improving agent practice (soul file, selective memory, self-stopping loops, live repair, memory compression) — implemented fully local for Fable 5 Offline. Not a weight-learning system; the *harness* improves.
+
+### 11.1 SOUL.md controls the agent
+
+`SOUL.md` is the identity and boundary file. It is loaded every run. Edit it to change persona, stop ethics, and hard limits. Garbage in soul → sophisticated garbage out; keep it short and true.
+
+### 11.2 Smart RAG (not the whole archive)
+
+Do **not** inject 2,000 messages. Retrieve the **top-K** (~20) memory chunks most relevant to the current goal/unit via local scoring. Prefer evidence that matches the active claims.
+
+### 11.3 The loop that stops itself
+
+Stop without waiting for a human when:
+
+1. Success condition is met **and** verifier confirms  
+2. Same unit failed **retry ceiling** times  
+3. Cycle **budget** is spent  
+
+Report evidence-backed status either way.
+
+### 11.4 Detect error → repair prompt now
+
+On verifier **FAIL**, before the next unit:
+
+- State what broke (specific, not vague)  
+- Patch the executor strategy for **one** next unit  
+- Avoid repeating the failed pattern  
+
+This is live repair, not a full replan of the goal.
+
+### 11.5 Memory compression
+
+After multi-cycle work, fold lessons into a short durable note (`memory/lessons/compressed-*.md`). Drop fluff; keep decisions, corrections, and open risks.
+
+### 11.6 Compound with skills
+
+After Hermes runs, self-improve may write skills so the next session starts smarter. Skills are procedures; soul is identity; memory is evidence.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -330,10 +374,12 @@ spent. Otherwise end the cycle cleanly for the next run.
 **How to use this offline:**
 
 1. **CLI agent (recommended):**
-   - `python fable5_offline_agent.py` — chat (Sections 1–8 + skills)
-   - `python fable5_offline_agent.py --loop "your goal"` — loop harness (Section 9); self-improves after
+   - `python fable5_offline_agent.py` — chat (Sections 1–8 + soul + skills)
+   - `python fable5_offline_agent.py --loop "your goal"` — loop harness (Section 9)
+   - `python fable5_offline_agent.py --hermes "your goal"` — Hermes behaviors (Section 11)
    - `python fable5_offline_agent.py --improve` — skill library growth (Section 10)
-   - In chat: `/loop` · `/improve` · `/skills` · `/memory` · `/help` · `quit`
+   - `python fable5_offline_agent.py --compress-memory` — memory fold
+   - In chat: `/hermes` · `/loop` · `/improve` · `/soul` · `/compress` · `/skills` · `/memory`
 
 2. **Ollama / Open WebUI / LM Studio:**
    - Use this file as system prompt for one-shot rigor.

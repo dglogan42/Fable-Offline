@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 """
 Fable 5 Offline Agent
-Local reasoning + loop engineering + self-improvement (skills) harness.
+Local reasoning + loop engineering + self-improvement + Hermes-style behaviors.
 
 Usage:
   python fable5_offline_agent.py
   python fable5_offline_agent.py --loop "…"
+  python fable5_offline_agent.py --hermes "…"
   python fable5_offline_agent.py --improve
-  python fable5_offline_agent.py --loop "…" --self-improve
+  python fable5_offline_agent.py --compress-memory
 
 In chat:
-  /loop <goal>   /improve [focus]   /skills   /memory   /doctor   /help   quit
+  /loop  /hermes  /improve  /skills  /soul  /memory  /compress  /doctor  /help  quit
 
-Self-improvement (offline):
-  Reflect on memory + cycles → propose skills → fresh-context grade → write skills/
-  Skills reload into the system prompt so later runs compound.
+Hermes behaviors (offline, inspired by self-improving agent courses + Hermes loops):
+  SOUL.md identity · smart RAG (top-K relevant memory) · self-stopping loop
+  mid-run prompt repair · memory compression · skill compound
 
 Requires: pip install openai
 Ollama:  ollama serve && ollama pull <MODEL_NAME>
@@ -23,6 +24,7 @@ Ollama:  ollama serve && ollama pull <MODEL_NAME>
 from __future__ import annotations
 
 import argparse
+import math
 import os
 import platform
 import re
@@ -30,6 +32,7 @@ import shutil
 import sys
 import urllib.error
 import urllib.request
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -38,12 +41,15 @@ from typing import Optional
 LOCAL_LLM_BASE_URL = os.environ.get("FABLE5_BASE_URL", "http://localhost:11434/v1")
 MODEL_NAME = os.environ.get("FABLE5_MODEL", "qwen2.5:7b")
 SYSTEM_PROMPT_FILE = os.environ.get("FABLE5_MANUAL", "Fable5_Operating_Manual.md")
+SOUL_FILE = os.environ.get("FABLE5_SOUL", "SOUL.md")
 MEMORY_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_MEMORY", "memory")))
 SKILLS_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_SKILLS", "skills")))
 DEFAULT_MAX_CYCLES = int(os.environ.get("FABLE5_MAX_CYCLES", "6"))
 RETRY_CEILING = int(os.environ.get("FABLE5_RETRY_CEILING", "3"))
 TEMPERATURE = float(os.environ.get("FABLE5_TEMPERATURE", "0.3"))
 MAX_TOKENS = int(os.environ.get("FABLE5_MAX_TOKENS", "8192"))
+# Smart RAG: retrieve this many memory chunks (course: ~20 relevant, not 2000)
+RAG_TOP_K = int(os.environ.get("FABLE5_RAG_TOP_K", "20"))
 # Self-improve after loops unless FABLE5_SELF_IMPROVE=0
 DEFAULT_SELF_IMPROVE = os.environ.get("FABLE5_SELF_IMPROVE", "1").strip().lower() not in {
     "0",
@@ -143,19 +149,68 @@ def load_manual_core() -> str:
     )
 
 
-def load_system_prompt() -> str:
-    """Manual + active skills (self-improving compound context)."""
+def load_soul() -> str:
+    """Load SOUL.md — Hermes-style identity/steering file that controls agent persona."""
+    path = _resolve(SOUL_FILE)
+    if not path.is_file():
+        # Seed default soul next to the script
+        path = SCRIPT_DIR / "SOUL.md"
+        if not path.is_file():
+            path.write_text(DEFAULT_SOUL_MD, encoding="utf-8", newline="\n")
+    if path.is_file():
+        return path.read_text(encoding="utf-8").strip()
+    return DEFAULT_SOUL_MD.strip()
+
+
+DEFAULT_SOUL_MD = """# SOUL.md — Fable 5 Offline Agent
+
+You are a **local, offline reasoning agent**. You do not phone home.
+You optimize for correctness over fluency. You compound via skills and memory, not weight updates.
+
+## Identity
+- Name: Fable5 Offline
+- Style: precise, skeptical, useful; answer first, then reasoning, then risk
+- Values: re-derive numbers, label guesses, attack own conclusions, maker ≠ grader
+
+## Boundaries
+- Never invent tool results or test output
+- Prefer one bounded unit of progress over finishing everything at once
+- Escalate to the human after repeated failure of the same unit
+- Do not dump entire chat history into context — use retrieved memory only
+
+## Hermes behaviors (always on when /hermes or --hermes)
+1. **Soul-first** — this file steers identity and stop ethics
+2. **Smart RAG** — only the most relevant memory chunks, not the whole archive
+3. **Self-stop** — stop on success, retry ceiling, or budget without waiting for a human
+4. **Live repair** — when the verifier fails, repair strategy/prompt before the next unit
+5. **Memory compress** — periodically fold lessons into shorter durable notes
+6. **Skill compound** — write reusable skills from verified wins and failure-preventers
+"""
+
+
+def load_system_prompt(*, hermes: bool = False) -> str:
+    """Manual + soul + active skills (self-improving compound context)."""
     core = load_manual_core()
+    soul = load_soul()
     skills = read_skills_bundle(limit_chars=5000)
-    if not skills.strip():
-        return core
-    return (
-        core
-        + "\n\n---\n## Active skills (self-improved library)\n"
-        "Apply any skill whose WHEN_TO_USE matches the task. Prefer skills over inventing "
-        "a new procedure when they fit.\n\n"
-        + skills
-    )
+    parts = [
+        core,
+        "\n\n---\n## SOUL.md (identity / steering)\n\n" + soul,
+    ]
+    if hermes:
+        parts.append(
+            "\n\n---\n## Hermes mode active\n"
+            "You are running Hermes-style offline behaviors: soul-steered, RAG-limited memory, "
+            "self-stopping loops, mid-run repair after failed verification, and skill compound.\n"
+        )
+    if skills.strip():
+        parts.append(
+            "\n\n---\n## Active skills (self-improved library)\n"
+            "Apply any skill whose WHEN_TO_USE matches the task. Prefer skills over inventing "
+            "a new procedure when they fit.\n\n"
+            + skills
+        )
+    return "".join(parts)
 
 
 def make_client():
@@ -212,6 +267,11 @@ def doctor() -> int:
     print(f"  Skills dir:  {skills_root()}")
     n_skills = len(list_skill_paths())
     print(f"  Skills:      {n_skills} file(s)")
+    print(f"  RAG top-K:   {RAG_TOP_K}")
+    soul_path = _resolve(SOUL_FILE)
+    if not soul_path.is_file():
+        soul_path = SCRIPT_DIR / "SOUL.md"
+    print(f"  Soul:        {soul_path}  ({'found' if soul_path.is_file() else 'will seed'})")
     manual = _resolve(SYSTEM_PROMPT_FILE)
     print(f"  Manual:      {manual}  ({'found' if manual.is_file() else 'MISSING'})")
     try:
@@ -327,6 +387,177 @@ def read_memory_bundle(limit_chars: int = 6000) -> str:
     if len(bundle) > limit_chars:
         bundle = bundle[:limit_chars] + "\n\n…[memory truncated for context]…"
     return bundle
+
+
+# -------------------- Hermes: smart RAG + repair + compress --------------------
+
+
+def _tokenize(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9]{2,}", text.lower())
+
+
+def _chunk_memory_corpus() -> list[dict]:
+    """Collect memory documents as RAG chunks (Hermes: don't load 2000 messages)."""
+    root = memory_root()
+    chunks: list[dict] = []
+    for path in sorted(root.rglob("*.md")):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        # Split long files into ~800-char paragraphs
+        pieces = re.split(r"\n{2,}", text)
+        buf = ""
+        for p in pieces:
+            if len(buf) + len(p) < 900:
+                buf = (buf + "\n\n" + p).strip()
+            else:
+                if buf:
+                    chunks.append({"id": f"{path.name}:{len(chunks)}", "source": path.name, "text": buf})
+                buf = p.strip()
+        if buf:
+            chunks.append({"id": f"{path.name}:{len(chunks)}", "source": path.name, "text": buf})
+    return chunks
+
+
+def retrieve_relevant_memory(query: str, top_k: int = RAG_TOP_K, limit_chars: int = 6000) -> str:
+    """
+    Smart RAG: score memory chunks against the query; return top-K only.
+    Course framing: bring ~20 relevant items, not the entire archive.
+    Pure local TF-style scoring — no external embedding service.
+    """
+    chunks = _chunk_memory_corpus()
+    if not chunks:
+        return "(no memory yet)"
+    q_tokens = _tokenize(query)
+    if not q_tokens:
+        # fall back to newest chunks
+        selected = chunks[-top_k:]
+    else:
+        q_set = Counter(q_tokens)
+        scored: list[tuple[float, dict]] = []
+        for ch in chunks:
+            t = _tokenize(ch["text"])
+            if not t:
+                continue
+            t_set = Counter(t)
+            # TF overlap + light IDF-ish rarity
+            overlap = sum((q_set & t_set).values())
+            if overlap == 0:
+                continue
+            rarity = sum(1.0 / (1 + math.log(1 + t_set[w])) for w in q_set if w in t_set)
+            score = overlap + 0.3 * rarity
+            # recency boost for cycle logs
+            if ch["source"].startswith("cycle_"):
+                score += 0.5
+            scored.append((score, ch))
+        scored.sort(key=lambda x: x[0], reverse=True)
+        selected = [c for _, c in scored[:top_k]]
+        if not selected:
+            selected = chunks[-min(top_k, len(chunks)) :]
+
+    parts = [
+        f"### [{c['source']}] (rag)\n{c['text'][:1200]}"
+        for c in selected
+    ]
+    bundle = (
+        f"# Retrieved memory (top {len(selected)} of {len(chunks)} chunks — Hermes smart RAG)\n\n"
+        + "\n\n---\n\n".join(parts)
+    )
+    if len(bundle) > limit_chars:
+        bundle = bundle[:limit_chars] + "\n\n…[rag truncated]…"
+    return bundle
+
+
+REPAIR_ROLE = """You are the LIVE REPAIR engine (Hermes behavior: detect error → fix strategy now).
+The verifier failed. Do NOT redo the whole goal. Output a short repair for the NEXT unit only.
+
+Format exactly:
+REPAIR_STRATEGY: <one sentence change in approach>
+NEXT_UNIT: <the single next bounded unit to attempt>
+PROMPT_PATCH: <extra instructions for the executor this cycle only>
+AVOID: <what failed pattern to not repeat>
+"""
+
+
+def live_repair(
+    client,
+    *,
+    goal: str,
+    unit: str,
+    artifact: str,
+    verdict: str,
+    fail_streak: int,
+) -> str:
+    """On verifier FAIL: produce a prompt/strategy patch for the next cycle."""
+    user = (
+        f"GOAL: {goal}\n"
+        f"FAILED UNIT: {unit}\n"
+        f"FAIL STREAK: {fail_streak}\n\n"
+        f"ARTIFACT (excerpt):\n{artifact[:2000]}\n\n"
+        f"VERIFIER:\n{verdict[:1500]}\n\n"
+        "Repair the approach for the next cycle only."
+    )
+    print(ui("\n[hermes live-repair]\n"))
+    return stream_chat(
+        client,
+        [
+            {"role": "system", "content": REPAIR_ROLE},
+            {"role": "user", "content": user},
+        ],
+        temperature=0.25,
+        prefix="Repair: ",
+    )
+
+
+COMPRESS_ROLE = """You are the MEMORY COMPRESSOR (Hermes behavior: fold history into durable notes).
+Given raw memory excerpts, produce a short compressed memory document.
+
+Rules:
+- Keep only durable facts, decisions, corrections, and open risks
+- Drop chat fluff and duplicate cycles
+- Max ~40 lines
+- Start with: # Compressed memory (YYYY-MM-DD)
+- Bullet lists preferred
+"""
+
+
+def compress_memory(client, system: str, *, focus: Optional[str] = None) -> Path:
+    """Compress memory archive into a single durable note (course: auto memory optimize)."""
+    raw = read_memory_bundle(limit_chars=10000)
+    rag = retrieve_relevant_memory(focus or "lessons failures decisions risks", top_k=RAG_TOP_K)
+    print(ui("\n[hermes memory-compress]\n"))
+    out = stream_chat(
+        client,
+        [
+            {"role": "system", "content": COMPRESS_ROLE},
+            {
+                "role": "user",
+                "content": (
+                    f"FOCUS: {focus or 'general durable lessons'}\n\n"
+                    f"RAG SLICE:\n{rag}\n\n"
+                    f"INDEX BUNDLE (excerpt):\n{raw[:4000]}\n"
+                ),
+            },
+        ],
+        temperature=0.2,
+        prefix="Compress: ",
+    )
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d")
+    path = memory_root() / "lessons" / f"compressed-{stamp}.md"
+    path.write_text(out.strip() + "\n", encoding="utf-8", newline="\n")
+    index = memory_root() / "INDEX.md"
+    text = index.read_text(encoding="utf-8") if index.exists() else "# Memory\n\n## Active lessons\n\n"
+    entry = f"- [Compressed {stamp}](lessons/{path.name})\n"
+    if path.name not in text:
+        if "## Active lessons" in text:
+            text = text.replace("## Active lessons\n\n", f"## Active lessons\n\n{entry}", 1)
+            text = text.replace("_(none yet)_\n", "")
+        else:
+            text += f"\n## Active lessons\n\n{entry}"
+        index.write_text(text, encoding="utf-8", newline="\n")
+    print(ui(f"  ✓ Compressed memory → {path}\n"))
+    return path
 
 
 def append_cycle_log(
@@ -760,30 +991,47 @@ def run_loop(
     max_cycles: int = DEFAULT_MAX_CYCLES,
     retry_ceiling: int = RETRY_CEILING,
     self_improve: bool = DEFAULT_SELF_IMPROVE,
+    hermes: bool = False,
 ) -> None:
     success_condition = success_condition or (
         "The goal is met with checkable evidence; key claims pass independent verification; "
         "remaining open items are empty or explicitly deferred with reason."
     )
+    title = "FABLE 5 HERMES LOOP — soul · rag · repair · stop" if hermes else (
+        "FABLE 5 LOOP ENGINE — offline · maker ≠ grader"
+    )
     print(ui("╔════════════════════════════════════════════════════════════╗"))
-    print(ui("║     FABLE 5 LOOP ENGINE — offline · maker ≠ grader         ║"))
+    print(ui(f"║  {title[:56]:<56}║"))
     print(ui("╚════════════════════════════════════════════════════════════╝"))
     print(f"Platform: {PLATFORM_LABEL}")
     print(f"Model:    {MODEL_NAME}")
+    print(f"Mode:     {'HERMES' if hermes else 'standard loop'}")
     print(f"Goal:     {goal}")
     print(f"Success:  {success_condition}")
     print(f"Budget:   {max_cycles} cycles · retry ceiling {retry_ceiling}")
+    if hermes:
+        print(f"RAG top-K:{RAG_TOP_K}  ·  Soul: {SOUL_FILE}")
     print(f"Memory:   {memory_root()}\n")
 
     fail_streak = 0
     prev_unit = ""
     final_stop = "budget"
+    repair_patch = ""
+    last_cycle = 0
 
     for cycle in range(1, max_cycles + 1):
+        last_cycle = cycle
         print(ui(f"{'─' * 60}"))
         print(ui(f"▶ Cycle {cycle}/{max_cycles}"))
         print(ui(f"{'─' * 60}"))
-        mem = read_memory_bundle()
+        # Hermes smart RAG vs full dump
+        if hermes:
+            mem = retrieve_relevant_memory(
+                f"{goal}\n{prev_unit}\n{success_condition}",
+                top_k=RAG_TOP_K,
+            )
+        else:
+            mem = read_memory_bundle()
 
         skills_ctx = read_skills_bundle(limit_chars=2500)
         exec_user = (
@@ -793,9 +1041,16 @@ def run_loop(
             f"FAIL STREAK ON SIMILAR UNIT: {fail_streak}\n"
             f"PREVIOUS UNIT: {prev_unit or '(none)'}\n\n"
             f"ACTIVE SKILLS (apply if relevant):\n{skills_ctx or '(none)'}\n\n"
-            f"MEMORY (read before acting):\n{mem}\n\n"
-            "Do ONE bounded unit now. Output in the required shape."
+            f"{'RETRIEVED MEMORY (smart RAG)' if hermes else 'MEMORY'}:\n{mem}\n\n"
         )
+        if repair_patch:
+            exec_user += f"LIVE REPAIR FROM PREVIOUS FAIL:\n{repair_patch}\n\n"
+        if hermes:
+            exec_user += (
+                "HERMES RULES: one bounded unit; stop when success is evidence-backed; "
+                "do not narrate the whole archive.\n"
+            )
+        exec_user += "Do ONE bounded unit now. Output in the required shape."
         print("\n[executor]\n")
         exec_text = stream_chat(
             client,
@@ -843,15 +1098,30 @@ def run_loop(
         if passed and done:
             stop_reason = "success"
             fail_streak = 0
+            repair_patch = ""
         elif not passed:
             fail_streak = fail_streak + 1 if stuck or fail_streak > 0 else 1
             if not stuck and prev_unit and unit.lower()[:50] != prev_unit.lower()[:50]:
                 fail_streak = 1  # new failing unit resets streak base
             if fail_streak >= retry_ceiling:
                 stop_reason = "retry_ceiling"
+            elif hermes:
+                # Hermes: detect error → repair prompt/strategy before next unit
+                try:
+                    repair_patch = live_repair(
+                        client,
+                        goal=goal,
+                        unit=unit,
+                        artifact=parsed["artifact"],
+                        verdict=verdict,
+                        fail_streak=fail_streak,
+                    )
+                except Exception as e:
+                    repair_patch = f"(repair failed: {e})"
         else:
             # Pass on this unit but goal not fully met — continue
             fail_streak = 0
+            repair_patch = ""
 
         append_cycle_log(
             cycle,
@@ -867,20 +1137,20 @@ def run_loop(
 
         if stop_reason == "success":
             final_stop = "success"
-            print(ui("\n✓ Loop stopped: success condition met (verifier confirmed).\n"))
+            print(ui("\n✓ Loop self-stopped: success condition met (verifier confirmed).\n"))
             break
         if stop_reason == "retry_ceiling":
             final_stop = "retry_ceiling"
             print(
                 ui(
-                    f"\n✗ Loop stopped: retry ceiling ({retry_ceiling}). "
+                    f"\n✗ Loop self-stopped: retry ceiling ({retry_ceiling}). "
                     "Escalate to a human — same unit is not converging.\n"
                 )
             )
             break
         if cycle == max_cycles:
             final_stop = "budget"
-            print(ui(f"\n⏸ Loop parked: cycle budget ({max_cycles}) spent.\n"))
+            print(ui(f"\n⏸ Loop self-stopped: cycle budget ({max_cycles}) spent.\n"))
         else:
             print(ui(f"\n→ Cycle complete. Fail streak={fail_streak}. Continuing…\n"))
 
@@ -906,13 +1176,20 @@ def run_loop(
         prefix="Fable5: ",
     )
 
+    # Hermes: compress memory after multi-cycle runs
+    if hermes and last_cycle >= 2:
+        try:
+            compress_memory(client, system, focus=f"goal={goal[:120]} stop={final_stop}")
+        except Exception as e:
+            print(ui(f"⚠️  Memory compress skipped: {e}\n"))
+
     # Self-improvement: encode durable skills from this run (workshop layer 5)
     if self_improve:
         print(ui("\n[self-improve after loop]\n"))
         try:
             run_self_improve(
                 client,
-                load_system_prompt(),
+                load_system_prompt(hermes=hermes),
                 focus=f"Lessons from goal: {goal[:200]} (stop={final_stop})",
             )
         except Exception as e:
@@ -924,13 +1201,13 @@ def run_loop(
 
 def print_banner() -> None:
     print(ui("╔════════════════════════════════════════════════════════════╗"))
-    print(ui("║  FABLE 5 OFFLINE — reason · loop · verify · self-improve   ║"))
-    print(ui("║  Local · skills compound · maker ≠ grader                  ║"))
+    print(ui("║  FABLE 5 OFFLINE — reason · loop · hermes · self-improve   ║"))
+    print(ui("║  soul · smart RAG · repair · skills · maker ≠ grader       ║"))
     print(ui("╚════════════════════════════════════════════════════════════╝"))
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
-    print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}")
+    print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())} loaded from {skills_root().name}/")
-    print("Commands: /loop  /improve  /skills  /memory  /doctor  /help  quit\n")
+    print("Commands: /loop /hermes /improve /skills /soul /memory /compress /help quit\n")
 
 
 def print_help() -> None:
@@ -938,32 +1215,34 @@ def print_help() -> None:
     print(
         f"""
 Commands
-  /loop <goal>       Loop harness (executor + fresh verifier + memory)
-  /improve [focus]   Self-improve: propose skills from memory, verify, write skills/
+  /loop <goal>       Standard loop (executor + fresh verifier + memory)
+  /hermes <goal>     Hermes loop: SOUL + smart RAG + live repair + self-stop + compress
+  /improve [focus]   Self-improve: propose skills, verify, write skills/
   /skills            List skill library
-  /memory            Print memory/INDEX.md
+  /soul              Show SOUL.md identity file
+  /memory            Print memory index (full)
+  /compress [focus]  Compress memory into a durable lesson note
   /doctor            Check Python, deps, Ollama backend
   /help              This help
   quit | exit | q    Leave
 
-Self-improvement (offline)
-  Does NOT retrain weights. Writes reusable skills into skills/ and reloads them
-  into context so the *system* compounds (workshop: tools + skills + memory).
-
-Launchers
-  Windows:  fable5.cmd   or   .\\scripts\\fable5.ps1
-  macOS/Linux:  ./fable5
+Hermes behaviors (offline)
+  1. SOUL.md steers identity
+  2. Smart RAG — top {RAG_TOP_K} relevant memory chunks (not the whole archive)
+  3. Self-stopping loop — success / retry ceiling / budget
+  4. Live repair — on verifier FAIL, patch strategy before next unit
+  5. Memory compress — fold history after multi-cycle runs
+  6. Skill compound — write reusable skills from verified lessons
 
 CLI
-  {py} fable5_offline_agent.py
-  {py} fable5_offline_agent.py --doctor
-  {py} fable5_offline_agent.py --improve
-  {py} fable5_offline_agent.py --improve "numeric claims"
+  {py} fable5_offline_agent.py --hermes "your goal"
   {py} fable5_offline_agent.py --loop "your goal"
-  {py} fable5_offline_agent.py --loop "…" --no-self-improve
+  {py} fable5_offline_agent.py --improve
+  {py} fable5_offline_agent.py --compress-memory
+  {py} fable5_offline_agent.py --doctor
 
 Env
-  FABLE5_MODEL  FABLE5_BASE_URL  FABLE5_MEMORY  FABLE5_SKILLS
+  FABLE5_MODEL  FABLE5_SOUL  FABLE5_RAG_TOP_K  FABLE5_MEMORY  FABLE5_SKILLS
   FABLE5_MAX_CYCLES  FABLE5_SELF_IMPROVE  FABLE5_ASCII
 """
     )
@@ -1006,6 +1285,17 @@ def chat_repl(client, system: str) -> None:
             print(read_memory_bundle(limit_chars=12000))
             print()
             continue
+        if low in {"/soul", "soul"}:
+            print(load_soul())
+            print()
+            continue
+        if low.startswith("/compress"):
+            focus = user_input[9:].strip() or None
+            try:
+                compress_memory(client, load_system_prompt(), focus=focus)
+            except Exception as e:
+                print(ui(f"\n❌ Compress error: {e}\n"))
+            continue
         if low in {"/skills", "skills"}:
             paths = list_skill_paths()
             if not paths:
@@ -1027,6 +1317,25 @@ def chat_repl(client, system: str) -> None:
             except Exception as e:
                 print(ui(f"\n❌ Improve error: {e}\n"))
             continue
+        if low.startswith("/hermes"):
+            goal = user_input[7:].strip()
+            if not goal:
+                goal = input("Hermes goal: ").strip()
+            if not goal:
+                print("No goal — cancelled.\n")
+                continue
+            try:
+                run_loop(
+                    client,
+                    load_system_prompt(hermes=True),
+                    goal,
+                    hermes=True,
+                )
+                messages = refresh_chat_system(messages)
+            except Exception as e:
+                print(ui(f"\n❌ Hermes error: {e}\n"))
+            print("Back to chat. Try /hermes, /loop, or /improve.\n")
+            continue
         if low.startswith("/loop"):
             goal = user_input[5:].strip()
             if not goal:
@@ -1035,17 +1344,25 @@ def chat_repl(client, system: str) -> None:
                 print("No goal — cancelled.\n")
                 continue
             try:
-                run_loop(client, load_system_prompt(), goal)
+                run_loop(client, load_system_prompt(), goal, hermes=False)
                 messages = refresh_chat_system(messages)
             except Exception as e:
                 print(ui(f"\n❌ Loop error: {e}\n"))
-            print("Back to chat. Type another question, /improve, or /loop.\n")
+            print("Back to chat. Type another question, /improve, /hermes, or /loop.\n")
             continue
 
+        # Chat: store clean user text; inject smart RAG only for this call
+        rag = retrieve_relevant_memory(user_input, top_k=min(8, RAG_TOP_K), limit_chars=2500)
+        enriched = user_input
+        if rag and "(no memory yet)" not in rag:
+            enriched = (
+                f"{user_input}\n\n---\nRelevant memory (smart RAG, optional):\n{rag}"
+            )
         messages.append({"role": "user", "content": user_input})
+        api_messages = messages[:-1] + [{"role": "user", "content": enriched}]
         print(ui("\nThinking… (Fable 5 mode)\n"))
         try:
-            full = stream_chat(client, messages, prefix="Fable5: ")
+            full = stream_chat(client, api_messages, prefix="Fable5: ")
             messages.append({"role": "assistant", "content": full})
         except Exception as e:
             print(ui(f"\n❌ Error: {e}"))
@@ -1063,10 +1380,23 @@ def main(argv: Optional[list[str]] = None) -> int:
         f"({PLATFORM_LABEL})"
     )
     parser.add_argument("--loop", metavar="GOAL", help="Run loop mode with this goal, then exit")
-    parser.add_argument("--success", metavar="COND", help="Checkable success condition for --loop")
+    parser.add_argument(
+        "--hermes",
+        metavar="GOAL",
+        help="Hermes loop: SOUL + smart RAG + live repair + self-stop + compress",
+    )
+    parser.add_argument("--success", metavar="COND", help="Checkable success condition for --loop/--hermes")
     parser.add_argument("--max-cycles", type=int, default=DEFAULT_MAX_CYCLES)
     parser.add_argument("--retry-ceiling", type=int, default=RETRY_CEILING)
     parser.add_argument("--model", help="Override MODEL_NAME")
+    parser.add_argument(
+        "--compress-memory",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="FOCUS",
+        help="Compress memory archive into a durable lesson note",
+    )
     parser.add_argument(
         "--improve",
         nargs="?",
@@ -1124,6 +1454,15 @@ def main(argv: Optional[list[str]] = None) -> int:
         print("  Run with --doctor for a full multi-platform check.")
         print(f"  Then: ollama pull {MODEL_NAME}  (if using Ollama)\n")
 
+    if args.compress_memory is not None:
+        focus = args.compress_memory.strip() or None
+        try:
+            compress_memory(client, system, focus=focus)
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
     if args.improve is not None:
         focus = args.improve.strip() or None
         try:
@@ -1139,6 +1478,25 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.self_improve:
         do_improve = True
 
+    if args.hermes:
+        try:
+            run_loop(
+                client,
+                load_system_prompt(hermes=True),
+                args.hermes,
+                success_condition=args.success,
+                max_cycles=args.max_cycles,
+                retry_ceiling=args.retry_ceiling,
+                self_improve=do_improve,
+                hermes=True,
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            print(f"Make sure Ollama is running. Try: ollama run {MODEL_NAME}")
+            print("Or: python fable5_offline_agent.py --doctor")
+            return 1
+
     if args.loop:
         try:
             run_loop(
@@ -1149,6 +1507,7 @@ def main(argv: Optional[list[str]] = None) -> int:
                 max_cycles=args.max_cycles,
                 retry_ceiling=args.retry_ceiling,
                 self_improve=do_improve,
+                hermes=False,
             )
             return 0
         except Exception as e:

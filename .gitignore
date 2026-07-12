@@ -1,5 +1,6 @@
 # =============================================================================
 # Fable 5 Offline Agent — .gitignore (Windows / macOS / Linux)
+# https://github.com/dglogan42/Fable-Offline
 # =============================================================================
 
 # --- Python ---
@@ -114,14 +115,18 @@ models/
 .ollama/
 
 # --- Fable 5 runtime (machine-local; do not commit) ---
-# Loop memory, cycle logs, lessons, self-improve logs
+# Loop memory, cycle logs, lessons, self-improve logs, compressed notes
 memory/*
 !memory/.gitkeep
 
-# Skills: ship shared skills; ignore only local drafts / sandboxes
+# Skills: ship shared seeds; ignore local drafts / sandboxes
 skills/*.draft.md
 skills/_local/
 skills/**/__pycache__/
+
+# Optional private soul override (default SOUL.md stays in repo)
+SOUL.local.md
+soul.local.md
 
 # Optional local overrides (defaults stay in repo)
 local_config.py

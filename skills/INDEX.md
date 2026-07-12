@@ -5,4 +5,5 @@ Loaded into context on every run so the system compounds without retraining weig
 
 ## Skills
 
+- **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
