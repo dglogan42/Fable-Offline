@@ -559,6 +559,32 @@ Inspired by in-house legal automation (clause review, NDA triage, vendor check, 
 
 ---
 
+## 18. Privacy & third-party host maps
+
+**Trigger:** `/privacy`, `--privacy`, HTML dump with many scripts/iframes, “what tracks this page?”, Shielded Site / tag-manager questions.
+
+### 18.1 Skill
+`privacy-host-map`: procedures **map-hosts**, **map-tags**, **map-tension**, **key-hygiene**, **write-knowledge**.
+
+### 18.2 Classification (required)
+| Tag | Meaning |
+|-----|---------|
+| LOAD | Resource load on page |
+| CONFIG | API/config endpoint |
+| CLICK | User-initiated link |
+| BUNDLE | String in minified JS only — not a confirmed call |
+
+### 18.3 Knowledge
+- Curated maps under `knowledge/privacy/` (e.g. `akl-libraries-third-party-hosts.md`).
+- Scrapes optional: `--scrape URL --scrape-dir privacy`.
+
+### 18.4 Automations
+- `privacy-host-map` — scored engineer map against skill + knowledge  
+
+**Not legal advice.** Not a penetration test. Network tab beats static guesses.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -591,6 +617,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Broker: `--scrape URL` · `--broker` · `--automate broker-full-audit` · knowledge/brokers/
    - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md
    - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
+   - Privacy: `--privacy` · `/privacy` · `--automate privacy-host-map` · knowledge/privacy/
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**

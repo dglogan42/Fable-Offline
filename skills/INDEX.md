@@ -14,4 +14,5 @@ Loaded into context on every run so the system compounds without retraining weig
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
 - **legal-playbook**: [Legal playbook (contract / NDA / vendor)](legal-playbook.md)
 - **loop-engineer**: [Loop engineer](loop-engineer.md)
+- **privacy-host-map**: [Privacy & third-party host map](privacy-host-map.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)

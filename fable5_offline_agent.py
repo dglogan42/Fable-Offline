@@ -271,8 +271,9 @@ def load_system_prompt(
     broker_mode: bool = False,
     legal_mode: bool = False,
     education_mode: bool = False,
+    privacy_mode: bool = False,
 ) -> str:
-    """Manual + soul + active skills (+ broker/legal/education knowledge when relevant)."""
+    """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
     soul = load_soul()
     skills = read_skills_bundle(limit_chars=5000)
@@ -316,6 +317,17 @@ def load_system_prompt(
         know = read_knowledge_bundle("education", limit_chars=8000)
         if know.strip():
             parts.append("\n\n---\n## Local education knowledge (scraped / curated)\n\n" + know)
+    if privacy_mode:
+        parts.append(
+            "\n\n---\n## Privacy host map mode\n"
+            "Apply skill privacy-host-map. Classify third parties as LOAD / CONFIG / CLICK / BUNDLE. "
+            "Do not treat minified JS host strings as confirmed network calls. "
+            "Map sensitive widgets (e.g. Shielded Site) separately from parent-page tags. "
+            "Not legal advice. Not a penetration test.\n"
+        )
+        know = read_knowledge_bundle("privacy", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local privacy knowledge (host maps)\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -1851,7 +1863,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | scrape | hitl | team | engineer
+           broker | legal | education | privacy | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -1999,6 +2011,22 @@ def run_automate(
                     prefix="EduMode: ",
                 )
                 results.append("education → done")
+            elif stype == "privacy":
+                psys = load_system_prompt(privacy_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill privacy-host-map and knowledge/privacy/, produce a third-party "
+                    "host privacy map. LOAD/CONFIG/CLICK/BUNDLE. Not legal advice."
+                )
+                print("\n[privacy host map]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": psys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="PrivacyMode: ",
+                )
+                results.append("privacy → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2221,7 +2249,7 @@ def print_banner() -> None:
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
-    print("Commands: /team /broker /legal /education /build /automate /loop /hermes /help quit\n")
+    print("Commands: /team /broker /legal /education /privacy /build /automate /loop /help quit\n")
 
 
 def print_help() -> None:
@@ -2234,6 +2262,7 @@ Commands
   /broker [prompt]   Broker user-model + claim audit (uses knowledge/brokers/)
   /legal [prompt]    Legal playbook: contract/NDA/vendor/brief/respond (knowledge/legal/)
   /education [prompt] Education/credential claim audit (knowledge/education/)
+  /privacy [prompt]  Third-party host / privacy map (knowledge/privacy/)
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
@@ -2262,10 +2291,12 @@ CLI
   {py} fable5_offline_agent.py --broker
   {py} fable5_offline_agent.py --legal "Review this NDA: [paste]"
   {py} fable5_offline_agent.py --education
+  {py} fable5_offline_agent.py --privacy
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
   {py} fable5_offline_agent.py --automate lpu-full-audit
+  {py} fable5_offline_agent.py --automate privacy-host-map
   {py} fable5_offline_agent.py --build "tiny flask hello app"
   {py} fable5_offline_agent.py --doctor
 
@@ -2384,6 +2415,26 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Education mode error: {e}\n"))
+            continue
+        if low.startswith("/privacy"):
+            prompt = user_input[8:].strip() or (
+                "Using skill privacy-host-map and knowledge/privacy/ (incl. "
+                "akl-libraries-third-party-hosts.md if present), produce a third-party host map. "
+                "Verdict first. LOAD/CONFIG/CLICK/BUNDLE. Not legal advice."
+            )
+            try:
+                psys = load_system_prompt(privacy_mode=True)
+                print(ui("\n[privacy host map]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": psys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="PrivacyMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Privacy mode error: {e}\n"))
             continue
         if low.startswith("/scrape"):
             url = user_input[7:].strip()
@@ -2624,6 +2675,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Education/credential claim audit using knowledge/education/",
     )
     parser.add_argument(
+        "--privacy",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Third-party host / privacy map using knowledge/privacy/",
+    )
+    parser.add_argument(
         "--scrape",
         metavar="URL",
         action="append",
@@ -2731,6 +2790,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             args.broker is None
             and args.legal is None
             and args.education is None
+            and args.privacy is None
             and not args.automate
             and not args.team
         ):
@@ -2795,6 +2855,25 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": esys}, {"role": "user", "content": prompt}],
                 prefix="EduMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.privacy is not None:
+        prompt = (args.privacy or "").strip() or (
+            "Using skill privacy-host-map and knowledge/privacy/ (especially "
+            "akl-libraries-third-party-hosts.md), produce a third-party host privacy map. "
+            "Verdict first. Classify LOAD/CONFIG/CLICK/BUNDLE. Cover tags, search SaaS, "
+            "iframes/Shielded, key hygiene, next Network checks. Not legal advice."
+        )
+        try:
+            psys = load_system_prompt(privacy_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": psys}, {"role": "user", "content": prompt}],
+                prefix="PrivacyMode: ",
             )
             return 0
         except Exception as e:

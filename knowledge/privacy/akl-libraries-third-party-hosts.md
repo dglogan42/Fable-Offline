@@ -5,6 +5,7 @@
 **Title:** Searching the library catalogue  
 **Stack:** Adobe AEM (`etc.clientlibs`), Coveo Atomic search, Adobe Launch, GTM, Shielded Site footer widget  
 **Purpose:** Offline privacy / host hygiene note for Fable.  
+**Skill:** `privacy-host-map` (`skills/privacy-host-map.md`) — use this file as local knowledge when running `/privacy` or `--automate privacy-host-map`.  
 **Not legal advice.** Re-check live Network tab and current privacy notices before relying on this map.
 
 ---

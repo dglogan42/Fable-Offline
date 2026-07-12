@@ -1,0 +1,27 @@
+{
+  "name": "privacy-host-map",
+  "description": "Engineer-grade third-party host / privacy map from HTML or knowledge/privacy notes — not legal advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Classify LOAD vs CONFIG vs CLICK vs BUNDLE. Bundle strings are not confirmed network calls."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill privacy-host-map and knowledge/privacy/ (especially akl-libraries-third-party-hosts.md if relevant), produce a full third-party host privacy map for the user-supplied page or the Auckland Libraries catalogue guide example. Verdict first. Separate confirmed loads from bundle noise. Cover tag managers, search SaaS, iframes/Shielded, public keys, and next Network-tab checks. Not legal advice.",
+      "criteria": [
+        "Verdict label correct",
+        "Every high-impact host tagged LOAD/CONFIG/CLICK/BUNDLE",
+        "First-party boundary stated",
+        "Bundle noise not listed as confirmed data-sharing",
+        "Sensitive surface tension covered if Shielded/safety widget present",
+        "Concrete next verification steps",
+        "One risk of trusting privacy policy alone",
+        "No invented legal compliance conclusions"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

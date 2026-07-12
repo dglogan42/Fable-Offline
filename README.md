@@ -22,6 +22,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
 | **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
+| **Privacy** | Third-party host maps · LOAD/CONFIG/CLICK/BUNDLE · tag/iframe hygiene (`knowledge/privacy/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -35,6 +36,8 @@ The *system* around the model improves (soul, memory, skills, workflows), not th
 **Legal mode:** offline playbook-driven contract review, NDA triage, vendor checks, briefs, and templated responses (GREEN/YELLOW/RED). Configure `knowledge/legal/playbook.md`. **Not legal advice** — licensed attorney review required before any real-matter use.
 
 **Education mode:** audits school/degree marketing (who issues the diploma, ASIC vs regional accreditation, state operate licenses, NBHWC/IBLM pathways). Example snapshot: Lifestyle Prescriptions® University in `knowledge/education/lpu-credential-claims.md`. **Not educational or medical advice.**
+
+**Privacy mode:** third-party host maps from HTML/JS (tag managers, search SaaS, iframes, public keys). Skill `privacy-host-map`; example `knowledge/privacy/akl-libraries-third-party-hosts.md`. **Not legal advice.**
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -141,6 +144,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/broker [prompt]` | Broker user-model + claim audit (local knowledge) |
 | `/legal [prompt]` | Legal playbook: contract / NDA / vendor / brief / respond |
 | `/education [prompt]` | Education/credential claim audit (local knowledge) |
+| `/privacy [prompt]` | Third-party host / privacy map (local knowledge) |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
 | `/automate <name>` | Run workflow recipe |
@@ -184,6 +188,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `legal-respond` | Draft DSAR / hold / pushback templates + HITL |
 | `education-claim-audit` | Engineer scored school/credential claim audit |
 | `lpu-full-audit` | Scrape LPU pages → education claim audit + HITL |
+| `privacy-host-map` | Engineer scored third-party host / privacy map |
 
 ## Broker scrape, user model & audit
 
@@ -251,7 +256,22 @@ Example: **Lifestyle Prescriptions® University** (`knowledge/education/lpu-cred
 
 ## Privacy / third-party host maps
 
-Curated offline notes for public-site processor hygiene (LOAD vs CONFIG vs CLICK vs bundle noise).
+**Skill:** `privacy-host-map` — agentic procedures `map-hosts` · `map-tags` · `map-tension` · `key-hygiene` · `write-knowledge`.
+
+```bash
+python fable5_offline_agent.py --privacy
+python fable5_offline_agent.py --privacy "map-hosts: [paste HTML head/footer]"
+python fable5_offline_agent.py --automate privacy-host-map
+```
+
+| Tag | Meaning |
+|-----|---------|
+| **LOAD** | Script/iframe/img load on page |
+| **CONFIG** | API/config endpoint in page |
+| **CLICK** | User-initiated outbound link |
+| **BUNDLE** | String in minified JS only — not a confirmed call |
+
+Curated knowledge:
 
 | Note | Scope |
 |------|--------|
@@ -405,7 +425,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -448,6 +468,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
 - **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
 - **Education mode** — credential/accreditation claim audit (not educational or medical advice).
+- **Privacy mode** — third-party host maps LOAD/CONFIG/CLICK/BUNDLE (not legal advice).
 
 ## License
 
@@ -457,4 +478,4 @@ Copyright © **2026 David Logan**.
 
 You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided the copyright and permission notice are included in all copies or substantial portions of the Software. The Software is provided **“AS IS”**, without warranty of any kind, express or implied.
 
-**Disclaimer:** Broker mode is **not financial advice**. Legal mode is **not legal advice** and does not create an attorney–client relationship. Education mode is **not educational, career, or medical advice**. Outputs require human verification (and licensed counsel for legal matters) before real-world use.
+**Disclaimer:** Broker mode is **not financial advice**. Legal mode is **not legal advice** and does not create an attorney–client relationship. Education mode is **not educational, career, or medical advice**. Privacy mode is **not legal advice** and is not a penetration test or compliance certification. Outputs require human verification (and licensed counsel for legal matters) before real-world use.
