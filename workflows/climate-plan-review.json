@@ -1,0 +1,26 @@
+{
+  "name": "climate-plan-review",
+  "description": "Structure climate plan + emissions modelling audit (Auckland Climate Plan seed) — not climate advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Use skill climate-modeling + knowledge/climate/*.md. Prefer PDF extract if user ran --pdf. Do not invent MtCO2e."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill climate-modeling and knowledge/climate/auckland-climate-plan.md plus climate-modeling.md, produce: (1) verdict first on modelling hygiene (2) plan identity and goals (3) modelling map (tool, baseline, BAU, pathway, residual, uncertainty) (4) re-derive key table arithmetic where possible (5) sector/priority structure (6) crosswalk to urban/transport/freight (7) verification next steps (8) non-claims. Use only claims supported by knowledge or user extract.",
+      "criteria": [
+        "Verdict on illustrative vs predictive framing",
+        "CURB/tool and 2016 baseline stated as plan claims",
+        "BAU vs pathway numbers table or explicit missing",
+        "Re-derive or flag arithmetic on 50%/94% claims",
+        "Residual emissions acknowledged",
+        "No invented emissions figures",
+        "Not climate/planning advice disclaimer"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

@@ -150,6 +150,7 @@ knowledge/**/scrape-*.txt
 knowledge/**/*.pdf
 knowledge/**/*.docx
 knowledge/pdf/_local/
+knowledge/climate/_local/
 
 # PDFs and dumped PDF.js viewer bundles (use curated knowledge/pdf notes only)
 *.pdf

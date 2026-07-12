@@ -24,12 +24,14 @@ Core competencies range from technical work in mapping software to soft skills: 
 | **CAD & 3D modelling** | Create spatial plans and architectural / urban layouts |
 | **Regulatory knowledge** | Local zoning, building codes, environmental regulations, resource management policies |
 | **Freight & goods data** | HGV volumes, freight generators (ports, logistics), first/last-mile constraints; observed vs modelled |
+| **Climate & emissions literacy** | Pathway/BAU models, baselines, residual emissions — skill `climate-modeling` |
 
 **Practice notes**
 - Always bind regulation to a **named jurisdiction** and document version.  
 - Label forecasts as scenarios with uncertainty.  
 - GIS outputs need metadata (source, date, CRS).  
 - Freight metrics: never invent counts; cite year and method.  
+- Climate MtCO₂e: never invent; cite plan/inventory year.  
 
 ---
 
@@ -113,6 +115,7 @@ python fable5_offline_agent.py --automate freight-plan-review
 - Freight module: `knowledge/urban-planning/freight-plan.md`  
 - AT Future Connect portal: `knowledge/urban-planning/at-future-connect-portal.md`  
 - Future Connect privacy: `knowledge/privacy/at-future-connect-hosts.md`  
+- Auckland Climate Plan + modelling: `knowledge/climate/auckland-climate-plan.md`, `climate-modeling.md`  
 - UoA PG webinar marketing: `knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md` — **privacy map**, not curriculum endorsement.  
 - Education claims: skill `education-claim-audit`.  
 - Privacy-aware tools: skills `privacy-host-map`, `privacy-design-planner`.  

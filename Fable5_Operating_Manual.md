@@ -611,13 +611,19 @@ Procedures: **plan-freight**, **future-connect-freight**.
 Knowledge: `knowledge/urban-planning/freight-plan.md`, `at-future-connect-portal.md`.  
 Workflow: `freight-plan-review`.
 
-### 19.3 Skill & knowledge
-- Skill: `urban-planner-competencies`  
-- Framework: `knowledge/urban-planning/competencies.md`  
-- Workflow: `urban-planner-checkpoint` · `freight-plan-review`  
+### 19.3 Climate module
+Procedure: **plan-climate** → skill **`climate-modeling`**.  
+Knowledge: `knowledge/climate/auckland-climate-plan.md`, `climate-modeling.md`.  
+Seed PDF: Auckland Climate Plan (Te Tāruke-ā-Tāwhiri) — CURB + supplementary **illustrative** pathway; −50% by 2030 / net zero 2050 (2016 baseline) as **plan claims**.  
+Workflow: `climate-plan-review`.
 
-### 19.4 Boundaries
-Not legal or planning consent advice. Do not invent zoning rules or freight hierarchy labels. Programme marketing ≠ competence (use `education-claim-audit` / privacy maps when relevant).
+### 19.4 Skill & knowledge
+- Skill: `urban-planner-competencies` · `climate-modeling`  
+- Framework: `knowledge/urban-planning/competencies.md`  
+- Workflow: `urban-planner-checkpoint` · `freight-plan-review` · `climate-plan-review`  
+
+### 19.5 Boundaries
+Not legal or planning consent advice. Do not invent zoning rules, freight hierarchy labels, or emissions Mt figures. Programme marketing ≠ competence (use `education-claim-audit` / privacy maps when relevant).
 
 ---
 
@@ -683,6 +689,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
    - Privacy: `--privacy` · `/privacy` · `--automate privacy-design-plan` · knowledge/privacy/
    - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · `--automate freight-plan-review` · knowledge/urban-planning/
+   - Climate: skill `climate-modeling` · `--automate climate-plan-review` · knowledge/climate/ · `--pdf` Auckland Climate Plan
    - PDF: `--pdf file.pdf` · `/pdf` · skill `pdf-render` · `--automate pdf-extract-review`
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 

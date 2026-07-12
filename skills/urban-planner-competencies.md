@@ -1,11 +1,11 @@
 # Urban planner competencies
 
-**WHEN_TO_USE:** Career or study questions about urban planning / urban design; skill audits for planners; learning plans; portfolio advice; linking postgraduate webinars (e.g. Master of Urban Design) to practice competencies; **freight / goods-movement / strategic freight network** work; multimodal transport plans (e.g. Auckland Transport Future Connect); or designing an agent that assists planning work (GIS notes, policy maps, stakeholder plans) without replacing licensed professionals.
+**WHEN_TO_USE:** Career or study questions about urban planning / urban design; skill audits for planners; learning plans; portfolio advice; linking postgraduate webinars (e.g. Master of Urban Design) to practice competencies; **freight / goods-movement / strategic freight network** work; multimodal transport plans (e.g. Auckland Transport Future Connect); **climate plans / emissions pathways / climate modeling** (e.g. Te Tāruke-ā-Tāwhiri: Auckland’s Climate Plan); or designing an agent that assists planning work (GIS notes, policy maps, stakeholder plans) without replacing licensed professionals.
 
 ## Stance
-Urban planning blends **spatial analysis**, **policy knowledge**, and **stakeholder management** to design and implement community land-use strategies. **Freight planning** is a core multimodal strand: moving goods safely and efficiently while managing community, equity, and environmental effects. Technical tools matter; so do negotiation, empathy, and creative problem-solving. This skill **coaches competence frameworks** — it does not practice law, certify planners, or approve developments.
+Urban planning blends **spatial analysis**, **policy knowledge**, and **stakeholder management** to design and implement community land-use strategies. **Freight planning** is a core multimodal strand: moving goods safely and efficiently while managing community, equity, and environmental effects. **Climate literacy** (mitigation pathways + adaptation) links land use, transport, and equity under uncertainty. Technical tools matter; so do negotiation, empathy, and creative problem-solving. This skill **coaches competence frameworks** — it does not practice law, certify planners, or approve developments.
 
-**Not legal, planning, or engineering advice.** Zoning, designation, and consent decisions require local professionals and statutory processes. Do not invent corridor classifications or freight hierarchy labels not in user-supplied sources.
+**Not legal, planning, engineering, or climate-science advice.** Zoning, designation, and consent decisions require local professionals and statutory processes. Do not invent corridor classifications, freight hierarchy labels, or MtCO₂e pathway figures not in user-supplied sources.
 
 ---
 
@@ -19,6 +19,7 @@ Urban planning blends **spatial analysis**, **policy knowledge**, and **stakehol
 | **CAD & 3D modelling** | Produce spatial plans / layouts others can critique; version assumptions |
 | **Regulatory knowledge** | Local zoning, building codes, environmental rules, resource management — **jurisdiction-specific**; never invent bylaws |
 | **Freight & goods data** | HGV/truck volumes, freight generators (ports, industrial, logistics parks), first/last-mile constraints; separate **observed** vs **modelled** |
+| **Climate & emissions literacy** | Read GHG inventories and **pathway models** (baseline year, BAU vs action, residual); hazard/adaptation inputs — use skill `climate-modeling` |
 
 ### 2. Communication & interpersonal
 | Competency | What good looks like |
@@ -37,13 +38,14 @@ Urban planning blends **spatial analysis**, **policy knowledge**, and **stakehol
 | **Multimodal strategic networks** | Integrate passenger modes **and freight**; avoid “people-only” plans that ignore goods movement |
 | **Freight network planning** | Hierarchy (strategic / supporting), mode split (road, rail, coastal, air), land-use fit (industrial zoning near corridors), time-of-day / access management |
 | **Project evaluation** | Feasibility, sustainability, equity/social impact — with criteria and evidence (include freight reliability, severance, noise, emissions where relevant) |
+| **Climate-responsive planning** | Align growth/transport options with mitigation + adaptation goals; avoid treating illustrative pathways as project carbon certificates |
 
 ### 4. Management & organisation
 | Competency | What good looks like |
 |------------|----------------------|
 | **Decision making** | Weigh options under budget and land constraints; document why |
 | **Leadership & organisation** | Multi-project delivery; staff oversight; alignment with mandates and plans |
-| **Programme alignment** | Tie local freight actions to regional transport plans, port strategies, RLTP/LTP-style investment pathways (names vary by place) |
+| **Programme alignment** | Tie local freight actions to regional transport plans, port strategies, RLTP/LTP-style investment pathways (names vary by place); align with **regional climate plans** where they exist |
 
 ---
 
@@ -100,6 +102,7 @@ When using AT **Future Connect** mapping portal (`knowledge/urban-planning/at-fu
 | Stakeholder session prep | **plan-engagement** |
 | **Freight network / freight plan** | **plan-freight** |
 | Future Connect freight walkthrough | **future-connect-freight** |
+| **Climate plan / emissions modelling** | **plan-climate** (delegate detail to skill `climate-modeling`) |
 | Short coaching reply | **brief** |
 
 ---
@@ -206,6 +209,20 @@ Local knowledge: `knowledge/urban-planning/freight-plan.md`, Future Connect port
 
 ---
 
+## plan-climate
+
+When climate plans or modelling enter an urban/transport brief:
+
+1. Hand primary modelling audit to skill **`climate-modeling`** (`structure-plan`, `map-modeling`, `audit-pathway`).  
+2. Crosswalk sectors to spatial tools: transport/freight, built form, coastal communities.  
+3. Use local knowledge: `knowledge/climate/auckland-climate-plan.md` for Te Tāruke-ā-Tāwhiri.  
+4. Extract PDFs with `--pdf` / `pdf-render`.  
+5. Output: planning-relevant verdict (what the pathway means for land use/transport options) + non-claims.  
+
+**Auckland seed claims (verify in PDF):** −50% GHG by 2030 and net zero 2050 (2016 baseline); **CURB** (World Bank/C40) + supplementary modelling for an **illustrative** pathway; residual emissions remain in 2050 curve.
+
+---
+
 ## future-connect-freight
 
 Guided checklist for AT Future Connect (when user can access the portal or paste screenshots/exports):
@@ -246,6 +263,8 @@ Guided checklist for AT Future Connect (when user can access the portal or paste
 - `knowledge/urban-planning/competencies.md` — full framework notes  
 - `knowledge/urban-planning/freight-plan.md` — freight plan module  
 - `knowledge/urban-planning/at-future-connect-portal.md` — AT Future Connect UI  
+- `knowledge/climate/auckland-climate-plan.md` — Te Tāruke-ā-Tāwhiri snapshot + modelling  
+- `knowledge/climate/climate-modeling.md` — pathway hygiene  
 - Privacy: `knowledge/privacy/at-future-connect-hosts.md`  
 
 ## Note

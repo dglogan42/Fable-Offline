@@ -24,6 +24,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
+| **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
@@ -74,6 +75,7 @@ Fable-Offline/
 ├── knowledge/privacy/           # Third-party host / privacy maps
 ├── knowledge/urban-planning/    # Planner competency framework
 ├── knowledge/pdf/               # PDF.js notes + extract hygiene
+├── knowledge/climate/           # Climate plans + modelling hygiene
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -197,6 +199,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review |
+| `climate-plan-review` | Climate plan + emissions modelling audit |
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 
 ## Broker scrape, user model & audit
@@ -327,6 +330,24 @@ python fable5_offline_agent.py --automate freight-plan-review
 Cross-links: programme marketing → `education-claim-audit` / privacy maps; PDFs → `pdf-render`; portal privacy → `knowledge/privacy/at-future-connect-hosts.md`.
 
 **Not legal or planning consent advice.**
+
+## Climate modeling (Auckland Climate Plan)
+
+Skill **`climate-modeling`**: inventories vs **illustrative pathways**, BAU vs action packages, residual emissions, uncertainty. Seed knowledge from [Te Tāruke-ā-Tāwhiri: Auckland’s Climate Plan](https://www.aucklandcouncil.govt.nz/content/dam/ac/docs/plans/climate-plan/auckland-climate-plan.pdf) (PDF extract; plan claims include **CURB** World Bank/C40 modelling, **−50% by 2030** and **net zero 2050** vs **2016** baseline).
+
+```bash
+python fable5_offline_agent.py --pdf path/to/auckland-climate-plan.pdf
+python fable5_offline_agent.py --automate climate-plan-review
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/climate-modeling.md` |
+| Plan snapshot | `knowledge/climate/auckland-climate-plan.md` |
+| Modelling hygiene | `knowledge/climate/climate-modeling.md` |
+| Workflow | `workflows/climate-plan-review.json` |
+
+Crosswalks to urban/freight/transport via `urban-planner-competencies` procedure **plan-climate**. **Not climate or investment advice.**
 
 ## PDF render & extract
 
@@ -541,6 +562,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Privacy mode** — host maps + design planner for privacy-aware agentic AI (not legal advice).
 - **Urban planner competencies** — GIS-to-stakeholder framework for learning and skill audits (not professional advice).
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
+- **Climate modeling** — pathway/BAU hygiene; Auckland Climate Plan seed (not climate advice).
 
 ## License
 

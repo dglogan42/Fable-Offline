@@ -15,6 +15,7 @@ PDFs are **containers**, not ground truth. Rendering shows pixels/text layers; e
 | `legal-playbook` | Contract/NDA PDFs |
 | `education-claim-audit` | Prospectus / accreditation PDFs |
 | `urban-planner-competencies` | Spatial plans, policy PDFs |
+| `climate-modeling` | Climate plans, pathway/BAU tables |
 | `privacy-host-map` | Site embeds PDF.js / viewer analytics |
 | `privacy-design-planner` | Agent that handles document PII |
 | `loop-engineer` | Multi-page extract → verify completeness |
