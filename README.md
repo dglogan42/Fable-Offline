@@ -66,6 +66,7 @@ Fable-Offline/
 ├── knowledge/brokers/           # Curated reg notes (scrapes gitignored)
 ├── knowledge/legal/             # playbook.md shipped; matters/_local gitignored
 ├── knowledge/education/         # Credential claim notes (e.g. LPU)
+├── knowledge/privacy/           # Third-party host / privacy maps
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -247,6 +248,16 @@ python fable5_offline_agent.py --automate lpu-full-audit
 ```
 
 Example: **Lifestyle Prescriptions® University** (`knowledge/education/lpu-credential-claims.md`) — homepage markets accredited M.A./Ph.D. and IBLM/NBHWC paths; accreditation page cites **ASIC UK**, **Wyoming** proprietary license, **EIU-Paris** degree validation, NBHWC program approval, and **IBLM approval pending**. Snapshot verdict: marketing / insufficient evidence for US-regional-equivalent PhD claims. **Re-verify on primary registers.** Not educational or medical advice.
+
+## Privacy / third-party host maps
+
+Curated offline notes for public-site processor hygiene (LOAD vs CONFIG vs CLICK vs bundle noise).
+
+| Note | Scope |
+|------|--------|
+| [`knowledge/privacy/akl-libraries-third-party-hosts.md`](knowledge/privacy/akl-libraries-third-party-hosts.md) | Auckland Libraries catalogue guide: GTM, Adobe Launch, Coveo, Shielded Site (`staticcdn.co.nz`), Qualtrics/OCLC/EBSCO links |
+
+**Not legal advice.** Re-verify with live Network capture and the published privacy policy before decisions.
 
 ## Multi-agent team & roadmap
 

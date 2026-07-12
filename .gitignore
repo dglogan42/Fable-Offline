@@ -156,6 +156,10 @@ knowledge/brokers/_local/
 knowledge/education/_local/
 knowledge/education/**/*-raw*.txt
 knowledge/education/lpu-raw-*.txt
+knowledge/privacy/_local/
+# Dropped empty AEM clientlib stubs / forensic JS dumps (keep curated .md only)
+clientlib-dependencies*.js
+*.lc-d41d8cd98f00b204e9800998ecf8427e-lc.min.js
 
 # Optional private soul / program overrides (defaults stay in repo)
 SOUL.local.md
