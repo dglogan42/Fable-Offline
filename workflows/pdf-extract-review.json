@@ -1,0 +1,25 @@
+{
+  "name": "pdf-extract-review",
+  "description": "Structure and review a PDF text extract (run --pdf first or paste text) — skill pdf-render",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Prefer: python fable5_offline_agent.py --pdf file.pdf  then this workflow. Image-only pages need OCR."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill pdf-render and any PDF extract text in the prompt or knowledge/pdf/, produce: (1) verdict on text-layer quality (2) document type guess with confidence (3) structured outline (4) key claims/numbers with re-derive where needed (5) gaps/ocr needs (6) recommended next domain skill (legal, education, urban, privacy). Do not invent text not in the extract.",
+      "criteria": [
+        "Source and extract method stated or marked unknown",
+        "Empty/scan gaps explicit",
+        "Outline or structure present",
+        "No invented PDF content",
+        "Next domain skill or action named",
+        "Quantitative claims flagged for re-derive if present"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

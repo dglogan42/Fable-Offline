@@ -24,6 +24,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Planner competency framework · skill audit · growth plans (`knowledge/urban-planning/`) |
+| **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -72,6 +73,7 @@ Fable-Offline/
 ├── knowledge/education/         # Credential claim notes (e.g. LPU)
 ├── knowledge/privacy/           # Third-party host / privacy maps
 ├── knowledge/urban-planning/    # Planner competency framework
+├── knowledge/pdf/               # PDF.js notes + extract hygiene
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -147,6 +149,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/legal [prompt]` | Legal playbook: contract / NDA / vendor / brief / respond |
 | `/education [prompt]` | Education/credential claim audit (local knowledge) |
 | `/privacy [prompt]` | Third-party host / privacy map (local knowledge) |
+| `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
 | `/automate <name>` | Run workflow recipe |
@@ -193,6 +196,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
+| `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 
 ## Broker scrape, user model & audit
 
@@ -316,6 +320,27 @@ python fable5_offline_agent.py --automate urban-planner-checkpoint
 Cross-links: programme marketing → `education-claim-audit` / privacy maps (e.g. UoA PG webinars); planning-assistant agents → HITL + no invented zoning.
 
 **Not legal or planning consent advice.**
+
+## PDF render & extract
+
+Offline text extract + structure (Mozilla **PDF.js** is the common browser viewer — not committed as a bundle).
+
+```bash
+python -m pip install pypdf   # also in requirements.txt
+python fable5_offline_agent.py --pdf path/to/file.pdf
+python fable5_offline_agent.py --pdf path/to/file.pdf --pdf-pages 1-5
+python scripts/pdf_extract.py path/to/file.pdf -o workspace/extract.md
+python fable5_offline_agent.py --automate pdf-extract-review
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/pdf-render.md` |
+| Knowledge | `knowledge/pdf/pdfjs-and-offline-render.md` |
+| CLI helper | `scripts/pdf_extract.py` |
+| Workflow | `workflows/pdf-extract-review.json` |
+
+Image-only/scanned pages need OCR (skill procedure **ocr-gap**). Hand off extracts to legal / education / urban skills as needed. **Do not commit** `.pdf` binaries or multi‑MB `pdf.js` dumps.
 
 ## Multi-agent team & roadmap
 
@@ -463,7 +488,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -508,6 +533,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Education mode** — credential/accreditation claim audit (not educational or medical advice).
 - **Privacy mode** — host maps + design planner for privacy-aware agentic AI (not legal advice).
 - **Urban planner competencies** — GIS-to-stakeholder framework for learning and skill audits (not professional advice).
+- **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
 
 ## License
 

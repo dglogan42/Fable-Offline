@@ -217,6 +217,7 @@ def knowledge_root() -> Path:
     (root / "education").mkdir(parents=True, exist_ok=True)
     (root / "privacy").mkdir(parents=True, exist_ok=True)
     (root / "urban-planning").mkdir(parents=True, exist_ok=True)
+    (root / "pdf").mkdir(parents=True, exist_ok=True)
     return root
 
 
@@ -266,6 +267,95 @@ def scrape_url_to_knowledge(url: str, out_dir: Optional[Path] = None) -> Path:
     return path
 
 
+def _parse_pdf_page_spec(spec: Optional[str], n_pages: int) -> range:
+    if not spec:
+        return range(n_pages)
+    spec = spec.strip()
+    if re.fullmatch(r"\d+", spec):
+        i = int(spec) - 1
+        if i < 0 or i >= n_pages:
+            raise ValueError(f"Page {spec} out of range 1..{n_pages}")
+        return range(i, i + 1)
+    m = re.fullmatch(r"(\d+)-(\d+)", spec)
+    if not m:
+        raise ValueError("Use page N or A-B (1-based)")
+    a, b = int(m.group(1)), int(m.group(2))
+    if a < 1 or b < a or b > n_pages:
+        raise ValueError(f"Range {spec} invalid for 1..{n_pages}")
+    return range(a - 1, b)
+
+
+def extract_pdf_to_markdown(
+    pdf_path: Path,
+    *,
+    pages_spec: Optional[str] = None,
+    out_path: Optional[Path] = None,
+) -> Path:
+    """
+    Extract text layer from a local PDF to markdown under workspace/ (skill pdf-render).
+    Requires optional dependency: pypdf.
+    """
+    try:
+        from pypdf import PdfReader
+    except ImportError as e:
+        print(ui("❌ Missing optional dependency: pypdf"))
+        print("  Install: python -m pip install pypdf")
+        print("  Or: python -m pip install -r requirements.txt")
+        raise SystemExit(1) from e
+
+    pdf_path = pdf_path.expanduser().resolve()
+    if not pdf_path.is_file():
+        raise FileNotFoundError(f"PDF not found: {pdf_path}")
+
+    reader = PdfReader(str(pdf_path))
+    n = len(reader.pages)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    slug = re.sub(r"[^\w\-]+", "-", pdf_path.stem.lower())[:40].strip("-") or "doc"
+    if out_path is None:
+        out_dir = workspace_root() / f"pdf-{slug}-{stamp}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / "extract.md"
+    else:
+        out_path = out_path.expanduser()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    lines = [
+        f"# PDF extract: {pdf_path.name}",
+        "",
+        f"- **Source:** `{pdf_path}`",
+        f"- **Pages (file):** {n}",
+        f"- **Tool:** pypdf / fable5 --pdf",
+        f"- **Skill:** pdf-render",
+        "",
+    ]
+    if getattr(reader, "is_encrypted", False):
+        lines.append("- **Encrypted:** yes")
+        lines.append("")
+
+    empty = 0
+    for i in _parse_pdf_page_spec(pages_spec, n):
+        text = (reader.pages[i].extract_text() or "").strip()
+        lines.append(f"## Page {i + 1}")
+        lines.append("")
+        if text:
+            lines.append(text)
+        else:
+            empty += 1
+            lines.append("*(no text layer — possible scan/image page; OCR needed)*")
+        lines.append("")
+
+    if empty:
+        lines.append("---")
+        lines.append(
+            f"**Note:** {empty} page(s) had no extractable text. "
+            "Skill pdf-render procedure **ocr-gap**."
+        )
+        lines.append("")
+
+    out_path.write_text("\n".join(lines), encoding="utf-8", newline="\n")
+    return out_path
+
+
 def load_system_prompt(
     *,
     hermes: bool = False,
@@ -273,6 +363,7 @@ def load_system_prompt(
     legal_mode: bool = False,
     education_mode: bool = False,
     privacy_mode: bool = False,
+    pdf_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -331,6 +422,17 @@ def load_system_prompt(
         know = read_knowledge_bundle("privacy", limit_chars=9000)
         if know.strip():
             parts.append("\n\n---\n## Local privacy knowledge (maps + design)\n\n" + know)
+    if pdf_mode:
+        parts.append(
+            "\n\n---\n## PDF render / extract mode\n"
+            "Apply skill **pdf-render**. Prefer local text extracts (pypdf / --pdf) over inventing "
+            "page content. Identify PDF.js dumps as Mozilla viewer libraries, not site business logic. "
+            "Image-only pages need OCR (ocr-gap). Hand off to legal/education/urban/privacy skills "
+            "when the document domain matches. Do not claim text that is not in the extract.\n"
+        )
+        know = read_knowledge_bundle("pdf", limit_chars=4000)
+        if know.strip():
+            parts.append("\n\n---\n## Local PDF knowledge\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -1866,7 +1968,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | scrape | hitl | team | engineer
+           broker | legal | education | privacy | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2031,6 +2133,36 @@ def run_automate(
                     prefix="PrivacyMode: ",
                 )
                 results.append("privacy → done")
+            elif stype == "pdf":
+                pdf_rel = step.get("path") or step.get("pdf")
+                pages = step.get("pages")
+                extract_note = ""
+                if pdf_rel:
+                    try:
+                        p = extract_pdf_to_markdown(Path(pdf_rel), pages_spec=pages)
+                        print(ui(f"  ✓ PDF extract → {p}"))
+                        extract_note = p.read_text(encoding="utf-8")[:12000]
+                        results.append(f"pdf extract → {p.name}")
+                    except Exception as e:
+                        print(ui(f"  ✗ PDF extract failed: {e}"))
+                        results.append(f"pdf FAIL → {e}")
+                psys = load_system_prompt(pdf_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill pdf-render, structure and review the PDF extract. "
+                    "Do not invent text. Flag OCR gaps."
+                )
+                if extract_note:
+                    prompt = prompt + "\n\n---\n## Extract\n\n" + extract_note
+                print("\n[pdf render / extract]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": psys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="PdfMode: ",
+                )
+                results.append("pdf → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2253,7 +2385,7 @@ def print_banner() -> None:
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
-    print("Commands: /team /broker /legal /education /privacy /build /automate /loop /help quit\n")
+    print("Commands: /team /broker /legal /education /privacy /pdf /build /automate /loop /help quit\n")
 
 
 def print_help() -> None:
@@ -2267,6 +2399,7 @@ Commands
   /legal [prompt]    Legal playbook: contract/NDA/vendor/brief/respond (knowledge/legal/)
   /education [prompt] Education/credential claim audit (knowledge/education/)
   /privacy [prompt]  Privacy host map + design planner (knowledge/privacy/)
+  /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
@@ -2302,6 +2435,8 @@ CLI
   {py} fable5_offline_agent.py --automate lpu-full-audit
   {py} fable5_offline_agent.py --automate privacy-host-map
   {py} fable5_offline_agent.py --automate privacy-design-plan
+  {py} fable5_offline_agent.py --pdf path/to/file.pdf
+  {py} fable5_offline_agent.py --automate pdf-extract-review
   {py} fable5_offline_agent.py --build "tiny flask hello app"
   {py} fable5_offline_agent.py --doctor
 
@@ -2440,6 +2575,40 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Privacy mode error: {e}\n"))
+            continue
+        if low.startswith("/pdf"):
+            rest = user_input[4:].strip()
+            pdf_path_s = rest
+            pages = None
+            if " --pages " in rest:
+                pdf_path_s, pages = rest.split(" --pages ", 1)
+                pdf_path_s, pages = pdf_path_s.strip(), pages.strip()
+            if not pdf_path_s:
+                pdf_path_s = input("Path to PDF: ").strip()
+            if not pdf_path_s:
+                print("No path — cancelled.\n")
+                continue
+            try:
+                out = extract_pdf_to_markdown(Path(pdf_path_s), pages_spec=pages)
+                print(ui(f"✓ Extracted → {out}\n"))
+                extract = out.read_text(encoding="utf-8")[:12000]
+                psys = load_system_prompt(pdf_mode=True)
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": psys},
+                        {
+                            "role": "user",
+                            "content": (
+                                "Using skill pdf-render, structure this extract. "
+                                "Flag OCR gaps. Do not invent text.\n\n" + extract
+                            ),
+                        },
+                    ],
+                    prefix="PdfMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ PDF error: {e}\n"))
             continue
         if low.startswith("/scrape"):
             url = user_input[7:].strip()
@@ -2688,6 +2857,21 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Privacy host map + design planner using knowledge/privacy/",
     )
     parser.add_argument(
+        "--pdf",
+        metavar="PATH",
+        help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
+    )
+    parser.add_argument(
+        "--pdf-pages",
+        metavar="SPEC",
+        help="With --pdf: 1-based page or range (e.g. 1 or 2-10)",
+    )
+    parser.add_argument(
+        "--pdf-out",
+        metavar="PATH",
+        help="With --pdf: write extract markdown to this path",
+    )
+    parser.add_argument(
         "--scrape",
         metavar="URL",
         action="append",
@@ -2884,6 +3068,40 @@ def main(argv: Optional[list[str]] = None) -> int:
             return 0
         except Exception as e:
             print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.pdf:
+        try:
+            out = extract_pdf_to_markdown(
+                Path(args.pdf),
+                pages_spec=args.pdf_pages,
+                out_path=Path(args.pdf_out) if args.pdf_out else None,
+            )
+            print(ui(f"✓ PDF extract → {out}"))
+            extract = out.read_text(encoding="utf-8")
+            # Cap context for local models
+            extract_for_model = extract if len(extract) <= 14000 else extract[:14000] + "\n\n…[truncated]"
+            psys = load_system_prompt(pdf_mode=True)
+            stream_chat(
+                client,
+                [
+                    {"role": "system", "content": psys},
+                    {
+                        "role": "user",
+                        "content": (
+                            "Using skill pdf-render procedure structure-doc, review this extract. "
+                            "Verdict on text-layer quality, outline, key claims, OCR gaps, "
+                            "next domain skill. Do not invent text.\n\n" + extract_for_model
+                        ),
+                    },
+                ],
+                prefix="PdfMode: ",
+            )
+            return 0
+        except SystemExit:
+            raise
+        except Exception as e:
+            print(ui(f"\n❌ PDF error: {e}"))
             return 1
 
     if args.team:

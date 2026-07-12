@@ -1,3 +1,5 @@
 # Fable 5 Offline Agent — multi-platform (Windows, macOS, Linux)
 # Install: python -m pip install -r requirements.txt
 openai>=1.40.0
+# Optional but recommended for --pdf / scripts/pdf_extract.py
+pypdf>=4.0.0

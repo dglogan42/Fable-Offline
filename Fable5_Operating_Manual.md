@@ -616,6 +616,34 @@ Not legal or planning consent advice. Do not invent zoning rules. Programme mark
 
 ---
 
+## 20. PDF render & extract (offline)
+
+**Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”
+
+### 20.1 Skill
+`pdf-render`: **render-guide**, **extract-text**, **structure-doc**, **inspect-meta**, **ocr-gap**, **map-viewer**, **design-pdf-agent**, **write-knowledge**.
+
+### 20.2 Extract
+```bash
+python -m pip install pypdf
+python fable5_offline_agent.py --pdf path/to/file.pdf
+python fable5_offline_agent.py --pdf path/to/file.pdf --pdf-pages 1-5
+python scripts/pdf_extract.py file.pdf -o workspace/extract.md
+```
+
+### 20.3 Rules
+- Do not invent text not in the extract  
+- Empty pages → image/scan → **ocr-gap**  
+- PDF.js webpack dumps = Mozilla viewer, not site business logic  
+- No committing `.pdf` or multi‑MB viewer bundles  
+
+### 20.4 Automations
+- `pdf-extract-review` — structure extract after `--pdf`  
+
+Knowledge: `knowledge/pdf/pdfjs-and-offline-render.md`.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -650,6 +678,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
    - Privacy: `--privacy` · `/privacy` · `--automate privacy-design-plan` · knowledge/privacy/
    - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · knowledge/urban-planning/
+   - PDF: `--pdf file.pdf` · `/pdf` · skill `pdf-render` · `--automate pdf-extract-review`
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**

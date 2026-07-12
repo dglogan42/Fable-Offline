@@ -149,6 +149,15 @@ knowledge/**/scrape-*.md
 knowledge/**/scrape-*.txt
 knowledge/**/*.pdf
 knowledge/**/*.docx
+knowledge/pdf/_local/
+
+# PDFs and dumped PDF.js viewer bundles (use curated knowledge/pdf notes only)
+*.pdf
+pdf.mjs
+pdf.min.js
+pdf.worker*.js
+**/pdfjs*.js
+!scripts/pdf_extract.py
 knowledge/legal/_local/
 knowledge/legal/matters/
 knowledge/legal/**/*confidential*
