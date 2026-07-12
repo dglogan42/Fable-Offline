@@ -1,0 +1,14 @@
+{
+  "name": "broker-user-session",
+  "description": "Coach as disciplined CFD broker user: entity, risk, leverage, edge-vs-luck",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Broker user model session — risk capital, entity-first, no live autotrade."
+    },
+    {
+      "type": "llm",
+      "prompt": "Act with skill broker-user-model. User is a retail CFD/forex client. If knowledge/brokers/ec-markets-regulation.md exists, use it as background. Deliver:\n1) Opening stance (risk capital only)\n2) Pre-deposit entity/licence checklist\n3) Leverage and position-sizing rules of thumb (education, not advice)\n4) How to reject marketing floors (0-pip spreads)\n5) When to run edge-vs-luck on a system\n6) What the agent will refuse to do (live orders without explicit enable)\nVerdict-first. Not financial advice."
+    }
+  ]
+}

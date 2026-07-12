@@ -19,6 +19,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Team** | Multi-agent supervisor: **research → write → critic** (HITL optional) |
 | **Roadmap** | 6-month agentic engineer path (`ROADMAP.md`) — build real things, order matters |
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
+| **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -26,6 +27,8 @@ The *system* around the model improves (soul, memory, skills, workflows), not th
 **Prompt vs loop:** a prompt is one instruction. A loop is a goal the agent keeps working toward — discover, plan, do, verify, feed back — until success or a hard limit. Three make-or-break parts: **verifier**, **state**, **stop**.
 
 **Edge vs luck:** the market manufactures convincing hot streaks and backtests by chance. Default verdict on small samples is *insufficient evidence* — treat skill claims as guilty of luck until large, out-of-sample, honestly tested numbers force otherwise.
+
+**Broker mode:** entity-first CFD/forex client model — verify licences on primary registers, distrust “0 pip / 1:300” marketing, no live-order automation without explicit consent. **Not financial advice.**
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -44,37 +47,21 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 
 ```
 Fable-Offline/
-├── fable5_offline_agent.py      # CLI: chat, team, build, automate, engineer, hermes
+├── fable5_offline_agent.py      # CLI: chat, team, broker, scrape, build, automate…
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
 ├── program.md                   # Loop-engineer constraints (Karpathy-style)
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt
-├── fable5                       # Unix launcher
-├── fable5.cmd                   # Windows launcher
-├── scripts/
-│   ├── install.sh / install.ps1
-│   └── fable5.sh / fable5.ps1
-├── skills/                      # Skill library (seeds + self-improved)
-│   ├── INDEX.md
-│   ├── agentic-engineer-roadmap.md
-│   ├── build-and-automate.md
-│   ├── edge-vs-luck.md
-│   ├── hermes-loop.md
-│   ├── loop-engineer.md
-│   └── rederive-numbers.md
+├── fable5 / fable5.cmd          # Launchers
+├── scripts/                     # install + platform wrappers
+├── skills/                      # Skill library (incl. broker + edge + loops)
 ├── workflows/                   # Automation recipes (*.json)
-│   ├── agentic-checkpoint.json
-│   ├── daily-review.json
-│   ├── edge-audit.json
-│   ├── engineer-memo.json
-│   ├── hello-project.json
-│   └── rigor-check.json
+├── knowledge/brokers/           # Scraped regulation notes (e.g. EC Markets)
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
 ├── .gitignore
-├── .gitattributes
 └── README.md
 ```
 
@@ -140,6 +127,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | *(any question)* | One-shot rigorous answer (+ light smart RAG) |
 | `/roadmap` | Show 6-month agentic engineer roadmap |
 | `/team <task>` | Multi-agent: research → write → critic |
+| `/broker [prompt]` | Broker user-model + claim audit (local knowledge) |
+| `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
 | `/automate <name>` | Run workflow recipe |
 | `/workflows` | List automation recipes |
@@ -172,6 +161,24 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `engineer-memo` | Loop-engineer a decision memo to score ≥ 8 |
 | `edge-audit` | Edge-vs-luck audit (streaks, backtests, “system works” claims) |
 | `agentic-checkpoint` | Biweekly: compress → improve → coach next roadmap stage |
+| `broker-full-audit` | Scrape EC Markets pages → broker audit + user model + HITL |
+| `broker-user-session` | Disciplined retail CFD user coaching |
+| `broker-claim-audit` | Engineer scored claim audit |
+
+## Broker scrape, user model & audit
+
+```bash
+# Scrape regulation / legal pages into knowledge/brokers/
+python fable5_offline_agent.py --scrape https://www.ecmarkets.com/legal/
+python fable5_offline_agent.py --scrape https://www.ecmarkets.co.nz/regulations-licences/
+
+# Broker user-model + claim audit (uses knowledge/brokers/*.md)
+python fable5_offline_agent.py --broker
+python fable5_offline_agent.py --automate broker-full-audit
+python fable5_offline_agent.py --automate broker-user-session
+```
+
+Curated snapshot: `knowledge/brokers/ec-markets-regulation.md` (entity **EC Markets Financial Limited**, co. **2446590**, FSPR **FSP197465**, claimed AFSL **414198**, multi-regulator marketing, leverage inconsistencies 1:30/1:100 vs 1:300). **Re-verify on official registers** before any real decision. Not financial advice.
 
 ## Multi-agent team & roadmap
 
@@ -284,6 +291,7 @@ Runtime artifacts: `memory/` — **gitignored**.
 | `FABLE5_SOUL` | `SOUL.md` | Identity / steering file |
 | `FABLE5_PROGRAM` | `program.md` | Loop-engineer constraints |
 | `FABLE5_ROADMAP` | `ROADMAP.md` | 6-month curriculum file |
+| `FABLE5_KNOWLEDGE` | `knowledge` | Scraped research (brokers, etc.) |
 | `FABLE5_HITL` | `1` | Human approval gates (`0` = off) |
 | `FABLE5_ENGINEER_MIN_SCORE` | `8` | Min 1–10 score per criterion |
 | `FABLE5_BILEVEL_EVERY` | `3` | Outer meta-loop period (`0` = off) |
@@ -318,7 +326,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--scrape` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -358,6 +366,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Build & automate** — Multi-file scaffolds and multi-step offline workflow recipes.
 - **Edge vs luck** — Fooled-by-Randomness style checklist (LLN, OOS, multiple testing, survivorship, regression to the mean).
 - **Agentic engineer path** — 6-month / 12-stage roadmap; multi-agent supervisor; HITL.
+- **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
 
 ## License
 

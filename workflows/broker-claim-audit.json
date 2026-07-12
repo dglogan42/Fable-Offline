@@ -1,0 +1,25 @@
+{
+  "name": "broker-claim-audit",
+  "description": "Engineer-audit broker marketing claims (spreads, leverage, regulation) — no advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Treat the site as sales copy. Guilty of marketing until primary registers verify."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill broker-claim-audit and any user-pasted site text about a broker (e.g. EC Markets NZ homepage), produce a claim audit. Do not invent licence numbers. Flag missing evidence. Not financial advice.",
+      "criteria": [
+        "Verdict label correct (Insufficient evidence / Marketing only / Partially verified / Red flags)",
+        "Key claims listed with evidence status",
+        "Account/leverage inconsistencies called out if present",
+        "Next verification steps name specific primary sources",
+        "One concrete risk of trusting the page as-is",
+        "No recommendation to open an account as 'safe'"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

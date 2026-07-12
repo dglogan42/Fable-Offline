@@ -74,6 +74,7 @@ ENGINEER_MIN_SCORE = int(os.environ.get("FABLE5_ENGINEER_MIN_SCORE", "8"))
 BILEVEL_EVERY = int(os.environ.get("FABLE5_BILEVEL_EVERY", "3"))
 PROGRAM_FILE = os.environ.get("FABLE5_PROGRAM", "program.md")
 ROADMAP_FILE = os.environ.get("FABLE5_ROADMAP", "ROADMAP.md")
+KNOWLEDGE_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_KNOWLEDGE", "knowledge")))
 # Human-in-the-loop: prompt before high-risk steps (default on for team/shell)
 HITL = os.environ.get("FABLE5_HITL", "1").strip().lower() not in {"0", "false", "no", "off"}
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
@@ -207,8 +208,62 @@ You optimize for correctness over fluency. You compound via skills and memory, n
 """
 
 
-def load_system_prompt(*, hermes: bool = False) -> str:
-    """Manual + soul + active skills (self-improving compound context)."""
+def knowledge_root() -> Path:
+    root = KNOWLEDGE_DIR if KNOWLEDGE_DIR.is_absolute() else SCRIPT_DIR / KNOWLEDGE_DIR
+    root = root.expanduser().resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    (root / "brokers").mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def read_knowledge_bundle(subdir: str = "", limit_chars: int = 8000) -> str:
+    base = knowledge_root() / subdir if subdir else knowledge_root()
+    if not base.exists():
+        return ""
+    parts: list[str] = []
+    for path in sorted(base.rglob("*.md")):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        rel = path.relative_to(knowledge_root())
+        parts.append(f"### knowledge/{rel.as_posix()}\n{text[:4000]}")
+    bundle = "\n\n---\n\n".join(parts)
+    if len(bundle) > limit_chars:
+        bundle = bundle[:limit_chars] + "\n\n…[knowledge truncated]…"
+    return bundle
+
+
+def scrape_url_to_knowledge(url: str, out_dir: Optional[Path] = None) -> Path:
+    """Fetch URL, strip HTML, save text under knowledge/ (for broker reg scrapes)."""
+    out_dir = out_dir or (knowledge_root() / "brokers")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Fable5OfflineAgent/1.0 (local research; +https://github.com/dglogan42/Fable-Offline)"},
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        raw = resp.read()
+    html = raw.decode("utf-8", errors="replace")
+    text = re.sub(r"(?is)<script[^>]*>.*?</script>", " ", html)
+    text = re.sub(r"(?is)<style[^>]*>.*?</style>", " ", text)
+    text = re.sub(r"(?is)<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    slug = re.sub(r"[^\w\-]+", "-", url.lower())[:80].strip("-")
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d")
+    path = out_dir / f"scrape-{stamp}-{slug}.md"
+    path.write_text(
+        f"# Scrape\n\n- **URL:** {url}\n- **When:** {stamp} UTC\n\n## Text extract\n\n{text[:50000]}\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    # also keep raw html lightly
+    (out_dir / f"scrape-{stamp}-{slug}.html").write_bytes(raw[:500_000])
+    return path
+
+
+def load_system_prompt(*, hermes: bool = False, broker_mode: bool = False) -> str:
+    """Manual + soul + active skills (+ broker knowledge when relevant)."""
     core = load_manual_core()
     soul = load_soul()
     skills = read_skills_bundle(limit_chars=5000)
@@ -222,6 +277,15 @@ def load_system_prompt(*, hermes: bool = False) -> str:
             "You are running Hermes-style offline behaviors: soul-steered, RAG-limited memory, "
             "self-stopping loops, mid-run repair after failed verification, and skill compound.\n"
         )
+    if broker_mode:
+        parts.append(
+            "\n\n---\n## Broker user model mode\n"
+            "Apply skills broker-user-model and broker-claim-audit. "
+            "Not financial advice. Entity-first. No live trading instructions unless explicitly enabled.\n"
+        )
+        know = read_knowledge_bundle("brokers", limit_chars=6000)
+        if know.strip():
+            parts.append("\n\n---\n## Local broker knowledge (scraped)\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -1838,6 +1902,38 @@ def run_automate(
                     max_revisions=int(step.get("max_revisions", 3)),
                 )
                 results.append("team → done")
+            elif stype == "scrape":
+                urls = step.get("urls") or []
+                if isinstance(urls, str):
+                    urls = [u.strip() for u in urls.split(",") if u.strip()]
+                out_rel = step.get("out_dir") or "knowledge/brokers"
+                out_path = SCRIPT_DIR / out_rel
+                out_path.mkdir(parents=True, exist_ok=True)
+                for url in urls:
+                    try:
+                        p = scrape_url_to_knowledge(url, out_dir=out_path)
+                        print(ui(f"  ✓ scraped {url} → {p.name}"))
+                        results.append(f"scrape → {p.name}")
+                    except Exception as e:
+                        print(ui(f"  ✗ scrape failed {url}: {e}"))
+                        results.append(f"scrape FAIL → {url}: {e}")
+            elif stype == "broker":
+                # Reload system with broker knowledge + user model
+                bsys = load_system_prompt(broker_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using broker-user-model and broker-claim-audit plus knowledge/brokers/, "
+                    "audit the broker and coach disciplined retail user behaviors. Not advice."
+                )
+                print("\n[broker user model]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": bsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="BrokerMode: ",
+                )
+                results.append("broker → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2070,6 +2166,8 @@ def print_help() -> None:
 Commands
   /roadmap           6-month agentic engineer roadmap (ROADMAP.md)
   /team <task>       Multi-agent: research → write → critic (supervisor)
+  /broker [prompt]   Broker user-model + claim audit (uses knowledge/brokers/)
+  /scrape <url>      Fetch URL text into knowledge/brokers/
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
   /workflows         List automation recipes
@@ -2094,13 +2192,15 @@ Agentic engineer stack (offline)
 CLI
   {py} fable5_offline_agent.py --roadmap
   {py} fable5_offline_agent.py --team "Research X and write a one-page brief"
+  {py} fable5_offline_agent.py --broker
+  {py} fable5_offline_agent.py --scrape https://www.ecmarkets.co.nz/regulations-licences/
+  {py} fable5_offline_agent.py --automate broker-full-audit
+  {py} fable5_offline_agent.py --automate broker-user-session
   {py} fable5_offline_agent.py --build "tiny flask hello app"
-  {py} fable5_offline_agent.py --automate agentic-checkpoint
-  {py} fable5_offline_agent.py --engineer "…" --criteria "…"
   {py} fable5_offline_agent.py --doctor
 
 Env
-  FABLE5_MODEL  FABLE5_SOUL  FABLE5_PROGRAM  FABLE5_ROADMAP  FABLE5_HITL
+  FABLE5_MODEL  FABLE5_SOUL  FABLE5_PROGRAM  FABLE5_ROADMAP  FABLE5_KNOWLEDGE  FABLE5_HITL
   FABLE5_ENGINEER_MIN_SCORE  FABLE5_BILEVEL_EVERY  FABLE5_RAG_TOP_K
   FABLE5_WORKFLOWS  FABLE5_WORKSPACE  FABLE5_ALLOW_SHELL  FABLE5_MEMORY  FABLE5_SKILLS
 """
@@ -2155,6 +2255,38 @@ def chat_repl(client, system: str) -> None:
                 run_team(client, load_system_prompt(), task)
             except Exception as e:
                 print(ui(f"\n❌ Team error: {e}\n"))
+            continue
+        if low.startswith("/broker"):
+            prompt = user_input[7:].strip() or (
+                "Audit known broker knowledge and coach disciplined retail user behaviors. "
+                "Use broker-user-model + broker-claim-audit. Not financial advice."
+            )
+            try:
+                bsys = load_system_prompt(broker_mode=True)
+                print(ui("\n[broker user model]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": bsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="BrokerMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Broker mode error: {e}\n"))
+            continue
+        if low.startswith("/scrape"):
+            url = user_input[7:].strip()
+            if not url:
+                url = input("URL to scrape: ").strip()
+            if not url:
+                print("No URL — cancelled.\n")
+                continue
+            try:
+                p = scrape_url_to_knowledge(url)
+                print(ui(f"✓ Saved {p}\n"))
+            except Exception as e:
+                print(ui(f"\n❌ Scrape error: {e}\n"))
             continue
         if low == "/memory":
             print(read_memory_bundle(limit_chars=12000))
@@ -2358,6 +2490,20 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Print the 6-month agentic engineer roadmap",
     )
     parser.add_argument(
+        "--broker",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Broker user-model + claim audit using knowledge/brokers/",
+    )
+    parser.add_argument(
+        "--scrape",
+        metavar="URL",
+        action="append",
+        help="Scrape URL into knowledge/brokers/ (repeatable)",
+    )
+    parser.add_argument(
         "--criteria",
         metavar="LIST",
         help="Comma-separated success criteria for --engineer (scored 1-10)",
@@ -2434,6 +2580,18 @@ def main(argv: Optional[list[str]] = None) -> int:
         show_roadmap()
         return 0
 
+    if args.scrape:
+        knowledge_root()
+        for url in args.scrape:
+            try:
+                p = scrape_url_to_knowledge(url)
+                print(ui(f"✓ scraped → {p}"))
+            except Exception as e:
+                print(ui(f"✗ scrape failed {url}: {e}"))
+                return 1
+        if args.broker is None and not args.automate and not args.team:
+            return 0
+
     system = load_system_prompt()
     client = make_client()
 
@@ -2442,6 +2600,24 @@ def main(argv: Optional[list[str]] = None) -> int:
         print(ui(f"⚠️  {msg}"))
         print("  Run with --doctor for a full multi-platform check.")
         print(f"  Then: ollama pull {MODEL_NAME}  (if using Ollama)\n")
+
+    if args.broker is not None:
+        prompt = (args.broker or "").strip() or (
+            "Using broker-user-model and broker-claim-audit plus knowledge/brokers/, "
+            "produce a regulation/claim audit and disciplined retail user checklist. "
+            "Not financial advice."
+        )
+        try:
+            bsys = load_system_prompt(broker_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": bsys}, {"role": "user", "content": prompt}],
+                prefix="BrokerMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
 
     if args.team:
         try:

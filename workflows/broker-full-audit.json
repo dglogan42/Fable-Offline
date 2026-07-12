@@ -1,0 +1,28 @@
+{
+  "name": "broker-full-audit",
+  "description": "Scrape broker pages (if available), then engineer-audit claims + disciplined user model",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Broker full audit: regulation scrape snapshot + claim audit + user-model coaching. Not financial advice."
+    },
+    {
+      "type": "scrape",
+      "urls": [
+        "https://www.ecmarkets.co.nz/",
+        "https://www.ecmarkets.co.nz/regulations-licences/",
+        "https://www.ecmarkets.com/legal/"
+      ],
+      "out_dir": "knowledge/brokers"
+    },
+    {
+      "type": "broker",
+      "prompt": "Using skills broker-claim-audit and broker-user-model, and knowledge/brokers/ (especially ec-markets-regulation.md and any scrape-*.md), produce:\n1) Claim audit of EC Markets regulation/marketing (verdict first)\n2) Table claims vs evidence (use scraped FSP/company numbers only as claims to verify)\n3) Leverage/licence inconsistencies\n4) Disciplined retail USER MODEL checklist\n5) Explicit next register checks (FSPR/FMA/ASIC/FSCA/FCA)\nDo not invent licence numbers. Not financial advice."
+    },
+    {
+      "type": "hitl",
+      "action": "Acknowledge audit is not a recommendation to open/fund an account",
+      "detail": "Human confirms they understand this is claim hygiene only."
+    }
+  ]
+}

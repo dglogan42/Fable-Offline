@@ -481,6 +481,27 @@ One real agent (this repo qualifies as architecture proof), clear README decisio
 
 ---
 
+## 15. Broker user model & regulation scrapes
+
+**Trigger:** `/broker`, `--broker`, broker HTML/URL, CFD/forex account questions, EC Markets or similar.
+
+### 15.1 Scraped knowledge
+- Store under `knowledge/brokers/` via `--scrape` / workflow `scrape` steps.
+- Example synthesis: `knowledge/brokers/ec-markets-regulation.md` (entity claims, licence numbers as *claimed*, inconsistencies).
+- Scrapes are **secondary sources**. Primary registers win.
+
+### 15.2 Broker user model
+Skill `broker-user-model`: disciplined retail client — entity-first, cost honesty, leverage discipline, edge-vs-luck on systems, no silent live trading, HITL for money movement.
+
+### 15.3 Automations
+- `broker-full-audit` — scrape + broker-mode audit + HITL acknowledge  
+- `broker-user-session` — coaching checklist without deposit CTA  
+- `broker-claim-audit` — engineer scored claim audit  
+
+**Not financial advice.**
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -510,6 +531,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - `python fable5_offline_agent.py --compress-memory` — memory fold
    - In chat: `/roadmap` · `/team` · `/build` · `/automate` · `/engineer` · `/hermes` · `/loop`
    - Edge vs luck: skill `edge-vs-luck` · `--automate edge-audit`
+   - Broker: `--scrape URL` · `--broker` · `--automate broker-full-audit` · knowledge/brokers/
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**

@@ -131,6 +131,11 @@ skills/**/__pycache__/
 # User-only private workflows (seeded public recipes stay tracked)
 workflows/_local/
 
+# Knowledge: keep curated .md; ignore bulky raw HTML scrapes
+knowledge/**/*.html
+knowledge/**/*-raw.html
+knowledge/**/scrape-*.html
+
 # Optional private soul / program overrides (defaults stay in repo)
 SOUL.local.md
 soul.local.md
