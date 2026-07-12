@@ -117,6 +117,7 @@ python fable5_offline_agent.py --automate freight-plan-review
 - Future Connect privacy: `knowledge/privacy/at-future-connect-hosts.md`  
 - Auckland Climate Plan + modelling: `knowledge/climate/auckland-climate-plan.md`, `climate-modeling.md`  
 - AC Compliance Policy: `knowledge/urban-planning/ac-compliance-policy.md`  
+- Sports field capacity programme: `knowledge/urban-planning/ac-sports-field-capacity-programme.md`  
 - UoA PG webinar marketing: `knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md` — **privacy map**, not curriculum endorsement.  
 - Education claims: skill `education-claim-audit`.  
 - Privacy-aware tools: skills `privacy-host-map`, `privacy-design-planner`.  

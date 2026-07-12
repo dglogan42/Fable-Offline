@@ -169,12 +169,14 @@ When asked to persist:
 
 If `knowledge/privacy/` contains notes (e.g. `akl-libraries-third-party-hosts.md`), **use them** and cite filenames. Still mark live re-verification as required when hashes/IDs may have changed.
 
-### Worked example (Auckland Libraries)
-- Guide page: catalogue search help  
-- Parent tags: GTM `GTM-TDX29C`, Adobe Launch, Coveo AU, Helix RUM path  
-- Safety: Shielded logo → iframe `staticcdn.co.nz`  
-- Empty stub: `clientlib-dependencies…d41d8cd9…` (0 bytes)  
-- Full snapshot: `knowledge/privacy/akl-libraries-third-party-hosts.md`
+### Worked examples (Auckland Council family)
+| Page | Snapshot | Notable tags |
+|------|----------|--------------|
+| Libraries catalogue | `akl-libraries-third-party-hosts.md` | GTM-TDX29C, Coveo ac-lib, Shielded |
+| Compliance Policy | `ac-compliance-policy-hosts.md` | GTM-MCLW6DXF, Coveo ac-web, Shielded |
+| Sports field programme | `ac-sports-field-programme-hosts.md` | GTM-MCLW6DXF **+ Clarity + Hotjar + GA4 gtag + YouTube + Qualtrics** |
+
+Empty AEM stub pattern: `clientlib-dependencies…d41d8cd9…` (0 bytes).
 
 ---
 

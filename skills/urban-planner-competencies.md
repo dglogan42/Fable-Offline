@@ -104,6 +104,7 @@ When using AT **Future Connect** mapping portal (`knowledge/urban-planning/at-fu
 | Future Connect freight walkthrough | **future-connect-freight** |
 | **Climate plan / emissions modelling** | **plan-climate** (delegate detail to skill `climate-modeling`) |
 | **Council compliance / enforcement approach** | **map-compliance-policy** |
+| **Open space / sports field capacity programmes** | **map-open-space-capacity** |
 | Short coaching reply | **brief** |
 
 ---
@@ -210,6 +211,24 @@ Local knowledge: `knowledge/urban-planning/freight-plan.md`, Future Connect port
 
 ---
 
+## map-open-space-capacity
+
+When sports field / parks **capacity development** programmes are in scope (e.g. AC Sports field capacity development programme):
+
+1. **Investment** — quantum, horizon, regional vs local board split.  
+2. **Need statement** — shortage type (e.g. training), spatial equity.  
+3. **Targets** — demand % and year; flag if target date is historical.  
+4. **Interventions** — artificial turf, sand carpet, renew, light, drain, new fields.  
+5. **Governance** — annual review, partners (clubs, RSOs).  
+6. **Risks named by council** — geotech, contamination, demand shift, tech, land.  
+7. Evaluation questions (demand model, capacity metric, equity by area).  
+8. Privacy of project page if HTML provided.  
+
+Local seed: `knowledge/urban-planning/ac-sports-field-capacity-programme.md`.  
+Do not invent which parks are funded without a project list source.
+
+---
+
 ## map-compliance-policy
 
 When Auckland Council (or similar) **compliance / enforcement policy** pages are in scope:
@@ -282,7 +301,8 @@ Guided checklist for AT Future Connect (when user can access the portal or paste
 - `knowledge/climate/auckland-climate-plan.md` — Te Tāruke-ā-Tāwhiri snapshot + modelling  
 - `knowledge/climate/climate-modeling.md` — pathway hygiene  
 - `knowledge/urban-planning/ac-compliance-policy.md` — AC Compliance Policy summary  
-- Privacy: `knowledge/privacy/at-future-connect-hosts.md`, `ac-compliance-policy-hosts.md`  
+- `knowledge/urban-planning/ac-sports-field-capacity-programme.md` — sports field capacity programme  
+- Privacy: `knowledge/privacy/at-future-connect-hosts.md`, `ac-compliance-policy-hosts.md`, `ac-sports-field-programme-hosts.md`  
 
 ## Note
 Competencies are **practice standards for learning**, not a substitute for professional registration or council/AT process where required.
