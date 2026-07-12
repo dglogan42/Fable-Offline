@@ -455,6 +455,32 @@ Use skill `edge-vs-luck` and, for multi-step audits, `/engineer` with the checkl
 
 ---
 
+## 14. Agentic engineer practice (6-month path)
+
+**Trigger:** career/learning questions, “how do I become an agentic engineer,” portfolio, or sequencing builds. See `ROADMAP.md` and skill `agentic-engineer-roadmap`.
+
+### 14.1 The job
+
+You design systems that **decide**: goal → steps → tools → execute → check → adjust → loop — not only hard-coded steps.
+
+### 14.2 Order matters
+
+Do not skip to multi-agent. Production failures cluster on: **blocking I/O**, **no evals**, **no tracing**. Foundations first (async, LLM mechanics), then tools + memory, then one ReAct agent, then teams, HITL, evals, ship.
+
+### 14.3 Multi-agent (Stage 6)
+
+Use `/team` supervisor: research → write → critic. Critic is a separate call. Max revision loops. Validate handoffs. More agents ≠ better — only when one agent cannot finish alone.
+
+### 14.4 Human-in-the-loop (Stage 7)
+
+High-risk actions need approval (`FABLE5_HITL`, audit log). Full autonomy fails expensively.
+
+### 14.5 Ship in public (Stage 12)
+
+One real agent (this repo qualifies as architecture proof), clear README decisions, short demo, public write-up. Proof beats a keyword list.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -482,8 +508,9 @@ spent. Otherwise end the cycle cleanly for the next run.
    - `python fable5_offline_agent.py --automate daily-review` — workflow recipe (Section 12)
    - `python fable5_offline_agent.py --improve` — skill library growth (Section 10)
    - `python fable5_offline_agent.py --compress-memory` — memory fold
-   - In chat: `/build` · `/automate` · `/engineer` · `/hermes` · `/loop` · `/improve` · `/workflows`
-   - Edge vs luck: skill `edge-vs-luck` · `python fable5_offline_agent.py --automate edge-audit`
+   - In chat: `/roadmap` · `/team` · `/build` · `/automate` · `/engineer` · `/hermes` · `/loop`
+   - Edge vs luck: skill `edge-vs-luck` · `--automate edge-audit`
+   - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 
 2. **Ollama / Open WebUI / LM Studio:**
    - Use this file as system prompt for one-shot rigor.

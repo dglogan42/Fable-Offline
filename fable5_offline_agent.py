@@ -73,6 +73,9 @@ ENGINEER_MIN_SCORE = int(os.environ.get("FABLE5_ENGINEER_MIN_SCORE", "8"))
 # Bilevel outer loop every N cycles (0 = off)
 BILEVEL_EVERY = int(os.environ.get("FABLE5_BILEVEL_EVERY", "3"))
 PROGRAM_FILE = os.environ.get("FABLE5_PROGRAM", "program.md")
+ROADMAP_FILE = os.environ.get("FABLE5_ROADMAP", "ROADMAP.md")
+# Human-in-the-loop: prompt before high-risk steps (default on for team/shell)
+HITL = os.environ.get("FABLE5_HITL", "1").strip().lower() not in {"0", "false", "no", "off"}
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
 USE_ASCII = os.environ.get("FABLE5_ASCII", "").strip() in {"1", "true", "yes"}
 # ===============================================
@@ -1825,8 +1828,32 @@ def run_automate(
             elif stype == "compress":
                 compress_memory(client, system, focus=step.get("focus") or extra_goal)
                 results.append("compress → done")
+            elif stype == "team":
+                task = step.get("task") or step.get("goal") or extra_goal or "complete the team task"
+                run_team(
+                    client,
+                    system,
+                    task,
+                    output_format=step.get("format", "report"),
+                    max_revisions=int(step.get("max_revisions", 3)),
+                )
+                results.append("team → done")
+            elif stype == "hitl":
+                action = step.get("action") or step.get("text") or "continue workflow"
+                if not hitl_approve(action, step.get("detail", "")):
+                    results.append(f"HITL DENIED → {action[:60]}")
+                    if step.get("stop_on_deny", True):
+                        print(ui("\nAutomation stopped (HITL denied).\n"))
+                        break
+                else:
+                    results.append(f"HITL APPROVED → {action[:60]}")
             elif stype == "shell":
                 cmd = step.get("command") or step.get("cmd") or "echo hello"
+                if not hitl_approve(f"shell: {cmd}", "Allowlisted only if FABLE5_ALLOW_SHELL=1"):
+                    results.append(f"shell DENIED → {cmd[:60]}")
+                    if step.get("stop_on_error", True):
+                        break
+                    continue
                 out = run_shell_step(cmd, cwd=workspace_root())
                 print(out)
                 results.append(f"shell → {cmd[:60]}")
@@ -1870,18 +1897,170 @@ def run_automate(
     print(ui(f"\n✓ Automation finished: {name}\n"))
 
 
+# -------------------- Multi-agent team + HITL (roadmap stages 6–7) --------------------
+
+
+def hitl_approve(action: str, detail: str = "") -> bool:
+    """Human-in-the-loop gate. Returns True if approved (or HITL disabled)."""
+    if not HITL:
+        return True
+    print(ui(f"\n⏸ HITL approval required: {action}"))
+    if detail:
+        print(detail[:500])
+    try:
+        ans = input("Approve? [y/N]: ").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print()
+        return False
+    ok = ans in {"y", "yes"}
+    log = memory_root() / "hitl_log.md"
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    prev = log.read_text(encoding="utf-8") if log.exists() else "# HITL audit log\n\n"
+    log.write_text(
+        prev + f"- {stamp}: {'APPROVED' if ok else 'DENIED'} — {action}\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    return ok
+
+
+def run_team(client, system: str, task: str, *, output_format: str = "report", max_revisions: int = 3) -> str:
+    """
+    Multi-agent supervisor: research → write → critic (Stage 6).
+    Critic is a separate call (maker ≠ grader). Max revision loops.
+    """
+    print(ui("╔════════════════════════════════════════════════════════════╗"))
+    print(ui("║   FABLE 5 TEAM — research · write · critic (supervisor)    ║"))
+    print(ui("╚════════════════════════════════════════════════════════════╝"))
+    print(f"Task:   {task}")
+    print(f"Format: {output_format}")
+    print(f"HITL:   {'on' if HITL else 'off'}\n")
+
+    if not hitl_approve("start multi-agent team run", task):
+        print(ui("Team run cancelled by human.\n"))
+        return ""
+
+    # Research specialist
+    print(ui("→ Research agent…\n"))
+    research = stream_chat(
+        client,
+        [
+            {
+                "role": "system",
+                "content": (
+                    system
+                    + "\n\nYou are the RESEARCH specialist. Find facts, structure, risks, unknowns. "
+                    "Be thorough. Label guesses. Do not write the final deliverable."
+                ),
+            },
+            {"role": "user", "content": f"Research for this task:\n{task}"},
+        ],
+        temperature=0.4,
+        prefix="Research: ",
+    )
+
+    content = ""
+    for attempt in range(1, max_revisions + 1):
+        print(ui(f"→ Writer agent (attempt {attempt}/{max_revisions})…\n"))
+        write_prompt = (
+            f"Task: {task}\nDesired format: {output_format}\n\n"
+            f"Research notes:\n{research}\n\n"
+            "Write the deliverable. Verdict/lead first when appropriate."
+        )
+        if content:
+            write_prompt += f"\n\nPrevious draft to revise:\n{content}\n"
+        content = stream_chat(
+            client,
+            [
+                {
+                    "role": "system",
+                    "content": (
+                        system
+                        + "\n\nYou are the WRITER specialist. Turn research into clear deliverable. "
+                        "Do not invent sources."
+                    ),
+                },
+                {"role": "user", "content": write_prompt},
+            ],
+            temperature=0.45,
+            prefix="Writer: ",
+        )
+
+        print(ui(f"→ Critic agent (fresh context, attempt {attempt})…\n"))
+        review = stream_chat(
+            client,
+            [
+                {
+                    "role": "system",
+                    "content": (
+                        "You are the CRITIC. Fresh context. Maker is never the grader.\n"
+                        "Return exactly:\n"
+                        "APPROVED: yes|no\n"
+                        "ISSUES:\n- ...\n"
+                        "SUGGESTIONS:\n- ...\n"
+                        "SCORE: <1-10>\n"
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        f"TASK:\n{task}\n\nFORMAT:\n{output_format}\n\n"
+                        f"DRAFT:\n{content}\n\n"
+                        "Approve only if ready to ship without follow-up on critical issues."
+                    ),
+                },
+            ],
+            temperature=0.2,
+            prefix="Critic: ",
+        )
+        approved = bool(re.search(r"APPROVED:\s*yes", review, re.I))
+        if approved:
+            print(ui("\n✓ Critic approved. Supervisor done.\n"))
+            break
+        print(ui(f"\n✗ Not approved — revising (attempt {attempt})…\n"))
+        # Feed issues into next writer via content already set; research stays fixed
+    else:
+        print(ui("\n⚠ Max revisions reached — returning best attempt.\n"))
+
+    if HITL and not hitl_approve("ship team deliverable", content[:400]):
+        print(ui("Deliverable held — human denied ship.\n"))
+        return content
+
+    # Persist episode
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    out = workspace_root() / f"team-{stamp}.md"
+    out.write_text(
+        f"# Team run {stamp}\n\n## Task\n{task}\n\n## Research\n{research}\n\n"
+        f"## Deliverable\n{content}\n\n## Last critic\n{review}\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(ui(f"Saved → {out}\n"))
+    return content
+
+
+def show_roadmap() -> None:
+    path = _resolve(ROADMAP_FILE)
+    if not path.is_file():
+        path = SCRIPT_DIR / "ROADMAP.md"
+    if path.is_file():
+        print(path.read_text(encoding="utf-8"))
+    else:
+        print("ROADMAP.md not found.")
+
+
 # -------------------- Chat REPL --------------------
 
 
 def print_banner() -> None:
     print(ui("╔════════════════════════════════════════════════════════════╗"))
-    print(ui("║  FABLE 5 OFFLINE — reason · build · automate · hermes      ║"))
-    print(ui("║  soul · RAG · repair · skills · maker ≠ grader             ║"))
+    print(ui("║  FABLE 5 OFFLINE — agentic engineer · loops · team · build ║"))
+    print(ui("║  soul · RAG · verifier · skills · HITL · maker ≠ grader    ║"))
     print(ui("╚════════════════════════════════════════════════════════════╝"))
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
-    print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}")
-    print("Commands: /build /automate /engineer /loop /hermes /improve /help quit\n")
+    print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
+    print("Commands: /team /build /automate /engineer /loop /hermes /roadmap /help quit\n")
 
 
 def print_help() -> None:
@@ -1889,11 +2068,13 @@ def print_help() -> None:
     print(
         f"""
 Commands
+  /roadmap           6-month agentic engineer roadmap (ROADMAP.md)
+  /team <task>       Multi-agent: research → write → critic (supervisor)
   /build <goal>      BUILD multi-file scaffold under workspace/
   /automate <name>   Run workflow recipe from workflows/*.json
   /workflows         List automation recipes
   /loop <goal>       Standard loop (executor + fresh verifier + memory)
-  /engineer <goal>   Loop like an engineer: PLAN→DO→VERIFY·STATE·STOP (Karpathy-style)
+  /engineer <goal>   Loop engineer: PLAN→DO→VERIFY · STATE · STOP
   /hermes <goal>     Hermes loop: SOUL + smart RAG + live repair + self-stop
   /improve [focus]   Self-improve: propose skills, verify, write skills/
   /skills            List skill library
@@ -1904,24 +2085,24 @@ Commands
   /help              This help
   quit | exit | q    Leave
 
-Build & automate (offline)
-  Build  — plan + write files under workspace/build-*/
-  Automate — multi-step JSON recipes (build, hermes, loop, improve, compress, shell, llm)
-  Shell steps run only if FABLE5_ALLOW_SHELL=1 and command is allowlisted
+Agentic engineer stack (offline)
+  Roadmap — 12 stages / 6 months (build real things, order matters)
+  Team    — multi-agent supervisor (Stage 6)
+  HITL    — human approval gates (Stage 7); FABLE5_HITL=0 to disable
+  Shell   — only if FABLE5_ALLOW_SHELL=1 and allowlisted
 
 CLI
+  {py} fable5_offline_agent.py --roadmap
+  {py} fable5_offline_agent.py --team "Research X and write a one-page brief"
   {py} fable5_offline_agent.py --build "tiny flask hello app"
-  {py} fable5_offline_agent.py --automate daily-review
-  {py} fable5_offline_agent.py --engineer "rewrite this memo until criteria hit 8+"
-  {py} fable5_offline_agent.py --hermes "your goal"
-  {py} fable5_offline_agent.py --loop "your goal"
-  {py} fable5_offline_agent.py --improve
+  {py} fable5_offline_agent.py --automate agentic-checkpoint
+  {py} fable5_offline_agent.py --engineer "…" --criteria "…"
   {py} fable5_offline_agent.py --doctor
 
 Env
-  FABLE5_MODEL  FABLE5_SOUL  FABLE5_PROGRAM  FABLE5_ENGINEER_MIN_SCORE  FABLE5_BILEVEL_EVERY
-  FABLE5_RAG_TOP_K  FABLE5_WORKFLOWS  FABLE5_WORKSPACE  FABLE5_ALLOW_SHELL
-  FABLE5_MEMORY  FABLE5_SKILLS  FABLE5_SELF_IMPROVE  FABLE5_ASCII
+  FABLE5_MODEL  FABLE5_SOUL  FABLE5_PROGRAM  FABLE5_ROADMAP  FABLE5_HITL
+  FABLE5_ENGINEER_MIN_SCORE  FABLE5_BILEVEL_EVERY  FABLE5_RAG_TOP_K
+  FABLE5_WORKFLOWS  FABLE5_WORKSPACE  FABLE5_ALLOW_SHELL  FABLE5_MEMORY  FABLE5_SKILLS
 """
     )
 
@@ -1958,6 +2139,22 @@ def chat_repl(client, system: str) -> None:
         if low in {"/doctor", "doctor"}:
             doctor()
             print()
+            continue
+        if low in {"/roadmap", "roadmap"}:
+            show_roadmap()
+            print()
+            continue
+        if low.startswith("/team"):
+            task = user_input[5:].strip()
+            if not task:
+                task = input("Team task: ").strip()
+            if not task:
+                print("No task — cancelled.\n")
+                continue
+            try:
+                run_team(client, load_system_prompt(), task)
+            except Exception as e:
+                print(ui(f"\n❌ Team error: {e}\n"))
             continue
         if low == "/memory":
             print(read_memory_bundle(limit_chars=12000))
@@ -2146,6 +2343,21 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Loop like an engineer: PLAN→DO→VERIFY, LOOP_STATE, stop gates, optional bilevel",
     )
     parser.add_argument(
+        "--team",
+        metavar="TASK",
+        help="Multi-agent supervisor: research → write → critic",
+    )
+    parser.add_argument(
+        "--format",
+        default="report",
+        help="Output format for --team (default: report)",
+    )
+    parser.add_argument(
+        "--roadmap",
+        action="store_true",
+        help="Print the 6-month agentic engineer roadmap",
+    )
+    parser.add_argument(
         "--criteria",
         metavar="LIST",
         help="Comma-separated success criteria for --engineer (scored 1-10)",
@@ -2218,6 +2430,10 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.doctor:
         return doctor()
 
+    if args.roadmap:
+        show_roadmap()
+        return 0
+
     system = load_system_prompt()
     client = make_client()
 
@@ -2226,6 +2442,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         print(ui(f"⚠️  {msg}"))
         print("  Run with --doctor for a full multi-platform check.")
         print(f"  Then: ollama pull {MODEL_NAME}  (if using Ollama)\n")
+
+    if args.team:
+        try:
+            run_team(client, system, args.team, output_format=args.format)
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
 
     if args.build:
         try:

@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **Hermes behaviors**, **self-improving skills**, and **build/automate** workflows.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, and **build/automate** — plus a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 | Mode | What it does |
@@ -16,7 +16,9 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Build** | Multi-file project scaffold under `workspace/build-*/` (PLAN + FILE blocks) |
 | **Automate** | Multi-step JSON recipes in `workflows/` (build → hermes → improve → …) |
 | **Engineer** | **Loop like an engineer**: purpose once · PLAN→DO→VERIFY · **LOOP_STATE** · stop gates · optional bilevel |
-| **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck (sample size, OOS, multiple testing, survivorship) |
+| **Team** | Multi-agent supervisor: **research → write → critic** (HITL optional) |
+| **Roadmap** | 6-month agentic engineer path (`ROADMAP.md`) — build real things, order matters |
+| **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -42,10 +44,11 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 
 ```
 Fable-Offline/
-├── fable5_offline_agent.py      # CLI: chat, build, automate, engineer, hermes, loops
+├── fable5_offline_agent.py      # CLI: chat, team, build, automate, engineer, hermes
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
 ├── program.md                   # Loop-engineer constraints (Karpathy-style)
+├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt
 ├── fable5                       # Unix launcher
 ├── fable5.cmd                   # Windows launcher
@@ -54,24 +57,27 @@ Fable-Offline/
 │   └── fable5.sh / fable5.ps1
 ├── skills/                      # Skill library (seeds + self-improved)
 │   ├── INDEX.md
+│   ├── agentic-engineer-roadmap.md
 │   ├── build-and-automate.md
-│   ├── hermes-loop.md
 │   ├── edge-vs-luck.md
+│   ├── hermes-loop.md
 │   ├── loop-engineer.md
 │   └── rederive-numbers.md
 ├── workflows/                   # Automation recipes (*.json)
-│   ├── hello-project.json
+│   ├── agentic-checkpoint.json
 │   ├── daily-review.json
-│   ├── rigor-check.json
+│   ├── edge-audit.json
 │   ├── engineer-memo.json
-│   └── edge-audit.json
-├── workspace/                   # Build outputs (gitignored; .gitkeep kept)
-├── memory/                      # Runtime memory (gitignored; .gitkeep kept)
+│   ├── hello-project.json
+│   └── rigor-check.json
+├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
+├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
 ├── .gitignore
 ├── .gitattributes
 └── README.md
 ```
+
 
 ## Requirements
 
@@ -132,6 +138,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | Input | Action |
 |-------|--------|
 | *(any question)* | One-shot rigorous answer (+ light smart RAG) |
+| `/roadmap` | Show 6-month agentic engineer roadmap |
+| `/team <task>` | Multi-agent: research → write → critic |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
 | `/automate <name>` | Run workflow recipe |
 | `/workflows` | List automation recipes |
@@ -163,6 +171,19 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `rigor-check` | Short Hermes loop on a numeric claim |
 | `engineer-memo` | Loop-engineer a decision memo to score ≥ 8 |
 | `edge-audit` | Edge-vs-luck audit (streaks, backtests, “system works” claims) |
+| `agentic-checkpoint` | Biweekly: compress → improve → coach next roadmap stage |
+
+## Multi-agent team & roadmap
+
+```bash
+./fable5 --roadmap
+./fable5 --team "Research offline agent evals and write a one-page brief" --format brief
+./fable5 --automate agentic-checkpoint
+```
+
+Supervisor pattern: **research** → **writer** → **critic** (separate grader, max 3 revisions). HITL prompts on start/ship when `FABLE5_HITL=1` (default).
+
+## Edge audit
 
 ```bash
 # Chat: describe the strategy, then
@@ -262,6 +283,8 @@ Runtime artifacts: `memory/` — **gitignored**.
 | `FABLE5_SKILLS` | `skills` | Skill library directory |
 | `FABLE5_SOUL` | `SOUL.md` | Identity / steering file |
 | `FABLE5_PROGRAM` | `program.md` | Loop-engineer constraints |
+| `FABLE5_ROADMAP` | `ROADMAP.md` | 6-month curriculum file |
+| `FABLE5_HITL` | `1` | Human approval gates (`0` = off) |
 | `FABLE5_ENGINEER_MIN_SCORE` | `8` | Min 1–10 score per criterion |
 | `FABLE5_BILEVEL_EVERY` | `3` | Outer meta-loop period (`0` = off) |
 | `FABLE5_WORKFLOWS` | `workflows` | Automation recipe directory |
@@ -295,7 +318,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -334,6 +357,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Hermes behaviors** — Soul file, smart RAG, self-stopping loops, live repair, memory compression.
 - **Build & automate** — Multi-file scaffolds and multi-step offline workflow recipes.
 - **Edge vs luck** — Fooled-by-Randomness style checklist (LLN, OOS, multiple testing, survivorship, regression to the mean).
+- **Agentic engineer path** — 6-month / 12-stage roadmap; multi-agent supervisor; HITL.
 
 ## License
 

@@ -115,11 +115,11 @@ models/
 .ollama/
 
 # --- Fable 5 runtime (machine-local; do not commit) ---
-# Loop memory, cycle logs, lessons, self-improve / build / automate logs
+# Loop memory, cycle logs, lessons, HITL/build/automate/self-improve logs, LOOP_STATE
 memory/*
 !memory/.gitkeep
 
-# Build outputs under workspace/ (keep directory placeholder)
+# Build + team outputs (keep directory placeholder)
 workspace/*
 !workspace/.gitkeep
 
@@ -131,9 +131,10 @@ skills/**/__pycache__/
 # User-only private workflows (seeded public recipes stay tracked)
 workflows/_local/
 
-# Optional private soul override (default SOUL.md stays in repo)
+# Optional private soul / program overrides (defaults stay in repo)
 SOUL.local.md
 soul.local.md
+program.local.md
 
 # Optional local overrides (defaults stay in repo)
 local_config.py

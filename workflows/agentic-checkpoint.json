@@ -1,0 +1,22 @@
+{
+  "name": "agentic-checkpoint",
+  "description": "Biweekly checkpoint: compress memory, self-improve, coach next roadmap stage",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Agentic engineer checkpoint — build one real thing; do not skip foundations."
+    },
+    {
+      "type": "compress",
+      "focus": "lessons from the last two weeks of agent work"
+    },
+    {
+      "type": "improve",
+      "focus": "procedures that prevented agent failures (async, tools, memory, evals)"
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill agentic-engineer-roadmap and ROADMAP.md stages, coach the user: (1) which stage they should be on if they started today, (2) one concrete build task for the next 14 days only, (3) what NOT to skip. Lead with the task. Be strict about not jumping to multi-agent before a solid single ReAct agent."
+    }
+  ]
+}
