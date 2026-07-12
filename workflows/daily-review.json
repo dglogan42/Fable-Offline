@@ -1,0 +1,14 @@
+{
+  "name": "daily-review",
+  "description": "Compress memory, then self-improve skills from recent work",
+  "steps": [
+    {
+      "type": "compress",
+      "focus": "daily durable lessons and open risks"
+    },
+    {
+      "type": "improve",
+      "focus": "procedures that prevented failures this week"
+    }
+  ]
+}

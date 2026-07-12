@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** reasoning agent with **loop engineering**, **self-improving skills**, and **Hermes-style behaviors**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **Hermes behaviors**, **self-improving skills**, and **build/automate** workflows.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 | Mode | What it does |
@@ -13,10 +13,11 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Loop** | Goal cycles: executor → **fresh-context verifier** → memory → stop rules (**maker ≠ grader**) |
 | **Self-improve** | Reflect → propose **skills** → grade in fresh context → write `skills/` (system compounds; **weights do not**) |
 | **Hermes** | Soul-steered loop: **SOUL.md** · smart RAG (top-K memory) · self-stop · live repair · memory compress |
+| **Build** | Multi-file project scaffold under `workspace/build-*/` (PLAN + FILE blocks) |
+| **Automate** | Multi-step JSON recipes in `workflows/` (build → hermes → improve → …) |
 
-Once a local model is loaded, everything stays offline — no API keys, no usage meters.
-
-The *system* around the model improves (soul, memory, skills), not the model weights.
+Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
+The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -35,9 +36,9 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 
 ```
 Fable-Offline/
-├── fable5_offline_agent.py      # CLI: chat, loop, hermes, self-improve, doctor
-├── Fable5_Operating_Manual.md   # System prompt (reasoning + loops + hermes + skills)
-├── SOUL.md                      # Hermes-style identity / steering
+├── fable5_offline_agent.py      # CLI: chat, build, automate, hermes, loops, doctor
+├── Fable5_Operating_Manual.md   # System prompt (full method)
+├── SOUL.md                      # Identity / steering
 ├── requirements.txt
 ├── fable5                       # Unix launcher
 ├── fable5.cmd                   # Windows launcher
@@ -46,9 +47,15 @@ Fable-Offline/
 │   └── fable5.sh / fable5.ps1
 ├── skills/                      # Skill library (seeds + self-improved)
 │   ├── INDEX.md
+│   ├── build-and-automate.md
 │   ├── hermes-loop.md
 │   └── rederive-numbers.md
-├── memory/                      # Runtime only (gitignored; .gitkeep kept)
+├── workflows/                   # Automation recipes (*.json)
+│   ├── hello-project.json
+│   ├── daily-review.json
+│   └── rigor-check.json
+├── workspace/                   # Build outputs (gitignored; .gitkeep kept)
+├── memory/                      # Runtime memory (gitignored; .gitkeep kept)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
 ├── .gitignore
 ├── .gitattributes
@@ -59,7 +66,7 @@ Fable-Offline/
 
 - **Python 3.10+** on `PATH`
 - **Ollama** (or any OpenAI-compatible server, default `http://localhost:11434/v1`)
-- A local chat model — larger models produce better loops and skills
+- A local chat model — larger models produce better loops, builds, and skills
 
 ```bash
 python -m pip install -r requirements.txt
@@ -95,14 +102,16 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 # Windows
 .\fable5.cmd
 .\fable5.cmd --doctor
+.\fable5.cmd --build "minimal Python CLI that greets and exits"
+.\fable5.cmd --automate daily-review
 .\fable5.cmd --hermes "Re-derive: revenue $4.0M to $4.2M is a 20% gain"
-.\fable5.cmd --improve
 
 # macOS / Linux
 ./fable5
 ./fable5 --doctor
+./fable5 --build "minimal Python CLI that greets and exits"
+./fable5 --automate daily-review
 ./fable5 --hermes "Re-derive: revenue $4.0M to $4.2M is a 20% gain"
-./fable5 --improve
 ```
 
 ## Chat commands
@@ -110,6 +119,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | Input | Action |
 |-------|--------|
 | *(any question)* | One-shot rigorous answer (+ light smart RAG) |
+| `/build <goal>` | Scaffold multi-file project under `workspace/` |
+| `/automate <name>` | Run workflow recipe |
+| `/workflows` | List automation recipes |
 | `/loop <goal>` | Multi-cycle loop (+ self-improve after, by default) |
 | `/hermes <goal>` | Hermes loop: soul + smart RAG + live repair + self-stop |
 | `/improve [focus]` | Self-improve: write verified skills from memory |
@@ -121,19 +133,49 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/help` | Command list |
 | `quit` · `exit` · `q` | Leave |
 
+## Build and automate
+
+```bash
+./fable5 --build "minimal Python CLI that greets and exits"
+./fable5 --automate daily-review
+./fable5 --automate rigor-check
+./fable5 --automate hello-project
+```
+
+| Recipe (seeded) | What it does |
+|-----------------|--------------|
+| `hello-project` | Build a tiny multi-file hello CLI |
+| `daily-review` | Compress memory → self-improve skills |
+| `rigor-check` | Short Hermes loop on a numeric claim |
+
+Workflow step types: `build` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note`.
+
+Add your own recipes as `workflows/my-job.json`. Private experiments can go in `workflows/_local/` (gitignored).
+
+**Shell automation** is **off by default**. Enable carefully:
+
+```bash
+# macOS / Linux
+export FABLE5_ALLOW_SHELL=1
+
+# Windows cmd
+set FABLE5_ALLOW_SHELL=1
+```
+
+Only allowlisted commands run (python/pip/ollama, limited git, simple `ls`/`dir`/`echo`). Builds cannot write outside `workspace/`.
+
 ## Hermes mode
 
 ```bash
 ./fable5 --hermes "Re-derive every claim and stop when verified"
-# Windows: .\fable5.cmd --hermes "…"
 ```
 
 | Behavior | Offline implementation |
 |----------|------------------------|
 | **SOUL.md** | Identity + boundaries loaded every turn |
-| **Smart RAG** | Top-K (`FABLE5_RAG_TOP_K`, default **20**) relevant memory chunks — not the whole archive |
+| **Smart RAG** | Top-K (`FABLE5_RAG_TOP_K`, default **20**) relevant memory chunks |
 | **Self-stop** | Success / retry ceiling / cycle budget |
-| **Live repair** | On verifier FAIL → strategy patch for the **next unit only** |
+| **Live repair** | On verifier FAIL → strategy patch for the next unit only |
 | **Memory compress** | After multi-cycle Hermes runs → `memory/lessons/compressed-*.md` |
 | **Skills** | Optional self-improve writes reusable procedures |
 
@@ -163,7 +205,7 @@ Trigger → Rules + memory (+ RAG if Hermes) → Executor (1 unit) → Verifier 
 ./fable5 --loop "One-page risk memo on shipping feature X" --max-cycles 6
 ```
 
-Runtime artifacts: `memory/` (`INDEX.md`, `cycle_*.md`, `lessons/`) — **gitignored**.
+Runtime artifacts: `memory/` — **gitignored**.
 
 ## Configuration
 
@@ -174,6 +216,9 @@ Runtime artifacts: `memory/` (`INDEX.md`, `cycle_*.md`, `lessons/`) — **gitign
 | `FABLE5_MEMORY` | `memory` | Memory directory (`~` allowed) |
 | `FABLE5_SKILLS` | `skills` | Skill library directory |
 | `FABLE5_SOUL` | `SOUL.md` | Identity / steering file |
+| `FABLE5_WORKFLOWS` | `workflows` | Automation recipe directory |
+| `FABLE5_WORKSPACE` | `workspace` | Build output directory |
+| `FABLE5_ALLOW_SHELL` | unset | `1` = run allowlisted shell steps |
 | `FABLE5_RAG_TOP_K` | `20` | Smart RAG chunk count |
 | `FABLE5_SELF_IMPROVE` | `1` | Self-improve after loops (`0` to disable) |
 | `FABLE5_MAX_CYCLES` | `6` | Loop cycle budget |
@@ -187,13 +232,13 @@ Runtime artifacts: `memory/` (`INDEX.md`, `cycle_*.md`, `lessons/`) — **gitign
 ```bat
 REM Windows cmd
 set FABLE5_MODEL=qwen2.5:7b
-.\fable5.cmd --hermes "your goal"
+.\fable5.cmd --build "your scaffold goal"
 ```
 
 ```powershell
 # Windows PowerShell
 $env:FABLE5_MODEL = "qwen2.5:7b"
-.\scripts\fable5.ps1 --hermes "your goal"
+.\scripts\fable5.ps1 --automate daily-review
 ```
 
 ```bash
@@ -202,7 +247,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--build` · `--automate` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--self-improve` · `--no-self-improve` · `--max-cycles` · `--retry-ceiling` · `--success` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -217,6 +262,7 @@ python fable5_offline_agent.py --doctor
 | Garbled box characters | `--ascii` or `FABLE5_ASCII=1` |
 | `python` not found (Windows) | Use `py -3` or reinstall with PATH enabled |
 | `Permission denied: ./fable5` | `chmod +x fable5 scripts/*.sh` |
+| Shell steps dry-run only | Set `FABLE5_ALLOW_SHELL=1` (allowlisted commands only) |
 | Slow first reply / cycle | Model loading into RAM/VRAM — expected |
 
 ## When to use it
@@ -224,6 +270,8 @@ python fable5_offline_agent.py --doctor
 | Prefer | For |
 |--------|-----|
 | **Chat** | Single decisions, code review, re-deriving a figure |
+| **Build** | New scripts, CLIs, small multi-file apps |
+| **Automate** | Daily review, chained build → hermes → improve |
 | **Loop** | Multi-step goals, graded multi-claim work |
 | **Hermes** | Long goals needing selective memory, live repair, self-stop |
 | **Self-improve** | Encoding durable procedures after loops or failures |
@@ -235,7 +283,8 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Reasoning rules** — Fable 5–style rigorous operating manual (community prompt lineage).
 - **Loop engineering** — Goals, boundaries, verification, fresh-context graders, stop rules.
 - **Self-improvement** — Memory + skills compound around a frozen local model.
-- **Hermes behaviors** — Soul file, smart RAG, self-stopping loops, live repair, memory compression (offline adaptation of self-building agent practice).
+- **Hermes behaviors** — Soul file, smart RAG, self-stopping loops, live repair, memory compression.
+- **Build & automate** — Multi-file scaffolds and multi-step offline workflow recipes.
 
 ## License
 

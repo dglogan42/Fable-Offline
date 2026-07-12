@@ -1,0 +1,14 @@
+{
+  "name": "hello-project",
+  "description": "Scaffold a tiny multi-file hello project under workspace/",
+  "steps": [
+    {
+      "type": "build",
+      "goal": "Create a minimal multi-file hello CLI: README, main.py, requirements.txt"
+    },
+    {
+      "type": "note",
+      "text": "Open workspace/ and run the generated main if present."
+    }
+  ]
+}

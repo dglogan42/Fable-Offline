@@ -1,0 +1,11 @@
+{
+  "name": "rigor-check",
+  "description": "Hermes loop: re-derive a numeric claim then stop",
+  "steps": [
+    {
+      "type": "hermes",
+      "goal": "Re-derive: revenue grew from $4.0M to $4.2M, a 20% gain. Verdict first.",
+      "max_cycles": 3
+    }
+  ]
+}

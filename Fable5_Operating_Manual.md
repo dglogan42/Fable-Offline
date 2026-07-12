@@ -355,6 +355,43 @@ After Hermes runs, self-improve may write skills so the next session starts smar
 
 ---
 
+## 12. Build and automate (offline)
+
+**Trigger:** `/build`, `--build`, `/automate`, `--automate`, or workflow recipes under `workflows/`.
+
+Course framing: spend time learning to **BUILD** and **AUTOMATE** — not only chat. Offline, that means multi-file scaffolds and multi-step recipes on your machine.
+
+### 12.1 Build
+
+Produce a **PLAN** plus multiple **FILE** blocks. The harness writes them under `workspace/build-*/` with relative paths only (no `..`, no absolute paths). Include run instructions for Windows, macOS, and Linux when useful.
+
+### 12.2 Automate
+
+A workflow is a JSON recipe with ordered **steps**:
+
+| type | Action |
+|------|--------|
+| `build` | Scaffold files from a goal |
+| `hermes` / `loop` | Run agentic cycles |
+| `improve` | Self-improve skills |
+| `compress` | Fold memory |
+| `llm` | One-shot model call |
+| `shell` | Allowlisted command (only if shell automation enabled) |
+| `note` | Print a human note |
+
+### 12.3 Safety
+
+- Shell is **off by default**. Enable with `FABLE5_ALLOW_SHELL=1`.
+- Shell commands must match the allowlist (python, ollama, git status/log/diff, simple ls/dir/echo).
+- No cloud deploy. No arbitrary network tools. Build and automate stay local.
+
+### 12.4 When to use
+
+- **Build** — new scripts, CLIs, small apps, multi-file docs
+- **Automate** — daily review, rigor checks, chained build → hermes → improve
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -377,9 +414,11 @@ spent. Otherwise end the cycle cleanly for the next run.
    - `python fable5_offline_agent.py` — chat (Sections 1–8 + soul + skills)
    - `python fable5_offline_agent.py --loop "your goal"` — loop harness (Section 9)
    - `python fable5_offline_agent.py --hermes "your goal"` — Hermes behaviors (Section 11)
+   - `python fable5_offline_agent.py --build "tiny CLI"` — multi-file scaffold (Section 12)
+   - `python fable5_offline_agent.py --automate daily-review` — workflow recipe (Section 12)
    - `python fable5_offline_agent.py --improve` — skill library growth (Section 10)
    - `python fable5_offline_agent.py --compress-memory` — memory fold
-   - In chat: `/hermes` · `/loop` · `/improve` · `/soul` · `/compress` · `/skills` · `/memory`
+   - In chat: `/build` · `/automate` · `/hermes` · `/loop` · `/improve` · `/workflows`
 
 2. **Ollama / Open WebUI / LM Studio:**
    - Use this file as system prompt for one-shot rigor.

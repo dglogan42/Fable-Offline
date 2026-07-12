@@ -24,18 +24,20 @@ Ollama:  ollama serve && ollama pull <MODEL_NAME>
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import os
 import platform
 import re
 import shutil
+import subprocess
 import sys
 import urllib.error
 import urllib.request
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 # ==================== CONFIG ====================
 LOCAL_LLM_BASE_URL = os.environ.get("FABLE5_BASE_URL", "http://localhost:11434/v1")
@@ -44,6 +46,8 @@ SYSTEM_PROMPT_FILE = os.environ.get("FABLE5_MANUAL", "Fable5_Operating_Manual.md
 SOUL_FILE = os.environ.get("FABLE5_SOUL", "SOUL.md")
 MEMORY_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_MEMORY", "memory")))
 SKILLS_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_SKILLS", "skills")))
+WORKFLOWS_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_WORKFLOWS", "workflows")))
+WORKSPACE_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_WORKSPACE", "workspace")))
 DEFAULT_MAX_CYCLES = int(os.environ.get("FABLE5_MAX_CYCLES", "6"))
 RETRY_CEILING = int(os.environ.get("FABLE5_RETRY_CEILING", "3"))
 TEMPERATURE = float(os.environ.get("FABLE5_TEMPERATURE", "0.3"))
@@ -56,6 +60,13 @@ DEFAULT_SELF_IMPROVE = os.environ.get("FABLE5_SELF_IMPROVE", "1").strip().lower(
     "false",
     "no",
     "off",
+}
+# Shell automation: off by default; set FABLE5_ALLOW_SHELL=1 to run allowlisted commands
+ALLOW_SHELL = os.environ.get("FABLE5_ALLOW_SHELL", "").strip().lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
 }
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
 USE_ASCII = os.environ.get("FABLE5_ASCII", "").strip() in {"1", "true", "yes"}
@@ -267,6 +278,9 @@ def doctor() -> int:
     print(f"  Skills dir:  {skills_root()}")
     n_skills = len(list_skill_paths())
     print(f"  Skills:      {n_skills} file(s)")
+    print(f"  Workflows:   {workflows_root()}")
+    print(f"  Workspace:   {workspace_root()}")
+    print(f"  Shell auto:  {'enabled' if ALLOW_SHELL else 'disabled (dry-run)'}")
     print(f"  RAG top-K:   {RAG_TOP_K}")
     soul_path = _resolve(SOUL_FILE)
     if not soul_path.is_file():
@@ -1196,18 +1210,396 @@ def run_loop(
             print(ui(f"⚠️  Self-improve skipped: {e}\n"))
 
 
+# -------------------- Build + Automate (course: BUILD and AUTOMATE) --------------------
+
+
+def workflows_root() -> Path:
+    root = WORKFLOWS_DIR if WORKFLOWS_DIR.is_absolute() else SCRIPT_DIR / WORKFLOWS_DIR
+    root = root.expanduser().resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def workspace_root() -> Path:
+    root = WORKSPACE_DIR if WORKSPACE_DIR.is_absolute() else SCRIPT_DIR / WORKSPACE_DIR
+    root = root.expanduser().resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def ensure_default_workflows() -> None:
+    """Seed example automation recipes if missing."""
+    root = workflows_root()
+    samples = {
+        "hello-project.json": {
+            "name": "hello-project",
+            "description": "Scaffold a tiny multi-file hello project under workspace/",
+            "steps": [
+                {
+                    "type": "build",
+                    "goal": "Create a minimal multi-file hello CLI: README, main.py, requirements.txt",
+                },
+                {"type": "note", "text": "Open workspace/ and run the generated main if present."},
+            ],
+        },
+        "daily-review.json": {
+            "name": "daily-review",
+            "description": "Compress memory, then self-improve skills from recent work",
+            "steps": [
+                {"type": "compress", "focus": "daily durable lessons and open risks"},
+                {"type": "improve", "focus": "procedures that prevented failures this week"},
+            ],
+        },
+        "rigor-check.json": {
+            "name": "rigor-check",
+            "description": "Hermes loop: re-derive a numeric claim then stop",
+            "steps": [
+                {
+                    "type": "hermes",
+                    "goal": "Re-derive: revenue grew from $4.0M to $4.2M, a 20% gain. Verdict first.",
+                    "max_cycles": 3,
+                }
+            ],
+        },
+    }
+    for name, data in samples.items():
+        path = root / name
+        if not path.exists():
+            path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
+
+
+BUILD_ROLE = """You are the BUILD engine for Fable 5 Offline (course skill: BUILD anything).
+Produce a complete, multi-file project scaffold the user can run offline.
+
+Output EXACTLY in this machine-parseable format (repeat FILE blocks):
+
+PLAN:
+- bullet goals and how to run
+
+FILE: relative/path.ext
+```
+file contents here
+```
+
+FILE: another/path.ext
+```
+more contents
+```
+
+DONE: one-line summary
+
+Rules:
+- Prefer small, complete, runnable scaffolds
+- Use relative paths only (no absolute paths, no ..)
+- Do not invent secrets or network credentials
+- Include a README with run instructions for Windows, macOS, and Linux when useful
+- Max ~12 files unless the goal truly needs more
+"""
+
+
+def parse_build_files(text: str) -> tuple[str, list[tuple[str, str]], str]:
+    """Return (plan, [(relpath, content), ...], done)."""
+    plan_m = re.search(r"^PLAN:\s*\n(.*?)(?=^FILE:|\Z)", text, re.M | re.S)
+    plan = plan_m.group(1).strip() if plan_m else ""
+    done_m = re.search(r"^DONE:\s*(.+)$", text, re.M)
+    done = done_m.group(1).strip() if done_m else ""
+    files: list[tuple[str, str]] = []
+    for m in re.finditer(
+        r"^FILE:\s*(.+?)\s*\n```(?:\w+)?\n(.*?)```",
+        text,
+        re.M | re.S,
+    ):
+        rel = m.group(1).strip().lstrip("./").replace("\\", "/")
+        if ".." in rel.split("/") or rel.startswith("/") or re.match(r"^[A-Za-z]:", rel):
+            continue
+        files.append((rel, m.group(2)))
+    return plan, files, done
+
+
+def safe_workspace_path(base: Path, rel: str) -> Optional[Path]:
+    rel = rel.strip().lstrip("/").replace("\\", "/")
+    if not rel or ".." in Path(rel).parts:
+        return None
+    target = (base / rel).resolve()
+    try:
+        target.relative_to(base.resolve())
+    except ValueError:
+        return None
+    return target
+
+
+def run_build(client, system: str, goal: str, *, name: Optional[str] = None) -> Path:
+    """
+    BUILD behavior: plan + write multi-file scaffold under workspace/.
+    Offline, local disk only — no cloud deploy.
+    """
+    ensure_default_workflows()
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    slug = re.sub(r"[^\w\-]+", "-", (name or goal[:40]).lower()).strip("-")[:40] or "build"
+    out_dir = workspace_root() / f"build-{slug}-{stamp}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    print(ui("╔════════════════════════════════════════════════════════════╗"))
+    print(ui("║   FABLE 5 BUILD — scaffold · multi-file · offline          ║"))
+    print(ui("╚════════════════════════════════════════════════════════════╝"))
+    print(f"Goal:      {goal}")
+    print(f"Workspace: {out_dir}\n")
+
+    mem = retrieve_relevant_memory(goal, top_k=min(10, RAG_TOP_K), limit_chars=3000)
+    skills = read_skills_bundle(limit_chars=2000)
+    print("[builder]\n")
+    raw = stream_chat(
+        client,
+        [
+            {"role": "system", "content": system + "\n\n" + BUILD_ROLE},
+            {
+                "role": "user",
+                "content": (
+                    f"BUILD GOAL:\n{goal}\n\n"
+                    f"RELEVANT MEMORY:\n{mem}\n\n"
+                    f"SKILLS:\n{skills or '(none)'}\n\n"
+                    "Produce PLAN + FILE blocks + DONE."
+                ),
+            },
+        ],
+        temperature=0.35,
+        prefix="Build: ",
+    )
+    plan, files, done = parse_build_files(raw)
+    if plan:
+        (out_dir / "PLAN.md").write_text(f"# Build plan\n\n{plan}\n", encoding="utf-8", newline="\n")
+    written: list[str] = []
+    for rel, content in files:
+        path = safe_workspace_path(out_dir, rel)
+        if not path:
+            print(ui(f"  ✗ skipped unsafe path: {rel}"))
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8", newline="\n")
+        written.append(rel)
+        print(ui(f"  ✓ wrote {rel}"))
+
+    # Project instructions (CLAUDE.md-style) for follow-on agent work
+    proj = out_dir / "PROJECT.md"
+    proj.write_text(
+        f"# Project\n\n"
+        f"- **Goal:** {goal}\n"
+        f"- **Built:** {stamp} UTC\n"
+        f"- **Done:** {done or '(see PLAN.md)'}\n"
+        f"- **Files:** {', '.join(written) if written else '(none parsed — see raw below)'}\n\n"
+        f"## Raw builder output\n\n```\n{raw[:8000]}\n```\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    if not written:
+        (out_dir / "BUILD_RAW.md").write_text(raw, encoding="utf-8", newline="\n")
+        print(ui("  ⚠ no FILE blocks parsed — saved BUILD_RAW.md"))
+
+    log = memory_root() / "build_log.md"
+    prev = log.read_text(encoding="utf-8") if log.exists() else "# Build log\n\n"
+    log.write_text(
+        prev + f"- {stamp}: `{out_dir.name}` — {goal[:100]} ({len(written)} files)\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(ui(f"\n✓ Build complete → {out_dir}\n"))
+    return out_dir
+
+
+# Shell allowlist prefixes (automation). Only used when ALLOW_SHELL is true.
+_SHELL_ALLOW = (
+    "python ",
+    "python3 ",
+    "py -3 ",
+    "pip ",
+    "pip3 ",
+    "python -m ",
+    "python3 -m ",
+    "ollama ",
+    "git status",
+    "git log",
+    "git diff",
+    "git branch",
+    "dir",
+    "ls",
+    "echo ",
+    "type ",
+    "cat ",
+    "where ",
+    "which ",
+)
+
+
+def shell_allowed(cmd: str) -> bool:
+    c = cmd.strip()
+    low = c.lower()
+    if not c or "|" in c or ";" in c or "&" in c or "`" in c or "$(" in c:
+        # keep pipelines simple / block chaining for safety
+        if "|" in c or ";" in c or "&&" in c or "||" in c:
+            return False
+    return any(low.startswith(p) or low == p.strip() for p in _SHELL_ALLOW)
+
+
+def run_shell_step(cmd: str, *, cwd: Path) -> str:
+    if not ALLOW_SHELL:
+        return f"[dry-run] shell disabled (set FABLE5_ALLOW_SHELL=1). would run: {cmd}"
+    if not shell_allowed(cmd):
+        return f"[blocked] command not on allowlist: {cmd}"
+    try:
+        proc = subprocess.run(
+            cmd,
+            shell=True,
+            cwd=str(cwd),
+            capture_output=True,
+            text=True,
+            timeout=120,
+            encoding="utf-8",
+            errors="replace",
+        )
+        out = (proc.stdout or "") + (proc.stderr or "")
+        return f"exit={proc.returncode}\n{out[:4000]}"
+    except Exception as e:
+        return f"[error] {e}"
+
+
+def load_workflow(name_or_path: str) -> dict[str, Any]:
+    ensure_default_workflows()
+    p = Path(name_or_path)
+    if not p.is_file():
+        cand = workflows_root() / name_or_path
+        if not cand.suffix:
+            cand = workflows_root() / f"{name_or_path}.json"
+        p = cand
+    if not p.is_file():
+        raise FileNotFoundError(f"Workflow not found: {name_or_path} (looked in {workflows_root()})")
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def list_workflows() -> list[Path]:
+    ensure_default_workflows()
+    return sorted(workflows_root().glob("*.json"))
+
+
+def run_automate(
+    client,
+    system: str,
+    workflow_name: str,
+    *,
+    extra_goal: Optional[str] = None,
+) -> None:
+    """
+    AUTOMATE behavior: run a multi-step workflow recipe (JSON).
+    Steps: build | hermes | loop | improve | compress | shell | note | llm
+    """
+    wf = load_workflow(workflow_name)
+    name = wf.get("name", workflow_name)
+    steps = wf.get("steps") or []
+    print(ui("╔════════════════════════════════════════════════════════════╗"))
+    print(ui("║   FABLE 5 AUTOMATE — recipe · pipeline · offline           ║"))
+    print(ui("╚════════════════════════════════════════════════════════════╝"))
+    print(f"Workflow: {name}")
+    print(f"Desc:     {wf.get('description', '')}")
+    print(f"Steps:    {len(steps)}")
+    print(f"Shell:    {'ENABLED' if ALLOW_SHELL else 'dry-run (FABLE5_ALLOW_SHELL=0)'}\n")
+
+    results: list[str] = []
+    for i, step in enumerate(steps, 1):
+        stype = (step.get("type") or "note").lower()
+        print(ui(f"{'─' * 60}"))
+        print(ui(f"▶ Step {i}/{len(steps)} · type={stype}"))
+        print(ui(f"{'─' * 60}"))
+        try:
+            if stype == "build":
+                goal = step.get("goal") or extra_goal or "scaffold a minimal project"
+                out = run_build(client, system, goal, name=step.get("name"))
+                results.append(f"build → {out}")
+            elif stype == "hermes":
+                goal = step.get("goal") or extra_goal or "complete the automated goal"
+                run_loop(
+                    client,
+                    load_system_prompt(hermes=True),
+                    goal,
+                    success_condition=step.get("success"),
+                    max_cycles=int(step.get("max_cycles", DEFAULT_MAX_CYCLES)),
+                    hermes=True,
+                    self_improve=bool(step.get("self_improve", False)),
+                )
+                results.append(f"hermes → done")
+            elif stype == "loop":
+                goal = step.get("goal") or extra_goal or "complete the automated goal"
+                run_loop(
+                    client,
+                    system,
+                    goal,
+                    success_condition=step.get("success"),
+                    max_cycles=int(step.get("max_cycles", DEFAULT_MAX_CYCLES)),
+                    hermes=False,
+                    self_improve=bool(step.get("self_improve", False)),
+                )
+                results.append("loop → done")
+            elif stype == "improve":
+                run_self_improve(client, system, focus=step.get("focus") or extra_goal)
+                results.append("improve → done")
+            elif stype == "compress":
+                compress_memory(client, system, focus=step.get("focus") or extra_goal)
+                results.append("compress → done")
+            elif stype == "shell":
+                cmd = step.get("command") or step.get("cmd") or "echo hello"
+                out = run_shell_step(cmd, cwd=workspace_root())
+                print(out)
+                results.append(f"shell → {cmd[:60]}")
+            elif stype == "llm":
+                prompt = step.get("prompt") or extra_goal or "Summarize current memory."
+                print("\n[llm step]\n")
+                ans = stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": system},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="Auto: ",
+                )
+                results.append(f"llm → {len(ans)} chars")
+            elif stype == "note":
+                text = step.get("text") or step.get("message") or ""
+                print(text)
+                results.append(f"note → {text[:60]}")
+            else:
+                print(ui(f"⚠ unknown step type: {stype}"))
+                results.append(f"skip → {stype}")
+        except Exception as e:
+            print(ui(f"❌ step failed: {e}"))
+            results.append(f"FAIL {stype}: {e}")
+            if step.get("stop_on_error", True):
+                print(ui("\nAutomation stopped (stop_on_error).\n"))
+                break
+
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    log = memory_root() / "automate_log.md"
+    prev = log.read_text(encoding="utf-8") if log.exists() else "# Automate log\n\n"
+    log.write_text(
+        prev
+        + f"\n## {stamp} · {name}\n"
+        + "\n".join(f"- {r}" for r in results)
+        + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(ui(f"\n✓ Automation finished: {name}\n"))
+
+
 # -------------------- Chat REPL --------------------
 
 
 def print_banner() -> None:
     print(ui("╔════════════════════════════════════════════════════════════╗"))
-    print(ui("║  FABLE 5 OFFLINE — reason · loop · hermes · self-improve   ║"))
-    print(ui("║  soul · smart RAG · repair · skills · maker ≠ grader       ║"))
+    print(ui("║  FABLE 5 OFFLINE — reason · build · automate · hermes      ║"))
+    print(ui("║  soul · RAG · repair · skills · maker ≠ grader             ║"))
     print(ui("╚════════════════════════════════════════════════════════════╝"))
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
-    print(f"Skills:   {len(list_skill_paths())} loaded from {skills_root().name}/")
-    print("Commands: /loop /hermes /improve /skills /soul /memory /compress /help quit\n")
+    print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}")
+    print("Commands: /build /automate /loop /hermes /improve /workflows /help quit\n")
 
 
 def print_help() -> None:
@@ -1215,8 +1607,11 @@ def print_help() -> None:
     print(
         f"""
 Commands
+  /build <goal>      BUILD multi-file scaffold under workspace/
+  /automate <name>   Run workflow recipe from workflows/*.json
+  /workflows         List automation recipes
   /loop <goal>       Standard loop (executor + fresh verifier + memory)
-  /hermes <goal>     Hermes loop: SOUL + smart RAG + live repair + self-stop + compress
+  /hermes <goal>     Hermes loop: SOUL + smart RAG + live repair + self-stop
   /improve [focus]   Self-improve: propose skills, verify, write skills/
   /skills            List skill library
   /soul              Show SOUL.md identity file
@@ -1226,24 +1621,22 @@ Commands
   /help              This help
   quit | exit | q    Leave
 
-Hermes behaviors (offline)
-  1. SOUL.md steers identity
-  2. Smart RAG — top {RAG_TOP_K} relevant memory chunks (not the whole archive)
-  3. Self-stopping loop — success / retry ceiling / budget
-  4. Live repair — on verifier FAIL, patch strategy before next unit
-  5. Memory compress — fold history after multi-cycle runs
-  6. Skill compound — write reusable skills from verified lessons
+Build & automate (offline)
+  Build  — plan + write files under workspace/build-*/
+  Automate — multi-step JSON recipes (build, hermes, loop, improve, compress, shell, llm)
+  Shell steps run only if FABLE5_ALLOW_SHELL=1 and command is allowlisted
 
 CLI
+  {py} fable5_offline_agent.py --build "tiny flask hello app"
+  {py} fable5_offline_agent.py --automate daily-review
   {py} fable5_offline_agent.py --hermes "your goal"
   {py} fable5_offline_agent.py --loop "your goal"
   {py} fable5_offline_agent.py --improve
-  {py} fable5_offline_agent.py --compress-memory
   {py} fable5_offline_agent.py --doctor
 
 Env
-  FABLE5_MODEL  FABLE5_SOUL  FABLE5_RAG_TOP_K  FABLE5_MEMORY  FABLE5_SKILLS
-  FABLE5_MAX_CYCLES  FABLE5_SELF_IMPROVE  FABLE5_ASCII
+  FABLE5_MODEL  FABLE5_SOUL  FABLE5_RAG_TOP_K  FABLE5_WORKFLOWS  FABLE5_WORKSPACE
+  FABLE5_ALLOW_SHELL  FABLE5_MEMORY  FABLE5_SKILLS  FABLE5_SELF_IMPROVE  FABLE5_ASCII
 """
     )
 
@@ -1307,6 +1700,43 @@ def chat_repl(client, system: str) -> None:
                 print()
                 print(read_skills_bundle(limit_chars=8000))
                 print()
+            continue
+        if low in {"/workflows", "workflows"}:
+            ensure_default_workflows()
+            wfs = list_workflows()
+            print(f"Workflows in {workflows_root()}:\n")
+            for p in wfs:
+                try:
+                    data = json.loads(p.read_text(encoding="utf-8"))
+                    print(f"  - {p.stem}: {data.get('description', '')[:80]}")
+                except Exception:
+                    print(f"  - {p.name}")
+            print()
+            continue
+        if low.startswith("/build"):
+            goal = user_input[6:].strip()
+            if not goal:
+                goal = input("Build goal: ").strip()
+            if not goal:
+                print("No goal — cancelled.\n")
+                continue
+            try:
+                run_build(client, load_system_prompt(), goal)
+            except Exception as e:
+                print(ui(f"\n❌ Build error: {e}\n"))
+            continue
+        if low.startswith("/automate"):
+            name = user_input[9:].strip()
+            if not name:
+                name = input("Workflow name (e.g. daily-review): ").strip()
+            if not name:
+                print("No workflow — cancelled.\n")
+                continue
+            try:
+                run_automate(client, load_system_prompt(), name)
+                messages = refresh_chat_system(messages)
+            except Exception as e:
+                print(ui(f"\n❌ Automate error: {e}\n"))
             continue
         if low.startswith("/improve"):
             focus = user_input[8:].strip() or None
@@ -1376,7 +1806,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     configure_stdio()
 
     parser = argparse.ArgumentParser(
-        description="Fable 5 Offline Agent — chat, loops, self-improving skills "
+        description="Fable 5 Offline Agent — chat, build, automate, loops, hermes "
         f"({PLATFORM_LABEL})"
     )
     parser.add_argument("--loop", metavar="GOAL", help="Run loop mode with this goal, then exit")
@@ -1384,6 +1814,16 @@ def main(argv: Optional[list[str]] = None) -> int:
         "--hermes",
         metavar="GOAL",
         help="Hermes loop: SOUL + smart RAG + live repair + self-stop + compress",
+    )
+    parser.add_argument(
+        "--build",
+        metavar="GOAL",
+        help="BUILD multi-file scaffold under workspace/",
+    )
+    parser.add_argument(
+        "--automate",
+        metavar="WORKFLOW",
+        help="Run automation recipe (name or path under workflows/)",
     )
     parser.add_argument("--success", metavar="COND", help="Checkable success condition for --loop/--hermes")
     parser.add_argument("--max-cycles", type=int, default=DEFAULT_MAX_CYCLES)
@@ -1439,8 +1879,10 @@ def main(argv: Optional[list[str]] = None) -> int:
     except OSError:
         pass
 
-    # Ensure skills dir exists early
+    # Ensure dirs exist early
     skills_root()
+    ensure_default_workflows()
+    workspace_root()
 
     if args.doctor:
         return doctor()
@@ -1453,6 +1895,22 @@ def main(argv: Optional[list[str]] = None) -> int:
         print(ui(f"⚠️  {msg}"))
         print("  Run with --doctor for a full multi-platform check.")
         print(f"  Then: ollama pull {MODEL_NAME}  (if using Ollama)\n")
+
+    if args.build:
+        try:
+            run_build(client, system, args.build)
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.automate:
+        try:
+            run_automate(client, system, args.automate)
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
 
     if args.compress_memory is not None:
         focus = args.compress_memory.strip() or None
