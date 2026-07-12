@@ -1,0 +1,25 @@
+{
+  "name": "freight-plan-review",
+  "description": "Structure a freight plan / strategic freight network review from user evidence or Future Connect notes — not professional advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Use skill urban-planner-competencies plan-freight + knowledge/urban-planning/freight-plan.md. Do not invent corridors or volumes."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill urban-planner-competencies (procedures plan-freight and, if relevant, future-connect-freight) and knowledge/urban-planning/freight-plan.md plus at-future-connect-portal.md, produce a freight plan review: (1) verdict first (2) scope and sources (3) generators and network summary (4) issues/opportunities (5) options vs evaluation criteria matrix (6) recommended package and risks (7) engagement needs (8) explicit non-claims. If user only has Future Connect context, structure a portal observation checklist and a one-page issues note template filled only with stated facts.",
+      "criteria": [
+        "Verdict first on freight problems and direction",
+        "Evaluation criteria from freight module used",
+        "Sources cited or marked missing",
+        "No invented volumes or strategic classifications",
+        "Options include do-minimum or equivalent",
+        "Non-claims / not professional advice present"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

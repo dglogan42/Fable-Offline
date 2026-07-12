@@ -596,23 +596,28 @@ PURPOSE → privacy-design-planner → privacy-host-map → engineer verify → 
 
 ---
 
-## 19. Urban planner competencies
+## 19. Urban planner competencies (incl. freight)
 
-**Trigger:** urban planning / urban design careers, skill audits, PG study (e.g. Master of Urban Design), planning-assistant agent design.
+**Trigger:** urban planning / urban design careers, skill audits, PG study, **freight / strategic freight networks**, Future Connect, planning-assistant agent design.
 
 ### 19.1 Four areas
-1. **Technical & analytical** — GIS, data/stats, CAD/3D, regulatory knowledge  
-2. **Communication & interpersonal** — engagement, presentation, mediation, teams  
-3. **Design & strategic** — vision, master planning/revitalisation, project evaluation  
-4. **Management & organisation** — decision making, leadership  
+1. **Technical & analytical** — GIS, data/stats, CAD/3D, regulatory knowledge, **freight & goods data**  
+2. **Communication & interpersonal** — engagement, **freight stakeholders**, presentation, mediation, teams  
+3. **Design & strategic** — vision, master planning, **multimodal + freight network planning**, evaluation  
+4. **Management & organisation** — decision making, leadership, programme alignment  
 
-### 19.2 Skill & knowledge
+### 19.2 Freight module
+Procedures: **plan-freight**, **future-connect-freight**.  
+Knowledge: `knowledge/urban-planning/freight-plan.md`, `at-future-connect-portal.md`.  
+Workflow: `freight-plan-review`.
+
+### 19.3 Skill & knowledge
 - Skill: `urban-planner-competencies`  
 - Framework: `knowledge/urban-planning/competencies.md`  
-- Workflow: `urban-planner-checkpoint`  
+- Workflow: `urban-planner-checkpoint` · `freight-plan-review`  
 
-### 19.3 Boundaries
-Not legal or planning consent advice. Do not invent zoning rules. Programme marketing ≠ competence (use `education-claim-audit` / privacy maps when relevant).
+### 19.4 Boundaries
+Not legal or planning consent advice. Do not invent zoning rules or freight hierarchy labels. Programme marketing ≠ competence (use `education-claim-audit` / privacy maps when relevant).
 
 ---
 
@@ -677,7 +682,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md
    - Education: `--education` · `/education` · `--automate lpu-full-audit` · knowledge/education/
    - Privacy: `--privacy` · `/privacy` · `--automate privacy-design-plan` · knowledge/privacy/
-   - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · knowledge/urban-planning/
+   - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · `--automate freight-plan-review` · knowledge/urban-planning/
    - PDF: `--pdf file.pdf` · `/pdf` · skill `pdf-render` · `--automate pdf-extract-review`
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 

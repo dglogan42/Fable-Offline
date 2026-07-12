@@ -23,7 +23,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
 | **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
-| **Urban planning** | Planner competency framework · skill audit · growth plans (`knowledge/urban-planning/`) |
+| **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
@@ -196,6 +196,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
+| `freight-plan-review` | Freight network / freight plan structured review |
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 
 ## Broker scrape, user model & audit
@@ -297,27 +298,33 @@ Curated knowledge:
 
 **Not legal advice.** Re-verify with live Network capture and the published privacy policy before decisions.
 
-## Urban planner competencies
+## Urban planner competencies (incl. freight)
 
 Four-area practice framework for study and career coaching (not professional registration advice):
 
-1. **Technical & analytical** — GIS, data/stats, CAD/3D, regulatory knowledge  
-2. **Communication & interpersonal** — engagement, presentation, mediation, teams  
-3. **Design & strategic** — vision, master planning, project evaluation  
-4. **Management & organisation** — decisions, leadership  
+1. **Technical & analytical** — GIS, data/stats, CAD/3D, regulatory knowledge, **freight & goods data**  
+2. **Communication & interpersonal** — engagement, **freight stakeholders**, presentation, mediation, teams  
+3. **Design & strategic** — vision, master planning, **multimodal + freight networks**, project evaluation  
+4. **Management & organisation** — decisions, leadership, programme alignment  
+
+**Freight module:** strategic vs supporting freight networks, generators, first/last mile, mode split, evaluation criteria (access, safety, equity, environment, resilience, land use, deliverability). Procedures: `plan-freight`, `future-connect-freight` (AT Future Connect portal).
 
 ```bash
 python fable5_offline_agent.py --automate urban-planner-checkpoint
-# Chat: "Audit my urban planner skills against the four areas: [paste experience]"
+python fable5_offline_agent.py --automate freight-plan-review
+# Chat: "Draft a freight plan issues note for [area]"
+# Chat: "Future Connect freight walkthrough for Current vs First Decade"
 ```
 
 | Resource | Path |
 |----------|------|
 | Skill | `skills/urban-planner-competencies.md` |
-| Knowledge | `knowledge/urban-planning/competencies.md` |
-| Workflow | `workflows/urban-planner-checkpoint.json` |
+| Framework | `knowledge/urban-planning/competencies.md` |
+| Freight module | `knowledge/urban-planning/freight-plan.md` |
+| Future Connect | `knowledge/urban-planning/at-future-connect-portal.md` |
+| Workflows | `urban-planner-checkpoint`, `freight-plan-review` |
 
-Cross-links: programme marketing → `education-claim-audit` / privacy maps (e.g. UoA PG webinars); planning-assistant agents → HITL + no invented zoning.
+Cross-links: programme marketing → `education-claim-audit` / privacy maps; PDFs → `pdf-render`; portal privacy → `knowledge/privacy/at-future-connect-hosts.md`.
 
 **Not legal or planning consent advice.**
 

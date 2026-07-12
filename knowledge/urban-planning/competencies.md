@@ -23,11 +23,13 @@ Core competencies range from technical work in mapping software to soft skills: 
 | **Data analysis & statistics** | Interpret demographic, economic, and environmental data; discern trends; forecast community needs |
 | **CAD & 3D modelling** | Create spatial plans and architectural / urban layouts |
 | **Regulatory knowledge** | Local zoning, building codes, environmental regulations, resource management policies |
+| **Freight & goods data** | HGV volumes, freight generators (ports, logistics), first/last-mile constraints; observed vs modelled |
 
 **Practice notes**
 - Always bind regulation to a **named jurisdiction** and document version.  
 - Label forecasts as scenarios with uncertainty.  
 - GIS outputs need metadata (source, date, CRS).  
+- Freight metrics: never invent counts; cite year and method.  
 
 ---
 
@@ -36,13 +38,15 @@ Core competencies range from technical work in mapping software to soft skills: 
 | Skill | Why it matters |
 |-------|----------------|
 | **Stakeholder engagement** | Involve community members, business owners, environmental groups in decisions |
+| **Freight stakeholders** | Ports, logistics operators, industrial landowners, RCAs, rail, corridor communities |
 | **Public speaking & presentation** | Translate technical concepts for boards and the public |
-| **Mediation & negotiation** | Facilitate when developers, policymakers, and residents conflict |
-| **Team collaboration** | Multidisciplinary work with architects, civil engineers, economists |
+| **Mediation & negotiation** | Facilitate when developers, policymakers, and residents conflict (incl. freight amenity vs access) |
+| **Team collaboration** | Multidisciplinary work with architects, civil engineers, economists, transport/freight planners |
 
 **Practice notes**
 - Engagement without feedback loops is theatre — record what changed.  
 - In Aotearoa NZ contexts, plan for appropriate engagement with **mana whenua** (process depends on project; do not invent protocols).  
+- Freight corridors need **both** industry and residential voices.  
 
 ---
 
@@ -52,11 +56,14 @@ Core competencies range from technical work in mapping software to soft skills: 
 |-------|----------------|
 | **Creative vision** | Visualise untapped potential; envision alternative social and physical environments |
 | **Master planning & revitalisation** | Spatial structure, functional public space, sustainable transit systems |
-| **Project evaluation** | Feasibility, sustainability, and social impact of proposals |
+| **Multimodal strategic networks** | Integrate passenger modes **and freight**; hierarchy of strategic vs supporting links |
+| **Freight network planning** | Mode split, land-use fit, first/last mile, time horizons, intermodal nodes |
+| **Project evaluation** | Feasibility, sustainability, and social impact of proposals (incl. freight reliability, noise, severance) |
 
 **Practice notes**
 - Vision without constraints is fantasy; constraints without vision is stagnation.  
-- Evaluate with explicit criteria (access, housing, hazard, cost, equity, ecology).  
+- Evaluate with explicit criteria (access, housing, hazard, cost, equity, ecology, **freight access/safety**).  
+- Full freight module: `knowledge/urban-planning/freight-plan.md`.  
 
 ---
 
@@ -66,10 +73,11 @@ Core competencies range from technical work in mapping software to soft skills: 
 |-------|----------------|
 | **Decision making** | Choose viable, safe plans under budgets and land constraints |
 | **Leadership & organisation** | Multiple projects, staff oversight, alignment with government mandates |
+| **Programme alignment** | Link local freight actions to regional transport / port / investment pathways |
 
 **Practice notes**
 - Decision logs beat undocumented “professional judgment.”  
-- Align to higher-order plans (regional policy, district plan, transport strategy).  
+- Align to higher-order plans (regional policy, district plan, transport strategy, **freight network plans**).  
 
 ---
 
@@ -96,13 +104,19 @@ python fable5_offline_agent.py --privacy  # if analysing programme marketing pag
 # "Audit my urban planner competencies: [paste CV]"
 # "Plan 6 months growth toward council junior planner"
 # "Map Master of Urban Design webinar to competencies"
+# "Draft a freight plan issues note for [area] using Future Connect freight mode"
 python fable5_offline_agent.py --automate urban-planner-checkpoint
+python fable5_offline_agent.py --automate freight-plan-review
 ```
 
 ### Related knowledge
-- UoA PG webinar marketing (Urban Design among topics): `knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md` — **privacy map**, not curriculum endorsement.  
+- Freight module: `knowledge/urban-planning/freight-plan.md`  
+- AT Future Connect portal: `knowledge/urban-planning/at-future-connect-portal.md`  
+- Future Connect privacy: `knowledge/privacy/at-future-connect-hosts.md`  
+- UoA PG webinar marketing: `knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md` — **privacy map**, not curriculum endorsement.  
 - Education claims: skill `education-claim-audit`.  
 - Privacy-aware tools: skills `privacy-host-map`, `privacy-design-planner`.  
+- PDFs/reports: skill `pdf-render`.  
 
 ---
 
