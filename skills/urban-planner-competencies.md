@@ -103,6 +103,7 @@ When using AT **Future Connect** mapping portal (`knowledge/urban-planning/at-fu
 | **Freight network / freight plan** | **plan-freight** |
 | Future Connect freight walkthrough | **future-connect-freight** |
 | **Climate plan / emissions modelling** | **plan-climate** (delegate detail to skill `climate-modeling`) |
+| **Council compliance / enforcement approach** | **map-compliance-policy** |
 | Short coaching reply | **brief** |
 
 ---
@@ -209,6 +210,21 @@ Local knowledge: `knowledge/urban-planning/freight-plan.md`, Future Connect port
 
 ---
 
+## map-compliance-policy
+
+When Auckland Council (or similar) **compliance / enforcement policy** pages are in scope:
+
+1. State **purpose** (environment, health, safety, well-being).  
+2. List **coverage topics** (laws used, principles, encourage vs respond, risk, complaints, cost recovery).  
+3. Flag **status** (current / under review / renewal date claims).  
+4. Separate **landing summary** from full policy PDF if only HTML summary is available.  
+5. Cross-link privacy of the web page if HTML dump provided (`privacy-host-map`).  
+6. Local seed: `knowledge/urban-planning/ac-compliance-policy.md`.  
+
+**Do not** invent prosecution criteria or fee schedules.
+
+---
+
 ## plan-climate
 
 When climate plans or modelling enter an urban/transport brief:
@@ -265,7 +281,8 @@ Guided checklist for AT Future Connect (when user can access the portal or paste
 - `knowledge/urban-planning/at-future-connect-portal.md` — AT Future Connect UI  
 - `knowledge/climate/auckland-climate-plan.md` — Te Tāruke-ā-Tāwhiri snapshot + modelling  
 - `knowledge/climate/climate-modeling.md` — pathway hygiene  
-- Privacy: `knowledge/privacy/at-future-connect-hosts.md`  
+- `knowledge/urban-planning/ac-compliance-policy.md` — AC Compliance Policy summary  
+- Privacy: `knowledge/privacy/at-future-connect-hosts.md`, `ac-compliance-policy-hosts.md`  
 
 ## Note
 Competencies are **practice standards for learning**, not a substitute for professional registration or council/AT process where required.
