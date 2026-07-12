@@ -16,11 +16,14 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Build** | Multi-file project scaffold under `workspace/build-*/` (PLAN + FILE blocks) |
 | **Automate** | Multi-step JSON recipes in `workflows/` (build → hermes → improve → …) |
 | **Engineer** | **Loop like an engineer**: purpose once · PLAN→DO→VERIFY · **LOOP_STATE** · stop gates · optional bilevel |
+| **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck (sample size, OOS, multiple testing, survivorship) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
 
 **Prompt vs loop:** a prompt is one instruction. A loop is a goal the agent keeps working toward — discover, plan, do, verify, feed back — until success or a hard limit. Three make-or-break parts: **verifier**, **state**, **stop**.
+
+**Edge vs luck:** the market manufactures convincing hot streaks and backtests by chance. Default verdict on small samples is *insufficient evidence* — treat skill claims as guilty of luck until large, out-of-sample, honestly tested numbers force otherwise.
 
 **Repository:** [github.com/dglogan42/Fable-Offline](https://github.com/dglogan42/Fable-Offline)
 
@@ -53,13 +56,15 @@ Fable-Offline/
 │   ├── INDEX.md
 │   ├── build-and-automate.md
 │   ├── hermes-loop.md
+│   ├── edge-vs-luck.md
 │   ├── loop-engineer.md
 │   └── rederive-numbers.md
 ├── workflows/                   # Automation recipes (*.json)
 │   ├── hello-project.json
 │   ├── daily-review.json
 │   ├── rigor-check.json
-│   └── engineer-memo.json
+│   ├── engineer-memo.json
+│   └── edge-audit.json
 ├── workspace/                   # Build outputs (gitignored; .gitkeep kept)
 ├── memory/                      # Runtime memory (gitignored; .gitkeep kept)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -157,8 +162,17 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `daily-review` | Compress memory → self-improve skills |
 | `rigor-check` | Short Hermes loop on a numeric claim |
 | `engineer-memo` | Loop-engineer a decision memo to score ≥ 8 |
+| `edge-audit` | Edge-vs-luck audit (streaks, backtests, “system works” claims) |
 
-Workflow step types: `build` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note`.
+```bash
+# Chat: describe the strategy, then
+./fable5 --automate edge-audit
+# or
+./fable5 --engineer "Audit this system for edge vs luck: [paste rules + stats]" \
+  --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
+```
+
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments can go in `workflows/_local/` (gitignored).
 
@@ -319,6 +333,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Self-improvement** — Memory + skills compound around a frozen local model.
 - **Hermes behaviors** — Soul file, smart RAG, self-stopping loops, live repair, memory compression.
 - **Build & automate** — Multi-file scaffolds and multi-step offline workflow recipes.
+- **Edge vs luck** — Fooled-by-Randomness style checklist (LLN, OOS, multiple testing, survivorship, regression to the mean).
 
 ## License
 

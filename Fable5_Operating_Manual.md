@@ -419,6 +419,42 @@ A workflow is a JSON recipe with ordered **steps**:
 
 ---
 
+## 13. Edge vs luck (Fooled by Randomness)
+
+**Trigger:** trading systems, backtests, performance streaks, “this strategy works,” fund rankings, agent/loop success on small samples, any claim that a hot run proves skill.
+
+### 13.1 The expensive mistake
+
+The worst market error is not a bad trade — it is **mistaking a lucky streak for a skill**. Markets hand out green weeks and staircase backtests to people with **no edge**, by chance. The learnable skill is separating real edge from manufactured luck.
+
+### 13.2 Layers of doubt (apply in order)
+
+1. **Brain** — narrative fallacy: you will invent skill stories for random wins (Kahneman). Assume pattern-instinct is wrong until math forces otherwise.
+2. **Truly large numbers** — enough traders × enough trials **guarantees** fake geniuses (Diaconis–Mosteller). A 20-green-trade “prodigy” is usually the lottery the law required.
+3. **Large numbers for truth** — only large samples reveal true edge (Bernoulli). Small samples make real 51% edges and pure luck **look identical**.
+4. **Backtests lie** — optimizers mine noise; few trials fake significance; correct for multiple testing (e.g. deflated Sharpe — López de Prado / Bailey). Published edges decay OOS and after discovery.
+5. **Regression to the mean** — extremes fade (Galton). Chasing last month’s hottest system buys luck before it expires.
+6. **Tools that work** — out-of-sample / walk-forward; trials-adjusted significance; adequate N; count the graveyard (survivorship bias — Taleb).
+
+### 13.3 Default verdict
+
+For any small sample, the honest answer to “does my system work?” is almost always:
+
+> **I do not have enough evidence yet.**
+
+Treat the best idea as **guilty of being luck** until a large, out-of-sample, honestly tested body of evidence forces provisional belief. Finding a pattern is free; a convincing backtest is free; a hot streak is free. **Edge is the doubt.**
+
+### 13.4 Required output when this section fires
+
+1. Verdict first: **Insufficient evidence** | **Consistent with luck/overfitting** | **Provisional edge** | **Not proven**
+2. What LLN / multiple testing / survivorship can produce without skill
+3. What evidence would change your mind (N, OOS design, costs, trials count)
+4. One concrete risk of believing the streak now
+
+Use skill `edge-vs-luck` and, for multi-step audits, `/engineer` with the checklist as success criteria.
+
+---
+
 ## Loop instruction block (for scheduled / harness agents)
 
 Paste-ready policy for each cycle:
@@ -446,7 +482,8 @@ spent. Otherwise end the cycle cleanly for the next run.
    - `python fable5_offline_agent.py --automate daily-review` — workflow recipe (Section 12)
    - `python fable5_offline_agent.py --improve` — skill library growth (Section 10)
    - `python fable5_offline_agent.py --compress-memory` — memory fold
-   - In chat: `/build` · `/automate` · `/hermes` · `/loop` · `/improve` · `/workflows`
+   - In chat: `/build` · `/automate` · `/engineer` · `/hermes` · `/loop` · `/improve` · `/workflows`
+   - Edge vs luck: skill `edge-vs-luck` · `python fable5_offline_agent.py --automate edge-audit`
 
 2. **Ollama / Open WebUI / LM Studio:**
    - Use this file as system prompt for one-shot rigor.

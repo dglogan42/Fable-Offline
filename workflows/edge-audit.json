@@ -1,0 +1,25 @@
+{
+  "name": "edge-audit",
+  "description": "Loop-engineer an edge-vs-luck audit until checklist criteria clear",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Fooled by Randomness protocol: guilty of luck until large OOS evidence says otherwise."
+    },
+    {
+      "type": "engineer",
+      "goal": "Audit the user's strategy or streak claim under edge-vs-luck skill. Assume luck until proven otherwise. Deliver verdict first, gates table, and what evidence would change the mind. Do not invent trade data — mark missing inputs as insufficient evidence.",
+      "criteria": [
+        "Verdict is one of: Insufficient evidence, Consistent with luck/overfitting, Provisional edge, Not proven",
+        "Sample size and out-of-sample status are stated honestly",
+        "Multiple-testing / backtest-search exposure is named",
+        "Survivorship and costs are addressed or flagged unknown",
+        "What would change the mind is specific (N, OOS, costs)",
+        "One concrete risk of believing the narrative now"
+      ],
+      "min_score": 8,
+      "max_cycles": 5,
+      "self_improve": false
+    }
+  ]
+}
