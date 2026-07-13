@@ -93,13 +93,12 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
     No Flex images, cracked MEE clients, enrollment tokens, or student PII.
     Not educational or legal advice.
 
-11. Animation toolkits (2D, stop-motion, 3D)
+11. Animation toolkits (2D, stop-motion, 3D) and Roblox Studio
     animation-dev-kit (Krita), stop-motion-dev-kit (Stop Motion Studio and/or
-    Cloud Stop Motion at cloudstopmotion.com for Chromebook/browser cloud
-    projects), and 3d-animation-dev-kit (Blender-first; optional school map
-    seeds). No cracked DCC. No Fable auto-upload. Not careers/enrollment
-    advice. Do not commit huge .kra / SMS / cloud exports / .blend / EXR or
-    student rosters (workspace/creative/ gitignored).
+    Cloud Stop Motion), 3d-animation-dev-kit (Blender-first), and
+    roblox-studio-resource-kit (create.roblox.com/docs/studio/setup). No cracked
+    DCC/Studio. No Fable auto-upload or Roblox cookies. Not careers advice.
+    Do not commit huge .kra / SMS / .blend / .rbxl / EXR or student rosters.
 
 12. Automatic prompt generator and swarm prompts
    auto_prompt_generator.py, skill prompt-generator, knowledge/swarm/, and

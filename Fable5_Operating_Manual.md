@@ -1024,6 +1024,14 @@ Map only; user operates school accounts HITL. No student PII in Fable. Not legal
 **Automation:** `minecraft-education-resource-kit`.  
 Prefer official for licensing; wiki for exclusive features (Agent, borders, Classroom Mode). Wiki prices VERIFY LIVE. No cracked clients. Hand off via `google-for-education`.
 
+## 20w. Roblox Studio resource kit
+**Trigger:** Roblox Studio, create.roblox.com, install Studio, Luau, publish Roblox experience.  
+**Skill:** `roblox-studio-resource-kit` — **rs-plan**, **sysreq-check**, **install-studio**, **first-launch**, **customize-studio**, **update-studio**, **beta-features**, **hello-place**, **studio-tools-map**, **education-lab**, **publish-handoff**.  
+**Source:** [Studio setup](https://create.roblox.com/docs/studio/setup) · [Studio overview](https://create.roblox.com/docs/studio).  
+**Knowledge:** `knowledge/media/roblox-studio.md`.  
+**Automation:** `roblox-studio-resource-kit`.  
+Free official Win/Mac app; not for Chromebook creation. Keep Studio updated. No cracked clients; no account cookies in git.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

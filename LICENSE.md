@@ -174,15 +174,17 @@ those products.
 | `animation-dev-kit` | [Krita](https://krita.org/) · [Animation manual](https://docs.krita.org/en/user_manual/animation.html) | FOSS frame-by-frame; optional FFmpeg |
 | `stop-motion-dev-kit` | [Stop Motion Studio](https://www.stopmotionstudio.com/download/index.html) · [Cloud Stop Motion](https://cloudstopmotion.com/) | Local Studio and/or browser Chromebook / ChromeOS Flex cloud; no cracked installs; no auto-upload by Fable |
 | `3d-animation-dev-kit` | [Blender](https://www.blender.org/download/) (default) | FOSS CG pipeline; Maya/Houdini/C4D only if user already licensed |
+| `roblox-studio-resource-kit` | [Roblox Studio setup](https://create.roblox.com/docs/studio/setup) | Free official Win/Mac Studio; Roblox terms apply; no cracked clients |
 
 Public **education map** seeds (e.g. [Media Design School 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees))
 are **not** enrollment, careers, or immigration advice. Re-verify fees, entry,
 and rankings live. **Cloud Stop Motion** stores projects on a third-party
 cloud; school use requires following institution and child-privacy policies
 (COPPA/age rules as applicable). The Software does **not** upload files for
-the user, hold cloud passwords, or authorize cracked DCC tools. Do not commit
-multi-GB masters (`.kra`, SMS projects, cloud exports, `.blend`, EXR) or
-student rosters — keep media under `workspace/creative/` (gitignored).
+the user, hold cloud passwords or Roblox session cookies, or authorize cracked
+DCC / Studio tools. Do not commit multi-GB masters (`.kra`, SMS projects, cloud
+exports, `.blend`, `.rbxl`, EXR) or student rosters — keep media under
+`workspace/creative/` (gitignored).
 
 ### 12. Automatic prompt generator and swarm prompts
 

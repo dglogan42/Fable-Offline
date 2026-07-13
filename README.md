@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS / ChromeOS Flex install prep**, **Google for Education**, **Minecraft Education** ([education.minecraft.net](https://education.minecraft.net/en-us) + [minecraft.wiki](https://minecraft.wiki/w/Minecraft_Education)), **Steam SIM soak**, **math/physics**, **creative pipelines**, and **2D / stop-motion / 3D animation kits** (Krita · Stop Motion Studio · [Cloud Stop Motion](https://cloudstopmotion.com/) · Blender), plus a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS / ChromeOS Flex install prep**, **Google for Education**, **Minecraft Education**, **Roblox Studio**, **Steam SIM soak**, **math/physics**, **creative pipelines**, and **2D / stop-motion / 3D kits** (Krita · Stop Motion Studio · Cloud Stop Motion · Blender), plus a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 **Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE.md) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
@@ -51,6 +51,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Animation dev kit (Krita)** | Frame-by-frame plan · walk cycle · render/FFmpeg ([Krita manual](https://docs.krita.org/en/user_manual/animation.html)) |
 | **Stop / motion dev kit** | Studio + **Cloud Stop Motion** (Chromebook cloud) ([cloudstopmotion.com](https://cloudstopmotion.com/)) |
 | **3D animation dev kit** | Blender-first CG pipeline · optional VFX study map ([MDS seed](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees)) |
+| **Roblox Studio resource kit** | Free Studio setup ([create.roblox.com/docs/studio/setup](https://create.roblox.com/docs/studio/setup)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 
@@ -130,6 +131,7 @@ Fable-Offline/
 | Krita `.kra` / `03_krita/` / render sequences | Local 2D animation masters |
 | Stop Motion Studio / Cloud SM dumps (`02_sms_project/`, `02_cloud_exports/`) | Local project libraries |
 | Blender `.blend` / EXR / `03_shots/` / caches / FBX·USD·VDB dumps | Local 3D/CG weight |
+| Roblox `.rbxl` / `.rbxm` places · session cookies | Local Studio projects + secrets |
 | `generated_prompts/` bulk dumps | Local LLM prompt-gen output |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
@@ -162,7 +164,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | ChromeOS Flex | `knowledge/chromeos/` | `chromeos-flex-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
-| YouTube Live / creative / 2D / stop-mo / 3D | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit` |
+| YouTube Live / creative / 2D / stop-mo / 3D / Roblox | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit`, `roblox-studio-resource-kit` |
 | Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
 | Swarm / prompt generator | `knowledge/swarm/` | `prompt-generator` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
@@ -313,6 +315,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `chromeos-flex-install-prep` | ChromeOS Flex USB install plan for existing PC/Mac |
 | `google-for-education` | Google for Education hub map (Workspace · Classroom · devices) |
 | `minecraft-education-resource-kit` | Minecraft Education lessons, license, unit scaffold |
+| `roblox-studio-resource-kit` | Roblox Studio install, sysreqs, first place, docs map |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
@@ -523,6 +526,32 @@ python fable5_offline_agent.py --automate minecraft-education-resource-kit
 | Wiki | [minecraft.wiki/w/Minecraft_Education](https://minecraft.wiki/w/Minecraft_Education) |
 
 **Refuse:** cracked clients. Wiki prices/country maps can be stale. No student PII in git.
+
+## Roblox Studio resource kit
+
+Free **Windows/Mac** creator app for Roblox experiences. Official setup: [create.roblox.com/docs/studio/setup](https://create.roblox.com/docs/studio/setup).
+
+| Stage | Focus |
+|-------|--------|
+| Sysreqs | Min: Win 10 / macOS 10.14 · 3 GB RAM · Rec: Win 11 / macOS 14+ · 8 GB · 1600×900 |
+| Install | Download Studio → `RobloxStudio.exe` / `.dmg` → Launch → sign in [roblox.com](https://www.roblox.com/) |
+| Devices | **PC/Mac only for Studio** — not Chromebooks/phones for creation (education FAQ) |
+| Keep current | In-app Update button; experiences use latest engine |
+| Customize | Toolbar, layout, shortcuts, Studio Settings (Alt+S / ⌥S) |
+| First place | Baseplate → Part → Script print → Play test → save to account |
+
+```bash
+python fable5_offline_agent.py --automate roblox-studio-resource-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/roblox-studio-resource-kit.md` |
+| Knowledge | `knowledge/media/roblox-studio.md` |
+| Workflow | `workflows/roblox-studio-resource-kit.json` |
+| Docs hub | [create.roblox.com/docs/studio](https://create.roblox.com/docs/studio) |
+
+**Refuse:** cracked Studio, Robux scams, account cookie theft. Large `.rbxl` places stay local (gitignored).
 
 ## 3D animation dev kit (CG · Blender-first)
 
@@ -1398,6 +1427,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **ChromeOS Flex install prep** — official Flex on PC/Mac ([product](https://chromeos.google/products/chromeos-flex/)); USB Recovery Utility; certified models.
 - **Google for Education** — Workspace · Classroom · Chromebooks map ([edu.google.com](https://edu.google.com/intl/ALL_us/)).
 - **Minecraft Education resource kit** — official hub + [Minecraft Wiki](https://minecraft.wiki/w/Minecraft_Education) features/sysreqs (re-check license on Microsoft).
+- **Roblox Studio resource kit** — official setup ([create.roblox.com/docs/studio/setup](https://create.roblox.com/docs/studio/setup)); free Win/Mac Studio.
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
@@ -1444,6 +1474,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
 | ChromeOS Flex / GfE / Minecraft Education | Third-party ISOs, cracked MEE, student PII, invented prices, or compliance guarantees |
+| Roblox Studio | Cracked Studio, Robux scams, session cookies, or huge `.rbxl` in public git |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |

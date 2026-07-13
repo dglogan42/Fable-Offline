@@ -299,6 +299,13 @@ workspace/creative/**/*.usd
 workspace/creative/**/*.usda
 workspace/creative/**/*.usdc
 workspace/creative/**/*.vdb
+# Roblox Studio places / team create dumps (curated notes.md OK)
+workspace/creative/**/*.rbxl
+workspace/creative/**/*.rbxlx
+workspace/creative/**/*.rbxm
+workspace/creative/**/*.rbxmx
+**/RobloxStudio*cookie*
+**/*ROBLOSECURITY*
 # Allow small curated notes/presets only
 !workspace/creative/**/notes.md
 !workspace/creative/**/05_presets/**/*.md

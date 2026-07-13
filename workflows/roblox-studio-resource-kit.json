@@ -1,0 +1,14 @@
+{
+  "name": "roblox-studio-resource-kit",
+  "description": "Plan Roblox Studio setup: sysreqs, official install, first place, docs map",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Setup: https://create.roblox.com/docs/studio/setup — skill roblox-studio-resource-kit. Free official Studio only. Win/Mac (not Chromebook for creation). No cracked clients, no account cookies in git. Not legal advice."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill roblox-studio-resource-kit and knowledge/media/roblox-studio.md from official create.roblox.com/docs/studio/setup, produce rs-plan: (1) verdict on machine (2) sysreq-check — min Win10/macOS 10.14 + 3GB RAM; recommended Win11/macOS 14+ + 8GB RAM + 1600×900; Studio not for Chromebooks/mobile creation per education FAQ (3) install-studio steps: Download Studio → RobloxStudio.exe/.dmg → Launch → sign in roblox.com (4) first-launch + customize-studio (toolbar, layout, Alt+S/⌥S settings, shortcuts) (5) update-studio + beta-features caution (6) hello-place: Baseplate, Part, print script, Play test (7) studio-tools-map with official doc paths (Explorer, Properties, Script Editor, Testing, Terrain, Plugins) (8) education-lab if school (9) publish-handoff HITL + ToS (10) OPEN — VERIFY LIVE docs. Not legal advice. User operates Studio HITL."
+    }
+  ]
+}

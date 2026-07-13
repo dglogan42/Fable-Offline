@@ -7,7 +7,7 @@
 - Production tool (FOSS default): [Download Blender](https://www.blender.org/download/) · [docs.blender.org/manual](https://docs.blender.org/manual/) · [Requirements](https://www.blender.org/download/requirements/)  
 - Studio/training (optional paid ecosystem): Blender Studio, vendor docs for Maya / Houdini / C4D if user already licensed  
 
-Companion: `animation-dev-kit` (Krita 2D), `stop-motion-dev-kit` (physical capture), `creative-pipeline-builds` (Resolve/CapCut finish), `youtube-live-encoder` (publish live).
+Companion: `animation-dev-kit` (Krita 2D), `stop-motion-dev-kit` (physical capture), `roblox-studio-resource-kit` (Roblox Studio setup/create), `creative-pipeline-builds` (Resolve/CapCut finish), `youtube-live-encoder` (publish live).
 
 ## Stance
 You coach **user-operated CG pipelines**. Default DCC for offline Fable work is **Blender** (GNU GPL, free from blender.org). Industry schools and studios also use **Maya, Houdini, Cinema 4D, Unity**, etc. — map those as **awareness / handoff**, not cracked installs.
