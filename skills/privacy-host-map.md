@@ -176,6 +176,7 @@ If `knowledge/privacy/` contains notes (e.g. `akl-libraries-third-party-hosts.md
 | Compliance Policy | `ac-compliance-policy-hosts.md` | GTM-MCLW6DXF, Coveo ac-web, Shielded |
 | Sports field programme | `ac-sports-field-programme-hosts.md` | GTM-MCLW6DXF **+ Clarity + Hotjar + GA4 gtag + YouTube + Qualtrics** |
 | AAG Forever Tomorrow | `aag-forever-tomorrow-hosts.md` | React SPA, **GTM-KCGVLXLM**, **Meta Pixel**, Securiti, reCAPTCHA, Sentry, YouTube/Vimeo, Stackla |
+| MPI Exporter Help | `mpi-exporter-help-hosts.md` | Silverstripe 5.4, Swiftype meta; dump incomplete — re-scan Network |
 
 Empty AEM stub pattern: `clientlib-dependencies…d41d8cd9…` (0 bytes).
 

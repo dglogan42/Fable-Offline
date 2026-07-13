@@ -105,6 +105,7 @@ When using AT **Future Connect** mapping portal (`knowledge/urban-planning/at-fu
 | **Climate plan / emissions modelling** | **plan-climate** (delegate detail to skill `climate-modeling`) |
 | **Council compliance / enforcement approach** | **map-compliance-policy** |
 | **Open space / sports field capacity programmes** | **map-open-space-capacity** |
+| **Primary sector export help (MPI)** | **map-export-help** (see `knowledge/trade/`) |
 | Short coaching reply | **brief** |
 
 ---
@@ -208,6 +209,20 @@ Structure a stakeholder process:
 8. Explicit non-claims  
 
 Local knowledge: `knowledge/urban-planning/freight-plan.md`, Future Connect portal notes.
+
+---
+
+## map-export-help
+
+When **MPI Exporter Help** or primary-industry export guidance is in scope:
+
+1. Agency and service purpose (understand export requirements).  
+2. Contact channels (phone/form/webinars) with **verify live** tags.  
+3. Product/market themes mentioned — not as a full compliance checklist.  
+4. Boundaries: not customs clearance, not destination law.  
+5. Privacy of the govt web page if HTML provided.  
+
+Local seed: `knowledge/trade/mpi-exporter-help.md`, `knowledge/privacy/mpi-exporter-help-hosts.md`.
 
 ---
 
