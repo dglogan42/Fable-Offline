@@ -153,6 +153,9 @@ knowledge/pdf/_local/
 knowledge/climate/_local/
 knowledge/trade/_local/
 knowledge/culture/_local/
+knowledge/aem/_local/
+knowledge/health/_local/
+knowledge/public-safety/_local/
 
 # PDFs and dumped PDF.js viewer bundles (use curated knowledge/pdf notes only)
 *.pdf

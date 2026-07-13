@@ -1,0 +1,25 @@
+{
+  "name": "aem-page-audit",
+  "description": "Fingerprint Adobe AEM page, clientlibs, and privacy processors — not a penetration test",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill aem-site-agent + privacy-host-map. Empty d41d8cd9 clientlib = empty stub. Not legal advice."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill aem-site-agent and knowledge/aem/aem-patterns.md plus any relevant knowledge/privacy AC AEM host maps, produce: (1) AEM fingerprint verdict (2) clientlib inventory (3) empty-stub callout if present (4) data layer / Coveo / Launch / GTM / Shielded notes (5) full privacy host table LOAD/CONFIG/CLICK/BUNDLE (6) content domain handoff (7) non-claims. If user pasted non-AEM HTML, say so and stop AEM procedures.",
+      "criteria": [
+        "AEM vs not-AEM verdict with evidence",
+        "Clientlibs or scripts inventoried",
+        "Empty clientlib hash explained if present",
+        "Privacy hosts tagged LOAD/CONFIG/CLICK/BUNDLE",
+        "No invented AEM Cloud topology",
+        "Not penetration test disclaimer"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

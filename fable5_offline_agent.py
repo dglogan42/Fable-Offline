@@ -221,6 +221,9 @@ def knowledge_root() -> Path:
     (root / "climate").mkdir(parents=True, exist_ok=True)
     (root / "trade").mkdir(parents=True, exist_ok=True)
     (root / "culture").mkdir(parents=True, exist_ok=True)
+    (root / "aem").mkdir(parents=True, exist_ok=True)
+    (root / "health").mkdir(parents=True, exist_ok=True)
+    (root / "public-safety").mkdir(parents=True, exist_ok=True)
     return root
 
 

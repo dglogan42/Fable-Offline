@@ -648,6 +648,43 @@ Not customs brokerage, biosecurity certification, or freight rate binding. No in
 
 ---
 
+## 20b. Arts & culture agent
+
+**Trigger:** exhibitions, galleries, visitor FAQs, timed tickets, content warnings.
+
+### Skill
+`arts-culture-agent`: **structure-exhibition**, **visitor-ops**, **access-content**, **map-institution**, **map-arts-privacy**, **design-arts-agent**.
+
+### Knowledge
+- `knowledge/culture/arts-culture-framework.md`  
+- `knowledge/culture/aag-forever-tomorrow.md`  
+- Privacy: `knowledge/privacy/aag-forever-tomorrow-hosts.md`  
+
+### Automation
+- `arts-exhibition-brief`  
+
+**Not ticketing advice.** Surface mature-content warnings when present in source.
+
+---
+
+## 20c. Adobe AEM site agent
+
+**Trigger:** HTML with `/etc.clientlibs/`, `clientlib-*`, `adobeDataLayer`, Experience Fragments, Coveo on council sites.
+
+### Skill
+`aem-site-agent`: **fingerprint-stack**, **map-clientlibs**, **audit-empty-clientlib**, **map-datalayer**, **map-search-config**, **map-chrome**, **map-aem-privacy**, **design-aem-agent**.
+
+### Knowledge
+- `knowledge/aem/aem-patterns.md`  
+- AC host maps under `knowledge/privacy/ac-*.md`, `akl-libraries-*.md`  
+
+### Automation
+- `aem-page-audit`  
+
+**Not a penetration test.** Empty `d41d8cd9…` clientlib = empty stub MD5.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”
@@ -712,6 +749,8 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · `--automate freight-plan-review` · knowledge/urban-planning/
    - Climate: skill `climate-modeling` · `--automate climate-plan-review` · knowledge/climate/ · `--pdf` Auckland Climate Plan
    - Export/forwarder: skill `freight-forwarder-exporter` · `--automate freight-export-checkpoint` · knowledge/trade/
+   - Arts: skill `arts-culture-agent` · `--automate arts-exhibition-brief` · knowledge/culture/
+   - AEM: skill `aem-site-agent` · `--automate aem-page-audit` · knowledge/aem/
    - PDF: `--pdf file.pdf` · `/pdf` · skill `pdf-render` · `--automate pdf-extract-review`
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 

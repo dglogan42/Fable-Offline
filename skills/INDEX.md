@@ -5,7 +5,9 @@ Loaded into context on every run so the system compounds without retraining weig
 
 ## Skills
 
+- **aem-site-agent**: [Adobe Experience Manager (AEM) site agent](aem-site-agent.md)
 - **agentic-engineer-roadmap**: [Agentic engineer roadmap (6 months)](agentic-engineer-roadmap.md)
+- **arts-culture-agent**: [Arts & culture agent](arts-culture-agent.md)
 - **broker-claim-audit**: [Broker claim audit (marketing vs evidence)](broker-claim-audit.md)
 - **broker-user-model**: [Broker user model (disciplined retail CFD client)](broker-user-model.md)
 - **build-and-automate**: [Build and automate (offline)](build-and-automate.md)

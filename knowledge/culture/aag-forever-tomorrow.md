@@ -3,7 +3,7 @@
 **URL:** https://www.aucklandartgallery.com/visit/exhibitions/forever-tomorrow-chinese-art-now  
 **Venue:** Auckland Art Gallery Toi o Tāmaki, 1 Kitchener Street, Auckland CBD 1010  
 **Captured:** 2026-07-12 (HTML dump)  
-**Skills:** `privacy-host-map` (web stack), cultural/visitor programming notes  
+**Skills:** `arts-culture-agent`, `privacy-host-map` (web stack)  
 **Not ticketing, visa, or legal advice.** Re-verify dates, prices, and FAQs live.
 
 ---

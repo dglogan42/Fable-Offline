@@ -1,0 +1,25 @@
+{
+  "name": "arts-exhibition-brief",
+  "description": "Structure exhibition/visitor brief from HTML or knowledge/culture — not ticketing advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill arts-culture-agent. Prefer published venue facts. Surface content warnings. No invented prices."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill arts-culture-agent and knowledge/culture/ (especially aag-forever-tomorrow.md and arts-culture-framework.md), produce an exhibition brief: identity, dates, theme, ticketing model, content warnings, visitor logistics, sponsors, official URL, privacy pointer if stack known. Do not invent prices or omit mature-content notes when present in source.",
+      "criteria": [
+        "Venue and exhibition title stated",
+        "Dates or status stated",
+        "Content warnings included when source has them",
+        "No invented ticket prices",
+        "Official URL or source path present",
+        "Not ticketing advice disclaimer"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

@@ -26,6 +26,8 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
 | **Export / forwarder** | Export readiness · Incoterms · doc packs · MPI path (`knowledge/trade/`) |
+| **Arts & culture** | Exhibition briefs · visitor ops · content warnings (`knowledge/culture/`) |
+| **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
@@ -78,7 +80,10 @@ Fable-Offline/
 ├── knowledge/pdf/               # PDF.js notes + extract hygiene
 ├── knowledge/climate/           # Climate plans + modelling hygiene
 ├── knowledge/trade/             # MPI export + forwarder/exporter framework
-├── knowledge/culture/           # Gallery/exhibition notes
+├── knowledge/culture/           # Gallery/exhibition notes + arts framework
+├── knowledge/aem/               # Adobe AEM public-site patterns
+├── knowledge/health/            # Health NZ directory notes
+├── knowledge/public-safety/     # Police / FENZ notes
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -203,6 +208,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
+| `arts-exhibition-brief` | Exhibition/visitor brief (arts-culture-agent) |
+| `aem-page-audit` | AEM fingerprint + clientlibs + privacy map |
 | `climate-plan-review` | Climate plan + emissions modelling audit |
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 
@@ -364,6 +371,42 @@ python fable5_offline_agent.py --automate freight-export-checkpoint
 | Workflow | `workflows/freight-export-checkpoint.json` |
 
 **Not customs, biosecurity, or freight brokerage advice.** No invented HS codes or rates.
+
+## Arts & culture agent
+
+Skill **`arts-culture-agent`**: exhibition structure, visitor ops, content warnings, institution map, arts-site privacy handoff.
+
+```bash
+python fable5_offline_agent.py --automate arts-exhibition-brief
+# Chat: "structure-exhibition for Forever Tomorrow at AAG"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/arts-culture-agent.md` |
+| Framework | `knowledge/culture/arts-culture-framework.md` |
+| Seed | `knowledge/culture/aag-forever-tomorrow.md` |
+| Workflow | `workflows/arts-exhibition-brief.json` |
+
+**Not ticketing advice.**
+
+## AEM site agent
+
+Skill **`aem-site-agent`**: fingerprint Adobe AEM (`etc.clientlibs`, data layer, Experience Fragments), inventory clientlibs (including empty `d41d8cd9` stubs), Coveo/Launch/GTM/Shielded patterns used on Auckland Council properties.
+
+```bash
+python fable5_offline_agent.py --automate aem-page-audit
+# Chat: "fingerprint this HTML for AEM and map privacy"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/aem-site-agent.md` |
+| Patterns | `knowledge/aem/aem-patterns.md` |
+| Workflow | `workflows/aem-page-audit.json` |
+| Example maps | `knowledge/privacy/ac-*.md`, `akl-libraries-*.md` |
+
+**Not a penetration test.**
 
 ## Climate modeling (Auckland Climate Plan)
 
@@ -598,6 +641,8 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
 - **Climate modeling** — pathway/BAU hygiene; Auckland Climate Plan seed (not climate advice).
 - **Freight forwarder / exporter** — readiness, docs, Incoterms, MPI path (not customs advice).
+- **Arts & culture** — exhibition briefs and visitor ops (not ticketing).
+- **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
 
 ## License
 
