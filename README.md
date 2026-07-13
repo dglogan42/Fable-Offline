@@ -118,7 +118,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 
 | Domain | Path | Skill(s) |
 |--------|------|----------|
-| Privacy host maps | `knowledge/privacy/` | `privacy-host-map`, `privacy-design-planner` |
+| Privacy host maps | `knowledge/privacy/` | `privacy-host-map`, `privacy-design-planner`, `tiktok-analytics` |
 | Urban planning / freight | `knowledge/urban-planning/` | `urban-planner-competencies` |
 | Climate pathways | `knowledge/climate/` | `climate-modeling` |
 | Trade / MPI / export | `knowledge/trade/` | `freight-forwarder-exporter` |
@@ -261,6 +261,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `lpu-full-audit` | Scrape LPU pages → education claim audit + HITL |
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
+| `tiktok-analytics-map` | TikTok Analytics / pixel HTML + Network evidence map |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
@@ -566,13 +567,16 @@ Example: **Lifestyle Prescriptions® University** (`knowledge/education/lpu-cred
 |-------|------|
 | **`privacy-host-map`** | Evidence: `map-hosts` · `map-tags` · `map-tension` · `key-hygiene` · `write-knowledge` |
 | **`privacy-design-planner`** | Design/plan: `design-system` · `plan-review` · `plan-from-knowledge` · **`design-agent`** · `plan-compound` · `brief` |
+| **`tiktok-analytics`** | TikTok pixel: `scan-html` · `confirm-network` · `map-tiktok` · `policy-tension` |
 
 ```bash
 python fable5_offline_agent.py --privacy
 python fable5_offline_agent.py --privacy "design-agent: offline privacy mapper"
 python fable5_offline_agent.py --privacy "map-hosts: [paste HTML head/footer]"
+python fable5_offline_agent.py --privacy "map-tiktok: Network dump for analytics.tiktok.com"
 python fable5_offline_agent.py --automate privacy-host-map
 python fable5_offline_agent.py --automate privacy-design-plan
+python fable5_offline_agent.py --automate tiktok-analytics-map
 ```
 
 | Tag | Meaning |
@@ -592,6 +596,8 @@ Curated knowledge:
 | [`knowledge/privacy/design-privacy-agent.md`](knowledge/privacy/design-privacy-agent.md) | Seed design for Fable privacy agentic AI |
 | [`knowledge/privacy/akl-libraries-third-party-hosts.md`](knowledge/privacy/akl-libraries-third-party-hosts.md) | Auckland Libraries: GTM, Adobe, Coveo, Shielded |
 | [`knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md`](knowledge/privacy/uoa-eloqua-pg-webinar-hosts.md) | UoA Eloqua webinar LP: pixel, lead form, Ads gclid |
+| [`knowledge/privacy/tiktok-analytics.md`](knowledge/privacy/tiktok-analytics.md) | TikTok Analytics method (HTML + Network) |
+| [`knowledge/privacy/wgtn-ac-nz-hosts.md`](knowledge/privacy/wgtn-ac-nz-hosts.md) | VUW: `analytics.tiktok.com` LOAD seed |
 
 **Not legal advice.** Re-verify with live Network capture and the published privacy policy before decisions.
 

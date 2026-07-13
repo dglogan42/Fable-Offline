@@ -31,6 +31,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **property-manager-agent**: [Property manager agent](property-manager-agent.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)
+- **tiktok-analytics**: [TikTok Analytics / Pixel (HTML + Network)](tiktok-analytics.md)
 - **uc-arts-postgraduate**: [UC Arts postgraduate study (Canterbury)](uc-arts-postgraduate.md)
 - **urban-planner-competencies**: [Urban planner competencies](urban-planner-competencies.md)
 - **windows-install-prep**: [Windows install prep (licensed · DISM hygiene)](windows-install-prep.md)

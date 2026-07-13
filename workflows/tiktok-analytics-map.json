@@ -1,0 +1,14 @@
+{
+  "name": "tiktok-analytics-map",
+  "description": "Map TikTok Analytics/pixel evidence from HTML and/or Network dumps",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: tiktok-analytics. Method: knowledge/privacy/tiktok-analytics.md. Example: wgtn-ac-nz-hosts.md (analytics.tiktok.com)."
+    },
+    {
+      "type": "privacy",
+      "prompt": "Using skill tiktok-analytics and knowledge/privacy/tiktok-analytics.md (plus wgtn-ac-nz-hosts.md if relevant), produce map-tiktok: (1) verdict LOAD/CONFIG/BUNDLE/not found (2) HTML scan patterns (ttq, analytics.tiktok.com, _ttp) (3) Network evidence table if headers provided (4) redaction rules (5) policy-tension questions (6) gaps. Not legal advice. Do not invent pixel IDs."
+    }
+  ]
+}

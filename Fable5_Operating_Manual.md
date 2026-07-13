@@ -568,6 +568,7 @@ Inspired by in-house legal automation (clause review, NDA triage, vendor check, 
 |-------|------|
 | **privacy-host-map** | Evidence: **map-hosts**, **map-tags**, **map-tension**, **key-hygiene**, **write-knowledge** |
 | **privacy-design-planner** | Design/plan: **design-system**, **plan-review**, **plan-from-knowledge**, **design-agent**, **plan-compound**, **brief** |
+| **tiktok-analytics** | TikTok pixel: **scan-html**, **confirm-network**, **map-tiktok**, **policy-tension** |
 
 ### 18.2 Classification (required on evidence maps)
 | Tag | Meaning |
@@ -591,6 +592,11 @@ PURPOSE → privacy-design-planner → privacy-host-map → engineer verify → 
 ### 18.5 Automations
 - `privacy-host-map` — scored host map  
 - `privacy-design-plan` — plan from knowledge + architecture + risks + HITL  
+- `tiktok-analytics-map` — TikTok Analytics / pixel evidence map  
+
+### 18.6 TikTok seed
+- Method: `knowledge/privacy/tiktok-analytics.md`  
+- Example LOAD: `knowledge/privacy/wgtn-ac-nz-hosts.md` (`analytics.tiktok.com` from www.wgtn.ac.nz)
 
 **Not legal advice.** Not a penetration test. Not a DPIA substitute. Network tab beats static guesses.
 

@@ -470,6 +470,8 @@ def load_system_prompt(
             "\n\n---\n## Privacy mode (host map + design planner)\n"
             "Apply skills **privacy-host-map** (evidence: LOAD/CONFIG/CLICK/BUNDLE) and "
             "**privacy-design-planner** (design briefs, phases, agent architecture, risk register). "
+            "For TikTok pixels / analytics.tiktok.com / ttq / _ttp, also apply **tiktok-analytics** "
+            "(scan-html, confirm-network, map-tiktok). "
             "Do not treat minified JS host strings as confirmed network calls. "
             "Map sensitive widgets (e.g. Shielded Site) separately from parent-page tags. "
             "For multi-step programmes or privacy-aware agent design, plan before mapping bulk sites. "

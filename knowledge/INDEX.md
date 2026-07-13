@@ -57,6 +57,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `doc-blog-hosts.md` | DOC Conservation blog (WordPress/Jetpack) |
 | `uc-arts-pg-hosts.md` | UC Arts postgraduate hub (AEM + multi-analytics) |
 | `wgtn-ac-nz-hosts.md` | Victoria University of Wellington — TikTok Analytics seed |
+| `tiktok-analytics.md` | TikTok pixel/analytics method (HTML + Network) |
 
 ---
 

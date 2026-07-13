@@ -99,6 +99,7 @@ If the user confirms the same session was on wgtn.ac.nz **and** body styles matc
 
 ## Cross-links
 
-- Skill: `privacy-host-map`  
+- Skill: `privacy-host-map` · **`tiktok-analytics`**  
+- Method: `knowledge/privacy/tiktok-analytics.md`  
 - CSS orphan (unbound): `knowledge/web/css-design-fingerprint-helvetica-grey.md`  
 - Compare uni stacks: `knowledge/privacy/uc-arts-pg-hosts.md`, `uoa-eloqua-pg-webinar-hosts.md`  

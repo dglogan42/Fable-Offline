@@ -76,6 +76,7 @@ Also mark:
 | Safety widgets | `shielded.co.nz`, `staticcdn.co.nz` | Shielded Site-style DV help |
 | Library vendors | EBSCO, OCLC, III, OverDrive | Research / auth ecosystems |
 | Social | Facebook, X/Twitter, LinkedIn, TikTok, YouTube | Share / embeds |
+| TikTok Analytics | `analytics.tiktok.com`, `ttq`, `_ttp` | Ads measurement pixel — skill **`tiktok-analytics`** |
 | CDN / UI | Cloudflare, jsDelivr, unpkg, cloudfront | Static assets (context-dependent) |
 
 Do **not** list BUNDLE-only hosts as “this site shares data with X” without Network evidence.
