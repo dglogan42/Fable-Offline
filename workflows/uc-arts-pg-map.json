@@ -1,0 +1,14 @@
+{
+  "name": "uc-arts-pg-map",
+  "description": "Map UC Arts postgraduate pathways from curated hub + optional privacy/AEM notes",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Source: https://www.canterbury.ac.nz/study/academic-study/arts/study-arts/arts-postgraduate-study — skill uc-arts-postgraduate. VERIFY LIVE fees/entry."
+    },
+    {
+      "type": "education",
+      "prompt": "Using skill uc-arts-postgraduate and knowledge/education/uc-arts-postgraduate-study.md, produce map-pathways: (1) verdict (2) graduate/PG cert-dip, Honours, Masters, research tables as in knowledge only (3) route-chooser taught vs research (4) apply-nav (myUC, eligibility, contact Arts, scholarships) (5) note AEM + multi-vendor analytics per knowledge/privacy/uc-arts-pg-hosts.md if relevant (6) VERIFY LIVE. Not admissions advice."
+    }
+  ]
+}

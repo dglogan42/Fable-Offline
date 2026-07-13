@@ -1,6 +1,6 @@
 # Education & credential claim audit
 
-**WHEN_TO_USE:** Evaluating a school, “university,” online M.A./Ph.D., fast-track doctorate, health coaching or lifestyle medicine certification, tuition-credit funnel, or any page that markets **accredited degrees** — especially after pasting site HTML or a URL summary (e.g. Lifestyle Prescriptions® University).
+**WHEN_TO_USE:** Evaluating a school, “university,” online M.A./Ph.D., fast-track doctorate, health coaching or lifestyle medicine certification, tuition-credit funnel, or any page that markets **accredited degrees** — especially after pasting site HTML or a URL summary (e.g. Lifestyle Prescriptions® University). For **legitimate NZ university programme hubs** (e.g. UC Arts postgraduate), prefer skill **`uc-arts-postgraduate`** for pathway mapping; still use this skill if someone **over-claims** accreditation or guaranteed outcomes.
 
 ## Stance
 Marketing pages are **unverified claims**, not ground truth. Apply Section 4 (re-derive) and treat impressive accreditation logos as **guilty of sales framing** until primary registers and recognition rules are checked. “Accredited” is not one thing — always ask **by whom, for what, and recognized where**.

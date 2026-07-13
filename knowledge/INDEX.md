@@ -18,7 +18,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
-| **education/** | Credential claim audits | `lpu-credential-claims.md` |
+| **education/** | Credential claims + UC Arts PG hub | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **health/** | Health NZ navigation | `healthnz-find-a-service.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
@@ -54,6 +54,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `google-calendar-hosts.md` | Google Calendar / Meet / mail seed map |
 | `zoom-hosts.md` | Zoom Web Client join (`app.zoom.us/wc/join`) seed map |
 | `doc-blog-hosts.md` | DOC Conservation blog (WordPress/Jetpack) |
+| `uc-arts-pg-hosts.md` | UC Arts postgraduate hub (AEM + multi-analytics) |
 
 ---
 

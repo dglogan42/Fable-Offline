@@ -900,6 +900,27 @@ DOC Conservation blog: [Becoming a DOC ranger](https://blog.doc.govt.nz/2020/01/
 
 ---
 
+## 20k. UC Arts postgraduate study
+
+**Trigger:** UC Canterbury Arts PG, Masters/Honours/certs, `--education` with UC Arts, AEM dump of canterbury.ac.nz Arts hub.
+
+### Skill
+`uc-arts-postgraduate`: **map-pathways**, **route-chooser**, **masters-shortlist**, **research-route**, **apply-nav**, **map-page-privacy**.
+
+### Seed
+[Arts postgraduate study](https://www.canterbury.ac.nz/study/academic-study/arts/study-arts/arts-postgraduate-study) → `knowledge/education/uc-arts-postgraduate-study.md`.
+
+### Knowledge / privacy
+- `knowledge/education/uc-arts-postgraduate-study.md`
+- `knowledge/privacy/uc-arts-pg-hosts.md` (GTM×2, Adobe Launch, ClickDimensions, Lucky Orange, Monsido, Sentry, AEM)
+
+### Automation
+- `uc-arts-pg-map` (education step)
+
+**VERIFY LIVE** fees, entry, programme availability. Not admissions advice. myUC apply is user HITL.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

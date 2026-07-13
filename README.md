@@ -23,7 +23,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
-| **Education** | Credential claim audit · accreditation type map · board pathway hygiene (`knowledge/education/`) |
+| **Education** | Credential claim audit · **UC Arts PG** hub map · board pathway hygiene (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
@@ -53,7 +53,7 @@ The *system* around the model improves (soul, memory, skills, workflows), not th
 
 **Legal mode:** offline playbook-driven contract review, NDA triage, vendor checks, briefs, and templated responses (GREEN/YELLOW/RED). Configure `knowledge/legal/playbook.md`. **Not legal advice** — licensed attorney review required before any real-matter use.
 
-**Education mode:** audits school/degree marketing (who issues the diploma, ASIC vs regional accreditation, state operate licenses, NBHWC/IBLM pathways). Example snapshot: Lifestyle Prescriptions® University in `knowledge/education/lpu-credential-claims.md`. **Not educational or medical advice.**
+**Education mode:** audits school/degree marketing (who issues the diploma, ASIC vs regional accreditation, state operate licenses, NBHWC/IBLM pathways). Snapshots: LPU (`lpu-credential-claims.md`) and **UC Arts postgraduate** hub (`uc-arts-postgraduate-study.md`). **Not educational or medical advice.**
 
 **Privacy mode:** third-party host maps (`privacy-host-map`) plus **agentic design planner** (`privacy-design-planner`) for review programmes and privacy-aware agents. Knowledge: host maps, `DESIGN_PLANNER.md`, `design-privacy-agent.md`. **Not legal advice.**
 
@@ -129,7 +129,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
-| Education claims | `knowledge/education/` | `education-claim-audit` |
+| Education claims / UC Arts PG | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate` |
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
@@ -278,6 +278,33 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `instagram-fit-select` | Hero fit/selfie pick + caption pack + post-safety |
 | `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
 | `doc-ranger-pathway` | DOC Trainee Ranger / L4 conservation pathway map |
+| `uc-arts-pg-map` | UC Arts postgraduate pathways + apply navigation |
+
+## UC Arts postgraduate study
+
+Hub snapshot: [Arts postgraduate study \| UC](https://www.canterbury.ac.nz/study/academic-study/arts/study-arts/arts-postgraduate-study) (AEM site; meta ~17 Mar 2026 in dump).
+
+| Layer | Content |
+|-------|---------|
+| Awards | Grad/PG certs & diplomas, BA(Hons)/MusB(Hons), named Masters, research/thesis routes |
+| Faculty | Te Kaupeka Toi Tangata \| Faculty of Arts |
+| Apply | myUC · eligibility · contact Arts · scholarships |
+| Stack | AEM + dual GTM, Adobe Launch, ClickDimensions, Lucky Orange, Monsido, Sentry |
+
+```bash
+python fable5_offline_agent.py --education
+python fable5_offline_agent.py --education "map UC Arts postgraduate pathways"
+python fable5_offline_agent.py --automate uc-arts-pg-map
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/uc-arts-postgraduate.md` |
+| Knowledge | `knowledge/education/uc-arts-postgraduate-study.md` |
+| Privacy | `knowledge/privacy/uc-arts-pg-hosts.md` |
+| Workflow | `workflows/uc-arts-pg-map.json` |
+
+**VERIFY LIVE** each qualification page for fees and entry. Not admissions advice.
 
 ## DOC ranger pathway (NZ)
 
@@ -956,7 +983,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Agentic engineer path** — 6-month / 12-stage roadmap; multi-agent supervisor; HITL.
 - **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
 - **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
-- **Education mode** — credential/accreditation claim audit (not educational or medical advice).
+- **Education mode** — credential/accreditation claim audit + UC Arts PG pathway map (not educational or medical advice).
 - **Privacy mode** — host maps + design planner for privacy-aware agentic AI (not legal advice).
 - **Urban planner competencies** — GIS-to-stakeholder framework for learning and skill audits (not professional advice).
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).

@@ -457,9 +457,12 @@ def load_system_prompt(
             "\n\n---\n## Education claim audit mode\n"
             "Apply skill education-claim-audit. Treat school marketing as claims. "
             "Distinguish state operate license, institutional accreditation, partner degree "
-            "validation, and professional board pathways. Not educational, career, or medical advice.\n"
+            "validation, and professional board pathways. For University of Canterbury Arts "
+            "postgraduate hubs, also apply skill **uc-arts-postgraduate** and curated "
+            "knowledge/education/uc-arts-postgraduate-study.md (VERIFY LIVE fees/entry). "
+            "Not educational, career, or medical advice.\n"
         )
-        know = read_knowledge_bundle("education", limit_chars=8000)
+        know = read_knowledge_bundle("education", limit_chars=10000)
         if know.strip():
             parts.append("\n\n---\n## Local education knowledge (scraped / curated)\n\n" + know)
     if privacy_mode:
