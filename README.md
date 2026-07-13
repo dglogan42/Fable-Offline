@@ -1111,6 +1111,7 @@ Offline help for **Google Calendar**, **Zoom Web Client**, **Microsoft Teams fre
 | Google Calendar | [calendar.google.com](https://calendar.google.com/) | Prep, drafts, no auth scrape |
 | Zoom web join | [app.zoom.us/wc/join](https://app.zoom.us/wc/join) | **join-zoom** checklist; never auto-join |
 | Teams free | [teams.live.com/free](https://teams.live.com/free) | **join-teams** checklist; never auto-join |
+| Teams Calendar join | App **Calendar** → **Join** ([official help](https://support.microsoft.com/en-us/teams/meetings/join-a-meeting-in-microsoft-teams#bkmk_calendar)) | **join-teams** path A |
 | Google Meet | `meet.google.com/…` | Flag as CLICK from invites |
 
 ```bash

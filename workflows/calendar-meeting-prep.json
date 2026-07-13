@@ -8,7 +8,7 @@
     },
     {
       "type": "calendar",
-      "prompt": "Using skill calendar-mail-meetings and knowledge/calendar/ (ical-and-google.md, zoom-web-join.md, teams-live-free.md, meetings-playbook.md), produce: (1) verdict ready/needs-info (2) meeting-prep agenda with time boxes (3) plain-text block to paste into Google Calendar description (4) if Zoom: join-zoom at https://app.zoom.us/wc/join — mask passcodes (5) if Teams: join-teams at https://teams.live.com/free (or work teams.microsoft.com) — mask passcodes; note free ~60-min seed and paid record/Copilot (6) optional draft .ics skeleton (7) mail-draft invite subject+body (8) privacy: no secret iCal URLs, OAuth tokens, or meeting pwd in git. If no meeting details were provided, ask for title, time+tz, attendees, video link (Meet/Zoom/Teams), and goal. Not legal advice."
+      "prompt": "Using skill calendar-mail-meetings and knowledge/calendar/ (ical-and-google.md, zoom-web-join.md, teams-live-free.md, teams-join-from-calendar.md, meetings-playbook.md), produce: (1) verdict ready/needs-info (2) meeting-prep agenda with time boxes (3) plain-text block to paste into Google Calendar description (4) if Zoom: join-zoom at https://app.zoom.us/wc/join — mask passcodes (5) if Teams: join-teams — prefer Teams Calendar path (Calendar → meeting → Join per support #bkmk_calendar) or ID/passcode via teams.live.com/free or microsoft.com join page; mask passcodes; note free ~60-min seed (6) optional draft .ics skeleton (7) mail-draft invite subject+body (8) privacy: no secret iCal URLs, OAuth tokens, or meeting pwd in git. If no meeting details were provided, ask for title, time+tz, attendees, video link (Meet/Zoom/Teams), and goal. Not legal advice."
     }
   ]
 }

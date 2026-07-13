@@ -24,6 +24,9 @@ Video meetings carry **high-sensitivity** content (voice, video, chat, shared sc
 | `*.teams.microsoft.com` | **CLICK** / **LOAD** | Meetup-join deep links, tenant shells |
 | `login.microsoftonline.com` / Microsoft account hosts | **CLICK** / **CONFIG** | Auth (VERIFY LIVE) |
 | `insider.teams.com` | **CLICK** | What’s new / product updates |
+| `support.microsoft.com` | **LOAD** / **CLICK** | Official join help (e.g. join-from-calendar article) |
+| `www.microsoft.com` | **CLICK** | Marketing join-by-ID (`/microsoft-teams/join-a-meeting`) |
+| `privacy.microsoft.com` | **LOAD** | Privacy statement links from personal-account join notes |
 | Media / SFU / TURN hosts | **LOAD** | WebRTC/media (names change; capture live) |
 
 Exact CDN and media hostnames vary by release and region.

@@ -22,7 +22,8 @@ Companion to Google Calendar / Zoom / **Microsoft Teams** / iCal / mail flows.
 - Google Meet: `meet.google.com/…`
 - Zoom web join: [app.zoom.us/wc/join](https://app.zoom.us/wc/join) or full `zoom.us/j/…` invite
 - Teams free: [teams.live.com/free](https://teams.live.com/free) (Meeting ID + passcode) or work `teams.microsoft.com` invite
-- See `zoom-web-join.md` · `teams-live-free.md` for join checklists
+- Teams Calendar join: app **Calendar** → meeting → **Join** (official help `#bkmk_calendar`)
+- See `zoom-web-join.md` · `teams-live-free.md` · `teams-join-from-calendar.md`
 ```
 
 Paste objective + agenda into Google Calendar **description** so guests see it without a separate doc if possible.

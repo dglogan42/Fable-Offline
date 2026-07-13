@@ -2,6 +2,10 @@
 
 **Skill:** `calendar-mail-meetings`  
 **Primary CLICK:** [https://teams.live.com/free](https://teams.live.com/free)  
+**Official join help (calendar / ID):**  
+[Join a meeting in Microsoft Teams](https://support.microsoft.com/en-us/teams/meetings/join-a-meeting-in-microsoft-teams#bkmk_calendar)  
+→ full notes: `knowledge/calendar/teams-join-from-calendar.md`  
+
 Microsoft Teams and related marks belong to Microsoft. **Not legal advice.**
 
 ---
@@ -76,19 +80,38 @@ Fable **must not**:
 
 ## User checklist (join-teams)
 
-Before **CLICK** → [teams.live.com/free](https://teams.live.com/free) or invite link:
+### A — Join from Teams calendar (work/school or personal app)
+
+Official seed ([#bkmk_calendar](https://support.microsoft.com/en-us/teams/meetings/join-a-meeting-in-microsoft-teams#bkmk_calendar)):
+
+1. Open **Teams** app or web (user HITL).  
+2. Select **Calendar**.  
+3. Select the meeting → **Join**.  
+4. Pre-join: mic/camera, name, account (**Change** if wrong account).  
+5. **Join** / enter lobby if required.  
+
+### B — Join with Meeting ID
+
+1. **Calendar** → **Meet now** dropdown → **Join with an ID** (desktop seed)  
+   or mobile **More** → **Join with meeting ID**.  
+2. Enter ID + passcode from invite or **Details → Show meeting info**.  
+3. Or browser: [teams.live.com/free](https://teams.live.com/free) / [microsoft.com/microsoft-teams/join-a-meeting](https://www.microsoft.com/microsoft-teams/join-a-meeting).  
+
+### C — Hygiene (all paths)
 
 | Step | Check |
 |------|--------|
-| 1 | Correct Meeting ID (from invite) |
-| 2 | Passcode ready (password manager / invite — not in public chat) |
+| 1 | Correct Meeting ID / link (from invite, not chat folklore) |
+| 2 | Passcode ready (not in public channels; mask in Fable notes) |
 | 3 | Free vs work account path (live.com vs microsoft.com tenant) |
 | 4 | Time budget — free meetings often capped (~60 min seed) |
 | 5 | Display name appropriate |
 | 6 | Mic/camera off until needed |
-| 7 | Recording: free tier may not include record; if host records, note policy |
+| 7 | Recording / lobby / org policy |
 | 8 | Screen share: no secrets on screen |
 | 9 | Captions optional for accessibility |
+
+Full multi-path article map: `teams-join-from-calendar.md`.
 
 ---
 

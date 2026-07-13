@@ -15,7 +15,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **aem/** | Adobe AEM public-site patterns | `aem-patterns.md` |
 | **animals/** | Animal/dog compliance framework | `animal-compliance-framework.md` |
 | **brokers/** | Broker claim snapshots | `ec-markets-regulation.md` |
-| **calendar/** | Google Calendar · Zoom · Teams free · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `teams-live-free.md`, `meetings-playbook.md` |
+| **calendar/** | Google Calendar · Zoom · Teams free · join-from-calendar · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `teams-live-free.md`, `teams-join-from-calendar.md`, `meetings-playbook.md` |
 | **chromeos/** | ChromeOS Flex install on PC/Mac | `chromeos-flex.md` |
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |

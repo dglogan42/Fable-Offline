@@ -805,8 +805,8 @@ User **CLICK** → [https://calendar.google.com/](https://calendar.google.com/).
 ### Zoom Web Client
 User **CLICK** → [https://app.zoom.us/wc/join](https://app.zoom.us/wc/join) (or invite `zoom.us/j/…`). Procedure **join-zoom**. Never auto-join; mask passcodes.
 
-### Microsoft Teams free
-User **CLICK** → [https://teams.live.com/free](https://teams.live.com/free). Start free meeting or join with Meeting ID + passcode. Procedure **join-teams**. Free limits VERIFY LIVE (~60-min seed; record/Copilot often paid). Work/school: `teams.microsoft.com`. Knowledge: `teams-live-free.md`.
+### Microsoft Teams free + join from calendar
+User **CLICK** → [https://teams.live.com/free](https://teams.live.com/free) (ID + passcode) **or** Teams app **Calendar** → meeting → **Join** (official: [support join article `#bkmk_calendar`](https://support.microsoft.com/en-us/teams/meetings/join-a-meeting-in-microsoft-teams#bkmk_calendar)). Procedure **join-teams**. Free limits VERIFY LIVE (~60-min seed; record/Copilot often paid). Work/school: `teams.microsoft.com`. Knowledge: `teams-live-free.md`, `teams-join-from-calendar.md`.
 
 ### Tools
 ```bash

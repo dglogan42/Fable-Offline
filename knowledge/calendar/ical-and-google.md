@@ -59,8 +59,9 @@ Tag all Zoom join URLs as **CLICK**. Mask `pwd=` in any committed notes.
 | Detail | `knowledge/calendar/teams-live-free.md` |
 | Privacy | `knowledge/privacy/teams-live-hosts.md` |
 | Procedure | **join-teams** |
+| Calendar join help | `teams-join-from-calendar.md` · [support `#bkmk_calendar`](https://support.microsoft.com/en-us/teams/meetings/join-a-meeting-in-microsoft-teams#bkmk_calendar) |
 
-Tag all Teams join URLs as **CLICK**. Mask passcodes. Free duration/features VERIFY LIVE.
+Tag all Teams join URLs as **CLICK**. Mask passcodes. Free duration/features VERIFY LIVE. App path: Teams **Calendar** → meeting → **Join**.
 
 ---
 
