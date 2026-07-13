@@ -5,6 +5,7 @@ Loaded into context on every run so the system compounds without retraining weig
 
 ## Skills
 
+- **3d-animation-dev-kit**: [3D animation dev kit (CG · Blender-first)](3d-animation-dev-kit.md)
 - **aem-site-agent**: [Adobe Experience Manager (AEM) site agent](aem-site-agent.md)
 - **agentic-engineer-roadmap**: [Agentic engineer roadmap (6 months)](agentic-engineer-roadmap.md)
 - **animation-dev-kit**: [Animation dev kit (Krita frame-by-frame)](animation-dev-kit.md)

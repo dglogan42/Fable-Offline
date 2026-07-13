@@ -48,6 +48,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Creative pipeline builds** | Adobe CC + CapCut + LR/PS + Resolve export recipes (`knowledge/media/`) |
 | **Animation dev kit (Krita)** | Frame-by-frame plan · walk cycle · render/FFmpeg ([Krita manual](https://docs.krita.org/en/user_manual/animation.html)) |
 | **Stop / motion dev kit** | Stop Motion Studio capture → export ([official download](https://www.stopmotionstudio.com/download/index.html)) |
+| **3D animation dev kit** | Blender-first CG pipeline · optional VFX study map ([MDS seed](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 
@@ -153,7 +154,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
-| YouTube Live / creative / Krita / stop-motion | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit` |
+| YouTube Live / creative / 2D / stop-mo / 3D | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit` |
 | Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
 | Swarm / prompt generator | `knowledge/swarm/` | `prompt-generator` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
@@ -300,6 +301,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `creative-pipeline-build` | Adobe CC + CapCut + LR/PS + Resolve export pipeline plan |
 | `animation-dev-kit` | Krita frame-by-frame animation plan (storyboard → render) |
 | `stop-motion-dev-kit` | Stop Motion Studio stop-motion plan (download → capture → export) |
+| `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
@@ -423,6 +425,29 @@ python fable5_offline_agent.py --automate stop-motion-dev-kit
 | Workflow | `workflows/stop-motion-dev-kit.json` |
 
 **Notes:** Licensed/purchased app only. User captures and exports HITL. Heavy projects/exports stay local (gitignored). Hybrid draw cleanup → `animation-dev-kit` (Krita).
+
+## 3D animation dev kit (CG · Blender-first)
+
+CG pipeline plan: model → rig → animate → light → render → deliver. Default DCC: [Blender](https://www.blender.org/download/) (FOSS). Education seed from public [MDS 3D Animation & VFX courses](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) (map only — not enrollment advice).
+
+| Track | Focus |
+|-------|--------|
+| **A · Production** | Scaffold, shot budget, Blender hello-shot → asset/anim/render/finish |
+| **B · Education map** | Bachelor / GDCT / foundation certificate overview (VERIFY LIVE fees & entry) |
+| Engines | EEVEE lookdev · Cycles finals · prefer image sequences then encode |
+| Package | `workspace/creative/<slug>/` (`03_shots/`, `04_renders/`, `06_exports/`) |
+
+```bash
+python fable5_offline_agent.py --automate 3d-animation-dev-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/3d-animation-dev-kit.md` |
+| Knowledge | `knowledge/media/3d-animation-pipeline.md` |
+| Workflow | `workflows/3d-animation-dev-kit.json` |
+
+**Notes:** No cracked Maya/Houdini/C4D. Not careers advice. Huge caches/renders stay local (gitignored). Hybrid with Krita 2D / stop-motion skills as needed.
 
 ## YouTube Live with an encoder
 
@@ -1272,6 +1297,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Creative pipeline builds** — Adobe CC + CapCut + Resolve export recipes (licensed apps only).
 - **Animation dev kit** — Krita frame-by-frame plan from [docs.krita.org animation manual](https://docs.krita.org/en/user_manual/animation.html) (walk cycle, RAM budget, render/FFmpeg).
 - **Stop / motion dev kit** — Stop Motion Studio from [official download](https://www.stopmotionstudio.com/download/index.html) (FPS, onion skin, export, automate recipe).
+- **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
 
@@ -1318,6 +1344,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |
 | Stop / motion dev kit | Cracked Stop Motion Studio, auto-post, or committing full SMS project libraries |
+| 3D animation dev kit | Cracked Maya/Houdini/C4D, invented school fees/jobs, or multi-GB EXR/blend caches in git |
 | Prompt generator / swarms | Investment advice, live trading, or unreviewed production agents |
 | Math / physics agent | Course credit or professional engineering sign-off |
 

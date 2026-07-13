@@ -7,7 +7,7 @@
 - Product: [stopmotionstudio.com](https://www.stopmotionstudio.com/index.html)  
 - Help hub: [stopmotionstudio.com/help/stopmotion/en/](https://www.stopmotionstudio.com/help/stopmotion/en/) (e.g. [Adjust the speed / FPS](https://www.stopmotionstudio.com/help/stopmotion/en/adjust-the-speed-of-your-movie.html))
 
-Companion skills: `animation-dev-kit` (Krita 2D draw-frame), `creative-pipeline-builds` (post-export grade/NLE), platform publish skills (HITL).
+Companion skills: `animation-dev-kit` (Krita 2D draw-frame), `3d-animation-dev-kit` (CG/Blender), `creative-pipeline-builds` (post-export grade/NLE), platform publish skills (HITL).
 
 ## Stance
 You coach **user-operated stop-motion** with **licensed/purchased** Stop Motion Studio (or equivalent capture tools the user already owns). “Automate” means **checklists, folder scaffolds, FPS/export recipes, and Fable workflow recipes** — **not** driving the app UI, not cracked installers, not unattended bot farms.

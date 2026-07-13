@@ -1,0 +1,14 @@
+{
+  "name": "3d-animation-dev-kit",
+  "description": "Plan a 3D animation/VFX build (Blender-first) or map formal 3D Animation & VFX study options",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Education seed: https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees — Production: https://www.blender.org/download/ — skill 3d-animation-dev-kit. No cracks. Not careers advice. Heavy .blend/renders stay local (gitignored)."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill 3d-animation-dev-kit and knowledge/media/3d-animation-pipeline.md, produce cg-plan: (1) verdict on scope vs time/hardware (2) choose track A production and/or B edu-map (3) blender-install from https://www.blender.org/download/ (stable/LTS; no experimental for finals; no cracked Maya/Houdini/C4D) (4) project-scaffold under workspace/creative/<slug>/ (5) shot-budget: pick FPS (24/25/30), res, seconds×FPS≈frames; prefer one polished short shot (6) ordered hello-shot or full asset-pass → anim-pass → render-pass (EEVEE lookdev / Cycles finals; image sequence then encode) → finish-pass (7) machine-budget (VRAM, proxies) (8) if education interest: edu-map from MDS seed — Bachelor ~3 years, GDCT ~1 year, NZ Certificate foundation ~20 weeks; partners Houdini/Unity claims VERIFY LIVE; user CLICK school pages; no invented fees/jobs (9) portfolio-pack suggestions (10) publish-handoff to animation-dev-kit / stop-motion-dev-kit / creative-pipeline / social skills (11) OPEN. If unclear, ask: ship a Blender shot vs explore formal study vs both. Not educational or careers advice. User operates DCC HITL."
+    }
+  ]
+}

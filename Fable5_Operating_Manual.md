@@ -1000,6 +1000,14 @@ FOSS Krita; frames in RAM — plan short clips. User installs Krita + optional F
 **Automation:** `stop-motion-dev-kit`.  
 Official app only (no cracks). Start ~6 FPS; 12+ smoother. User HITL capture/export; publish via other skills.
 
+## 20s. 3D animation dev kit (CG · Blender-first)
+**Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
+**Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  
+**Sources:** [Blender download](https://www.blender.org/download/) · education seed [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees).  
+**Knowledge:** `knowledge/media/3d-animation-pipeline.md`.  
+**Automation:** `3d-animation-dev-kit`.  
+FOSS Blender default; no cracked DCC. Not careers/enrollment advice. User operates software HITL.
+
 ## 20l. Offline loop agents pack
 
 **Trigger:** `/hermes`, `/loop`, `/engineer`, `offline_goal_loop.py`.

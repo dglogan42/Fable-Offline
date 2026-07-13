@@ -10,7 +10,8 @@ You coach **user-operated Krita** workflows. Krita is specialized in **frame-by-
 **Not legal advice.** Krita is free/open-source software under its own licenses (KDE / project terms). Trademarks remain with rights holders. User installs Krita + optional FFmpeg themselves.
 
 Hand off finished exports to `creative-pipeline-builds`, `youtube-live-encoder`, TikTok/IG skills as **HITL** publish steps — not auto-post.  
-Physical object capture (camera + clay/LEGO): use **`stop-motion-dev-kit`** (Stop Motion Studio) instead of or hybrid with this skill.
+Physical object capture (camera + clay/LEGO): use **`stop-motion-dev-kit`** (Stop Motion Studio) instead of or hybrid with this skill.  
+Full CG / character 3D pipeline: use **`3d-animation-dev-kit`** (Blender-first).
 
 ---
 

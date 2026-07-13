@@ -260,8 +260,16 @@ workspace/creative/**/02_sms_project/**
 workspace/creative/**/03_capture_raw/**
 workspace/creative/**/*stop*motion*
 workspace/creative/**/*.sms
+# 3D / Blender caches and heavy scenes (curated notes.md OK)
+workspace/creative/**/*.blend1
+workspace/creative/**/*.blend2
+workspace/creative/**/04_renders/**
+workspace/creative/**/03_shots/**
+workspace/creative/**/*_cache*/
+workspace/creative/**/*.exr
 !workspace/creative/**/notes.md
 !workspace/creative/**/05_presets/**/*.md
+!workspace/creative/**/07_presets/**/*.md
 
 # Math/physics lesson drafts may live under workspace/lessons (allowed)
 # Keep private homework solutions out of public commits if sensitive:
