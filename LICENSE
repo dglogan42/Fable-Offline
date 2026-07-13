@@ -79,7 +79,14 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    Snapchat remains Snap Inc.'s property. No scraping, credential theft, or
    social automation abuse. Do not commit private feed URLs with secrets.
 
-9. Contributions
+9. Creative desktop apps and pipeline builds
+   creative-pipeline-builds and knowledge/media/ cover licensed Adobe Creative
+   Cloud (desktop app), Photoshop, Lightroom, CapCut, and DaVinci Resolve
+   templates/presets/exports. No cracks or license bypass. Do not commit
+   Adobe passwords, stream keys, or heavy media masters. YouTube Live encoder
+   notes require valid access; never commit stream keys.
+
+10. Contributions
    By submitting contributions to this repository, you agree they are licensed
    under the same MIT License terms as the Software, unless you state otherwise
    in writing with the copyright holders.

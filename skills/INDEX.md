@@ -14,6 +14,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **build-and-automate**: [Build and automate (offline)](build-and-automate.md)
 - **calendar-mail-meetings**: [Calendar · iCal · mail · meetings (Google Calendar)](calendar-mail-meetings.md)
 - **climate-modeling**: [Climate modeling (pathways, inventory, hazards)](climate-modeling.md)
+- **creative-pipeline-builds**: [Creative pipeline builds (Adobe · CapCut · Resolve)](creative-pipeline-builds.md)
 - **doc-ranger-pathway**: [DOC ranger pathway (NZ Trainee Ranger)](doc-ranger-pathway.md)
 - **edge-vs-luck**: [Edge vs luck (Fooled by Randomness)](edge-vs-luck.md)
 - **education-claim-audit**: [Education & credential claim audit](education-claim-audit.md)

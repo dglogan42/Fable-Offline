@@ -24,7 +24,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **health/** | Health NZ navigation | `healthnz-find-a-service.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
-| **media/** | YouTube Live encoder protocol | `youtube-live-encoder.md` |
+| **media/** | YouTube Live · Adobe CC · CapCut/Resolve builds | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md` |
 | **pdf/** | PDF.js + extract hygiene | `pdfjs-and-offline-render.md` |
 | **privacy/** | Third-party host maps + privacy design | See table below |
 | **property/** | Property manager framework | `property-manager-framework.md` |

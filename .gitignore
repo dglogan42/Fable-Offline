@@ -6,7 +6,7 @@
 # Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
 # Zoom/Google calendar credentials, Windows product keys, macOS recovery keys /
 # full Installer apps / IPSW, social chat/snap exports, private RSS URLs with
-# tokens, local soak dumps.
+# tokens, stream keys, Adobe passwords, heavy creative inbox/exports, soak dumps.
 # =============================================================================
 
 # --- Python ---
@@ -233,6 +233,24 @@ knowledge/media/_local/
 knowledge/media/*-local*.md
 knowledge/media/*stream*key*
 **/*stream*key*
+# Heavy media masters (export packages stay local)
+workspace/creative/**/00_inbox/**
+workspace/creative/**/01_selects/**
+workspace/creative/**/04_exports/**
+workspace/creative/**/*.psd
+workspace/creative/**/*.psb
+workspace/creative/**/*.dng
+workspace/creative/**/*.cr2
+workspace/creative/**/*.cr3
+workspace/creative/**/*.nef
+workspace/creative/**/*.arw
+workspace/creative/**/*.mov
+workspace/creative/**/*.mp4
+workspace/creative/**/*.mxf
+workspace/creative/**/*.drp
+workspace/creative/**/*.prproj
+!workspace/creative/**/notes.md
+!workspace/creative/**/05_presets/**/*.md
 # Seamly / pattern CAD client files
 **/*.sm2d
 **/*.sm2d*

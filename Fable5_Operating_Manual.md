@@ -957,6 +957,14 @@ DOC Conservation blog: [Becoming a DOC ranger](https://blog.doc.govt.nz/2020/01/
 **Automation:** `youtube-live-encoder-plan`.  
 Never commit stream keys. First enable may take up to 24 hours. User operates Studio + encoder.
 
+## 20n. Creative pipeline builds (Adobe · CapCut · Resolve)
+**Trigger:** Creative Cloud desktop, Photoshop/Lightroom batch, CapCut, DaVinci Resolve Deliver.  
+**Skill:** `creative-pipeline-builds` — **pipeline-plan**, **cc-desktop-setup**, **lightroom-build**, **photoshop-build**, **capcut-build**, **resolve-build**.  
+**Adobe entry:** [CC desktop app (NZ)](https://www.adobe.com/nz/creativecloud/desktop-app.html).  
+**Knowledge:** `knowledge/media/creative-pipeline-builds.md`, `adobe-cc-desktop.md`.  
+**Automation:** `creative-pipeline-build`.  
+Licensed apps only; presets/templates/export queues = “automation”; no cracks. User HITL.
+
 ## 20l. Offline loop agents pack
 
 **Trigger:** `/hermes`, `/loop`, `/engineer`, `offline_goal_loop.py`.

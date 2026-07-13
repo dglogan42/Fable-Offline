@@ -121,7 +121,24 @@ session hijacking, or automated abuse of Snapchat or other social platforms.
 entitled to publish. Do not republish third-party full-text content without
 rights, and do not commit private feed URLs that embed secrets.
 
-### 9. Contributions
+### 9. Creative desktop apps and pipeline builds
+
+Skill `creative-pipeline-builds` and notes under `knowledge/media/` describe
+**licensed** workflows using Adobe Creative Cloud (including the
+[Creative Cloud desktop app](https://www.adobe.com/nz/creativecloud/desktop-app.html)),
+Photoshop, Lightroom, CapCut, and DaVinci Resolve: project templates, presets,
+export/render queues, and checklists.
+
+Adobe, CapCut, Blackmagic Design, and related marks remain the property of
+their respective owners. The Software does **not** authorize cracked installers,
+license bypass tools, keygens, or malware “activators.” Do not commit Adobe
+passwords, stock assets without rights, raw camera masters, or heavy export
+packages. Prefer `workspace/creative/` locally (inbox/exports gitignored).
+
+YouTube Live encoder guidance (Help answer 2907883 family) likewise requires
+valid account access; never commit stream keys.
+
+### 10. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise

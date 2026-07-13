@@ -45,6 +45,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Snapchat Web feed** | Desktop Chat feed protocol (`web.snapchat.com`) |
 | **RSS share** | Build/share **RSS 2.0** feeds (`scripts/rss_share.py`) |
 | **YouTube Live encoder** | Studio + RTMP/encoder protocol ([Help 2907883](https://support.google.com/youtube/answer/2907883?hl=en)) |
+| **Creative pipeline builds** | Adobe CC + CapCut + LR/PS + Resolve export recipes (`knowledge/media/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -113,6 +114,7 @@ Fable-Offline/
 | `**/*.ics`, Zoom passcodes, secret calendar feeds | Private invites / join secrets |
 | Windows product keys (`knowledge/windows/_local/`) | Licensing secrets |
 | macOS `Install *.app`, `.ipsw`, recovery / FileVault keys | Huge binaries + secrets |
+| Stream keys; Adobe passwords; creative `00_inbox` / `04_exports` media | Secrets + bulk binaries |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
 Ship only **curated markdown** under `knowledge/` and shared skills/workflows. Full policy: [`.gitignore`](.gitignore) · data index: [`knowledge/INDEX.md`](knowledge/INDEX.md).
@@ -143,7 +145,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
-| YouTube Live encoder | `knowledge/media/` | `youtube-live-encoder` |
+| YouTube Live / creative builds | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 | DOC ranger careers | `knowledge/conservation/` | `doc-ranger-pathway` |
 | TikTok Ads creation | `knowledge/ads/` | `tiktok-ads-create` |
@@ -275,6 +277,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `snapchat-web-session` | Snapchat for Web login + Chat feed + call/snap protocol |
 | `rss-share-build` | Compose channel JSON + RSS 2.0 feed.xml share pack |
 | `youtube-live-encoder-plan` | YouTube Live encoder first-stream plan (Help 2907883) |
+| `creative-pipeline-build` | Adobe CC + CapCut + LR/PS + Resolve export pipeline plan |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
@@ -293,6 +296,30 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
 | `doc-ranger-pathway` | DOC Trainee Ranger / L4 conservation pathway map |
 | `uc-arts-pg-map` | UC Arts postgraduate pathways + apply navigation |
+
+## Creative pipeline builds (Adobe · CapCut · Resolve)
+
+Repeatable **export builds** with licensed apps — not cracked installers.
+
+| Stage | Tool |
+|-------|------|
+| Install / update | [Adobe Creative Cloud desktop](https://www.adobe.com/nz/creativecloud/desktop-app.html) → Photoshop, Lightroom, … |
+| Stills | Lightroom develop/export presets → Photoshop actions |
+| Short-form | CapCut templates → 9:16 export |
+| Long-form / grade | DaVinci Resolve project + Deliver presets |
+| Package | `workspace/creative/<slug>/04_exports/` + `notes.md` |
+
+```bash
+python fable5_offline_agent.py --automate creative-pipeline-build
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/creative-pipeline-builds.md` |
+| Knowledge | `knowledge/media/creative-pipeline-builds.md`, `adobe-cc-desktop.md` |
+| Workflow | `workflows/creative-pipeline-build.json` |
+
+**Refuse:** GenP/cracks. User runs apps. Hand off publish to YouTube Live / TikTok / IG / RSS skills.
 
 ## YouTube Live with an encoder
 
@@ -1138,6 +1165,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Snapchat Web feed** — official web.snapchat.com Chat/call/snap protocol (not a scraper).
 - **RSS share** — RSS 2.0 feed build/share (`scripts/rss_share.py`; pull syndication).
 - **YouTube Live encoder** — Studio + encoder setup from Help 2907883 (not stream-key storage).
+- **Creative pipeline builds** — Adobe CC + CapCut + Resolve export recipes (licensed apps only).
 
 ## License
 
@@ -1157,7 +1185,8 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 6. Windows install (licensed Win11 media / DISM only; no rebrand/piracy)  
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
-9. Contribution licensing  
+9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
+10. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -1177,5 +1206,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
+| Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

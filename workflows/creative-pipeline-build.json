@@ -1,0 +1,14 @@
+{
+  "name": "creative-pipeline-build",
+  "description": "Plan Adobe CC + CapCut + Lightroom/Photoshop + DaVinci Resolve export builds",
+  "steps": [
+    {
+      "type": "note",
+      "text": "CC desktop: https://www.adobe.com/nz/creativecloud/desktop-app.html — skill creative-pipeline-builds. Licensed apps only. No cracks. Stream keys / Adobe passwords never in git."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill creative-pipeline-builds and knowledge/media/ (creative-pipeline-builds.md, adobe-cc-desktop.md), produce pipeline-plan: (1) verdict (2) cc-desktop-setup steps (3) project-scaffold under workspace/creative/<slug>/ (4) lightroom-build and/or photoshop-build and/or capcut-build and/or resolve-build matching the user's deliverable (5) verify-package (6) publish-handoff to YouTube/TikTok/IG/RSS skills (7) refuse cracks. If deliverable unclear, ask stills vs short-form vs long-form. Not legal advice. User runs apps HITL."
+    }
+  ]
+}
