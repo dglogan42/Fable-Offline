@@ -36,6 +36,8 @@ See skill **kit-from-css** schema. Every fingerprint file should support that sc
 | [css-design-fingerprint-epic-brutal.md](css-design-fingerprint-epic-brutal.md) | Epic multi-product web | very high | `*-navigation`, 4.5rem, Inter, Brutal, Titan One, MUI, `.epic-wf` |
 | [css-design-fingerprint-firefox-videocontrols.md](css-design-fingerprint-firefox-videocontrols.md) | Firefox media controls | very high | MPL, chrome://, `-moz-range-*`, `#00b6f0` progress |
 
+Related product shell (not full fingerprint file yet): **MyFitnessPal** web — Inter + brand `#0066EE` + ~992px / 60px header (`knowledge/health/myfitnesspal.md`).
+
 ---
 
 ## Epic navigation registry (from fingerprint)

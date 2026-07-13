@@ -1,0 +1,14 @@
+{
+  "name": "myfitnesspal-resource-kit",
+  "description": "Map MyFitnessPal product + privacy hosts from official site / HTML dump",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Site: https://www.myfitnesspal.com — skill myfitnesspal-resource-kit. Not medical advice. Privacy hosts from dump. Redact live keys in public notes. No diary scrapes."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill myfitnesspal-resource-kit and knowledge/health/myfitnesspal.md + knowledge/privacy/myfitnesspal-hosts.md (homepage dump v21.9.1), produce mfp-plan: (1) verdict — MyFitnessPal Next.js nutrition tracker homepage (2) product-map calories/macros/BMR/food/exercise/Premium features as marketing seeds only (3) goals-hygiene non-clinical (4) host-map LOAD/CONFIG for first-party CDNs, GTM-NR6RNVL, GA, Amplitude, AppsFlyer, Datadog, TrustArc/Sourcepoint, Facebook app id, Stripe publishable, reCAPTCHA, Trainerize/GymEngine widgets, Cloudflare (5) env-hygiene — public __ENV, do not treat as private secrets to abuse (6) css-fingerprint Inter + #0066EE (7) premium-notes partner offers VERIFY LIVE (8) medical disclaimer (9) OPEN. Not medical or legal advice. User operates MFP HITL."
+    }
+  ]
+}

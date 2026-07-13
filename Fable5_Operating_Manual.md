@@ -1055,6 +1055,30 @@ Author platform for WebNovel; SPA-loaded academy text. Not publishing/legal advi
 **Automation:** `css-styles-media-kit`.  
 CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML for hosts.
 
+## 20aa. MyFitnessPal resource kit
+**Trigger:** MyFitnessPal, MFP, calorie tracker, macro log, myfitnesspal.com HTML dump.  
+**Skill:** `myfitnesspal-resource-kit` — **mfp-plan**, **product-map**, **host-map**, **goals-hygiene**, **env-hygiene**, **premium-notes**.  
+**Source:** [myfitnesspal.com](https://www.myfitnesspal.com/) homepage dump (Next.js v21.9.1 seed).  
+**Knowledge:** `knowledge/health/myfitnesspal.md`, `knowledge/privacy/myfitnesspal-hosts.md`.  
+**Automation:** `myfitnesspal-resource-kit`.  
+**Not medical advice.** Privacy map LOAD/CONFIG only. No diary scrapes or session cookies in git.
+
+## 20ab. PhysiotherapyExercises.com resource kit
+**Trigger:** PhysiotherapyExercises.com, physio exercise booklet, ptx-main, exercise database for patients.  
+**Skill:** `physiotherapy-exercises-resource-kit` — **ptx-plan**, **booklet-workflow**, **patient-hygiene**, **host-map**, **red-flags**.  
+**Source:** [physiotherapyexercises.com](https://www.physiotherapyexercises.com/) HTML dump.  
+**Knowledge:** `knowledge/health/physiotherapy-exercises.md`, `knowledge/privacy/physiotherapyexercises-hosts.md`.  
+**Automation:** `physiotherapy-exercises-resource-kit`.  
+**Not physiotherapy advice.** Clinician booklet tool. No patient PII in git.
+
+## 20ac. Fitness companion agent
+**Trigger:** fitness companion, workout buddy agent, habit loop, track food/exercise, MFP + physio contrast, injury vs training.  
+**Skill:** `fitness-companion-agent` — **fit-plan**, **companion-loop**, **nutrition-track**, **move-check**, **injury-route**, **clinician-booklet**, **privacy-fit**, **red-flags**.  
+**Data:** MyFitnessPal + PhysiotherapyExercises.com + Health NZ packs.  
+**Knowledge:** `knowledge/health/fitness-companion-framework.md` (+ `myfitnesspal.md`, `physiotherapy-exercises.md`).  
+**Automation:** `fitness-companion-agent`.  
+**Not medical/physio/nutrition advice.** No diaries or patient booklets in git. NZ emergency: **111**.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

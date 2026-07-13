@@ -46,6 +46,25 @@ third-party works. Always re-verify against primary official sources.
 In an emergency in New Zealand, call **111**. Agents must not take crime,
 fire, or medical reports as the agent of record.
 
+Skill `myfitnesspal-resource-kit` and notes under `knowledge/health/myfitnesspal.md`
+describe **third-party** nutrition tracking product surfaces and privacy hosts
+only. They are **not medical, dietetic, or mental-health advice**. MyFitnessPal
+and related marks remain the property of their owners. Do not commit private
+food diaries or session cookies.
+
+Skill `physiotherapy-exercises-resource-kit` and notes under
+`knowledge/health/physiotherapy-exercises.md` describe the **PhysiotherapyExercises.com**
+exercise library and booklet tool for clinicians. They are **not physiotherapy,
+medical, or rehabilitation advice**. Site content and images remain the property
+of their rights holders. Do not commit patient-identifying booklets or bulk
+scraped exercise media.
+
+Skill `fitness-companion-agent` and `knowledge/health/fitness-companion-framework.md`
+orchestrate **habit/process companionship** and tool literacy from the packs above.
+They are **not** medical, physiotherapy, nutrition, or personal-training advice.
+Do not invent calorie targets or DIY rehab plans; do not commit food diaries or
+patient materials.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

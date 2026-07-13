@@ -55,6 +55,9 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Book Creator comics kit** | Classroom comics ([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)) |
 | **Inkstone resource kit** | WebNovel author platform ([inkstone.webnovel.com](https://inkstone.webnovel.com/)) · Academy · hosts |
 | **CSS styles media kit** | Web design rules + CSS fingerprints (Epic · TikTok · Firefox · orphan) |
+| **Fitness companion agent** | Habit process + MFP/physio routing (`fitness-companion-agent`) — not medical advice |
+| **MyFitnessPal resource kit** | Nutrition tracker map + privacy hosts ([myfitnesspal.com](https://www.myfitnesspal.com/)) |
+| **PhysiotherapyExercises kit** | Clinician exercise library + patient booklets ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 
@@ -154,7 +157,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Property management | `knowledge/property/` | `property-manager-agent` |
 | Animals / dogs | `knowledge/animals/` | `animal-compliance-agent` |
 | Emergency / safety | `knowledge/public-safety/` | `emergency-services-agent` |
-| Health directory | `knowledge/health/` | `emergency-services-agent` |
+| Health directory / fitness companion / MFP / physio | `knowledge/health/` | `fitness-companion-agent`, `emergency-services-agent`, `myfitnesspal-resource-kit`, `physiotherapy-exercises-resource-kit` |
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
@@ -324,6 +327,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `book-creator-comics-kit` | Book Creator classroom comics (panels, bubbles, unit) |
 | `inkstone-resource-kit` | Inkstone SPA hosts, HiBridge, privacy checklist |
 | `css-styles-media-kit` | CSS design media kit + fingerprint catalog match |
+| `fitness-companion-agent` | Fitness habit companion + MFP/physio/injury routing |
+| `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
+| `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
@@ -632,6 +638,75 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## Fitness companion agent
+
+Offline **habit/process companion** built from curated health-tool data (MyFitnessPal + PhysiotherapyExercises.com + Health NZ). Routes general fitness vs injury vs clinician booklet workflows; maps privacy; escalates red flags.
+
+| Stage | Focus |
+|-------|--------|
+| Companion loop | User-defined goals · one habit · weekly review · stop rules |
+| Nutrition | MFP logging process (HITL); user owns numbers |
+| Injury | No DIY rehab → clinician; physio site only for **clinician** booklets |
+| Privacy | MFP + physio host maps |
+| Stance | **Not medical / physio / nutrition advice** · no diaries or patient PII in git |
+
+```bash
+python fable5_offline_agent.py --automate fitness-companion-agent
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/fitness-companion-agent.md` |
+| Framework | `knowledge/health/fitness-companion-framework.md` |
+| Workflow | `workflows/fitness-companion-agent.json` |
+| Product kits | `myfitnesspal-resource-kit`, `physiotherapy-exercises-resource-kit` |
+
+## PhysiotherapyExercises.com resource kit
+
+Clinician tool to **search 1500+ exercises** and **make patient booklets** ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)).
+
+| Stage | Focus |
+|-------|--------|
+| Product | Search / select / booklet for injuries & disabilities |
+| Locale seed | en-AU culture, NZ country flag on dump |
+| Feeds | `/exercise/rss` · `/exercise/atom` |
+| Privacy | First-party media/JS + GA `UA-20604563-1` + Cloudflare |
+| Stance | **Not physiotherapy advice** · no patient IDs in git |
+
+```bash
+python fable5_offline_agent.py --automate physiotherapy-exercises-resource-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/physiotherapy-exercises-resource-kit.md` |
+| Knowledge | `knowledge/health/physiotherapy-exercises.md` |
+| Privacy | `knowledge/privacy/physiotherapyexercises-hosts.md` |
+| Workflow | `workflows/physiotherapy-exercises-resource-kit.json` |
+
+## MyFitnessPal resource kit
+
+Nutrition / calorie tracking product map and **privacy host inventory** from [myfitnesspal.com](https://www.myfitnesspal.com/) (Next.js homepage seed v21.9.1).
+
+| Stage | Focus |
+|-------|--------|
+| Product | Calories, macros, BMR, food/exercise logging, Premium features (marketing) |
+| Design seed | Inter · brand `#0066EE` · ~992px shell |
+| First-party | web-assets CDN, api.myfitnesspal.com, blog, community |
+| Third-party | GTM, GA, Amplitude, AppsFlyer, Datadog, TrustArc/Sourcepoint, Facebook, Stripe pk, reCAPTCHA |
+| Stance | **Not medical advice** · no diary scrapes |
+
+```bash
+python fable5_offline_agent.py --automate myfitnesspal-resource-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/myfitnesspal-resource-kit.md` |
+| Knowledge | `knowledge/health/myfitnesspal.md` |
+| Privacy | `knowledge/privacy/myfitnesspal-hosts.md` |
+| Workflow | `workflows/myfitnesspal-resource-kit.json` |
 
 ## 3D animation dev kit (CG · Blender-first)
 
@@ -1511,6 +1586,9 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Book Creator comics kit** — classroom comics ([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)).
 - **Inkstone resource kit** — WebNovel author platform + Writers Academy ([inkstone.webnovel.com](https://inkstone.webnovel.com/)).
 - **CSS styles media kit** — web design rules + fingerprint catalog (Epic · TikTok · Firefox · orphan).
+- **Fitness companion agent** — habit/process companion from MFP + physio + Health NZ data; not medical advice.
+- **MyFitnessPal resource kit** — nutrition tracker + privacy hosts ([myfitnesspal.com](https://www.myfitnesspal.com/)); not medical advice.
+- **PhysiotherapyExercises kit** — clinician exercise booklets ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)); not physio advice.
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
@@ -1560,6 +1638,9 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Roblox Studio | Cracked Studio, Robux scams, session cookies, or huge `.rbxl` in public git |
 | Book Creator comics | Student books/PII in git, cracked accounts, or invented pricing |
 | Inkstone / WebNovel | Session cookies, unpublished manuscripts in git, invented contracts/contest wins, or fake academy article text |
+| Fitness companion agent | Medical/physio/nutrition prescriptions, invented macros, DIY rehab, diaries/patient data in git |
+| MyFitnessPal | Medical advice claims, diary scrapes, or session cookies in git |
+| PhysiotherapyExercises.com | Physio prescriptions for undiagnosed injury, patient booklets in git, bulk media scrape |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |

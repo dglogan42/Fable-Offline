@@ -1,0 +1,14 @@
+{
+  "name": "physiotherapy-exercises-resource-kit",
+  "description": "Map PhysiotherapyExercises.com: booklet workflow, locale, privacy hosts",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Site: https://www.physiotherapyexercises.com — skill physiotherapy-exercises-resource-kit. Clinician exercise library + patient booklets. NOT physiotherapy advice. No patient PII. GA UA-20604563-1 + Cloudflare in dump."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill physiotherapy-exercises-resource-kit and knowledge/health/physiotherapy-exercises.md + knowledge/privacy/physiotherapyexercises-hosts.md, produce ptx-plan: (1) verdict — clinician tool for search/select/booklets for people with injuries/disabilities (2) booklet-workflow HITL on live site (3) patient-hygiene — no patient IDs in Fable (4) locale NZ/en-AU seeds (5) feeds RSS/Atom (6) host-map first-party + GTM UA-20604563-1 + Cloudflare (7) red-flags → emergency pathways not exercise picks (8) medical disclaimer (9) OPEN. Not medical advice. User is clinician or refers to clinician."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "fitness-companion-agent",
+  "description": "Fitness companion: habit loop, MFP nutrition process, injury vs clinician booklet routing, privacy",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill fitness-companion-agent. Data: MyFitnessPal + PhysiotherapyExercises.com + Health NZ. NOT medical/physio/nutrition advice. No diaries or patient booklets in git. Emergency NZ: 111."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill fitness-companion-agent and knowledge/health/fitness-companion-framework.md (plus myfitnesspal.md and physiotherapy-exercises.md as needed), produce fit-plan: (1) verdict — process companion only with medical disclaimer (2) audience split: general fitness vs injured/patient vs clinician (3) if injury/pain → injury-route + red-flags, do not prescribe DIY rehab (4) if nutrition logging → nutrition-track via MFP kit hygiene, user owns goals/numbers (5) if general → companion-loop one habit + review cadence (6) if clinician handouts → clinician-booklet on physiotherapyexercises.com HITL (7) privacy-fit if asking who tracks them (8) health-nav NZ only when relevant (9) OPEN VERIFY LIVE. Never invent macros/BMR as clinical truth. Never scrape diaries or exercise image libraries."
+    }
+  ]
+}

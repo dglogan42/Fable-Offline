@@ -333,6 +333,16 @@ workspace/creative/**/*.rbxmx
 knowledge/math/_local/
 knowledge/physics/_local/
 knowledge/swarm/_local/
+# MyFitnessPal / physio / fitness companion — no diary/patient material
+knowledge/health/_local/
+knowledge/health/*diary*
+knowledge/health/*myfitnesspal*secret*
+knowledge/health/*patient*booklet*
+**/mfp*session*
+**/myfitnesspal*cookie*
+**/physiotherapyexercises*export*
+workspace/health/fitness-companion/**
+!workspace/health/fitness-companion/.gitkeep
 
 # Auto-generated agent system prompts (local bulk; ship generator + skill only)
 # Keep generated_prompts/.gitkeep so the directory exists after clone.
