@@ -1,0 +1,14 @@
+{
+  "name": "outfit-seamly-plan",
+  "description": "Outfit select or create brief + Seamly2D project plan (download seamly.io)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Seamly download: https://seamly.io/download/ — skill outfit-selector-create. FOSS apparel CAD. Then optional instagram-selfie-selector for photos."
+    },
+    {
+      "type": "outfit",
+      "prompt": "Using skill outfit-selector-create and knowledge/fashion/ (seamly-outfit-workflow.md, outfit-selector-create.md): (1) if user listed wardrobe options run select-outfit (2) else create-outfit-brief for their occasion/vibe (3) if sewing/pattern intent: measure-sheet placeholders + seamly-project-plan (4) seamly-download-guide pointing to https://seamly.io/download/ (form → email link; user CLICK) (5) materials-list high-level (6) optional hand-off-slay to Instagram skill. No body shame. No commercial pattern piracy. Not medical advice."
+    }
+  ]
+}

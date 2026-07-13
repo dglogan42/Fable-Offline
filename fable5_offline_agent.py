@@ -415,6 +415,7 @@ def load_system_prompt(
     windows_mode: bool = False,
     macos_mode: bool = False,
     fit_mode: bool = False,
+    outfit_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -548,11 +549,30 @@ def load_system_prompt(
             "user's own photos: select-hero, fit-check, makeup-check, slay-score, caption-pack, "
             "format-fit, post-safety. No body shame. No fake viral guarantees. No auto-post to "
             "Instagram. Privacy: crop IDs, non-consenting people, sensitive locations. "
-            "Refuse content that sexualises minors. Not medical or mental-health care.\n"
+            "Refuse content that sexualises minors. Not medical or mental-health care. "
+            "If the user is designing/sewing a new outfit, also apply **outfit-selector-create** "
+            "and Seamly download https://seamly.io/download/ .\n"
         )
         know = read_knowledge_bundle("social", limit_chars=6000)
         if know.strip():
             parts.append("\n\n---\n## Local social / fit knowledge\n\n" + know)
+        fashion = read_knowledge_bundle("fashion", limit_chars=4000)
+        if fashion.strip():
+            parts.append("\n\n---\n## Local fashion / Seamly knowledge\n\n" + fashion)
+    if outfit_mode:
+        parts.append(
+            "\n\n---\n## Outfit selector / create mode (Seamly)\n"
+            "Apply skill **outfit-selector-create**. Select wardrobe combos or create outfit "
+            "briefs; plan Seamly2D pattern projects. Official download: "
+            "https://seamly.io/download/ (user CLICK — form emails link). FOSS apparel CAD for "
+            "Windows/Linux/macOS. Procedures: select-outfit, create-outfit-brief, "
+            "seamly-download-guide, measure-sheet, seamly-project-plan, materials-list, "
+            "fit-iteration, hand-off-slay → instagram-selfie-selector. No body shame. "
+            "No commercial pattern piracy. Not medical advice. Not a Seamly binary host.\n"
+        )
+        know = read_knowledge_bundle("fashion", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local fashion / Seamly knowledge\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2088,7 +2108,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | macos | fit | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2363,6 +2383,22 @@ def run_automate(
                     prefix="FitMode: ",
                 )
                 results.append("fit → done")
+            elif stype in {"outfit", "seamly", "wardrobe"}:
+                osys = load_system_prompt(outfit_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill outfit-selector-create and knowledge/fashion/, plan outfit "
+                    "select or create + Seamly project. Download: https://seamly.io/download/"
+                )
+                print("\n[outfit selector / create · Seamly]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": osys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="OutfitMode: ",
+                )
+                results.append("outfit → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2587,7 +2623,7 @@ def print_banner() -> None:
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
         "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
-        "/fit /slay /pdf /build /automate /loop /help quit\n"
+        "/fit /slay /outfit /pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -2608,6 +2644,8 @@ Commands
   /macos [prompt]    Apple-licensed macOS bootable installer / recovery (knowledge/macos/)
   /fit [prompt]      Instagram selfie / fit / makeup selector (knowledge/social/)
   /slay [prompt]     Alias for /fit
+  /outfit [prompt]   Outfit select/create + Seamly2D plan (knowledge/fashion/)
+  /seamly [prompt]   Alias for /outfit
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2650,6 +2688,9 @@ CLI
   {py} fable5_offline_agent.py --fit
   {py} fable5_offline_agent.py --fit "A black blazer fit vs B soft glam mirror selfie — feed post"
   {py} fable5_offline_agent.py --automate instagram-fit-select
+  {py} fable5_offline_agent.py --outfit
+  {py} fable5_offline_agent.py --outfit "create skirt pattern brief for Seamly"
+  {py} fable5_offline_agent.py --automate outfit-seamly-plan
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -2900,6 +2941,32 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Fit mode error: {e}\n"))
+            continue
+        if low.startswith("/outfit") or low.startswith("/seamly") or low.startswith("/wardrobe"):
+            if low.startswith("/outfit"):
+                prompt = user_input[7:].strip()
+            elif low.startswith("/seamly"):
+                prompt = user_input[7:].strip()
+            else:
+                prompt = user_input[9:].strip()
+            prompt = prompt or (
+                "Using skill outfit-selector-create and knowledge/fashion/, explain select-outfit "
+                "vs create-outfit-brief vs seamly-project-plan. Point download to "
+                "https://seamly.io/download/ . Ask for occasion, vibe, and closet or sew intent."
+            )
+            try:
+                osys = load_system_prompt(outfit_mode=True)
+                print(ui("\n[outfit selector / create · Seamly]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": osys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="OutfitMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Outfit mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3219,6 +3286,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Instagram selfie / fit / makeup selector (knowledge/social/)",
     )
     parser.add_argument(
+        "--outfit",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Outfit select/create + Seamly2D plan (knowledge/fashion/; seamly.io/download)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3346,6 +3421,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.windows is None
             and args.macos is None
             and args.fit is None
+            and args.outfit is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3540,6 +3616,27 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": fsys}, {"role": "user", "content": prompt}],
                 prefix="FitMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.outfit is not None:
+        prompt = (args.outfit or "").strip() or (
+            "Using skill outfit-selector-create and knowledge/fashion/ "
+            "(seamly-outfit-workflow.md, outfit-selector-create.md), produce: "
+            "(1) method chooser select vs create (2) create-outfit-brief template "
+            "(3) seamly-download-guide for https://seamly.io/download/ "
+            "(4) seamly-project-plan phases (5) hand-off to Instagram skill. "
+            "FOSS apparel CAD. No body shame. No pattern piracy. Not medical advice."
+        )
+        try:
+            osys = load_system_prompt(outfit_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": osys}, {"role": "user", "content": prompt}],
+                prefix="OutfitMode: ",
             )
             return 0
         except Exception as e:

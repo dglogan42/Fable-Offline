@@ -39,6 +39,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Windows install prep** | Licensed **Windows 11** media + DISM/unattend hygiene (`knowledge/windows/`) |
 | **macOS install prep** | Apple **bootable installer** / recovery hygiene (`knowledge/macos/`) |
 | **Instagram fit / selfie** | Pick hero fits, makeup, slay shots + captions (`knowledge/social/`) |
+| **Outfit select / create** | Wardrobe picks + **Seamly2D** pattern plans (`knowledge/fashion/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -86,7 +87,8 @@ Fable-Offline/
 │   ├── INDEX.md                 # Data catalog
 │   ├── aem/ animals/ brokers/ climate/ culture/
 │   ├── calendar/ education/ health/ legal/ pdf/ privacy/
-│   ├── macos/ property/ public-safety/ social/ steam/ trade/ urban-planning/ windows/
+│   ├── fashion/ macos/ property/ public-safety/ social/ steam/ trade/
+│   ├── urban-planning/ windows/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
@@ -134,6 +136,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Windows install (licensed) | `knowledge/windows/` | `windows-install-prep` |
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
+| Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 
 Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
@@ -208,6 +211,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/windows [prompt]` | Licensed Windows 11 install / DISM hygiene |
 | `/macos [prompt]` | Apple-licensed macOS bootable installer / recovery |
 | `/fit` · `/slay` · `/ootd` | Instagram selfie / fit / makeup selector |
+| `/outfit` · `/seamly` | Outfit select/create + Seamly2D plan |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -269,6 +273,35 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `windows-install-prep` | Licensed Win11 media plan + optional DISM/unattend outline |
 | `macos-install-prep` | Apple bootable installer (101578) + recovery method chooser |
 | `instagram-fit-select` | Hero fit/selfie pick + caption pack + post-safety |
+| `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
+
+## Outfit selector / create (Seamly2D)
+
+Wardrobe **select** or sew **create**, with open-source pattern CAD **Seamly** / Seamly2D.
+
+| Step | Action |
+|------|--------|
+| Download CAD | User **CLICK** [seamly.io/download](https://seamly.io/download/) (form → email link) |
+| Select | Rank closet combos for occasion / vibe |
+| Create | Outfit brief → measurements → Seamly project phases → muslin |
+| Show | Hand off to `--fit` / Instagram selfie selector |
+
+```bash
+python fable5_offline_agent.py --outfit
+python fable5_offline_agent.py --outfit "select-outfit: dinner, cool weather, black trousers + ?"
+python fable5_offline_agent.py --outfit "seamly-project-plan: A-line skirt first draft"
+python fable5_offline_agent.py --automate outfit-seamly-plan
+# Chat: /outfit  /seamly  /wardrobe
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/outfit-selector-create.md` |
+| Knowledge | `knowledge/fashion/seamly-outfit-workflow.md`, `outfit-selector-create.md` |
+| Workflow | `workflows/outfit-seamly-plan.json` |
+| Instagram hand-off | `skills/instagram-selfie-selector.md` |
+
+FOSS apparel CAD (Windows / Linux / macOS). No body shame; no pirated commercial patterns; measurements stay in `knowledge/fashion/_local/`.
 
 ## Instagram selfie selector (fits · makeup · slay)
 
@@ -718,7 +751,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `pdf` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `outfit` · `pdf` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
@@ -845,7 +878,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--outfit` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -909,6 +942,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Windows install prep** — licensed Win11 media + DISM/unattend hygiene (not piracy; no fake Windows 12).
 - **macOS install prep** — Apple bootable installer / recovery (101578; not Hackintosh or cracked media).
 - **Instagram selfie selector** — fits, makeup, slay picks + captions (not auto-post; not body-shame).
+- **Outfit / Seamly** — wardrobe select + create briefs + Seamly2D pattern plan ([seamly.io/download](https://seamly.io/download/)).
 
 ## License
 

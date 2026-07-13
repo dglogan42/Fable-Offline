@@ -42,10 +42,11 @@ If only one photo: run **polish-one** not a fake multi-way rank.
 | `privacy-host-map` | Meta/Instagram trackers if auditing web login pages |
 | `privacy-design-planner` | Personal brand agent that handles photos |
 | `arts-culture-agent` | Colour/composition language crossover |
+| `outfit-selector-create` | Wardrobe pick / sew brief / Seamly2D pattern plan before the photo |
 | `calendar-mail-meetings` | Schedule post time (user posts manually) |
 | `pdf-render` | Moodboards exported as PDF |
 
-Knowledge: `knowledge/social/instagram-selfie-playbook.md`
+Knowledge: `knowledge/social/instagram-selfie-playbook.md` · Seamly: `knowledge/fashion/`
 
 ---
 

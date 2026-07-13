@@ -858,6 +858,27 @@ User **CLICK** → [https://support.apple.com/en-nz/101578](https://support.appl
 
 ---
 
+## 20i. Outfit selector / create (Seamly)
+
+**Trigger:** `/outfit`, `/seamly`, `--outfit`, wardrobe pick, sew brief, pattern CAD.
+
+### Skill
+`outfit-selector-create`: **select-outfit**, **create-outfit-brief**, **seamly-download-guide**, **measure-sheet**, **seamly-project-plan**, **materials-list**, **fit-iteration**, **hand-off-slay**.
+
+### Seamly download
+User **CLICK** → [https://seamly.io/download/](https://seamly.io/download/) (form → email link). FOSS apparel CAD for Windows / Linux / macOS.
+
+### Knowledge
+- `knowledge/fashion/seamly-outfit-workflow.md`
+- `knowledge/fashion/outfit-selector-create.md`
+
+### Automation
+- `outfit-seamly-plan` (step types: `outfit` / `seamly` / `wardrobe`)
+
+Bridge finished looks to **instagram-selfie-selector**. No body shame; no commercial pattern piracy; measurements stay local (`knowledge/fashion/_local/`).
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

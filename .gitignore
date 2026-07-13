@@ -211,6 +211,13 @@ knowledge/social/**/*.jpeg
 knowledge/social/**/*.png
 knowledge/social/**/*.heic
 knowledge/social/**/*.webp
+knowledge/fashion/_local/
+knowledge/fashion/*-local*.md
+knowledge/fashion/**/*measure*
+# Seamly / pattern CAD client files
+**/*.sm2d
+**/*.sm2d*
+**/seamly-projects/
 # Do not commit full macOS Installer apps, raw USB dumps, or firmware images
 **/Install macOS *.app/**
 **/Install OS X *.app/**
