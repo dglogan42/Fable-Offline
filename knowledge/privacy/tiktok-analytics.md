@@ -89,8 +89,22 @@ LOAD confirmed | script only | BUNDLE only | not found
 
 ---
 
+## First-party TikTok UI (not the pixel alone)
+
+If CSS shows **TikTok Text / TikTok Display**, `--primary-color: #fe2c55`, and **`--ttam-*`** tokens, the user is likely on a **TikTok product console** (ads/business), not merely a third-party site with a pixel.
+
+See: `knowledge/web/css-design-fingerprint-tiktok-ui.md`.
+
+| Context | CSS | Typical network |
+|---------|-----|-----------------|
+| TikTok product UI | TikTok fonts + brand pink | First-party TikTok app hosts |
+| Third-party site with pixel | Site’s own design system | Often `analytics.tiktok.com` only |
+
+---
+
 ## Cross-links
 
 - Skill: `tiktok-analytics`  
 - VUW seed: `wgtn-ac-nz-hosts.md`  
+- UI fingerprint: `knowledge/web/css-design-fingerprint-tiktok-ui.md`  
 - General hosts: `privacy-host-map`  

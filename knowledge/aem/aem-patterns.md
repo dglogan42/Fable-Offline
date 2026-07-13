@@ -25,8 +25,9 @@ When the dump is **styles only**, store under `knowledge/web/` and do **not** in
 | Fingerprint note | Signals |
 |------------------|---------|
 | `knowledge/web/css-design-fingerprint-helvetica-grey.md` | Helvetica Neue + Segoe WP + Nimbus Sans L; body `#424242`; 1.125rem / .95rem mid; 45–60 em/rem breakpoints; `*` reset + border-box |
+| `knowledge/web/css-design-fingerprint-tiktok-ui.md` | TikTok Text/Display; `#fe2c55`; `--ttam-*`; midas grid; dark `theme-mode` — **first-party TikTok UI**, not pixel-on-publisher |
 
-**Origin for that sample is UNKNOWN** until a URL is bound.
+**Helvetica-grey sample origin is UNKNOWN** until a URL is bound. TikTok UI sample is high-confidence TikTok product CSS.
 
 ---
 

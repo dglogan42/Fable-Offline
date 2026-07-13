@@ -77,11 +77,12 @@ Do not treat every `tiktok.com` **CLICK** (embed, share, careers social link) as
 | Detect TikTok from HTML/JS only | **scan-html** |
 | Confirm live fire from Network | **confirm-network** |
 | Full TikTok-focused map for a page | **map-tiktok** |
+| CSS = TikTok product UI vs third-party pixel | **fingerprint-ui** |
 | Compare policy claim vs reality | **policy-tension** |
 | Write durable knowledge note | **write-knowledge** |
 | Short answer | **brief** |
 
-Default: **map-tiktok** if both HTML and Network available; else **scan-html** or **confirm-network** alone.
+Default: **map-tiktok** if both HTML and Network available; else **scan-html** or **confirm-network** alone; **fingerprint-ui** if CSS-only with TikTok fonts/tokens.
 
 ---
 
@@ -129,6 +130,27 @@ Combine scan + network:
 
 ---
 
+## fingerprint-ui
+
+**Input:** CSS dump (possibly without URL).
+
+**Strong TikTok product UI signals** (see `knowledge/web/css-design-fingerprint-tiktok-ui.md`):
+
+| Signal | Example |
+|--------|---------|
+| Fonts | `TikTok Text`, `TikTok Display` |
+| Brand | `--primary-color: #fe2c55` |
+| Tokens | `--ttam-font-family-*`, `--midas-grid-*` |
+| Theme | `:root[theme-mode="dark"]` |
+
+**Output:**
+1. Verdict — **TikTok product UI** / **third-party site CSS** / **mixed/unknown**  
+2. Match checklist score  
+3. If product UI: do not treat as “university loads TikTok” alone — user may be on ads.tiktok.com  
+4. If third-party CSS + Network to `analytics.tiktok.com`: classic **pixel on publisher**  
+
+---
+
 ## policy-tension
 
 | Question | Evidence needed |
@@ -157,7 +179,8 @@ Never commit raw HAR with full cookies.
 
 ## Local knowledge
 - `knowledge/privacy/tiktok-analytics.md` (method)  
-- `knowledge/privacy/wgtn-ac-nz-hosts.md` (worked example)  
+- `knowledge/privacy/wgtn-ac-nz-hosts.md` (third-party pixel example)  
+- `knowledge/web/css-design-fingerprint-tiktok-ui.md` (first-party UI CSS)  
 
 ## Companion skills
 | Skill | Use |
