@@ -76,6 +76,10 @@ PROGRAM_FILE = os.environ.get("FABLE5_PROGRAM", "program.md")
 ROADMAP_FILE = os.environ.get("FABLE5_ROADMAP", "ROADMAP.md")
 KNOWLEDGE_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_KNOWLEDGE", "knowledge")))
 AGENTS_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_AGENTS", "agents")))
+# Generated system prompts from offline prompt generator (local; often gitignored)
+PROMPT_GEN_DIR = Path(
+    os.path.expanduser(os.environ.get("FABLE5_PROMPT_GEN_DIR", "generated_prompts"))
+)
 # Human-in-the-loop: prompt before high-risk steps (default on for team/shell)
 HITL = os.environ.get("FABLE5_HITL", "1").strip().lower() not in {"0", "false", "no", "off"}
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
@@ -237,6 +241,123 @@ def agents_root() -> Path:
     root = root.expanduser().resolve()
     root.mkdir(parents=True, exist_ok=True)
     return root
+
+
+def prompt_gen_root() -> Path:
+    """Directory for auto-generated agent system prompts (local)."""
+    root = PROMPT_GEN_DIR if PROMPT_GEN_DIR.is_absolute() else SCRIPT_DIR / PROMPT_GEN_DIR
+    root = root.expanduser().resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def run_prompt_generator(
+    spec: str,
+    *,
+    model: Optional[str] = None,
+    num_agents: int = 4,
+    quiet: bool = False,
+) -> list[Path]:
+    """
+    Run offline auto_prompt_generator.
+
+    spec examples:
+      quant | list
+      swarm: 4-agent blog team
+      agent: rigorous code reviewer
+      free text → treated as custom swarm description
+    """
+    # Import sibling module
+    if str(SCRIPT_DIR) not in sys.path:
+        sys.path.insert(0, str(SCRIPT_DIR))
+    try:
+        import auto_prompt_generator as apg  # type: ignore
+    except ImportError as e:
+        raise RuntimeError(
+            "auto_prompt_generator.py not found next to fable5_offline_agent.py"
+        ) from e
+
+    raw = (spec or "").strip()
+    out = prompt_gen_root()
+    m = model or MODEL_NAME
+    low = raw.lower()
+
+    if not raw or low in {"help", "?", "plan"}:
+        return []  # caller should chat with skill
+
+    if low in {"list", "ls", "show"}:
+        return apg.run_mode("list", out_dir=out, quiet=quiet)
+
+    if low in {"quant", "quant-swarm", "quant_swarm", "1"}:
+        return apg.run_mode(
+            "quant",
+            model=m,
+            out_dir=out,
+            base_url=LOCAL_LLM_BASE_URL,
+            quiet=quiet,
+        )
+
+    # swarm: description  |  agent: role
+    if low.startswith("swarm:"):
+        desc = raw.split(":", 1)[1].strip()
+        # optional leading N agents: "swarm:4: blog team" or "swarm: blog"
+        n = num_agents
+        parts = desc.split(":", 1)
+        if len(parts) == 2 and parts[0].strip().isdigit():
+            n = max(2, min(int(parts[0].strip()), 12))
+            desc = parts[1].strip()
+        return apg.run_mode(
+            "swarm",
+            description=desc or "custom multi-agent swarm",
+            num_agents=n,
+            model=m,
+            out_dir=out,
+            base_url=LOCAL_LLM_BASE_URL,
+            quiet=quiet,
+        )
+
+    if low.startswith("agent:") or low.startswith("single:"):
+        role = raw.split(":", 1)[1].strip()
+        return apg.run_mode(
+            "single",
+            description=role or "Specialized offline agent",
+            model=m,
+            out_dir=out,
+            base_url=LOCAL_LLM_BASE_URL,
+            quiet=quiet,
+        )
+
+    # Bare keywords without colon
+    if low.startswith("swarm "):
+        return apg.run_mode(
+            "swarm",
+            description=raw[6:].strip(),
+            num_agents=num_agents,
+            model=m,
+            out_dir=out,
+            base_url=LOCAL_LLM_BASE_URL,
+            quiet=quiet,
+        )
+    if low.startswith("agent "):
+        return apg.run_mode(
+            "single",
+            description=raw[6:].strip(),
+            model=m,
+            out_dir=out,
+            base_url=LOCAL_LLM_BASE_URL,
+            quiet=quiet,
+        )
+
+    # Free text → custom swarm (default 4 agents)
+    return apg.run_mode(
+        "swarm",
+        description=raw,
+        num_agents=num_agents,
+        model=m,
+        out_dir=out,
+        base_url=LOCAL_LLM_BASE_URL,
+        quiet=quiet,
+    )
 
 
 def read_agents_brief(
@@ -473,6 +594,7 @@ def load_system_prompt(
     loop_mode: bool = False,
     engineer_mode: bool = False,
     math_mode: bool = False,
+    prompt_gen_mode: bool = False,
 ) -> str:
     """Manual + soul + agent briefs + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -709,6 +831,44 @@ def load_system_prompt(
                 )
             except OSError:
                 pass
+    if prompt_gen_mode:
+        parts.append(
+            "\n\n---\n## Offline prompt generator mode\n"
+            "Apply skill **prompt-generator**. Help design agent swarms and system "
+            "prompts with Fable5 rigour, maker≠checker, clear I/O contracts, and "
+            "stopping conditions. Actual file generation is done by "
+            "`auto_prompt_generator.py` (CLI: --prompt-gen / /prompt-gen). "
+            "Output dir: generated_prompts/ (or FABLE5_PROMPT_GEN_DIR). "
+            "After generation, hand off prompts to /hermes, /team, offline_goal_loop, "
+            "or agents/*.md. Prefer strong local models for generation quality. "
+            "Not financial advice when generating quant swarm prompts.\n"
+        )
+        know = read_knowledge_bundle("swarm", limit_chars=6000)
+        if know.strip():
+            parts.append("\n\n---\n## Local swarm / prompt-gen knowledge\n\n" + know)
+        pga = agents_root() / "prompt-generator-agent.md"
+        if pga.is_file():
+            try:
+                parts.append(
+                    "\n\n---\n## agents/prompt-generator-agent.md\n\n"
+                    + pga.read_text(encoding="utf-8")[:2500]
+                )
+            except OSError:
+                pass
+        # Index of already-generated prompts (names only)
+        try:
+            gen_root = prompt_gen_root()
+            if gen_root.is_dir():
+                names = sorted(
+                    {p.relative_to(gen_root).as_posix() for p in gen_root.rglob("*.md")}
+                )[:40]
+                if names:
+                    parts.append(
+                        "\n\n---\n## Existing generated_prompts/ (names)\n"
+                        + "\n".join(f"- `{n}`" for n in names)
+                    )
+        except OSError:
+            pass
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2253,7 +2413,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | tiktok_ads | math | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | tiktok_ads | math | prompt_gen | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2592,6 +2752,45 @@ def run_automate(
                     prefix="MathPhys: ",
                 )
                 results.append("math → done")
+            elif stype in {"prompt_gen", "prompt-gen", "promptgen", "swarm-prompts"}:
+                spec = (
+                    step.get("spec")
+                    or step.get("mode")
+                    or step.get("goal")
+                    or extra_goal
+                    or "quant"
+                )
+                n_agents = int(step.get("agents", step.get("num_agents", 4)))
+                print("\n[offline prompt generator]\n")
+                try:
+                    paths = run_prompt_generator(
+                        str(spec),
+                        model=step.get("model") or MODEL_NAME,
+                        num_agents=n_agents,
+                    )
+                    if paths:
+                        for p in paths:
+                            print(ui(f"  ✓ {p}"))
+                        results.append(f"prompt_gen → {len(paths)} files")
+                    else:
+                        # Advisory chat if no files produced (help/plan)
+                        pgsys = load_system_prompt(prompt_gen_mode=True)
+                        prompt = step.get("prompt") or (
+                            "Using skill prompt-generator, explain how to generate a "
+                            "quant swarm, custom swarm, or single agent prompt offline."
+                        )
+                        stream_chat(
+                            client,
+                            [
+                                {"role": "system", "content": pgsys},
+                                {"role": "user", "content": prompt},
+                            ],
+                            prefix="PromptGen: ",
+                        )
+                        results.append("prompt_gen → plan chat")
+                except Exception as e:
+                    print(ui(f"  ✗ prompt_gen failed: {e}"))
+                    results.append(f"prompt_gen FAIL → {e}")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2817,7 +3016,7 @@ def print_banner() -> None:
     print(
         "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
         "/fit /slay /outfit /doc /tiktok-ads /deep-explain /theorem /physics "
-        "/pdf /build /automate /loop /help quit\n"
+        "/prompt-gen /pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -2847,6 +3046,8 @@ Commands
   /deep-explain [topic]  Bottom-up math/physics lesson (durable markdown)
   /theorem [claim]   Formal theorem + proof structure
   /physics [problem] Physics solve with dimensional analysis gate
+  /prompt-gen [spec] Offline swarm/agent prompt generator → generated_prompts/
+  /prompts           Alias: list generated prompts (/prompt-gen list)
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2903,6 +3104,11 @@ CLI
   {py} fable5_offline_agent.py --physics "block on incline with friction"
   {py} fable5_offline_agent.py --automate math-deep-explain
   {py} fable5_offline_agent.py --automate physics-solve
+  {py} fable5_offline_agent.py --prompt-gen quant
+  {py} fable5_offline_agent.py --prompt-gen "swarm: technical blog team"
+  {py} fable5_offline_agent.py --prompt-gen "agent: rigorous code reviewer"
+  {py} fable5_offline_agent.py --prompt-gen list
+  {py} fable5_offline_agent.py --automate prompt-gen-quant
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -3298,6 +3504,63 @@ def chat_repl(client, system: str) -> None:
             except Exception as e:
                 print(ui(f"\n❌ Math/physics mode error: {e}\n"))
             continue
+        if (
+            low.startswith("/prompt-gen")
+            or low.startswith("/promptgen")
+            or low.startswith("/prompts")
+            or low.startswith("/swarm-prompt")
+        ):
+            if low.startswith("/prompt-gen"):
+                rest = user_input[len("/prompt-gen") :].strip()
+            elif low.startswith("/promptgen"):
+                rest = user_input[len("/promptgen") :].strip()
+            elif low.startswith("/prompts"):
+                rest = user_input[len("/prompts") :].strip() or "list"
+            else:
+                rest = user_input[len("/swarm-prompt") :].strip()
+            print(ui("\n[offline prompt generator]\n"))
+            try:
+                if not rest or rest.lower() in {"help", "?", "plan"}:
+                    pgsys = load_system_prompt(prompt_gen_mode=True)
+                    content = (
+                        "Using skill prompt-generator, explain modes: quant swarm, "
+                        "custom swarm (swarm: …), single agent (agent: …), list. "
+                        "Show example Fable CLI and how to feed generated_prompts/ into "
+                        "/hermes, /team, or agents/. Prefer strong local models."
+                    )
+                    stream_chat(
+                        client,
+                        [
+                            {"role": "system", "content": pgsys},
+                            {"role": "user", "content": content},
+                        ],
+                        prefix="PromptGen: ",
+                    )
+                else:
+                    paths = run_prompt_generator(rest, model=MODEL_NAME)
+                    if paths:
+                        print(
+                            ui(
+                                f"Generated {len(paths)} file(s) under {prompt_gen_root()}:"
+                            )
+                        )
+                        for p in paths:
+                            print(ui(f"  ✓ {p}"))
+                        print(
+                            ui(
+                                "\nNext: load a prompt as system/agent brief, or /team /hermes "
+                                "with the swarm overview. See skill prompt-generator.\n"
+                            )
+                        )
+                    else:
+                        print(
+                            ui(
+                                "No files written. Try: quant | list | swarm: … | agent: …\n"
+                            )
+                        )
+            except Exception as e:
+                print(ui(f"\n❌ Prompt generator error: {e}\n"))
+            continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
             pdf_path_s = rest
@@ -3669,6 +3932,24 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Physics solve with dimensional analysis (math-physics-agent)",
     )
     parser.add_argument(
+        "--prompt-gen",
+        nargs="?",
+        const="help",
+        default=None,
+        metavar="SPEC",
+        help=(
+            "Offline prompt generator: quant | list | swarm:DESC | agent:ROLE | free-text swarm "
+            "(writes generated_prompts/)"
+        ),
+    )
+    parser.add_argument(
+        "--prompt-gen-agents",
+        type=int,
+        default=4,
+        metavar="N",
+        help="Agent count for custom --prompt-gen swarm (default 4, max 12)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3802,6 +4083,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.deep_explain is None
             and args.theorem is None
             and args.physics is None
+            and args.prompt_gen is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -4119,6 +4401,46 @@ def main(argv: Optional[list[str]] = None) -> int:
             return 0
         except Exception as e:
             print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.prompt_gen is not None:
+        spec = (args.prompt_gen or "help").strip()
+        try:
+            if spec.lower() in {"help", "?", "plan", ""}:
+                pgsys = load_system_prompt(prompt_gen_mode=True)
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": pgsys},
+                        {
+                            "role": "user",
+                            "content": (
+                                "Using skill prompt-generator, explain how to generate "
+                                "quant / custom swarm / single-agent system prompts offline. "
+                                "CLI examples and handoff to Hermes/team/agents."
+                            ),
+                        },
+                    ],
+                    prefix="PromptGen: ",
+                )
+                return 0
+            paths = run_prompt_generator(
+                spec,
+                model=MODEL_NAME,
+                num_agents=int(getattr(args, "prompt_gen_agents", 4) or 4),
+            )
+            if paths:
+                print(ui(f"\n✓ {len(paths)} file(s) → {prompt_gen_root()}"))
+                for p in paths:
+                    print(ui(f"  {p}"))
+                return 0
+            # list with empty dir is success; other empty results are usage errors
+            if spec.strip().lower() in {"list", "ls", "show"}:
+                return 0
+            print(ui("No files written. Spec: quant | list | swarm:… | agent:…"))
+            return 1
+        except Exception as e:
+            print(ui(f"\n❌ Prompt generator error: {e}"))
             return 1
 
     if args.pdf:

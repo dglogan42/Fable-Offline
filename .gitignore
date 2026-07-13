@@ -6,7 +6,8 @@
 # Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
 # Zoom/Google calendar credentials, Windows product keys, macOS recovery keys /
 # full Installer apps / IPSW, social chat/snap exports, private RSS URLs with
-# tokens, stream keys, Adobe passwords, heavy creative inbox/exports, soak dumps.
+# tokens, stream keys, Adobe passwords, heavy creative inbox/exports, soak dumps,
+# bulk generated_prompts/ (ship auto_prompt_generator.py + skill, not LLM dumps).
 # =============================================================================
 
 # --- Python ---
@@ -256,6 +257,15 @@ workspace/creative/**/*.prproj
 # Keep private homework solutions out of public commits if sensitive:
 knowledge/math/_local/
 knowledge/physics/_local/
+knowledge/swarm/_local/
+
+# Auto-generated agent system prompts (local bulk; ship generator + skill only)
+# Keep generated_prompts/.gitkeep so the directory exists after clone.
+generated_prompts/**
+!generated_prompts/
+!generated_prompts/.gitkeep
+generated_swarm_prompts/
+**/swarm_config.local.json
 # Seamly / pattern CAD client files
 **/*.sm2d
 **/*.sm2d*

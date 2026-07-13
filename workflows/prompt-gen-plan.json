@@ -1,0 +1,15 @@
+{
+  "name": "prompt-gen-plan",
+  "description": "Chat-only: architect a swarm and show exact /prompt-gen commands (no file gen unless you change step)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Advisory plan only. Use prompt-gen-quant or --prompt-gen to write files."
+    },
+    {
+      "type": "prompt_gen",
+      "spec": "help",
+      "prompt": "Using skill prompt-generator procedure architect, design a practical 4-agent offline swarm for the user's domain (or general research+write+verify if none). Give exact Fable CLI and slash commands. Handoff to /hermes and agents/shared-state.md."
+    }
+  ]
+}

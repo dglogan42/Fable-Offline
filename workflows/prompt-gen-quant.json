@@ -1,0 +1,14 @@
+{
+  "name": "prompt-gen-quant",
+  "description": "Generate full 6-agent quant research swarm system prompts offline",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: prompt-generator. Writes generated_prompts/*.md. Prefer strong local model. Not financial advice."
+    },
+    {
+      "type": "prompt_gen",
+      "spec": "quant"
+    }
+  ]
+}

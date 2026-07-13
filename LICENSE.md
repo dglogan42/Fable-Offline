@@ -138,7 +138,20 @@ packages. Prefer `workspace/creative/` locally (inbox/exports gitignored).
 YouTube Live encoder guidance (Help answer 2907883 family) likewise requires
 valid account access; never commit stream keys.
 
-### 10. Contributions
+### 10. Automatic prompt generator and swarm prompts
+
+`auto_prompt_generator.py`, skill `prompt-generator`, notes under
+`knowledge/swarm/`, Fable CLI `--prompt-gen` / `/prompt-gen`, and workflows
+`prompt-gen-*` produce **local** system-prompt markdown for multi-agent
+workflows (including a sample quant research swarm design). Generated files
+under `generated_prompts/` (see `.gitignore`) are user-local artifacts.
+
+This is **not investment or trading advice**. Quant-style prompts describe a
+research process only; they do not execute trades or guarantee alpha. Review
+generated prompts before production or safety-critical use. Do not commit
+secrets, API keys, or private trading parameters into generated prompt dumps.
+
+### 11. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise

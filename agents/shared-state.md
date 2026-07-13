@@ -12,6 +12,7 @@ Offline loops share **intent** (finish the goal with verification) but may use d
 | Program | `program.md` | Engineer constraints |
 | Soul | `SOUL.md` | Identity / Hermes ethics |
 | Agent briefs | `agents/*.md` | This pack |
+| Generated prompts | `generated_prompts/` | Auto prompt generator output (`FABLE5_PROMPT_GEN_DIR`) |
 | Workspace | `workspace/` | Build artifacts |
 
 ## Standalone goal loop (`offline_goal_loop.py`)
@@ -28,6 +29,7 @@ Offline loops share **intent** (finish the goal with verification) but may use d
 2. Prefer **offline_goal_loop** for simple “keep going on a goal” with JSON resume.  
 3. Do not assume both share one state file — copy conclusions into `memory/lessons/` if you want Fable RAG to see them.  
 4. Delete `loop_state.json` or clear LOOP_STATE to start clean.  
+5. **Prompt generator:** `auto_prompt_generator.py` / `--prompt-gen` writes system prompts under `generated_prompts/`. Load each agent `.md` as system (or agent brief); pass prior agent Output Contract as the next user message. Overview + `swarm_config.json` describe order.  
 
 ## Privacy
 

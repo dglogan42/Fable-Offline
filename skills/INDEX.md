@@ -28,6 +28,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **math-physics-agent**: [Math & physics agent (deep-explain · theorem · solver)](math-physics-agent.md)
 - **outfit-selector-create**: [Outfit selector / create (Seamly2D)](outfit-selector-create.md)
 - **pdf-render**: [PDF render & extract (offline)](pdf-render.md)
+- **prompt-generator**: [Offline prompt generator (swarm / agent system prompts)](prompt-generator.md)
 - **privacy-design-planner**: [Privacy design planner (agentic AI)](privacy-design-planner.md)
 - **privacy-host-map**: [Privacy & third-party host map](privacy-host-map.md)
 - **property-manager-agent**: [Property manager agent](property-manager-agent.md)

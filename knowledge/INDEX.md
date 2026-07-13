@@ -35,6 +35,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **trade/** | Export + freight forwarder | `freight-forwarder-exporter.md`, `mpi-exporter-help.md` |
 | **urban-planning/** | Planner competencies, freight, AC programmes | `competencies.md`, `freight-plan.md`, … |
 | **steam/** | Steam SIM launch for model soak tests | `sim-games-launch.md` |
+| **swarm/** | Offline prompt generator / multi-agent swarm design | `prompt-generator.md` |
 | **windows/** | Licensed Win11 media + DISM/unattend hygiene | `official-media.md`, `dism-unattend-hygiene.md` |
 | **web/** | CSS / design-system fingerprints (orphan OK) | `css-design-fingerprint-helvetica-grey.md`, `css-design-fingerprint-tiktok-ui.md` |
 

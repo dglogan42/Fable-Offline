@@ -965,6 +965,17 @@ Never commit stream keys. First enable may take up to 24 hours. User operates St
 **Automation:** `math-deep-explain`, `physics-solve`.  
 Durable lessons → `workspace/lessons/` or `memory/lessons/`. Dimensional gate required for physics. Not course credit.
 
+## 20p. Offline prompt generator (swarm system prompts)
+**Trigger:** `/prompt-gen`, `/prompts`, `--prompt-gen`, “generate agent prompts”, multi-agent swarm design.  
+**Skill:** `prompt-generator` — **plan**, **architect**, **generate**, **handoff**, **review-prompt**.  
+**Script:** `auto_prompt_generator.py` (Ollama / OpenAI-compatible).  
+**Knowledge:** `knowledge/swarm/prompt-generator.md`.  
+**Agents:** `agents/prompt-generator-agent.md`.  
+**Output:** `generated_prompts/` (`FABLE5_PROMPT_GEN_DIR`; typically gitignored).  
+**Modes:** `quant` (6-agent research swarm) · `swarm:…` · `agent:…` · `list`.  
+**Automation:** `prompt-gen-quant`, `prompt-gen-custom`, `prompt-gen-plan`.  
+Prefer stronger local models for generation quality. Handoff into `/hermes`, `/team`, `agents/`, or `offline_goal_loop.py`. Quant swarm = research process design, not investment advice.
+
 ## 20n. Creative pipeline builds (Adobe · CapCut · Resolve)
 **Trigger:** Creative Cloud desktop, Photoshop/Lightroom batch, CapCut, DaVinci Resolve Deliver.  
 **Skill:** `creative-pipeline-builds` — **pipeline-plan**, **cc-desktop-setup**, **lightroom-build**, **photoshop-build**, **capcut-build**, **resolve-build**.  
@@ -986,6 +997,8 @@ Licensed apps only; presets/templates/export queues = “automation”; no crack
 | `fable-loop-agent.md` | Executor / engineer brief |
 | `goal-quality.md` | Checkable goals |
 | `shared-state.md` | State file handoff |
+| `math-physics-agent.md` | STEM lesson cycles |
+| `prompt-generator-agent.md` | Swarm prompt gen + handoff |
 
 Harness injects these into system + cycle context (`FABLE5_AGENTS`, default `agents`).  
 Edit briefs to steer **both** Hermes and Fable loops offline.
@@ -1047,7 +1060,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - `python fable5_offline_agent.py --automate daily-review` — workflow recipe (Section 12)
    - `python fable5_offline_agent.py --improve` — skill library growth (Section 10)
    - `python fable5_offline_agent.py --compress-memory` — memory fold
-   - In chat: `/roadmap` · `/team` · `/build` · `/automate` · `/engineer` · `/hermes` · `/loop`
+   - In chat: `/roadmap` · `/team` · `/build` · `/automate` · `/engineer` · `/hermes` · `/loop` · `/prompt-gen`
    - Edge vs luck: skill `edge-vs-luck` · `--automate edge-audit`
    - Broker: `--scrape URL` · `--broker` · `--automate broker-full-audit` · knowledge/brokers/
    - Legal: `--legal` · `/legal` · `--automate legal-contract-review` · knowledge/legal/playbook.md

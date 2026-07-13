@@ -29,7 +29,14 @@ Shared briefing files that feed **Hermes**, **Fable loops**, and `offline_goal_l
 - `agents/fable-loop-agent.md` — executor / engineer rules
 - `agents/goal-quality.md` — checkable goals
 - `agents/shared-state.md` — LOOP_STATE vs loop_state.json handoff
+- `agents/prompt-generator-agent.md` — offline swarm prompt generation + handoff
 Obey these when looping. See `agents/INDEX.md`.
+
+## Prompt generator (when `/prompt-gen`, `--prompt-gen`)
+- Use skill `prompt-generator` and `auto_prompt_generator.py` offline (Ollama)
+- Write specialized system prompts to `generated_prompts/` with I/O contracts and maker≠checker
+- Prefer stronger local models for prompt quality; human-review before production use
+- Feed outputs into `/hermes`, `/team`, `agents/`, or `offline_goal_loop.py`
 
 ## Build & automate (when `/build`, `/automate`, `--build`, `--automate`)
 - Prefer multi-file scaffolds with clear run steps over single-file dumps

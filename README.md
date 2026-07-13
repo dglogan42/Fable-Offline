@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, and **build/automate** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS install prep**, **Steam SIM soak**, and a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** (swarm/agent system prompts) — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS install prep**, **Steam SIM soak**, **math/physics**, and a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 **Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE.md) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
@@ -47,6 +47,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **YouTube Live encoder** | Studio + RTMP/encoder protocol ([Help 2907883](https://support.google.com/youtube/answer/2907883?hl=en)) |
 | **Creative pipeline builds** | Adobe CC + CapCut + LR/PS + Resolve export recipes (`knowledge/media/`) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
+| **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -81,6 +82,7 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 ```
 Fable-Offline/
 ├── fable5_offline_agent.py      # CLI harness (all modes)
+├── auto_prompt_generator.py     # Offline swarm/agent system-prompt generator
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
 ├── program.md                   # Loop-engineer constraints
@@ -96,7 +98,8 @@ Fable-Offline/
 │   ├── aem/ animals/ brokers/ climate/ culture/
 │   ├── calendar/ education/ health/ legal/ pdf/ privacy/
 │   ├── ads/ conservation/ fashion/ macos/ property/ public-safety/
-│   ├── social/ steam/ trade/ urban-planning/ windows/
+│   ├── social/ steam/ swarm/ trade/ urban-planning/ windows/
+├── generated_prompts/           # Prompt-gen output (gitignored bulk)
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
@@ -116,6 +119,7 @@ Fable-Offline/
 | Windows product keys (`knowledge/windows/_local/`) | Licensing secrets |
 | macOS `Install *.app`, `.ipsw`, recovery / FileVault keys | Huge binaries + secrets |
 | Stream keys; Adobe passwords; creative `00_inbox` / `04_exports` media | Secrets + bulk binaries |
+| `generated_prompts/` bulk dumps | Local LLM prompt-gen output |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
 Ship only **curated markdown** under `knowledge/` and shared skills/workflows. Full policy: [`.gitignore`](.gitignore) · data index: [`knowledge/INDEX.md`](knowledge/INDEX.md).
@@ -148,6 +152,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
 | YouTube Live / creative builds | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds` |
 | Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
+| Swarm / prompt generator | `knowledge/swarm/` | `prompt-generator` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 | DOC ranger careers | `knowledge/conservation/` | `doc-ranger-pathway` |
 | TikTok Ads creation | `knowledge/ads/` | `tiktok-ads-create` |
@@ -231,6 +236,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/deep-explain [topic]` | Bottom-up math/physics lesson (durable md) |
 | `/theorem [claim]` | Formal theorem + proof structure |
 | `/physics [problem]` | Physics solve + dimensional analysis gate |
+| `/prompt-gen [spec]` | Offline swarm/agent prompt generator → `generated_prompts/` |
+| `/prompts` | List generated prompts (`/prompt-gen list`) |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -255,6 +262,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 ./fable5 --automate daily-review
 ./fable5 --automate rigor-check
 ./fable5 --automate hello-project
+./fable5 --prompt-gen quant
+./fable5 --automate prompt-gen-quant
 ```
 
 | Recipe (seeded) | What it does |
@@ -264,6 +273,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `rigor-check` | Short Hermes loop on a numeric claim |
 | `engineer-memo` | Loop-engineer a decision memo to score ≥ 8 |
 | `edge-audit` | Edge-vs-luck audit (streaks, backtests, “system works” claims) |
+| `prompt-gen-quant` | Generate 6-agent quant research system prompts offline |
+| `prompt-gen-custom` | Generate a custom multi-agent swarm |
+| `prompt-gen-plan` | Chat architect plan for swarm prompts (no files) |
 | `agentic-checkpoint` | Biweekly: compress → improve → coach next roadmap stage |
 | `broker-full-audit` | Scrape EC Markets pages → broker audit + user model + HITL |
 | `broker-user-session` | Disciplined retail CFD user coaching |
@@ -1204,6 +1216,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **YouTube Live encoder** — Studio + encoder setup from Help 2907883 (not stream-key storage).
 - **Creative pipeline builds** — Adobe CC + CapCut + Resolve export recipes (licensed apps only).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
+- **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
 
 ## License
 
@@ -1224,7 +1237,8 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
 9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
-10. Contribution licensing  
+10. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
+11. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -1245,5 +1259,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
+| Prompt generator / swarms | Investment advice, live trading, or unreviewed production agents |
+| Math / physics agent | Course credit or professional engineering sign-off |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

@@ -1,0 +1,15 @@
+{
+  "name": "prompt-gen-custom",
+  "description": "Generate a custom multi-agent swarm from a description (edit prompt/spec)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Edit the prompt_gen step spec. Example: swarm: 4-agent technical blog (research, write, fact-check, SEO). Or pass extra goal via automate CLI."
+    },
+    {
+      "type": "prompt_gen",
+      "spec": "swarm: 4-agent swarm for high-quality technical blog posts: researcher, writer, fact-checker, SEO optimizer",
+      "agents": 4
+    }
+  ]
+}
