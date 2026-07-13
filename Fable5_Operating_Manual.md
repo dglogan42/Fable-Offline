@@ -992,6 +992,14 @@ Licensed apps only; presets/templates/export queues = “automation”; no crack
 **Automation:** `animation-dev-kit`.  
 FOSS Krita; frames in RAM — plan short clips. User installs Krita + optional FFmpeg. Hand off to creative pipeline / YouTube skills for publish (HITL).
 
+## 20r. Stop / motion dev kit (Stop Motion Studio)
+**Trigger:** Stop motion, claymation, LEGO short, Stop Motion Studio, onion-skin capture, export all images / GIF / 4K.  
+**Skill:** `stop-motion-dev-kit` — **sm-plan**, **download-install**, **set-rig**, **fps-recipe**, **capture-lab**, **onion-guides**, **camera-setup**, **chroma-key**, **export-package**, **publish-handoff**.  
+**Source:** [Download](https://www.stopmotionstudio.com/download/index.html) · [Help (FPS)](https://www.stopmotionstudio.com/help/stopmotion/en/adjust-the-speed-of-your-movie.html).  
+**Knowledge:** `knowledge/media/stop-motion-studio.md`.  
+**Automation:** `stop-motion-dev-kit`.  
+Official app only (no cracks). Start ~6 FPS; 12+ smoother. User HITL capture/export; publish via other skills.
+
 ## 20l. Offline loop agents pack
 
 **Trigger:** `/hermes`, `/loop`, `/engineer`, `offline_goal_loop.py`.

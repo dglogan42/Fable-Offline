@@ -37,6 +37,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **rss-share**: [RSS share (feed build · subscribe)](rss-share.md)
 - **snapchat-web-feed**: [Snapchat for Web feed protocol](snapchat-web-feed.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)
+- **stop-motion-dev-kit**: [Stop / motion dev kit (Stop Motion Studio)](stop-motion-dev-kit.md)
 - **tiktok-ads-create**: [TikTok Ads creation (Ads Manager)](tiktok-ads-create.md)
 - **tiktok-analytics**: [TikTok Analytics / Pixel (HTML + Network)](tiktok-analytics.md)
 - **uc-arts-postgraduate**: [UC Arts postgraduate study (Canterbury)](uc-arts-postgraduate.md)

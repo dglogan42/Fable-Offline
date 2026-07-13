@@ -77,6 +77,7 @@ Resolve Free vs Studio: feature gates — VERIFY LIVE Blackmagic docs.
 | 5–10 min film | Resolve |
 | Live Q&A | `youtube-live-encoder` |
 | Frame-by-frame 2D | `animation-dev-kit` (Krita) |
+| Physical stop-motion | `stop-motion-dev-kit` (Stop Motion Studio) |
 | Feed announce | `rss-share` |
 
 ---

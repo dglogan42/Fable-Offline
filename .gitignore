@@ -255,6 +255,11 @@ workspace/creative/**/*.kra
 workspace/creative/**/*.kra~
 workspace/creative/**/03_krita/**
 workspace/creative/**/04_renders/**
+# Stop Motion Studio project backups + capture dumps (curated notes.md OK)
+workspace/creative/**/02_sms_project/**
+workspace/creative/**/03_capture_raw/**
+workspace/creative/**/*stop*motion*
+workspace/creative/**/*.sms
 !workspace/creative/**/notes.md
 !workspace/creative/**/05_presets/**/*.md
 

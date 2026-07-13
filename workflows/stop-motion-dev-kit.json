@@ -1,0 +1,14 @@
+{
+  "name": "stop-motion-dev-kit",
+  "description": "Plan a Stop Motion Studio stop-motion build (download → capture → export)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Download: https://www.stopmotionstudio.com/download/index.html — skill stop-motion-dev-kit. Official Stop Motion Studio only. No cracks. User captures/exports HITL. Large projects/exports stay local (gitignored)."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill stop-motion-dev-kit and knowledge/media/stop-motion-studio.md (Stop Motion Studio product + help), produce sm-plan: (1) verdict (2) download-install for user's OS from https://www.stopmotionstudio.com/download/index.html (Studio 2: Win10+ MSIX, macOS 13+ DMG; older releases if needed; stores OK) (3) project-scaffold under workspace/creative/<slug>/ (4) set-rig (tripod, light, lock exposure/WB) (5) fps-recipe from official help — start ~6 FPS, 12+ smoother; seconds×FPS≈frames; Project Settings FPS; freeze for holds (6) capture-lab or full capture checklist with onion-guides (7) camera-setup notes (device/USB/DSLR/remote — VERIFY LIVE compat) (8) edit-timeline + optional chroma-key/audio-titles (9) export-package: video 1080p/4K, GIF, export all images, project transfer (10) publish-handoff to creative-pipeline / youtube / social skills HITL (11) vs-krita if hybrid draw needed (12) OPEN — re-verify live download/help. If goal unclear, ask: first short vs multi-shot vs export-only; LEGO/clay/objects; phone vs DSLR. Not legal advice. User operates app HITL."
+    }
+  ]
+}

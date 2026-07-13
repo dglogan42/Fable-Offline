@@ -25,7 +25,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
 | **math/** | Deep-explain + theorem frameworks | `deep-explain-framework.md`, `theorem-framework.md` |
-| **media/** | YouTube Live · Adobe CC · CapCut/Resolve · Krita animation | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md` |
+| **media/** | YouTube Live · Adobe CC · CapCut/Resolve · Krita · Stop Motion Studio | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md`, `stop-motion-studio.md` |
 | **physics/** | Solver + dimensional analysis | `solver-framework.md` |
 | **pdf/** | PDF.js + extract hygiene | `pdfjs-and-offline-render.md` |
 | **privacy/** | Third-party host maps + privacy design | See table below |
