@@ -137,7 +137,15 @@ workspace/*
 skills/*.draft.md
 skills/_local/
 skills/**/__pycache__/
+scripts/**/__pycache__/
 workflows/_local/
+workflows/*.local.json
+
+# Soak / perf scratch (local measurements; do not commit machine-specific dumps)
+*.soak.json
+*.soak.log
+soak-results/
+perf-results/
 
 # --- Knowledge data policy ---
 # Ship curated *.md only. Ignore scrapes, binaries, private matter.
@@ -172,6 +180,8 @@ knowledge/public-safety/_local/
 knowledge/property/_local/
 knowledge/animals/_local/
 knowledge/steam/_local/
+knowledge/steam/*-local*.md
+knowledge/steam/appids.local.*
 
 # PDFs and dumped PDF.js viewer bundles (curated knowledge/pdf notes only)
 *.pdf

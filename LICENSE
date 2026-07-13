@@ -41,7 +41,18 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    In an emergency in New Zealand, call 111. Agents must not take crime,
    fire, or medical reports as the agent of record.
 
-4. Contributions
+4. Steam, games, and local soak tests
+   Scripts such as scripts/steam_launch.py and scripts/steam_sim_soak.py, and
+   notes under knowledge/steam/, help launch games the user already owns and
+   has installed, and measure local model performance under concurrent load.
+   They are not a game bot, multiplayer cheat, DRM bypass, or tool for
+   unauthorised access. Steam and individual games remain the property of
+   Valve and the respective publishers/developers. Launch only software you
+   are licensed to run.
+
+5. Contributions
    By submitting contributions to this repository, you agree they are licensed
    under the same MIT License terms as the Software, unless you state otherwise
    in writing with the copyright holders.
+
+See also LICENSE.md (same terms, markdown formatting).

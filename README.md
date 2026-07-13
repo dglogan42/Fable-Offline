@@ -34,7 +34,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Arts & culture** | Exhibition briefs · visitor ops · content warnings (`knowledge/culture/`) |
 | **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
-| **Steam SIM launch** | Launch SimCity 4 etc. for **local model soak tests** (`knowledge/steam/`) |
+| **Steam SIM soak** | Launch SimCity 4 (etc.) + **measure Ollama latency** under load (`knowledge/steam/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -75,7 +75,7 @@ Fable-Offline/
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt             # openai + pypdf
 ├── fable5 / fable5.cmd          # Launchers
-├── scripts/                     # install, pdf_extract, platform wrappers
+├── scripts/                     # install, pdf_extract, steam_launch, steam_sim_soak
 ├── skills/                      # Agentic skill library (see skills/INDEX.md)
 ├── workflows/                   # Public automation recipes (*.json)
 ├── knowledge/                   # Curated offline data (see knowledge/INDEX.md)
@@ -85,8 +85,8 @@ Fable-Offline/
 │   ├── property/ public-safety/ steam/ trade/ urban-planning/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
-├── LICENSE                      # MIT © 2026 David Logan + domain notices
-├── .gitignore                   # Secrets, scrapes, PDFs, private knowledge
+├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
+├── .gitignore                   # Secrets, scrapes, PDFs, private knowledge, soak junk
 └── README.md
 ```
 
@@ -122,6 +122,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Education claims | `knowledge/education/` | `education-claim-audit` |
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
+| Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
 
 Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
@@ -249,15 +250,23 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 | `steam-sim-perf-check` | Plan Steam SIM launch + model perf notes (SC4 app 24780) |
 
-## Steam SIM launch (model performance)
+## Steam SIM launch & Ollama soak
 
-Launch an owned SIM/city-builder via Steam while testing local LLM responsiveness.
+Launch an **owned, installed** SIM/city-builder via Steam and measure local LLM latency under concurrent load.
 
 **Seed:** SimCity 4 Deluxe — `steam://rungameid/24780`
 
 ```bash
+# Launch only
 python scripts/steam_launch.py 24780
 python scripts/steam_launch.py steam://rungameid/24780 --dry-run
+
+# Full A/B soak: latency WITH game → stop → baseline WITHOUT → relaunch
+python scripts/steam_sim_soak.py --appid 24780
+python scripts/steam_sim_soak.py --appid 24780 --no-stop          # load-only sample
+python scripts/steam_sim_soak.py --appid 24780 --skip-relaunch    # do not restart game after baseline
+
+# Doctor + planned workflow notes
 python fable5_offline_agent.py --doctor
 python fable5_offline_agent.py --automate steam-sim-perf-check
 ```
@@ -266,10 +275,13 @@ python fable5_offline_agent.py --automate steam-sim-perf-check
 |----------|------|
 | Skill | `skills/steam-sim-launch.md` |
 | Knowledge | `knowledge/steam/sim-games-launch.md` |
-| Script | `scripts/steam_launch.py` |
+| Launch script | `scripts/steam_launch.py` |
+| Soak / latency | `scripts/steam_sim_soak.py` |
 | Workflow | `workflows/steam-sim-perf-check.json` |
 
-Optional: set `FABLE5_STEAM` or `STEAM_EXE` to your `steam.exe` path. **Not a game bot** — launch only; no in-game automation.
+**Soak metrics:** time-to-first-token (TTFT), total generate time, rough tok/s for a short fixed prompt (`qwen2.5:7b` by default; override with `--model`). Optional env: `FABLE5_STEAM` or `STEAM_EXE` → path to `steam.exe`.
+
+**Not a game bot** — launch and measure only; no in-game automation, no DRM bypass. Close heavy games before long engineer/Hermes loops if latency or VRAM is tight.
 
 ## Broker scrape, user model & audit
 
@@ -691,6 +703,7 @@ Runtime artifacts: `memory/` — **gitignored**.
 | `FABLE5_PYTHON` | unset | Force Python executable path |
 | `FABLE5_MANUAL` | `Fable5_Operating_Manual.md` | System prompt path |
 | `FABLE5_API_KEY` | `ollama` | API key (ignored by Ollama) |
+| `FABLE5_STEAM` / `STEAM_EXE` | unset | Path to `steam.exe` (SIM launch / soak scripts) |
 
 ```bat
 REM Windows cmd
@@ -727,6 +740,8 @@ python fable5_offline_agent.py --doctor
 | `Permission denied: ./fable5` | `chmod +x fable5 scripts/*.sh` |
 | Shell steps dry-run only | Set `FABLE5_ALLOW_SHELL=1` (allowlisted commands only) |
 | Slow first reply / cycle | Model loading into RAM/VRAM — expected |
+| Slow chat while a SIM runs | Expected under load; run `python scripts/steam_sim_soak.py` for A/B TTFT |
+| Steam not found | Set `FABLE5_STEAM` / `STEAM_EXE`, or install Steam; default also checks `D:\Steam\steam.exe` |
 
 ## When to use it
 
@@ -764,22 +779,23 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Arts & culture** — exhibition briefs and visitor ops (not ticketing).
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
 - **Knowledge data** — curated offline notes; see [`knowledge/INDEX.md`](knowledge/INDEX.md).
-- **Steam SIM launch** — local soak-test helper for SimCity 4 etc. (not a game bot).
+- **Steam SIM soak** — launch owned Steam SIMs + measure Ollama latency (not a game bot; no DRM bypass).
 
 ## License
 
-This project is free software under the **[MIT License](LICENSE)**.
+This project is free software under the **[MIT License](LICENSE.md)** ([`LICENSE`](LICENSE) is identical).
 
 Copyright © **2026 David Logan**.
 
 You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided the copyright and permission notice are included in all copies or substantial portions of the Software. The Software is provided **“AS IS”**, without warranty of any kind, express or implied.
 
-See **[LICENSE](LICENSE)** for the full MIT text plus **additional notices** on:
+See **[LICENSE.md](LICENSE.md)** for the full MIT text plus **additional notices** on:
 
 1. Domain knowledge / skills (not professional advice)  
 2. Third-party website and policy snapshots  
 3. Emergency routing (**call 111** in NZ emergencies)  
-4. Contribution licensing  
+4. Steam / games (ownership required; not a bot or DRM bypass)  
+5. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -794,5 +810,6 @@ See **[LICENSE](LICENSE)** for the full MIT text plus **additional notices** on:
 | Property / animals | Legal, valuation, veterinary, or agency advice |
 | Emergency / health | Medical advice or emergency response (call **111**) |
 | Arts | Ticketing or rights clearance |
+| Steam SIM soak | Game automation, multiplayer cheating, or DRM bypass |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.
