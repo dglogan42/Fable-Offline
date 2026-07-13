@@ -1,0 +1,14 @@
+{
+  "name": "macos-install-prep",
+  "description": "Licensed macOS bootable installer / recovery plan (Apple 101578; no piracy)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Apple: https://support.apple.com/en-nz/101578 createinstallmedia. Skill: macos-install-prep. USB volume MyVolume is erased. No Hackintosh, no pirate installers."
+    },
+    {
+      "type": "macos",
+      "prompt": "Using skill macos-install-prep and knowledge/macos/ (bootable-installer.md, reinstall-and-recovery.md), produce: (1) verdict (2) method-chooser: upgrade vs recovery vs bootable USB (3) if USB: bootable-installer-plan with erase warning and createinstallmedia-guide — only official command patterns for user-stated macOS name, VERIFY LIVE on https://support.apple.com/en-nz/101578 (4) boot-from-installer silicon vs Intel (5) preflight-checklist (6) refuse Hackintosh, cracked ISOs, Activation Lock bypass. Not legal advice. Apple terms apply."
+    }
+  ]
+}

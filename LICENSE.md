@@ -91,7 +91,22 @@ Microsoft installation media without rights, or rebranding Windows as a fake
 product (including nonexistent “Windows 12 Professional” consumer builds).
 Do not commit product keys or autounattend secrets.
 
-### 7. Contributions
+### 7. macOS install media
+
+Skill `macos-install-prep` and notes under `knowledge/macos/` summarise
+**Apple-published** guidance for bootable installers — notably support document
+[Create a bootable installer for macOS (101578)](https://support.apple.com/en-nz/101578)
+(`createinstallmedia`) — and recovery method choice on **Apple-branded Macs**.
+macOS, Mac, and related trademarks remain the property of Apple Inc.
+
+The Software does **not** authorize installing macOS on non-Apple hardware
+(Hackintosh), redistributing Apple installers without rights, cracked or
+torrent media, or bypassing Activation Lock / Find My without lawful ownership.
+Do not commit full `Install macOS *.app` bundles, IPSW images, FileVault or
+recovery keys, or Apple ID credentials. Re-verify live Apple Support after each
+macOS release; command tables go stale.
+
+### 8. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise

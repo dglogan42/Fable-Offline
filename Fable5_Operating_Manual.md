@@ -820,6 +820,27 @@ User **CLICK** → [https://www.microsoft.com/software-download/windows11](https
 
 ---
 
+## 20g. macOS install prep (Apple-licensed)
+
+**Trigger:** `/macos`, `--macos`, createinstallmedia, bootable USB, “install macOS from USB.”
+
+### Skill
+`macos-install-prep`: **method-chooser**, **bootable-installer-plan**, **createinstallmedia-guide**, **boot-from-installer**, **preflight-checklist**, **refuse-piracy**.
+
+### Official doc
+User **CLICK** → [https://support.apple.com/en-nz/101578](https://support.apple.com/en-nz/101578) (*Create a bootable installer for macOS*).
+
+### Knowledge
+- `knowledge/macos/bootable-installer.md`
+- `knowledge/macos/reinstall-and-recovery.md`
+
+### Automation
+- `macos-install-prep` (workflow step type: `macos`)
+
+**Notes:** USB volume (e.g. `MyVolume`) is **erased**. Internet required on target Mac during install. **Refuse:** Hackintosh, cracked installers, Activation Lock bypass without ownership. VERIFY LIVE Apple command table after each macOS release.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

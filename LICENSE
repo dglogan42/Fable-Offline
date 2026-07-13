@@ -65,7 +65,15 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    No piracy, cracks, unauthorized redistribution, or fake "Windows 12" rebrand.
    Do not commit product keys.
 
-7. Contributions
+7. macOS install media
+   knowledge/macos/ and skill macos-install-prep summarise Apple's bootable
+   installer guidance (support.apple.com 101578 / createinstallmedia) for
+   Apple-branded Macs. macOS remains Apple's property. No Hackintosh, cracked
+   or torrent installers, or Activation Lock bypass without ownership. Do not
+   commit Installer apps, IPSW, FileVault/recovery keys, or Apple ID secrets.
+   Re-verify live Apple Support after each macOS release.
+
+8. Contributions
    By submitting contributions to this repository, you agree they are licensed
    under the same MIT License terms as the Software, unless you state otherwise
    in writing with the copyright holders.

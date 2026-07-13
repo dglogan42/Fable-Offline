@@ -413,6 +413,7 @@ def load_system_prompt(
     pdf_mode: bool = False,
     calendar_mode: bool = False,
     windows_mode: bool = False,
+    macos_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -525,6 +526,20 @@ def load_system_prompt(
         know = read_knowledge_bundle("windows", limit_chars=8000)
         if know.strip():
             parts.append("\n\n---\n## Local Windows install knowledge\n\n" + know)
+    if macos_mode:
+        parts.append(
+            "\n\n---\n## macOS install prep mode (Apple-licensed only)\n"
+            "Apply skill **macos-install-prep**. Primary doc: "
+            "https://support.apple.com/en-nz/101578 (bootable installer / createinstallmedia). "
+            "Procedures: method-chooser, bootable-installer-plan, createinstallmedia-guide, "
+            "boot-from-installer, preflight-checklist, post-install-baseline, refuse-piracy. "
+            "USB volume is erased (MyVolume pattern). Target Macs need internet during install. "
+            "Refuse Hackintosh, cracked installers, Activation Lock bypass without ownership. "
+            "VERIFY LIVE Apple command table for new macOS names. Not legal advice. Not Apple Support.\n"
+        )
+        know = read_knowledge_bundle("macos", limit_chars=9000)
+        if know.strip():
+            parts.append("\n\n---\n## Local macOS install knowledge\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2060,7 +2075,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2302,6 +2317,23 @@ def run_automate(
                     prefix="WindowsMode: ",
                 )
                 results.append("windows → done")
+            elif stype == "macos":
+                msys = load_system_prompt(macos_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill macos-install-prep and knowledge/macos/, produce a "
+                    "method-chooser and bootable-installer-plan per Apple 101578. "
+                    "Refuse piracy/Hackintosh. Not legal advice."
+                )
+                print("\n[macos install prep — Apple-licensed]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": msys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="MacOSMode: ",
+                )
+                results.append("macos → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2525,7 +2557,7 @@ def print_banner() -> None:
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
-        "Commands: /team /broker /legal /education /privacy /calendar /windows /pdf "
+        "Commands: /team /broker /legal /education /privacy /calendar /windows /macos /pdf "
         "/build /automate /loop /help quit\n"
     )
 
@@ -2544,6 +2576,7 @@ Commands
   /calendar [prompt] Calendar / iCal / mail / meetings (knowledge/calendar/)
   /meetings [prompt] Alias for /calendar
   /windows [prompt]  Licensed Windows 11 install / DISM hygiene (knowledge/windows/)
+  /macos [prompt]    Apple-licensed macOS bootable installer / recovery (knowledge/macos/)
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2580,6 +2613,9 @@ CLI
   {py} fable5_offline_agent.py --windows
   {py} fable5_offline_agent.py --windows "official-media-plan for Win11 Pro reinstall"
   {py} fable5_offline_agent.py --automate windows-install-prep
+  {py} fable5_offline_agent.py --macos
+  {py} fable5_offline_agent.py --macos "bootable-installer-plan for Sequoia USB"
+  {py} fable5_offline_agent.py --automate macos-install-prep
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -2773,6 +2809,30 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Windows mode error: {e}\n"))
+            continue
+        if low.startswith("/macos") or low.startswith("/mac "):
+            if low.startswith("/macos"):
+                prompt = user_input[6:].strip()
+            else:
+                prompt = user_input[4:].strip()
+            prompt = prompt or (
+                "Using skill macos-install-prep and knowledge/macos/, outline method-chooser "
+                "and bootable installer steps per https://support.apple.com/en-nz/101578. "
+                "Warn USB erase. Refuse Hackintosh/piracy. Not legal advice."
+            )
+            try:
+                msys = load_system_prompt(macos_mode=True)
+                print(ui("\n[macos install prep — Apple-licensed]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": msys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="MacOSMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ macOS mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3076,6 +3136,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Licensed Windows 11 install prep / DISM hygiene (knowledge/windows/)",
     )
     parser.add_argument(
+        "--macos",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Apple-licensed macOS bootable installer / recovery (knowledge/macos/)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3201,6 +3269,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.privacy is None
             and args.calendar is None
             and args.windows is None
+            and args.macos is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3355,6 +3424,27 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": wsys}, {"role": "user", "content": prompt}],
                 prefix="WindowsMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.macos is not None:
+        prompt = (args.macos or "").strip() or (
+            "Using skill macos-install-prep and knowledge/macos/ "
+            "(bootable-installer.md, reinstall-and-recovery.md), produce method-chooser and "
+            "bootable-installer-plan per https://support.apple.com/en-nz/101578. "
+            "Warn that createinstallmedia erases MyVolume. List createinstallmedia patterns "
+            "only for known Apple version names; say VERIFY LIVE. Refuse Hackintosh and "
+            "cracked installers. Not legal advice."
+        )
+        try:
+            msys = load_system_prompt(macos_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": msys}, {"role": "user", "content": prompt}],
+                prefix="MacOSMode: ",
             )
             return 0
         except Exception as e:

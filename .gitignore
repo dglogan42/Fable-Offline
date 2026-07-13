@@ -4,7 +4,8 @@
 #
 # Ship curated markdown skills/knowledge/workflows only.
 # Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
-# Zoom/Google calendar credentials, Windows product keys, local soak dumps.
+# Zoom/Google calendar credentials, Windows product keys, macOS recovery keys /
+# full Installer apps / IPSW, local soak dumps.
 # =============================================================================
 
 # --- Python ---
@@ -195,6 +196,16 @@ knowledge/windows/_local/
 knowledge/windows/*-local*.md
 knowledge/windows/*product*key*
 knowledge/windows/*ProductKey*
+knowledge/macos/_local/
+knowledge/macos/*-local*.md
+knowledge/macos/*recovery*key*
+knowledge/macos/*FileVault*
+knowledge/macos/*apple*id*
+# Do not commit full macOS Installer apps, raw USB dumps, or firmware images
+**/Install macOS *.app/**
+**/Install OS X *.app/**
+**/*.ipsw
+**/*createinstallmedia*log*
 # Private calendar exports / invites / Zoom join material
 **/*.ics
 !**/*.ics.example
