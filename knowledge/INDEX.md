@@ -15,7 +15,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **aem/** | Adobe AEM public-site patterns | `aem-patterns.md` |
 | **animals/** | Animal/dog compliance framework | `animal-compliance-framework.md` |
 | **brokers/** | Broker claim snapshots | `ec-markets-regulation.md` |
-| **calendar/** | Google Calendar · Zoom · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `meetings-playbook.md` |
+| **calendar/** | Google Calendar · Zoom · Teams free · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `teams-live-free.md`, `meetings-playbook.md` |
 | **chromeos/** | ChromeOS Flex install on PC/Mac | `chromeos-flex.md` |
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |
@@ -62,6 +62,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `fenz-incident-reports-hosts.md` | FENZ incident reports |
 | `google-calendar-hosts.md` | Google Calendar / Meet / mail seed map |
 | `zoom-hosts.md` | Zoom Web Client join (`app.zoom.us/wc/join`) seed map |
+| `teams-live-hosts.md` | Microsoft Teams free / live (`teams.live.com/free`) seed map |
 | `doc-blog-hosts.md` | DOC Conservation blog (WordPress/Jetpack) |
 | `uc-arts-pg-hosts.md` | UC Arts postgraduate hub (AEM + multi-analytics) |
 | `wgtn-ac-nz-hosts.md` | Victoria University of Wellington — TikTok Analytics seed |

@@ -35,7 +35,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 | **Steam SIM soak** | Launch SimCity 4 (etc.) + **measure Ollama latency** under load (`knowledge/steam/`) |
-| **Calendar / mail / meetings** | Google Calendar + **Zoom** web join + **iCal** + meeting prep (`knowledge/calendar/`) |
+| **Calendar / mail / meetings** | Google Calendar + **Zoom** + **Teams free** + **iCal** + meeting prep (`knowledge/calendar/`) |
 | **Windows install prep** | Licensed **Windows 11** media + DISM/unattend hygiene (`knowledge/windows/`) |
 | **macOS install prep** | Apple **bootable installer** / recovery hygiene (`knowledge/macos/`) |
 | **ChromeOS Flex install prep** | Install Flex on PC/Mac via USB ([product](https://chromeos.google/products/chromeos-flex/)) |
@@ -1102,14 +1102,15 @@ python fable5_offline_agent.py --automate macos-install-prep
 
 **Warn:** target Mac needs **internet** during install; silicon vs Intel boot steps differ. **Refuse:** Hackintosh, torrents, Activation Lock bypass without ownership. VERIFY LIVE Apple’s command table after new macOS releases.
 
-## Calendar · mail · meetings (Google / Zoom / iCal)
+## Calendar · mail · meetings (Google / Zoom / Teams / iCal)
 
-Offline help for **Google Calendar**, **Zoom Web Client**, **iCalendar (.ics)**, **mail invites**, and **meeting prep/notes**.
+Offline help for **Google Calendar**, **Zoom Web Client**, **Microsoft Teams free**, **iCalendar (.ics)**, **mail invites**, and **meeting prep/notes**.
 
 | Surface | User CLICK | Agent |
 |---------|------------|--------|
 | Google Calendar | [calendar.google.com](https://calendar.google.com/) | Prep, drafts, no auth scrape |
 | Zoom web join | [app.zoom.us/wc/join](https://app.zoom.us/wc/join) | **join-zoom** checklist; never auto-join |
+| Teams free | [teams.live.com/free](https://teams.live.com/free) | **join-teams** checklist; never auto-join |
 | Google Meet | `meet.google.com/…` | Flag as CLICK from invites |
 
 ```bash
@@ -1133,7 +1134,7 @@ python fable5_offline_agent.py --automate calendar-meeting-prep
 | Parser | `scripts/ical_parse.py` |
 | Workflow | `workflows/calendar-meeting-prep.json` |
 
-**Draft only** — user sends mail, creates events, and joins Zoom/Meet. Keep secret iCal feeds, OAuth tokens, and Zoom passcodes out of git (`knowledge/calendar/_local/`, `.ics` ignored).
+**Draft only** — user sends mail, creates events, and joins Zoom/Meet/Teams. Keep secret iCal feeds, OAuth tokens, and meeting passcodes out of git (`knowledge/calendar/_local/`, `.ics` ignored).
 
 ## Steam SIM launch & Ollama soak
 
@@ -1647,7 +1648,7 @@ python fable5_offline_agent.py --doctor
 | Slow first reply / cycle | Model loading into RAM/VRAM — expected |
 | Slow chat while a SIM runs | Expected under load; run `python scripts/steam_sim_soak.py` for A/B TTFT |
 | Steam not found | Set `FABLE5_STEAM` / `STEAM_EXE`, or install Steam; default also checks `D:\Steam\steam.exe` |
-| Need Zoom / calendar help | `--calendar` / `/calendar`; web join [app.zoom.us/wc/join](https://app.zoom.us/wc/join); parse invites with `--ical` |
+| Need Zoom / Teams / calendar help | `--calendar` / `/calendar`; Zoom [app.zoom.us/wc/join](https://app.zoom.us/wc/join); Teams free [teams.live.com/free](https://teams.live.com/free); parse invites with `--ical` |
 | Need Windows install media | `--windows` / `/windows`; official [software-download/windows11](https://www.microsoft.com/software-download/windows11) only |
 | Need macOS install USB | `--macos` / `/macos`; Apple [101578 createinstallmedia](https://support.apple.com/en-nz/101578) (USB erased) |
 
@@ -1688,7 +1689,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
 - **Knowledge data** — curated offline notes; see [`knowledge/INDEX.md`](knowledge/INDEX.md).
 - **Steam SIM soak** — launch owned Steam SIMs + measure Ollama latency (not a game bot; no DRM bypass).
-- **Calendar / mail / meetings** — Google Calendar + Zoom web join + iCal parse + meeting prep (not a mail/Zoom client; draft + checklist only).
+- **Calendar / mail / meetings** — Google Calendar + Zoom + Teams free ([teams.live.com/free](https://teams.live.com/free)) + iCal parse + meeting prep (draft + checklist only; never auto-join).
 - **Windows install prep** — licensed Win11 media + DISM/unattend hygiene (not piracy; no fake Windows 12).
 - **macOS install prep** — Apple bootable installer / recovery (101578; not Hackintosh or cracked media).
 - **Instagram selfie selector** — fits, makeup, slay picks + captions (not auto-post; not body-shame).
@@ -1735,7 +1736,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 3. Emergency routing (**call 111** in NZ emergencies) · health packs (MFP / physio / fitness companion)  
 4. OpenStreetMap contribute pipelines · iNaturalist flora/fauna (not surveying/taxonomic advice)  
 5. Steam / games (ownership required; not a bot or DRM bypass)  
-6. Calendar / mail / Zoom (local iCal + drafts; user CLICK join only)  
+6. Calendar / mail / Zoom / Teams (local iCal + drafts; user CLICK join only)  
 7. Windows install (licensed Win11 media / DISM only; no rebrand/piracy)  
 8. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 9. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
@@ -1759,7 +1760,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Emergency / health | Medical advice or emergency response (call **111**) |
 | Arts | Ticketing or rights clearance |
 | Steam SIM soak | Game automation, multiplayer cheating, or DRM bypass |
-| Calendar / mail / Zoom | Mailbox control, silent send, auto-join, or account takeover |
+| Calendar / mail / Zoom / Teams | Mailbox control, silent send, auto-join, or account takeover |
 | Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
 | ChromeOS Flex / GfE / Minecraft Education | Third-party ISOs, cracked MEE, student PII, invented prices, or compliance guarantees |

@@ -1,7 +1,7 @@
 # Meetings playbook (offline)
 
 **Skill:** `calendar-mail-meetings`  
-Companion to Google Calendar / Zoom / iCal / mail flows.
+Companion to Google Calendar / Zoom / **Microsoft Teams** / iCal / mail flows.
 
 ---
 
@@ -18,10 +18,11 @@ Companion to Google Calendar / Zoom / iCal / mail flows.
 ## Pre-reads
 ## Decisions needed
 ## Non-goals
-## Links (Meet / Zoom / docs) — user-supplied only
+## Links (Meet / Zoom / Teams / docs) — user-supplied only
 - Google Meet: `meet.google.com/…`
 - Zoom web join: [app.zoom.us/wc/join](https://app.zoom.us/wc/join) or full `zoom.us/j/…` invite
-- See `zoom-web-join.md` for join checklist
+- Teams free: [teams.live.com/free](https://teams.live.com/free) (Meeting ID + passcode) or work `teams.microsoft.com` invite
+- See `zoom-web-join.md` · `teams-live-free.md` for join checklists
 ```
 
 Paste objective + agenda into Google Calendar **description** so guests see it without a separate doc if possible.

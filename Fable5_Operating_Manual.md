@@ -792,18 +792,21 @@ SimCity 4 Deluxe **appid 24780** — `python scripts/steam_launch.py 24780`
 
 ---
 
-## 20e. Calendar · mail · meetings (Google / Zoom / iCal)
+## 20e. Calendar · mail · meetings (Google / Zoom / Teams / iCal)
 
-**Trigger:** `/calendar`, `/meetings`, `/mail`, `--calendar`, `--ical`, Google Calendar, Zoom, invites, agendas.
+**Trigger:** `/calendar`, `/meetings`, `/mail`, `--calendar`, `--ical`, Google Calendar, Zoom, Microsoft Teams free, invites, agendas.
 
 ### Skill
-`calendar-mail-meetings`: **parse-ical**, **meeting-prep**, **meeting-notes**, **mail-draft**, **schedule-hygiene**, **gcal-guide**, **join-zoom**, **map-calendar-privacy**.
+`calendar-mail-meetings`: **parse-ical**, **meeting-prep**, **meeting-notes**, **mail-draft**, **schedule-hygiene**, **gcal-guide**, **join-zoom**, **join-teams**, **map-calendar-privacy**.
 
 ### Google Calendar
 User **CLICK** → [https://calendar.google.com/](https://calendar.google.com/). No authenticated scrape. Offline bridge: export **.ics** or paste VCALENDAR.
 
 ### Zoom Web Client
 User **CLICK** → [https://app.zoom.us/wc/join](https://app.zoom.us/wc/join) (or invite `zoom.us/j/…`). Procedure **join-zoom**. Never auto-join; mask passcodes.
+
+### Microsoft Teams free
+User **CLICK** → [https://teams.live.com/free](https://teams.live.com/free). Start free meeting or join with Meeting ID + passcode. Procedure **join-teams**. Free limits VERIFY LIVE (~60-min seed; record/Copilot often paid). Work/school: `teams.microsoft.com`. Knowledge: `teams-live-free.md`.
 
 ### Tools
 ```bash
@@ -816,14 +819,16 @@ python fable5_offline_agent.py --automate calendar-meeting-prep
 ### Knowledge
 - `knowledge/calendar/ical-and-google.md`
 - `knowledge/calendar/zoom-web-join.md`
+- `knowledge/calendar/teams-live-free.md`
 - `knowledge/calendar/meetings-playbook.md`
 - `knowledge/privacy/google-calendar-hosts.md`
 - `knowledge/privacy/zoom-hosts.md`
+- `knowledge/privacy/teams-live-hosts.md`
 
 ### Automation
 - `calendar-meeting-prep` (workflow step type: `calendar`)
 
-**Draft only.** User sends mail / creates events / joins Zoom. Never commit OAuth tokens, Zoom passcodes, or secret iCal feed URLs.
+**Draft only.** User sends mail / creates events / joins Zoom or Teams. Never commit OAuth tokens, meeting passcodes, or secret iCal feed URLs.
 
 ---
 

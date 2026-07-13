@@ -49,6 +49,21 @@ Tag all Zoom join URLs as **CLICK**. Mask `pwd=` in any committed notes.
 
 ---
 
+## Microsoft Teams free (live)
+
+| Item | Value |
+|------|--------|
+| Free hub | [https://teams.live.com/free](https://teams.live.com/free) |
+| Role | Start free meeting or join with Meeting ID + passcode |
+| In invites | Often LOCATION / DESCRIPTION; work links may use `teams.microsoft.com` |
+| Detail | `knowledge/calendar/teams-live-free.md` |
+| Privacy | `knowledge/privacy/teams-live-hosts.md` |
+| Procedure | **join-teams** |
+
+Tag all Teams join URLs as **CLICK**. Mask passcodes. Free duration/features VERIFY LIVE.
+
+---
+
 ## iCalendar (.ics) essentials
 
 RFC 5545 family. Minimal event:
@@ -65,7 +80,7 @@ DTSTAMP:20260712T000000Z
 DTSTART:20260715T010000Z
 DTEND:20260715T020000Z
 SUMMARY:Example meeting
-LOCATION:Meet link or room
+LOCATION:Meet or Zoom or Teams free link or room
 DESCRIPTION:Agenda line 1\\nAgenda line 2
 END:VEVENT
 END:VCALENDAR

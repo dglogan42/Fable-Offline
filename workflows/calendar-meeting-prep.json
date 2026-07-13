@@ -4,11 +4,11 @@
   "steps": [
     {
       "type": "note",
-      "text": "Google Calendar: https://calendar.google.com/ · Zoom web join: https://app.zoom.us/wc/join — local .ics via python scripts/ical_parse.py invite.ics. Skill: calendar-mail-meetings (join-zoom)."
+      "text": "Google Calendar: https://calendar.google.com/ · Zoom: https://app.zoom.us/wc/join · Teams free: https://teams.live.com/free — local .ics via python scripts/ical_parse.py. Skill: calendar-mail-meetings (join-zoom, join-teams)."
     },
     {
       "type": "calendar",
-      "prompt": "Using skill calendar-mail-meetings and knowledge/calendar/ (ical-and-google.md, zoom-web-join.md, meetings-playbook.md), produce: (1) verdict ready/needs-info (2) meeting-prep agenda with time boxes (3) plain-text block to paste into Google Calendar description (4) if Zoom: join-zoom checklist pointing at https://app.zoom.us/wc/join — mask passcodes (5) optional draft .ics skeleton (6) mail-draft invite subject+body (7) privacy: no secret iCal URLs, OAuth tokens, or Zoom pwd in git. If no meeting details were provided, ask for title, time+tz, attendees, video link (Meet/Zoom), and goal. Not legal advice."
+      "prompt": "Using skill calendar-mail-meetings and knowledge/calendar/ (ical-and-google.md, zoom-web-join.md, teams-live-free.md, meetings-playbook.md), produce: (1) verdict ready/needs-info (2) meeting-prep agenda with time boxes (3) plain-text block to paste into Google Calendar description (4) if Zoom: join-zoom at https://app.zoom.us/wc/join — mask passcodes (5) if Teams: join-teams at https://teams.live.com/free (or work teams.microsoft.com) — mask passcodes; note free ~60-min seed and paid record/Copilot (6) optional draft .ics skeleton (7) mail-draft invite subject+body (8) privacy: no secret iCal URLs, OAuth tokens, or meeting pwd in git. If no meeting details were provided, ask for title, time+tz, attendees, video link (Meet/Zoom/Teams), and goal. Not legal advice."
     }
   ]
 }

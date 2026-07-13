@@ -114,7 +114,7 @@ unauthorised access. Steam, individual games, trademarks, and related
 software remain the property of Valve Corporation and the respective
 publishers/developers. Launch only software you are licensed to run.
 
-### 5. Calendar, mail, meetings, and Zoom
+### 5. Calendar, mail, meetings, Zoom, and Teams
 
 Notes under `knowledge/calendar/`, skill `calendar-mail-meetings`, and
 `scripts/ical_parse.py` help with **local** iCalendar (`.ics`) files, meeting
@@ -125,14 +125,16 @@ prep, draft mail, and join **checklists**.
 | Google Calendar | [calendar.google.com](https://calendar.google.com/) | Prep / drafts; no authenticated scrape |
 | Google Meet | `meet.google.com` | Flag as user CLICK from invites |
 | Zoom Web Client | [app.zoom.us/wc/join](https://app.zoom.us/wc/join) | **join-zoom** checklist; never auto-join |
+| Microsoft Teams free | [teams.live.com/free](https://teams.live.com/free) | **join-teams** checklist; never auto-join |
 
 Google Calendar, Gmail, Meet, and related services remain the property of
 Google LLC. Zoom Web Client and related services remain the property of Zoom
-Video Communications, Inc. The Software does not grant rights to those
-services and is not a substitute for their terms of service.
+Video Communications, Inc. Microsoft Teams and related services remain the
+property of Microsoft. The Software does not grant rights to those services
+and is not a substitute for their terms of service.
 
-Do **not** commit OAuth tokens, app passwords, Zoom passcodes or `pwd=` query
-values, secret iCal feed URLs, or full mailbox exports. Prefer
+Do **not** commit OAuth tokens, app passwords, Zoom/Teams passcodes or `pwd=`
+query values, secret iCal feed URLs, or full mailbox exports. Prefer
 `knowledge/calendar/_local/` (gitignored) for private material.
 
 ### 6. Windows install media and imaging

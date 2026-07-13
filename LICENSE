@@ -63,14 +63,15 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    Valve and the respective publishers/developers. Launch only software you
    are licensed to run.
 
-5. Calendar, mail, meetings, and Zoom
+5. Calendar, mail, meetings, Zoom, and Teams
    knowledge/calendar/, skill calendar-mail-meetings, and scripts/ical_parse.py
    support local iCalendar files, meeting prep, draft mail, and join checklists.
    Google Calendar (calendar.google.com), Meet, and related services remain
    Google's property. Zoom Web Client (app.zoom.us/wc/join) and related services
-   remain Zoom's property. The Software does not auto-join meetings or send
-   mail. Do not commit OAuth tokens, app passwords, Zoom passcodes, or secret
-   calendar feed URLs. Prefer knowledge/calendar/_local/ for private material.
+   remain Zoom's property. Microsoft Teams free (teams.live.com/free) and related
+   services remain Microsoft's property. The Software does not auto-join meetings
+   or send mail. Do not commit OAuth tokens, app passwords, Zoom/Teams passcodes,
+   or secret calendar feed URLs. Prefer knowledge/calendar/_local/ for private material.
 
 6. Windows install media and imaging
    knowledge/windows/ and skill windows-install-prep support licensed Windows 11
