@@ -744,6 +744,26 @@ Unclear or life-threatening → **Call 111** first.
 
 ---
 
+## 20d. Steam SIM launch (model perf)
+
+**Trigger:** soak-test local Ollama/model while a SIM game runs; `steam://rungameid/…`.
+
+### Skill
+`steam-sim-launch`: **launch-sim**, **perf-baseline**, **resolve-app**, **stop-sim**.
+
+### Seed
+SimCity 4 Deluxe **appid 24780** — `python scripts/steam_launch.py 24780`
+
+### Knowledge
+- `knowledge/steam/sim-games-launch.md`
+
+### Automation
+- `steam-sim-perf-check` (plan; launch is local shell/script)
+
+**Not a game bot.** Launch only owned/installed titles.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

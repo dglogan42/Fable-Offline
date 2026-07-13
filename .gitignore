@@ -171,6 +171,7 @@ knowledge/health/_local/
 knowledge/public-safety/_local/
 knowledge/property/_local/
 knowledge/animals/_local/
+knowledge/steam/_local/
 
 # PDFs and dumped PDF.js viewer bundles (curated knowledge/pdf notes only)
 *.pdf

@@ -226,6 +226,7 @@ def knowledge_root() -> Path:
     (root / "public-safety").mkdir(parents=True, exist_ok=True)
     (root / "property").mkdir(parents=True, exist_ok=True)
     (root / "animals").mkdir(parents=True, exist_ok=True)
+    (root / "steam").mkdir(parents=True, exist_ok=True)
     return root
 
 

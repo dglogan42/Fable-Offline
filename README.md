@@ -34,6 +34,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Arts & culture** | Exhibition briefs · visitor ops · content warnings (`knowledge/culture/`) |
 | **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
+| **Steam SIM launch** | Launch SimCity 4 etc. for **local model soak tests** (`knowledge/steam/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -81,7 +82,7 @@ Fable-Offline/
 │   ├── INDEX.md                 # Data catalog
 │   ├── aem/ animals/ brokers/ climate/ culture/
 │   ├── education/ health/ legal/ pdf/ privacy/
-│   ├── property/ public-safety/ trade/ urban-planning/
+│   ├── property/ public-safety/ steam/ trade/ urban-planning/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE                      # MIT © 2026 David Logan + domain notices
@@ -246,6 +247,29 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `aem-page-audit` | AEM fingerprint + clientlibs + privacy map |
 | `climate-plan-review` | Climate plan + emissions modelling audit |
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
+| `steam-sim-perf-check` | Plan Steam SIM launch + model perf notes (SC4 app 24780) |
+
+## Steam SIM launch (model performance)
+
+Launch an owned SIM/city-builder via Steam while testing local LLM responsiveness.
+
+**Seed:** SimCity 4 Deluxe — `steam://rungameid/24780`
+
+```bash
+python scripts/steam_launch.py 24780
+python scripts/steam_launch.py steam://rungameid/24780 --dry-run
+python fable5_offline_agent.py --doctor
+python fable5_offline_agent.py --automate steam-sim-perf-check
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/steam-sim-launch.md` |
+| Knowledge | `knowledge/steam/sim-games-launch.md` |
+| Script | `scripts/steam_launch.py` |
+| Workflow | `workflows/steam-sim-perf-check.json` |
+
+Optional: set `FABLE5_STEAM` or `STEAM_EXE` to your `steam.exe` path. **Not a game bot** — launch only; no in-game automation.
 
 ## Broker scrape, user model & audit
 
@@ -740,6 +764,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Arts & culture** — exhibition briefs and visitor ops (not ticketing).
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
 - **Knowledge data** — curated offline notes; see [`knowledge/INDEX.md`](knowledge/INDEX.md).
+- **Steam SIM launch** — local soak-test helper for SimCity 4 etc. (not a game bot).
 
 ## License
 

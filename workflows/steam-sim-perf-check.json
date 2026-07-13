@@ -1,0 +1,14 @@
+{
+  "name": "steam-sim-perf-check",
+  "description": "Plan a Steam SIM launch + local model perf notes (does not auto-launch unless shell allowed)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Default seed: SimCity 4 Deluxe appid 24780. Launch with: python scripts/steam_launch.py 24780. Skill steam-sim-launch."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill steam-sim-launch and knowledge/steam/sim-games-launch.md, produce a short perf-test plan: (1) pre-doctor steps (2) launch command for appid 24780 SimCity 4 Deluxe (3) post checks while game runs (4) verdict criteria for model usable vs degraded (5) when to stop the game. Do not invent other AppIDs as installed."
+    }
+  ]
+}
