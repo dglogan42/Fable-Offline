@@ -177,11 +177,18 @@ knowledge/**/*-raw*.txt
 knowledge/brokers/_local/
 knowledge/education/_local/
 knowledge/education/lpu-raw-*.txt
-# School / Google for Education — no rosters or domain secrets
+# School / Google for Education / Minecraft Education — no rosters, keys, or domain secrets
+# (Ship curated knowledge/education/*.md only; no student data or license dumps)
 knowledge/education/*roster*
 knowledge/education/*student*
 !**/*student*.md.example
 **/workspace-for-education*token*
+**/minecraft*education*license*
+**/minecraft*education*key*
+**/minecraft*education*token*
+**/*gamertag*roster*
+**/MEE*license*
+**/educommunity*cookie*
 knowledge/legal/_local/
 knowledge/legal/matters/
 knowledge/privacy/_local/

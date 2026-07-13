@@ -146,15 +146,22 @@ hygiene (USB via Chromebook Recovery Utility, certified models, fleet notes).
 Skill `google-for-education` and `knowledge/education/google-for-education.md` map
 the public [Google for Education](https://edu.google.com/intl/ALL_us/) hub
 (Workspace for Education, Classroom, Chromebooks, Gemini for Education marketing).
-Google marks remain Google LLC.
+Skill `minecraft-education-resource-kit` and `knowledge/education/minecraft-education.md`
+map **Minecraft Education** ([education.minecraft.net](https://education.minecraft.net/en-us))
+with community technical notes from [Minecraft Wiki](https://minecraft.wiki)
+([Minecraft Education article](https://minecraft.wiki/w/Minecraft_Education), exclusive features,
+version history). Google marks remain Google LLC; Minecraft / Minecraft Education marks remain
+Microsoft / Mojang. Wiki content is third-party community documentation — re-verify licensing,
+prices, country availability, and app versions on official Microsoft pages before procurement.
 
 The Software does **not** redistribute Flex images, enrollment tokens, Admin
-console credentials, or student personal data. Full Flex install erases the
-target disk — user backups are required. Prefer certified models and official
-edu.google.com / support.google.com paths. Workspace edition pricing, free vs
-paid Fundamentals messaging, and compliance (e.g. FERPA marketing claims) must
-be VERIFY LIVE with Google and institutional counsel. Not educational, careers,
-or legal advice. Do not commit student rosters or school secrets (see `.gitignore`).
+console credentials, cracked Minecraft Education clients, or student personal
+data. Full Flex install erases the target disk — user backups are required.
+Prefer certified models and official edu.google.com / education.minecraft.net /
+support paths. Workspace edition pricing, Minecraft Education licensing, free vs
+paid messaging, and compliance claims must be VERIFY LIVE with vendors and
+institutional counsel. Not educational, careers, or legal advice. Do not commit
+student rosters, gamertags, or school secrets (see `.gitignore`).
 
 ### 11. Animation toolkits (2D, stop-motion, 3D)
 

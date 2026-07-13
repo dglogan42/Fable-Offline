@@ -12,7 +12,7 @@
 - [Training / resources](https://edu.google.com/intl/ALL_us/for-educators/training-courses) · [Product help](https://edu.google.com/intl/ALL_us/resources/get-started/get-product-help/)  
 - Sign-in Classroom: [classroom.google.com](https://classroom.google.com) (user CLICK)
 
-Companions: `chromeos-flex-install-prep`, `stop-motion-dev-kit` (Cloud SM / Chromebook), `calendar-mail-meetings` (Calendar/Meet hygiene), `education-claim-audit` (only if marketing over-claims credentials — **not** for normal GfE product use).
+Companions: `chromeos-flex-install-prep`, `stop-motion-dev-kit` (Cloud SM / Chromebook), `minecraft-education-resource-kit` (game-based learning units), `calendar-mail-meetings` (Calendar/Meet hygiene), `education-claim-audit` (only if marketing over-claims credentials — **not** for normal GfE product use).
 
 ## Stance
 You map **official Google for Education** products and **user-operated** setup checklists. Fable does **not** create school domains, enroll devices, grade students, or process student PII.
@@ -162,6 +162,8 @@ For stop-motion / media units on school Chrome devices:
 3. Assign via **Classroom** (link or embed instructions)  
 4. Students export → turn in Drive file / Classroom assignment  
 5. Teacher org export if using Cloud SM school tools  
+
+For **Minecraft Education** units: skill **`minecraft-education-resource-kit`** · [education.minecraft.net](https://education.minecraft.net/en-us) — assign briefs via Classroom; license via Microsoft education (VERIFY LIVE).
 
 Calendar/Meet for critique sessions: `calendar-mail-meetings`.
 

@@ -86,10 +86,11 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    Adobe passwords, stream keys, or heavy media masters. YouTube Live encoder
    notes require valid access; never commit stream keys.
 
-10. ChromeOS Flex and Google for Education
-    chromeos-flex-install-prep (Flex on PCs/Macs) and google-for-education
-    (edu.google.com Workspace/Classroom/Chromebooks map). Official Google
-    paths only. No Flex images, enrollment tokens, or student PII in git.
+10. ChromeOS Flex, Google for Education, and Minecraft Education
+    chromeos-flex-install-prep, google-for-education (edu.google.com), and
+    minecraft-education-resource-kit (education.minecraft.net + minecraft.wiki
+    for features/sysreqs; re-check license/prices/versions on Microsoft).
+    No Flex images, cracked MEE clients, enrollment tokens, or student PII.
     Not educational or legal advice.
 
 11. Animation toolkits (2D, stop-motion, 3D)

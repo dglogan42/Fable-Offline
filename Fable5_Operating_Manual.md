@@ -1016,6 +1016,14 @@ Official Recovery Utility only; full install erases disk. Hand off to Cloud Stop
 **Automation:** `google-for-education`.  
 Map only; user operates school accounts HITL. No student PII in Fable. Not legal/compliance advice. Hand off Flex + Cloud Stop Motion for device/creative labs.
 
+## 20v. Minecraft Education resource kit
+**Trigger:** Minecraft Education, MEE, teach with Minecraft, education.minecraft.net, minecraft.wiki Education, classroom Minecraft lessons.  
+**Skill:** `minecraft-education-resource-kit` — **mee-plan**, **vs-retail**, **license-path**, **sysreq-check**, **download-setup**, **lesson-library**, **world-controls**, **classroom-mode**, **code-builder-path**, **wiki-lookup**, **unit-scaffold**, **class-handoff**.  
+**Sources:** [education.minecraft.net](https://education.minecraft.net/en-us) (license/download/lessons) · [minecraft.wiki/w/Minecraft_Education](https://minecraft.wiki/w/Minecraft_Education) (features/sysreqs/history).  
+**Knowledge:** `knowledge/education/minecraft-education.md`.  
+**Automation:** `minecraft-education-resource-kit`.  
+Prefer official for licensing; wiki for exclusive features (Agent, borders, Classroom Mode). Wiki prices VERIFY LIVE. No cracked clients. Hand off via `google-for-education`.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

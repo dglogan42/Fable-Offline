@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS / ChromeOS Flex install prep**, **Google for Education**, **Steam SIM soak**, **math/physics**, **creative pipelines**, and **2D / stop-motion / 3D animation kits** (Krita · Stop Motion Studio · [Cloud Stop Motion](https://cloudstopmotion.com/) · Blender), plus a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS / ChromeOS Flex install prep**, **Google for Education**, **Minecraft Education** ([education.minecraft.net](https://education.minecraft.net/en-us) + [minecraft.wiki](https://minecraft.wiki/w/Minecraft_Education)), **Steam SIM soak**, **math/physics**, **creative pipelines**, and **2D / stop-motion / 3D animation kits** (Krita · Stop Motion Studio · [Cloud Stop Motion](https://cloudstopmotion.com/) · Blender), plus a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 **Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE.md) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
@@ -23,7 +23,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
-| **Education** | Credential claim audit · **UC Arts PG** · **Google for Education** map (`knowledge/education/`) |
+| **Education** | Credential audit · **UC Arts PG** · **Google for Education** · **Minecraft Education** kit (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
@@ -124,7 +124,8 @@ Fable-Offline/
 | Windows product keys (`knowledge/windows/_local/`) | Licensing secrets |
 | macOS `Install *.app`, `.ipsw`, recovery / FileVault keys | Huge binaries + secrets |
 | ChromeOS Flex `.bin` images, enrollment tokens | Binary dumps + fleet secrets |
-| Student rosters, school admin tokens, GfE secrets | Child/student privacy |
+| Student rosters, school admin tokens, GfE / Minecraft Education secrets | Child/student privacy |
+| Minecraft Education license keys / gamertag rosters | School licensing + privacy |
 | Stream keys; Adobe passwords; creative `00_inbox` / `04_exports` media | Secrets + bulk binaries |
 | Krita `.kra` / `03_krita/` / render sequences | Local 2D animation masters |
 | Stop Motion Studio / Cloud SM dumps (`02_sms_project/`, `02_cloud_exports/`) | Local project libraries |
@@ -151,7 +152,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
-| Education claims / UC Arts PG / GfE | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate`, `google-for-education` |
+| Education claims / UC Arts PG / GfE / Minecraft Edu | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate`, `google-for-education`, `minecraft-education-resource-kit` |
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
@@ -311,6 +312,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `stop-motion-cloud-chromebook` | Chromebook browser app + cloud project save + export |
 | `chromeos-flex-install-prep` | ChromeOS Flex USB install plan for existing PC/Mac |
 | `google-for-education` | Google for Education hub map (Workspace · Classroom · devices) |
+| `minecraft-education-resource-kit` | Minecraft Education lessons, license, unit scaffold |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
@@ -490,6 +492,37 @@ python fable5_offline_agent.py --automate google-for-education
 | Workflow | `workflows/google-for-education.json` |
 
 **Notes:** Not legal/compliance advice. No student PII in git. Editions/prices VERIFY LIVE.
+
+## Minecraft Education resource kit
+
+Classroom game-based learning map for **Minecraft Education** (Bedrock-based; not consumer Minecraft / not discontinued MinecraftEdu).
+
+| Source | Use |
+|--------|-----|
+| [education.minecraft.net](https://education.minecraft.net/en-us) | License, download, lesson library (authoritative) |
+| [minecraft.wiki — Minecraft Education](https://minecraft.wiki/w/Minecraft_Education) | Features, platforms, sysreqs, exclusive items (community; re-check) |
+
+| Stage | Focus |
+|-------|--------|
+| vs retail | School tools + library; Bedrock codebase (wiki) |
+| License | [Licensing](https://education.minecraft.net/en-us/licensing) — wiki prices only as VERIFY LIVE seeds |
+| Sysreqs | Win 10/11, macOS 12+, Chrome OS 114+ seeds — [MS requirements](https://educommunity.minecraft.net/hc/articles/360047556591) |
+| Tools | Classroom Mode, Agent/Code Builder, Allow/Deny/Border, Camera/Portfolio, NPC/Chalkboard |
+| Lessons | [Lesson library](https://education.minecraft.net/en-us/resources/explore-lessons) |
+| Assign | `google-for-education` (Classroom) |
+
+```bash
+python fable5_offline_agent.py --automate minecraft-education-resource-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/minecraft-education-resource-kit.md` |
+| Knowledge | `knowledge/education/minecraft-education.md` |
+| Workflow | `workflows/minecraft-education-resource-kit.json` |
+| Wiki | [minecraft.wiki/w/Minecraft_Education](https://minecraft.wiki/w/Minecraft_Education) |
+
+**Refuse:** cracked clients. Wiki prices/country maps can be stale. No student PII in git.
 
 ## 3D animation dev kit (CG · Blender-first)
 
@@ -1364,6 +1397,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Stop / motion dev kit** — Stop Motion Studio + [Cloud Stop Motion](https://cloudstopmotion.com/) Chromebook/browser cloud upload/export (automate recipes).
 - **ChromeOS Flex install prep** — official Flex on PC/Mac ([product](https://chromeos.google/products/chromeos-flex/)); USB Recovery Utility; certified models.
 - **Google for Education** — Workspace · Classroom · Chromebooks map ([edu.google.com](https://edu.google.com/intl/ALL_us/)).
+- **Minecraft Education resource kit** — official hub + [Minecraft Wiki](https://minecraft.wiki/w/Minecraft_Education) features/sysreqs (re-check license on Microsoft).
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
@@ -1387,7 +1421,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
 9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
-10. ChromeOS Flex / Google for Education (official install & hub map; no student PII)  
+10. ChromeOS Flex / Google for Education / Minecraft Education (official hubs + wiki notes; no student PII)  
 11. Animation toolkits — Krita 2D, Stop Motion Studio / Cloud SM, Blender 3D  
 12. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
 13. Contribution licensing  
@@ -1409,7 +1443,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Calendar / mail / Zoom | Mailbox control, silent send, auto-join, or account takeover |
 | Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
-| ChromeOS Flex / Google for Education | Third-party ISOs, student PII in git, invented edition prices, or compliance guarantees |
+| ChromeOS Flex / GfE / Minecraft Education | Third-party ISOs, cracked MEE, student PII, invented prices, or compliance guarantees |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |

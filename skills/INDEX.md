@@ -30,6 +30,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **loop-engineer**: [Loop engineer](loop-engineer.md)
 - **macos-install-prep**: [macOS install prep (Apple bootable installer)](macos-install-prep.md)
 - **math-physics-agent**: [Math & physics agent (deep-explain · theorem · solver)](math-physics-agent.md)
+- **minecraft-education-resource-kit**: [Minecraft Education resource kit](minecraft-education-resource-kit.md)
 - **outfit-selector-create**: [Outfit selector / create (Seamly2D)](outfit-selector-create.md)
 - **pdf-render**: [PDF render & extract (offline)](pdf-render.md)
 - **prompt-generator**: [Offline prompt generator (swarm / agent system prompts)](prompt-generator.md)

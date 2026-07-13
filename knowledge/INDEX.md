@@ -20,7 +20,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
-| **education/** | Credential claims · UC Arts PG · Google for Education | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md` |
+| **education/** | Credential claims · UC Arts PG · GfE · Minecraft Education (+ wiki seeds) | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md`, `minecraft-education.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **health/** | Health NZ navigation | `healthnz-find-a-service.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |

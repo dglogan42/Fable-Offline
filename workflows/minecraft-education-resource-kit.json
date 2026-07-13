@@ -1,0 +1,14 @@
+{
+  "name": "minecraft-education-resource-kit",
+  "description": "Plan Minecraft Education classroom resources: license, download, lessons, unit scaffold",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Hub: https://education.minecraft.net/en-us — Wiki: https://minecraft.wiki/w/Minecraft_Education — skill minecraft-education-resource-kit. Prefer official for license/download; wiki for features/sysreqs (re-check). No cracked clients. No student PII. Not educational/legal advice."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill minecraft-education-resource-kit and knowledge/education/minecraft-education.md (official hub + Minecraft Wiki seeds), produce mee-plan: (1) verdict (2) vs-retail — Bedrock-based Education vs consumer Minecraft vs discontinued MinecraftEdu (3) license-path — official https://education.minecraft.net/en-us/licensing first; wiki price/M365 A3/A5 inclusion only as VERIFY LIVE seeds (4) sysreq-check — wiki/Microsoft mins (Win10/11, macOS 12+, Chrome OS 114+, etc.) (5) download-setup official stores/download page (6) lesson-library official explore-lessons; no fake lesson URLs (7) world-controls — Allow/Deny, Border, Immutable, NPC, Chalkboard (wiki) (8) classroom-mode + code-builder Agent (9) unit-scaffold (10) assess-portfolio Camera/Portfolio (11) device-path incl ChromeOS (12) class-handoff google-for-education (13) OPEN — re-check wiki version history vs live store. Not educational advice. User HITL."
+    }
+  ]
+}
