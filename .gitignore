@@ -10,7 +10,9 @@
 # URLs with tokens, stream keys, Adobe passwords, heavy creative inbox/exports,
 # soak dumps, animation masters (Krita .kra, Stop Motion Studio + Cloud SM dumps,
 # Blender caches/EXR), Roblox places, Inkstone/HiBridge sessions, bulk
-# generated_prompts/, local web dump sandboxes (knowledge/web/_local/).
+# generated_prompts/, local web dump sandboxes (knowledge/web/_local/),
+# full third_party app mirrors (inaturalist/iNaturalistAPI — ship third_party/README only),
+# private GPX / OSM OAuth / iNat tokens / health diaries / patient booklets.
 # Ship curated css-design-fingerprint-*.md + css-styles-media-kit.md only.
 # =============================================================================
 
@@ -343,6 +345,21 @@ knowledge/health/*patient*booklet*
 **/physiotherapyexercises*export*
 workspace/health/fitness-companion/**
 !workspace/health/fitness-companion/.gitkeep
+# OpenStreetMap contribute — private GPX / CAD / session material
+knowledge/geo/_local/
+workspace/geo/osm-contribute/**
+!workspace/geo/osm-contribute/.gitkeep
+workspace/geo/flora-fauna/**
+!workspace/geo/flora-fauna/.gitkeep
+**/*osm*oauth*
+**/*openstreetmap*cookie*
+**/private*.gpx
+**/*inaturalist*token*
+**/*inaturalist*oauth*
+# Full upstream app trees (optional local mirrors; ship third_party/README only)
+third_party/inaturalist/
+third_party/iNaturalistAPI/
+third_party/inatVisionAPI/
 
 # Auto-generated agent system prompts (local bulk; ship generator + skill only)
 # Keep generated_prompts/.gitkeep so the directory exists after clone.

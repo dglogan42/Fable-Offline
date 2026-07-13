@@ -56,6 +56,8 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Inkstone resource kit** | WebNovel author platform ([inkstone.webnovel.com](https://inkstone.webnovel.com/)) · Academy · hosts |
 | **CSS styles media kit** | Web design rules + CSS fingerprints (Epic · TikTok · Firefox · orphan) |
 | **Fitness companion agent** | Habit process + MFP/physio routing (`fitness-companion-agent`) — not medical advice |
+| **OpenStreetMap contribute kit** | iOS/Android · 3D/CAD · drone · GPS upload pipelines ([Contribute map data](https://wiki.openstreetmap.org/wiki/Contribute_map_data)) |
+| **iNaturalist flora/fauna kit** | Native biota collection + optional OSM handoff ([inaturalist.org](https://www.inaturalist.org/) · [repo](https://github.com/inaturalist/inaturalist)) |
 | **MyFitnessPal resource kit** | Nutrition tracker map + privacy hosts ([myfitnesspal.com](https://www.myfitnesspal.com/)) |
 | **PhysiotherapyExercises kit** | Clinician exercise library + patient booklets ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
@@ -158,6 +160,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Animals / dogs | `knowledge/animals/` | `animal-compliance-agent` |
 | Emergency / safety | `knowledge/public-safety/` | `emergency-services-agent` |
 | Health directory / fitness companion / MFP / physio | `knowledge/health/` | `fitness-companion-agent`, `emergency-services-agent`, `myfitnesspal-resource-kit`, `physiotherapy-exercises-resource-kit` |
+| OpenStreetMap + iNaturalist biota | `knowledge/geo/` | `openstreetmap-contribute-kit`, `inaturalist-flora-fauna-kit` |
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
@@ -328,6 +331,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `inkstone-resource-kit` | Inkstone SPA hosts, HiBridge, privacy checklist |
 | `css-styles-media-kit` | CSS design media kit + fingerprint catalog match |
 | `fitness-companion-agent` | Fitness habit companion + MFP/physio/injury routing |
+| `openstreetmap-contribute-kit` | OSM contribute pipelines (mobile · 3D/CAD · drone · upload) |
+| `inaturalist-flora-fauna-kit` | Native flora/fauna via iNaturalist + Fable/OSM incorporate |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -638,6 +643,53 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## iNaturalist flora & fauna kit
+
+**Native flora/fauna information collection** via [iNaturalist](https://www.inaturalist.org/) (MIT Rails source: [inaturalist/inaturalist](https://github.com/inaturalist/inaturalist)). Occurrences live on iNat; Fable keeps process notes; optional habitat mapping via OSM kit — **not** species-node spam on the map.
+
+| Stage | Focus |
+|-------|--------|
+| Collect | Photo evidence · place · ID · native-focus hygiene |
+| Sensitive | Geoprivacy for threatened/rare taxa |
+| Incorporate | `workspace/geo/flora-fauna/` + optional OSM handoff |
+| API | Recommended practices · prefer exports · no scrape |
+| Dev | Optional sparse `third_party/inaturalist/` (gitignored) |
+
+```bash
+python fable5_offline_agent.py --automate inaturalist-flora-fauna-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/inaturalist-flora-fauna-kit.md` |
+| Knowledge | `knowledge/geo/inaturalist-flora-fauna.md` |
+| Privacy | `knowledge/privacy/inaturalist-hosts.md` |
+| Workflow | `workflows/inaturalist-flora-fauna-kit.json` |
+| Third-party pointer | `third_party/README.md` |
+
+## OpenStreetMap contribute kit
+
+Pipelines to **contribute map data** from the official [Contribute map data](https://wiki.openstreetmap.org/wiki/Contribute_map_data) hub — iOS/Android field survey, 3D/CAD footprint prep, drone/aerial, GPS traces, and an **upload portal checklist** on [openstreetmap.org](https://www.openstreetmap.org/) (iD / JOSM / Notes / GPS upload).
+
+| Pipeline | Focus |
+|----------|--------|
+| `pipeline-ios` / `pipeline-android` | Mobile editors + field attributes |
+| `pipeline-3d-cad` | CAD/Blender → footprints + tags (not full mesh host) |
+| `pipeline-drone` | Licensed imagery + survey geometry |
+| `pipeline-upload` | Account · changeset · GPX · Notes |
+| Gates | ODbL / Contributor Terms · **Import** CoC for bulk |
+
+```bash
+python fable5_offline_agent.py --automate openstreetmap-contribute-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/openstreetmap-contribute-kit.md` |
+| Knowledge | `knowledge/geo/openstreetmap-contribute.md` |
+| Privacy | `knowledge/privacy/openstreetmap-wiki-hosts.md` |
+| Workflow | `workflows/openstreetmap-contribute-kit.json` |
 
 ## Fitness companion agent
 
@@ -1587,6 +1639,8 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Inkstone resource kit** — WebNovel author platform + Writers Academy ([inkstone.webnovel.com](https://inkstone.webnovel.com/)).
 - **CSS styles media kit** — web design rules + fingerprint catalog (Epic · TikTok · Firefox · orphan).
 - **Fitness companion agent** — habit/process companion from MFP + physio + Health NZ data; not medical advice.
+- **OpenStreetMap contribute kit** — mobile · 3D/CAD · drone · GPS upload pipelines from [Contribute map data](https://wiki.openstreetmap.org/wiki/Contribute_map_data).
+- **iNaturalist flora/fauna kit** — native biota collection ([inaturalist.org](https://www.inaturalist.org/)); optional sparse GitHub mirror; incorporate with OSM.
 - **MyFitnessPal resource kit** — nutrition tracker + privacy hosts ([myfitnesspal.com](https://www.myfitnesspal.com/)); not medical advice.
 - **PhysiotherapyExercises kit** — clinician exercise booklets ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)); not physio advice.
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
@@ -1605,17 +1659,18 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 
 1. Domain knowledge / skills (not professional advice)  
 2. Third-party website and policy snapshots  
-3. Emergency routing (**call 111** in NZ emergencies)  
-4. Steam / games (ownership required; not a bot or DRM bypass)  
-5. Calendar / mail / Zoom (local iCal + drafts; user CLICK join only)  
-6. Windows install (licensed Win11 media / DISM only; no rebrand/piracy)  
-7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
-8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
-9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
-10. Education hubs · Inkstone · CSS fingerprints (official paths; no student PII; fingerprints ≠ rebrand rights)  
-11. Animation toolkits — Krita 2D, Stop Motion Studio / Cloud SM, Blender 3D  
-12. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
-13. Contribution licensing  
+3. Emergency routing (**call 111** in NZ emergencies) · health packs (MFP / physio / fitness companion)  
+4. OpenStreetMap contribute pipelines · iNaturalist flora/fauna (not surveying/taxonomic advice)  
+5. Steam / games (ownership required; not a bot or DRM bypass)  
+6. Calendar / mail / Zoom (local iCal + drafts; user CLICK join only)  
+7. Windows install (licensed Win11 media / DISM only; no rebrand/piracy)  
+8. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
+9. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
+10. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
+11. Education hubs · Inkstone · CSS fingerprints (official paths; no student PII; fingerprints ≠ rebrand rights)  
+12. Animation toolkits — Krita 2D, Stop Motion Studio / Cloud SM, Blender 3D  
+13. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
+14. Contribution licensing · optional `third_party/` mirrors stay local (gitignored)  
 
 ### Domain disclaimers (summary)
 
@@ -1639,6 +1694,9 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Book Creator comics | Student books/PII in git, cracked accounts, or invented pricing |
 | Inkstone / WebNovel | Session cookies, unpublished manuscripts in git, invented contracts/contest wins, or fake academy article text |
 | Fitness companion agent | Medical/physio/nutrition prescriptions, invented macros, DIY rehab, diaries/patient data in git |
+| OpenStreetMap contribute | Proprietary basemap copy, silent bulk imports, auto-upload, OAuth/cookies in git |
+| iNaturalist flora/fauna | Taxonomic inventions, API scrape abuse, sensitive-taxa doxxing, OAuth in git, species spam on OSM |
+| third_party mirrors | Committing full upstream app trees (ship `third_party/README.md` only) |
 | MyFitnessPal | Medical advice claims, diary scrapes, or session cookies in git |
 | PhysiotherapyExercises.com | Physio prescriptions for undiagnosed injury, patient booklets in git, bulk media scrape |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |

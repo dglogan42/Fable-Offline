@@ -42,7 +42,12 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    fire, or medical reports as the agent of record. fitness-companion-agent,
    myfitnesspal-resource-kit, and physiotherapy-exercises-resource-kit are not
    medical, dietetic, physiotherapy, or personal-training advice; do not commit
-   private diaries or patient booklets.
+   private diaries or patient booklets. openstreetmap-contribute-kit is not
+   surveying or legal advice; do not copy proprietary basemaps into OSM or
+   commit OAuth tokens / private GPX. inaturalist-flora-fauna-kit is not
+   taxonomic advice; do not abuse the iNaturalist API or commit OAuth tokens /
+   precise sensitive-taxa coordinates. Optional third_party/inaturalist mirrors
+   are local-only (gitignored); see third_party/README.md.
 
 4. Steam, games, and local soak tests
    Scripts such as scripts/steam_launch.py and scripts/steam_sim_soak.py, and

@@ -1,0 +1,14 @@
+{
+  "name": "inaturalist-flora-fauna-kit",
+  "description": "Native flora/fauna collection via iNaturalist; incorporate with Fable notes + optional OSM",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill inaturalist-flora-fauna-kit. Source: github.com/inaturalist/inaturalist (MIT Rails) + inaturalist.org. NOT taxonomic advice. No API scrape abuse. No auto-upload. Sensitive taxa → geoprivacy. Species on iNat; map features on OSM."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill inaturalist-flora-fauna-kit and knowledge/geo/inaturalist-flora-fauna.md + knowledge/privacy/inaturalist-hosts.md, produce inat-plan: (1) verdict — iNaturalist for flora/fauna occurrences; Fable for process notes; OSM only for habitat/access via openstreetmap-contribute-kit (2) collect-native field checklist for native biota (3) obs-hygiene including captive/cultivated (4) sensitive-taxa geoprivacy (5) mobile-observe or web HITL (6) incorporate-biota workspace/geo/flora-fauna scaffold (7) api-literacy if bulk (exports + recommended practices, no scrape) (8) optional dev-setup sparse third_party clone notes (9) host-map (10) OPEN VERIFY LIVE Network site and local wildlife law. Never invent scientific names or Research Grade."
+    }
+  ]
+}

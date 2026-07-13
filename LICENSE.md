@@ -65,6 +65,26 @@ They are **not** medical, physiotherapy, nutrition, or personal-training advice.
 Do not invent calorie targets or DIY rehab plans; do not commit food diaries or
 patient materials.
 
+Skill `openstreetmap-contribute-kit` and notes under
+`knowledge/geo/openstreetmap-contribute.md` describe **community pipelines** for
+contributing to OpenStreetMap using official wiki and map surfaces. They are
+**not** surveying, aviation, cadastral, or legal advice. OpenStreetMap data is
+published under the Open Database License; wiki text has its own licence.
+Do not copy proprietary basemaps into OSM, auto-upload as agent of record, or
+commit OAuth tokens / private GPX of sensitive paths.
+
+Skill `inaturalist-flora-fauna-kit` and `knowledge/geo/inaturalist-flora-fauna.md`
+describe **citizen-science collection** of flora/fauna via iNaturalist and how to
+keep process notes offline. They are **not** taxonomic, scientific, or
+conservation-law advice. The iNaturalist Rails application is MIT-licensed by its
+authors; observation media and data remain under iNaturalist/user licences.
+Prefer the iNaturalist Network over forking the community. Do not abuse the API,
+publish precise locations of sensitive taxa, or commit OAuth tokens.
+
+Optional local checkouts under `third_party/inaturalist/` (and related API repos)
+are **not** part of the shipped Software tree; see `third_party/README.md`. Full
+upstream trees remain the property of their authors and stay gitignored.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

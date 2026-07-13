@@ -1,0 +1,14 @@
+{
+  "name": "openstreetmap-contribute-kit",
+  "description": "OSM contribute pipelines: iOS/Android field, 3D/CAD, drone, GPS upload portal",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill openstreetmap-contribute-kit. Source: wiki Contribute_map_data. Official map openstreetmap.org only. ODbL + Contributor Terms. No proprietary basemap copy. No auto-upload. No bulk import without Import CoC."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill openstreetmap-contribute-kit and knowledge/geo/openstreetmap-contribute.md + knowledge/privacy/openstreetmap-wiki-hosts.md, produce osm-plan: (1) verdict — which pipeline (pipeline-ios, pipeline-android, pipeline-3d-cad, pipeline-drone, gps-pipeline, or simple iD/Notes) (2) licence-brief Contributor Terms + ODbL (3) editor-pick iD vs JOSM vs mobile (4) full step checklist for chosen pipeline ending in pipeline-upload on official OSM surfaces (5) import-gate if bulk/automated/drone-city (6) tag-hygiene pointers Map Features/Taginfo (7) host-map if privacy ask (8) QA/conflicts pointer (9) OPEN VERIFY LIVE wiki and local drone/privacy law. HITL only — Fable does not upload. Never copy Google/Bing into OSM."
+    }
+  ]
+}

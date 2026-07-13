@@ -22,6 +22,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
 | **education/** | Credential claims · UC Arts PG · GfE · Minecraft Edu · Book Creator comics | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md`, `minecraft-education.md`, `book-creator-comics.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
+| **geo/** | OpenStreetMap · iNaturalist flora/fauna | `openstreetmap-contribute.md`, `inaturalist-flora-fauna.md` |
 | **health/** | Health NZ · fitness companion · MyFitnessPal · PhysiotherapyExercises.com | `fitness-companion-framework.md`, `healthnz-find-a-service.md`, `myfitnesspal.md`, `physiotherapy-exercises.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
@@ -69,6 +70,8 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `inkstone-hosts.md` | Inkstone SPA (yueimg.com/inkstone) + HiBridge + CF Insights |
 | `myfitnesspal-hosts.md` | MyFitnessPal.com homepage third-party map (GTM, CMP, RUM, ads) |
 | `physiotherapyexercises-hosts.md` | PhysiotherapyExercises.com (GA, Cloudflare, first-party media) |
+| `openstreetmap-wiki-hosts.md` | OpenStreetMap Wiki + map contribute surfaces (MediaWiki seed) |
+| `inaturalist-hosts.md` | iNaturalist.org / API / forum / static (flora-fauna kit) |
 
 ---
 

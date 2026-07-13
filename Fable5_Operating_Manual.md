@@ -1079,6 +1079,22 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `fitness-companion-agent`.  
 **Not medical/physio/nutrition advice.** No diaries or patient booklets in git. NZ emergency: **111**.
 
+## 20ad. OpenStreetMap contribute kit (pipelines)
+**Trigger:** Contribute map data, OSM wiki, iD/JOSM, iOS/Android mapping, drone orthophoto, CAD footprints, GPS upload, ODbL.  
+**Skill:** `openstreetmap-contribute-kit` — **osm-plan**, **pipeline-ios**, **pipeline-android**, **pipeline-3d-cad**, **pipeline-drone**, **pipeline-upload**, **import-gate**, **licence-brief**.  
+**Source:** [Contribute map data](https://wiki.openstreetmap.org/wiki/Contribute_map_data) HTML dump (rev seed 3050449).  
+**Knowledge:** `knowledge/geo/openstreetmap-contribute.md`, `knowledge/privacy/openstreetmap-wiki-hosts.md`.  
+**Automation:** `openstreetmap-contribute-kit`.  
+**Not surveying/legal advice.** HITL upload only. No proprietary basemap copy. Bulk → Import CoC.
+
+## 20ae. iNaturalist flora & fauna kit
+**Trigger:** iNaturalist, native flora/fauna collection, citizen science biota, iNat API, Seek, incorporate species notes with OSM.  
+**Skill:** `inaturalist-flora-fauna-kit` — **inat-plan**, **collect-native**, **obs-hygiene**, **sensitive-taxa**, **incorporate-biota**, **api-literacy**, **dev-setup**.  
+**Sources:** [inaturalist.org](https://www.inaturalist.org/) · [github.com/inaturalist/inaturalist](https://github.com/inaturalist/inaturalist) (MIT Rails; optional sparse `third_party/`).  
+**Knowledge:** `knowledge/geo/inaturalist-flora-fauna.md`, `knowledge/privacy/inaturalist-hosts.md`.  
+**Automation:** `inaturalist-flora-fauna-kit`.  
+**Not taxonomic advice.** Occurrences on iNat; map features on OSM. No API scrape abuse. Geoprivacy for sensitive taxa.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  
