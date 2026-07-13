@@ -42,6 +42,8 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Outfit select / create** | Wardrobe picks + **Seamly2D** pattern plans (`knowledge/fashion/`) |
 | **DOC ranger pathway** | NZ Trainee Ranger / conservation career map (`knowledge/conservation/`) |
 | **TikTok Ads create** | Ads Manager campaign plan + pixel hygiene (`knowledge/ads/`) |
+| **Snapchat Web feed** | Desktop Chat feed protocol (`web.snapchat.com`) |
+| **RSS share** | Build/share **RSS 2.0** feeds (`scripts/rss_share.py`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -82,7 +84,7 @@ Fable-Offline/
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt             # openai + pypdf
 ├── fable5 / fable5.cmd          # Launchers
-├── scripts/                     # install, pdf_extract, ical_parse, steam_launch, steam_sim_soak
+├── scripts/                     # install, pdf_extract, ical_parse, rss_share, steam_*
 ├── skills/                      # Agentic skill library (see skills/INDEX.md)
 ├── workflows/                   # Public automation recipes (*.json)
 ├── knowledge/                   # Curated offline data (see knowledge/INDEX.md)
@@ -138,6 +140,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Windows install (licensed) | `knowledge/windows/` | `windows-install-prep` |
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
+| Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 | DOC ranger careers | `knowledge/conservation/` | `doc-ranger-pathway` |
 | TikTok Ads creation | `knowledge/ads/` | `tiktok-ads-create` |
@@ -266,6 +269,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 | `tiktok-analytics-map` | TikTok Analytics / pixel HTML + Network evidence map |
 | `tiktok-ads-create` | Full Ads Manager campaign plan (structure, pixel, creative, launch) |
+| `snapchat-web-session` | Snapchat for Web login + Chat feed + call/snap protocol |
+| `rss-share-build` | Compose channel JSON + RSS 2.0 feed.xml share pack |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
@@ -284,6 +289,52 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
 | `doc-ranger-pathway` | DOC Trainee Ranger / L4 conservation pathway map |
 | `uc-arts-pg-map` | UC Arts postgraduate pathways + apply navigation |
+
+## RSS share
+
+Produce an **RSS 2.0** feed for pull-based sharing (readers subscribe; you don’t spam-push).
+
+```bash
+python scripts/rss_share.py --demo -o workspace/demo-feed.xml
+python scripts/rss_share.py path/to/items.json -o workspace/feed.xml
+python fable5_offline_agent.py --automate rss-share-build
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/rss-share.md` |
+| Knowledge | `knowledge/social/rss-share.md` |
+| Script | `scripts/rss_share.py` |
+| Workflow | `workflows/rss-share-build.json` |
+
+Add to site HTML: `<link rel="alternate" type="application/rss+xml" title="…" href="https://…/feed.xml" />`.
+
+## Snapchat for Web feed protocol
+
+Desktop Snapchat via **[web.snapchat.com](http://web.snapchat.com/)** (official client).
+
+| Step | Protocol |
+|------|----------|
+| Browser | Chrome, Edge, or Safari (latest) |
+| Login | Credentials + mobile app push confirm; same account on phone |
+| Session | **One computer at a time** |
+| Feed | Chat feed → open friend → message / Snap / call |
+| Snap | Camera → click lens (photo) · hold lens (video) |
+| Limits | Subset of Lenses/tools vs mobile; screenshots still possible |
+
+```bash
+python fable5_offline_agent.py --automate snapchat-web-session
+# Chat after skills load: "Snapchat web feed protocol"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/snapchat-web-feed.md` |
+| Knowledge | `knowledge/social/snapchat-web-feed.md` |
+| Privacy | `knowledge/privacy/snapchat-web-hosts.md` |
+| Workflow | `workflows/snapchat-web-session.json` |
+
+**User operates the browser.** No credential storage, no feed scraping.
 
 ## TikTok Ads creation
 
@@ -1043,6 +1094,8 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Outfit / Seamly** — wardrobe select + create briefs + Seamly2D pattern plan ([seamly.io/download](https://seamly.io/download/)).
 - **DOC ranger pathway** — Trainee Ranger / L4 conservation map from DOC blog seed (not careers advice).
 - **TikTok Ads create** — Ads Manager campaign planning + pixel hygiene (not fraud; not ROAS guarantees).
+- **Snapchat Web feed** — official web.snapchat.com Chat/call/snap protocol (not a scraper).
+- **RSS share** — RSS 2.0 feed build/share (`scripts/rss_share.py`; pull syndication).
 
 ## License
 
@@ -1061,7 +1114,8 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 5. Calendar / mail / Zoom (local iCal + drafts; user CLICK join only)  
 6. Windows install (licensed Win11 media / DISM only; no rebrand/piracy)  
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
-8. Contribution licensing  
+8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
+9. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -1080,5 +1134,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Calendar / mail / Zoom | Mailbox control, silent send, auto-join, or account takeover |
 | Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
+| Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

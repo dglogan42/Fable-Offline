@@ -106,7 +106,22 @@ Do not commit full `Install macOS *.app` bundles, IPSW images, FileVault or
 recovery keys, or Apple ID credentials. Re-verify live Apple Support after each
 macOS release; command tables go stale.
 
-### 8. Contributions
+### 8. Social clients, feeds, and RSS
+
+Skills such as `snapchat-web-feed`, `rss-share`, `instagram-selfie-selector`,
+and related notes under `knowledge/social/` support **legitimate** use of
+third-party services and **user-generated** syndication.
+
+Snapchat, Snap Inc., and related marks remain the property of Snap Inc.
+Fable protocols for [web.snapchat.com](http://web.snapchat.com/) are operational
+hygiene only. The Software does **not** authorize scraping, credential theft,
+session hijacking, or automated abuse of Snapchat or other social platforms.
+
+`scripts/rss_share.py` produces standard **RSS 2.0** XML for feeds you are
+entitled to publish. Do not republish third-party full-text content without
+rights, and do not commit private feed URLs that embed secrets.
+
+### 9. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise

@@ -1,0 +1,19 @@
+{
+  "name": "rss-share-build",
+  "description": "Compose RSS channel items and build feed.xml via rss_share.py",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: rss-share. Script: python scripts/rss_share.py items.json -o workspace/feed.xml (or --demo)."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill rss-share and knowledge/social/rss-share.md: (1) compose-items JSON for a channel from the user topic (or a short Fable demo channel if none) (2) build-feed command line (3) share-pack with HTML discover-link snippet (4) validate-feed checklist. Prefer summaries + links. No private tokens in feed URLs."
+    },
+    {
+      "type": "shell",
+      "command": "python scripts/rss_share.py --demo -o workspace/demo-feed.xml",
+      "note": "Only runs if FABLE5_ALLOW_SHELL=1; otherwise user runs manually"
+    }
+  ]
+}

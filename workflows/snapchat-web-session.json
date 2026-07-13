@@ -1,0 +1,14 @@
+{
+  "name": "snapchat-web-session",
+  "description": "Snapchat for Web feed protocol: login, Chat feed, call/snap hygiene (official web.snapchat.com)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Entry: http://web.snapchat.com/ — skill snapchat-web-feed. Chrome/Edge/Safari. One computer session. No scrape, no credential storage."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill snapchat-web-feed and knowledge/social/snapchat-web-feed.md, produce web-session-protocol: (1) browser requirements (2) login + mobile push confirm (3) Chat feed navigate (4) call-from-web and Snap camera steps from Snap Help (5) privacy-screen / screenshot honesty (6) troubleshoot-web (7) sign-out on shared PC. Cite web.snapchat.com and help.snapchat.com. Not legal advice. User operates the browser."
+    }
+  ]
+}

@@ -5,7 +5,8 @@
 # Ship curated markdown skills/knowledge/workflows only.
 # Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
 # Zoom/Google calendar credentials, Windows product keys, macOS recovery keys /
-# full Installer apps / IPSW, local soak dumps.
+# full Installer apps / IPSW, social chat/snap exports, private RSS URLs with
+# tokens, local soak dumps.
 # =============================================================================
 
 # --- Python ---
@@ -206,6 +207,11 @@ knowledge/social/*-local*.md
 # Personal photo dumps / private drafts (keep curated playbook)
 knowledge/social/photos/
 knowledge/social/drafts/
+knowledge/social/*snap*export*
+knowledge/social/*chat*export*
+# Private / tokenized feed endpoints (public feed.xml demos OK under workspace/)
+**/feed.private.xml
+**/*rss*token*
 knowledge/social/**/*.jpg
 knowledge/social/**/*.jpeg
 knowledge/social/**/*.png

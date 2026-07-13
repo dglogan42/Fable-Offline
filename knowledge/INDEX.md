@@ -28,7 +28,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **privacy/** | Third-party host maps + privacy design | See table below |
 | **property/** | Property manager framework | `property-manager-framework.md` |
 | **public-safety/** | Emergency / Police / FENZ | `emergency-services-framework.md`, `nz-police-105.md`, `fenz-incident-reports.md` |
-| **social/** | Instagram fit / selfie / makeup selector | `instagram-selfie-playbook.md` |
+| **social/** | Instagram fits · Snapchat Web · RSS share | `instagram-selfie-playbook.md`, `snapchat-web-feed.md`, `rss-share.md` |
 | **trade/** | Export + freight forwarder | `freight-forwarder-exporter.md`, `mpi-exporter-help.md` |
 | **urban-planning/** | Planner competencies, freight, AC programmes | `competencies.md`, `freight-plan.md`, … |
 | **steam/** | Steam SIM launch for model soak tests | `sim-games-launch.md` |
@@ -60,6 +60,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `wgtn-ac-nz-hosts.md` | Victoria University of Wellington — TikTok Analytics seed |
 | `tiktok-analytics.md` | TikTok pixel/analytics method (HTML + Network) |
 | `ttcx-hosts.md` | TikTok Creative Exchange shell (pumbaa-rule seed) |
+| `snapchat-web-hosts.md` | Snapchat for Web (web.snapchat.com) seed |
 
 ---
 

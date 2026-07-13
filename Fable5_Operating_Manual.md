@@ -598,6 +598,21 @@ PURPOSE → privacy-design-planner → privacy-host-map → engineer verify → 
 - Method: `knowledge/privacy/tiktok-analytics.md`  
 - Example LOAD: `knowledge/privacy/wgtn-ac-nz-hosts.md` (`analytics.tiktok.com` from www.wgtn.ac.nz)
 
+### 18.9 RSS share
+**Trigger:** RSS feed, subscribe link, “share as RSS”, `feed.xml`.  
+**Skill:** `rss-share` — **compose-items**, **build-feed**, **share-pack**, **discover-link**, **validate-feed**.  
+**Script:** `python scripts/rss_share.py items.json -o workspace/feed.xml`  
+**Knowledge:** `knowledge/social/rss-share.md`  
+**Automation:** `rss-share-build`.  
+Pull syndication; no private token URLs in git.
+
+### 18.8 Snapchat for Web feed
+**Trigger:** `web.snapchat.com`, desktop Snapchat chat/call, “Snapchat on computer.”  
+**Skill:** `snapchat-web-feed` — **web-session-protocol**, **feed-navigate**, **call-from-web**, **compose-hygiene**, **troubleshoot-web**.  
+**Knowledge:** `knowledge/social/snapchat-web-feed.md` · privacy `snapchat-web-hosts.md`.  
+**Automation:** `snapchat-web-session`.  
+Official: [web.snapchat.com](http://web.snapchat.com/). Chrome/Edge/Safari; one PC session; user logs in HITL. No scrape.
+
 ### 18.7 TikTok Ads creation + Creative Exchange
 **Trigger:** `/tiktok-ads`, `--tiktok-ads`, Ads Manager, **TTCX** / Partner Exchange.  
 **Skill:** `tiktok-ads-create` — Campaign → Ad group → Ad; **ttcx-brief**; measurement-setup; creative-brief; launch-checklist.  

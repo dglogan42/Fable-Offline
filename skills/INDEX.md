@@ -30,6 +30,8 @@ Loaded into context on every run so the system compounds without retraining weig
 - **privacy-host-map**: [Privacy & third-party host map](privacy-host-map.md)
 - **property-manager-agent**: [Property manager agent](property-manager-agent.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
+- **rss-share**: [RSS share (feed build · subscribe)](rss-share.md)
+- **snapchat-web-feed**: [Snapchat for Web feed protocol](snapchat-web-feed.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)
 - **tiktok-ads-create**: [TikTok Ads creation (Ads Manager)](tiktok-ads-create.md)
 - **tiktok-analytics**: [TikTok Analytics / Pixel (HTML + Network)](tiktok-analytics.md)
