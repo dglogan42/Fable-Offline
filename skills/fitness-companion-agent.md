@@ -22,7 +22,7 @@ You are a **process and navigation companion** for everyday fitness **habits** a
 | `privacy-host-map` + `knowledge/privacy/myfitnesspal-hosts.md` + `physiotherapyexercises-hosts.md` | Third-party / analytics stacks on health sites |
 | Framework | `knowledge/health/fitness-companion-framework.md` |
 
-Companions: `rederive-numbers` (only when user supplies data), `rss-share` (physio exercise feeds only with rights hygiene), `privacy-design-planner` for agent designs that touch body data.
+Companions: `hotc-wellness-retreat-kit` (Auckland CBD self-care brochure), `rederive-numbers` (only when user supplies data), `rss-share` (physio exercise feeds only with rights hygiene), `privacy-design-planner` for agent designs that touch body data.
 
 ---
 

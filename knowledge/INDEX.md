@@ -23,7 +23,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **education/** | Credential claims · UC Arts PG · GfE · Minecraft Edu · Book Creator · TEDx pathways | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md`, `minecraft-education.md`, `book-creator-comics.md`, `tedx-learning-pathways.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **geo/** | OpenStreetMap · iNaturalist flora/fauna | `openstreetmap-contribute.md`, `inaturalist-flora-fauna.md` |
-| **health/** | Health NZ · fitness companion · MyFitnessPal · PhysiotherapyExercises.com | `fitness-companion-framework.md`, `healthnz-find-a-service.md`, `myfitnesspal.md`, `physiotherapy-exercises.md` |
+| **health/** | Health NZ · fitness companion · MFP · physio · CBD wellness retreat | `fitness-companion-framework.md`, `healthnz-find-a-service.md`, `myfitnesspal.md`, `physiotherapy-exercises.md`, `auckland-cbd-wellness-retreat.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
 | **math/** | Deep-explain + theorem frameworks | `deep-explain-framework.md`, `theorem-framework.md` |
@@ -74,6 +74,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `openstreetmap-wiki-hosts.md` | OpenStreetMap Wiki + map contribute surfaces (MediaWiki seed) |
 | `inaturalist-hosts.md` | iNaturalist.org / API / forum / static (flora-fauna kit) |
 | `tedx-youtube-hosts.md` | TEDx Talks / TED / TED-Ed YouTube + web watch surfaces |
+| `heartofthecity-hosts.md` | Heart of the City (Auckland CBD directory) wellness pages |
 
 ---
 

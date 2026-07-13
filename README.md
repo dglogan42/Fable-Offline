@@ -64,6 +64,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 | **MBTI personality customiser** | Full 16-type agent switch (`/mbti` · `--mbti` · `mbti_types.py`) |
 | **TEDx learning pathways** | Curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) library into study spines |
+| **HOTC wellness retreat kit** | Auckland CBD self-care brochure ([Health & Wellbeing](https://heartofthecity.co.nz/health-wellbeing)) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -337,6 +338,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `inaturalist-flora-fauna-kit` | Native flora/fauna via iNaturalist + Fable/OSM incorporate |
 | `mbti-personality-customiser` | 16-type MBTI agent personality switch + multi-lens |
 | `tedx-learning-pathways` | TEDx YouTube library → learning pathways + skill handoffs |
+| `hotc-wellness-retreat-kit` | Auckland CBD wellness retreat itinerary + PPTX brochure |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -647,6 +649,23 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## Heart of the City wellness retreat (Auckland CBD)
+
+Curated **1–3 day self-care / wellness-retreat program** and **PPTX brochure** from [Heart of the City Health & Wellbeing](https://heartofthecity.co.nz/health-wellbeing) (spas, gyms, yoga, pilates, hair & beauty).
+
+| Asset | Path |
+|-------|------|
+| Brochure | `brochures/auckland-cbd-wellness/Auckland_CBD_Wellness_Retreat_Brochure.pptx` |
+| Skill | `skills/hotc-wellness-retreat-kit.md` |
+| Knowledge | `knowledge/health/auckland-cbd-wellness-retreat.md` |
+| Rebuild | `node brochures/auckland-cbd-wellness/build_brochure.js` |
+
+```bash
+python fable5_offline_agent.py --automate hotc-wellness-retreat-kit
+```
+
+**Not medical advice** · not an official HOTC package · book venues HITL.
 
 ## TEDx Talks → learning pathways
 
@@ -1699,6 +1718,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
 - **MBTI personality customiser** — full 16-type agent switch (`/mbti`, `--mbti`, `mbti_types.py`); style lens only, not diagnosis.
 - **TEDx learning pathways** — curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) into study spines + Fable skill handoffs (not a degree; no video rehost).
+- **HOTC wellness retreat kit** — Auckland CBD self-care brochure from [heartofthecity.co.nz/health-wellbeing](https://heartofthecity.co.nz/health-wellbeing); not medical advice.
 
 ## License
 
@@ -1761,5 +1781,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Math / physics agent | Course credit or professional engineering sign-off |
 | MBTI personality customiser | Clinical diagnosis, hiring decisions, or persona overriding safety/accuracy |
 | TEDx learning pathways | Treating TEDx as academic credit, medical advice, channel scrape, or video rehost |
+| HOTC wellness retreat | Medical prescriptions, inventing HOTC package pricing, or booking as agent of record |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

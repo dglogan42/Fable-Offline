@@ -28,6 +28,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **freight-forwarder-exporter**: [Freight forwarder & exporter agent](freight-forwarder-exporter.md)
 - **google-for-education**: [Google for Education (Workspace · Classroom · Chromebooks)](google-for-education.md)
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
+- **hotc-wellness-retreat-kit**: [Heart of the City CBD wellness retreat brochure](hotc-wellness-retreat-kit.md)
 - **inaturalist-flora-fauna-kit**: [iNaturalist flora & fauna kit (native biota · API · OSM)](inaturalist-flora-fauna-kit.md)
 - **inkstone-resource-kit**: [Inkstone resource kit (yueimg SPA · privacy)](inkstone-resource-kit.md)
 - **instagram-selfie-selector**: [Instagram selfie selector (fits · makeup · slay)](instagram-selfie-selector.md)

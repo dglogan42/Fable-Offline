@@ -1111,6 +1111,15 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `tedx-learning-pathways`.  
 **Not a degree.** Curate short pathways; no video scrape/rehost. Claims need primary sources for high stakes.
 
+## 20ah. Heart of the City wellness retreat kit
+**Trigger:** Auckland CBD wellness retreat, self-care program brochure, HOTC health & wellbeing, city spa/gym/yoga itinerary.  
+**Skill:** `hotc-wellness-retreat-kit` — **hotc-plan**, **retreat-itinerary**, **brochure-map**, **select-venues**, **book-hitl**.  
+**Source:** [heartofthecity.co.nz/health-wellbeing](https://heartofthecity.co.nz/health-wellbeing).  
+**Knowledge:** `knowledge/health/auckland-cbd-wellness-retreat.md`, `knowledge/privacy/heartofthecity-hosts.md`.  
+**Brochure:** `brochures/auckland-cbd-wellness/Auckland_CBD_Wellness_Retreat_Brochure.pptx`.  
+**Automation:** `hotc-wellness-retreat-kit`.  
+**Not medical advice.** Not an official HOTC package. Book venues HITL.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

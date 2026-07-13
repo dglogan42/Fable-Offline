@@ -16,6 +16,12 @@
 # Ship curated css-design-fingerprint-*.md + css-styles-media-kit.md only.
 # =============================================================================
 
+# --- Node (brochure builders, local installs) ---
+node_modules/
+package-lock.json
+npm-debug.log*
+# Ship curated brochures under brochures/; keep local rebuild experiments out of root clutter
+
 # --- Python ---
 __pycache__/
 *.py[cod]

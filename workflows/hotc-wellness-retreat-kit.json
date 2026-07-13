@@ -1,0 +1,14 @@
+{
+  "name": "hotc-wellness-retreat-kit",
+  "description": "Auckland CBD wellness retreat / self-care brochure from Heart of the City Health & Wellbeing",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill hotc-wellness-retreat-kit. Source: heartofthecity.co.nz/health-wellbeing. Brochure: brochures/auckland-cbd-wellness/. NOT medical advice. NOT official HOTC package. Book venues HITL."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill hotc-wellness-retreat-kit and knowledge/health/auckland-cbd-wellness-retreat.md, produce hotc-plan: (1) verdict — curated CBD self-care itinerary not clinical retreat (2) pillars Move/Flow/Core/Restore/Glow/Nourish (3) retreat-itinerary 1–3 days or express-packs (4) select-venues from knowledge seeds with VERIFY LIVE (5) book-hitl steps on HOTC site (6) point to brochure PPTX path (7) habits prompts non-clinical (8) medical disclaimer + 111 (9) OPEN. Do not invent prices or claim official HOTC package."
+    }
+  ]
+}

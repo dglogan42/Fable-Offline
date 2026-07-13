@@ -96,6 +96,12 @@ related TED/TED-Ed surfaces. They are **not** educational credentials, scientifi
 peer review, or medical advice. TEDx events are independently organized; talk
 content remains the property of rights holders. Do not scrape or rehost videos.
 
+Skill `hotc-wellness-retreat-kit`, brochure under `brochures/auckland-cbd-wellness/`,
+and `knowledge/health/auckland-cbd-wellness-retreat.md` curate a **self-care program**
+from the public Heart of the City Health & Wellbeing directory. They are **not**
+medical advice or an official Heart of the City product. Venue listings remain
+with their owners; book directly and re-verify live.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,
