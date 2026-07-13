@@ -36,6 +36,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 | **Steam SIM soak** | Launch SimCity 4 (etc.) + **measure Ollama latency** under load (`knowledge/steam/`) |
 | **Calendar / mail / meetings** | Google Calendar + **Zoom** web join + **iCal** + meeting prep (`knowledge/calendar/`) |
+| **Windows install prep** | Licensed **Windows 11** media + DISM/unattend hygiene (`knowledge/windows/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -83,7 +84,7 @@ Fable-Offline/
 │   ├── INDEX.md                 # Data catalog
 │   ├── aem/ animals/ brokers/ climate/ culture/
 │   ├── calendar/ education/ health/ legal/ pdf/ privacy/
-│   ├── property/ public-safety/ steam/ trade/ urban-planning/
+│   ├── property/ public-safety/ steam/ trade/ urban-planning/ windows/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
@@ -126,6 +127,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
 | Calendar / iCal / meetings | `knowledge/calendar/` | `calendar-mail-meetings` |
+| Windows install (licensed) | `knowledge/windows/` | `windows-install-prep` |
 
 Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
@@ -197,6 +199,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/privacy [prompt]` | Third-party host / privacy map (local knowledge) |
 | `/calendar [prompt]` | Calendar / iCal / mail / meetings (`calendar-mail-meetings`) |
 | `/meetings` · `/mail` | Aliases for `/calendar` |
+| `/windows [prompt]` | Licensed Windows 11 install / DISM hygiene |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -255,6 +258,32 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 | `steam-sim-perf-check` | Plan Steam SIM launch + model perf notes (SC4 app 24780) |
 | `calendar-meeting-prep` | Meeting prep + Google Calendar / Zoom join / iCal / mail drafts |
+| `windows-install-prep` | Licensed Win11 media plan + optional DISM/unattend outline |
+
+## Windows install prep (licensed)
+
+Legal **Windows 11** install and image-hygiene coaching — not a piracy or “Windows 12” rebrand tool.
+
+| Path | What |
+|------|------|
+| **1. Official media** | [microsoft.com/software-download/windows11](https://www.microsoft.com/software-download/windows11) + genuine key / digital license |
+| **2. Enterprise image** | ADK / DISM / `unattend.xml` for **your** machines and licenses (still Windows 11) |
+| **3. Fable skill** | Checklists, refuse cracks/rebrand, no keys in git |
+
+```bash
+python fable5_offline_agent.py --windows
+python fable5_offline_agent.py --windows "official-media-plan for Pro reinstall"
+python fable5_offline_agent.py --automate windows-install-prep
+# Chat: /windows
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/windows-install-prep.md` |
+| Knowledge | `knowledge/windows/official-media.md`, `dism-unattend-hygiene.md` |
+| Workflow | `workflows/windows-install-prep.json` |
+
+**Refuse:** fake Windows 12 ISOs, activators, generic keys. Keep product keys out of the repo (`knowledge/windows/_local/`).
 
 ## Calendar · mail · meetings (Google / Zoom / iCal)
 
@@ -635,7 +664,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `pdf` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `pdf` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
@@ -762,7 +791,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -782,6 +811,7 @@ python fable5_offline_agent.py --doctor
 | Slow chat while a SIM runs | Expected under load; run `python scripts/steam_sim_soak.py` for A/B TTFT |
 | Steam not found | Set `FABLE5_STEAM` / `STEAM_EXE`, or install Steam; default also checks `D:\Steam\steam.exe` |
 | Need Zoom / calendar help | `--calendar` / `/calendar`; web join [app.zoom.us/wc/join](https://app.zoom.us/wc/join); parse invites with `--ical` |
+| Need Windows install media | `--windows` / `/windows`; official [software-download/windows11](https://www.microsoft.com/software-download/windows11) only |
 
 ## When to use it
 
@@ -821,6 +851,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Knowledge data** — curated offline notes; see [`knowledge/INDEX.md`](knowledge/INDEX.md).
 - **Steam SIM soak** — launch owned Steam SIMs + measure Ollama latency (not a game bot; no DRM bypass).
 - **Calendar / mail / meetings** — Google Calendar + Zoom web join + iCal parse + meeting prep (not a mail/Zoom client; draft + checklist only).
+- **Windows install prep** — licensed Win11 media + DISM/unattend hygiene (not piracy; no fake Windows 12).
 
 ## License
 
@@ -837,7 +868,8 @@ See **[LICENSE.md](LICENSE.md)** for the full MIT text plus **additional notices
 3. Emergency routing (**call 111** in NZ emergencies)  
 4. Steam / games (ownership required; not a bot or DRM bypass)  
 5. Calendar / mail / Zoom (local iCal + drafts; user CLICK join only)  
-6. Contribution licensing  
+6. Windows install (licensed media only; no rebrand/piracy)  
+7. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -854,5 +886,6 @@ See **[LICENSE.md](LICENSE.md)** for the full MIT text plus **additional notices
 | Arts | Ticketing or rights clearance |
 | Steam SIM soak | Game automation, multiplayer cheating, or DRM bypass |
 | Calendar / mail / Zoom | Mailbox control, silent send, auto-join, or account takeover |
+| Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

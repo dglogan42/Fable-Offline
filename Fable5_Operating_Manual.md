@@ -799,6 +799,27 @@ python fable5_offline_agent.py --automate calendar-meeting-prep
 
 ---
 
+## 20f. Windows install prep (licensed)
+
+**Trigger:** `/windows`, `--windows`, Media Creation Tool, DISM, unattend, “clean install Windows 11.”
+
+### Skill
+`windows-install-prep`: **official-media-plan**, **dism-service-plan**, **unattend-skeleton**, **preflight-checklist**, **post-install-baseline**, **refuse-piracy**.
+
+### Official media
+User **CLICK** → [https://www.microsoft.com/software-download/windows11](https://www.microsoft.com/software-download/windows11). Genuine key / digital license only.
+
+### Knowledge
+- `knowledge/windows/official-media.md`
+- `knowledge/windows/dism-unattend-hygiene.md`
+
+### Automation
+- `windows-install-prep` (workflow step type: `windows`)
+
+**Refuse:** fake “Windows 12” rebrand, crack keys, piracy ISO compilers. Enterprise DISM only for **owned** licenses; no ProductKey secrets in git.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

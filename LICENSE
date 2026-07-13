@@ -59,7 +59,13 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    mail. Do not commit OAuth tokens, app passwords, Zoom passcodes, or secret
    calendar feed URLs. Prefer knowledge/calendar/_local/ for private material.
 
-6. Contributions
+6. Windows install media and imaging
+   knowledge/windows/ and skill windows-install-prep support licensed Windows 11
+   media and DISM/unattend hygiene only. Windows remains Microsoft's property.
+   No piracy, cracks, unauthorized redistribution, or fake "Windows 12" rebrand.
+   Do not commit product keys.
+
+7. Contributions
    By submitting contributions to this repository, you agree they are licensed
    under the same MIT License terms as the Software, unless you state otherwise
    in writing with the copyright holders.

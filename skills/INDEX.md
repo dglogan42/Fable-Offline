@@ -28,3 +28,4 @@ Loaded into context on every run so the system compounds without retraining weig
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)
 - **urban-planner-competencies**: [Urban planner competencies](urban-planner-competencies.md)
+- **windows-install-prep**: [Windows install prep (licensed · DISM hygiene)](windows-install-prep.md)

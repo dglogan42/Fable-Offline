@@ -1,0 +1,14 @@
+{
+  "name": "windows-install-prep",
+  "description": "Licensed Windows 11 install/media plan (official download + optional DISM outline; no piracy)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Official media: https://www.microsoft.com/software-download/windows11 — skill windows-install-prep. No fake Windows 12, no keys, no rebrand ISO compilers."
+    },
+    {
+      "type": "windows",
+      "prompt": "Using skill windows-install-prep and knowledge/windows/ (official-media.md, dism-unattend-hygiene.md), produce: (1) verdict ready/needs-license-clarity/backup-first (2) official-media-plan for Windows 11 via microsoft.com/software-download/windows11 (3) if fleet/DISM mentioned: dism-service-plan high-level only (4) unattend-skeleton with ProductKey placeholder only (5) preflight-checklist (6) refuse any Windows 12 rebrand, cracks, or generic keys. Not legal advice. Microsoft terms apply."
+    }
+  ]
+}

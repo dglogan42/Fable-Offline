@@ -412,6 +412,7 @@ def load_system_prompt(
     privacy_mode: bool = False,
     pdf_mode: bool = False,
     calendar_mode: bool = False,
+    windows_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -510,6 +511,20 @@ def load_system_prompt(
                 parts.append(f"\n\n---\n## Privacy host map ({label})\n\n" + host_txt)
             except OSError:
                 pass
+    if windows_mode:
+        parts.append(
+            "\n\n---\n## Windows install prep mode (licensed only)\n"
+            "Apply skill **windows-install-prep**. Official media: "
+            "https://www.microsoft.com/software-download/windows11 (user CLICK). "
+            "Procedures: official-media-plan, dism-service-plan, unattend-skeleton, "
+            "preflight-checklist, post-install-baseline, refuse-piracy. "
+            "Stay on genuine Windows 11 (or real Microsoft SKUs). "
+            "Refuse Windows 12 rebrand, ISO crack compilers, activators, and generic keys. "
+            "Never put ProductKey secrets in git. Not legal advice. Not Microsoft support.\n"
+        )
+        know = read_knowledge_bundle("windows", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local Windows install knowledge\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2045,7 +2060,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2270,6 +2285,23 @@ def run_automate(
                     prefix="CalendarMode: ",
                 )
                 results.append("calendar → done")
+            elif stype == "windows":
+                wsys = load_system_prompt(windows_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill windows-install-prep and knowledge/windows/, produce an "
+                    "official-media-plan for licensed Windows 11. Refuse piracy/rebrand. "
+                    "Not legal advice."
+                )
+                print("\n[windows install prep — licensed]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": wsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="WindowsMode: ",
+                )
+                results.append("windows → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2493,7 +2525,7 @@ def print_banner() -> None:
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
-        "Commands: /team /broker /legal /education /privacy /calendar /pdf "
+        "Commands: /team /broker /legal /education /privacy /calendar /windows /pdf "
         "/build /automate /loop /help quit\n"
     )
 
@@ -2511,6 +2543,7 @@ Commands
   /privacy [prompt]  Privacy host map + design planner (knowledge/privacy/)
   /calendar [prompt] Calendar / iCal / mail / meetings (knowledge/calendar/)
   /meetings [prompt] Alias for /calendar
+  /windows [prompt]  Licensed Windows 11 install / DISM hygiene (knowledge/windows/)
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2544,6 +2577,9 @@ CLI
   {py} fable5_offline_agent.py --calendar
   {py} fable5_offline_agent.py --calendar "meeting-prep: sprint review tomorrow 10:00 NZST"
   {py} fable5_offline_agent.py --ical path/to/invite.ics
+  {py} fable5_offline_agent.py --windows
+  {py} fable5_offline_agent.py --windows "official-media-plan for Win11 Pro reinstall"
+  {py} fable5_offline_agent.py --automate windows-install-prep
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -2717,6 +2753,26 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Calendar mode error: {e}\n"))
+            continue
+        if low.startswith("/windows"):
+            prompt = user_input[8:].strip() or (
+                "Using skill windows-install-prep and knowledge/windows/, outline "
+                "official-media-plan via https://www.microsoft.com/software-download/windows11. "
+                "Refuse fake Windows 12 / cracks. Not legal advice."
+            )
+            try:
+                wsys = load_system_prompt(windows_mode=True)
+                print(ui("\n[windows install prep — licensed]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": wsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="WindowsMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Windows mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3012,6 +3068,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Parse local .ics to workspace/ markdown, then calendar-mail-meetings review",
     )
     parser.add_argument(
+        "--windows",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Licensed Windows 11 install prep / DISM hygiene (knowledge/windows/)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3136,6 +3200,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.education is None
             and args.privacy is None
             and args.calendar is None
+            and args.windows is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3270,6 +3335,26 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": csys}, {"role": "user", "content": prompt}],
                 prefix="CalendarMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.windows is not None:
+        prompt = (args.windows or "").strip() or (
+            "Using skill windows-install-prep and knowledge/windows/ "
+            "(official-media.md, dism-unattend-hygiene.md), produce an official-media-plan "
+            "for licensed Windows 11 via https://www.microsoft.com/software-download/windows11. "
+            "Include preflight checklist. Refuse fake Windows 12, rebrand ISO compilers, "
+            "cracks, and generic product keys. Not legal advice."
+        )
+        try:
+            wsys = load_system_prompt(windows_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": wsys}, {"role": "user", "content": prompt}],
+                prefix="WindowsMode: ",
             )
             return 0
         except Exception as e:

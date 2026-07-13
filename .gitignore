@@ -4,7 +4,7 @@
 #
 # Ship curated markdown skills/knowledge/workflows only.
 # Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
-# Zoom/Google calendar credentials, local soak dumps.
+# Zoom/Google calendar credentials, Windows product keys, local soak dumps.
 # =============================================================================
 
 # --- Python ---
@@ -191,6 +191,10 @@ knowledge/calendar/*-local*.md
 knowledge/calendar/*secret*
 knowledge/calendar/*passcode*
 knowledge/calendar/*meeting-id*
+knowledge/windows/_local/
+knowledge/windows/*-local*.md
+knowledge/windows/*product*key*
+knowledge/windows/*ProductKey*
 # Private calendar exports / invites / Zoom join material
 **/*.ics
 !**/*.ics.example

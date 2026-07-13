@@ -79,7 +79,19 @@ Do **not** commit OAuth tokens, app passwords, Zoom passcodes or `pwd=` query
 values, secret iCal feed URLs, or full mailbox exports. Prefer
 `knowledge/calendar/_local/` (gitignored) for private material.
 
-### 6. Contributions
+### 6. Windows install media and imaging
+
+Skill `windows-install-prep` and notes under `knowledge/windows/` support
+**licensed** Windows 11 deployment hygiene (official Media Creation Tool / ISO
+from Microsoft, DISM/ADK/unattend for images you are entitled to use). Windows
+and related trademarks remain the property of Microsoft Corporation.
+
+The Software does **not** authorize piracy, activation cracks, redistributing
+Microsoft installation media without rights, or rebranding Windows as a fake
+product (including nonexistent “Windows 12 Professional” consumer builds).
+Do not commit product keys or autounattend secrets.
+
+### 7. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise
