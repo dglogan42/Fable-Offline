@@ -63,6 +63,10 @@ pyrightconfig.json
 pip-log.txt
 pip-delete-this-directory.txt
 
+# MBTI personality customiser state (local active type + optional chat restore)
+mbti_state.json
+**/mbti_state.json
+
 # --- Secrets & local env ---
 .env
 .env.*

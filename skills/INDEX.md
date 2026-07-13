@@ -36,6 +36,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **macos-install-prep**: [macOS install prep (Apple bootable installer)](macos-install-prep.md)
 - **myfitnesspal-resource-kit**: [MyFitnessPal resource kit (nutrition · privacy)](myfitnesspal-resource-kit.md)
 - **math-physics-agent**: [Math & physics agent (deep-explain · theorem · solver)](math-physics-agent.md)
+- **mbti-personality-customiser**: [MBTI personality customiser (16-type agent switch)](mbti-personality-customiser.md)
 - **minecraft-education-resource-kit**: [Minecraft Education resource kit](minecraft-education-resource-kit.md)
 - **openstreetmap-contribute-kit**: [OpenStreetMap contribute kit (mobile · 3D/CAD · drone · upload)](openstreetmap-contribute-kit.md)
 - **outfit-selector-create**: [Outfit selector / create (Seamly2D)](outfit-selector-create.md)

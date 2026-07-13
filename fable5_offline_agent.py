@@ -11,7 +11,7 @@ Usage:
   python fable5_offline_agent.py --compress-memory
 
 In chat:
-  /loop  /hermes  /improve  /skills  /soul  /memory  /compress  /doctor  /help  quit
+  /loop  /hermes  /improve  /skills  /soul  /mbti  /memory  /compress  /doctor  /help  quit
 
 Hermes behaviors (offline, inspired by self-improving agent courses + Hermes loops):
   SOUL.md identity · smart RAG (top-K relevant memory) · self-stopping loop
@@ -595,6 +595,9 @@ def load_system_prompt(
     engineer_mode: bool = False,
     math_mode: bool = False,
     prompt_gen_mode: bool = False,
+    mbti_type: Optional[str] = None,
+    mbti_rigour: Optional[bool] = None,
+    mbti_mode: bool = False,
 ) -> str:
     """Manual + soul + agent briefs + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -604,6 +607,26 @@ def load_system_prompt(
         core,
         "\n\n---\n## SOUL.md (identity / steering)\n\n" + soul,
     ]
+    # Active MBTI personality customiser (style lens; SOUL + skills outrank flavour)
+    try:
+        from mbti_types import build_mbti_layer, get_active_type
+
+        layer = build_mbti_layer(mbti_type, rigour=mbti_rigour)
+        if layer:
+            parts.append(layer)
+        elif mbti_mode:
+            parts.append(
+                "\n\n---\n## MBTI personality customiser mode\n"
+                "Apply skill **mbti-personality-customiser**. Help the user switch agent "
+                "personality lenses (16 MBTI types via `mbti_types.py`). Commands: "
+                "`/mbti list|switch TYPE|current|off|rigour on|off|multi …`. "
+                "Style only — not clinical diagnosis. SOUL and accuracy outrank persona.\n"
+            )
+            know = read_knowledge_bundle("personality", limit_chars=6000)
+            if know.strip():
+                parts.append("\n\n---\n## Local MBTI / personality knowledge\n\n" + know)
+    except ImportError:
+        pass
     # Offline loop agent pack — informs Hermes, Fable loops, and chat awareness
     agents_brief = read_agents_brief(
         hermes=hermes,
@@ -3059,6 +3082,8 @@ Commands
   /improve [focus]   Self-improve: propose skills, verify, write skills/
   /skills            List skill library
   /soul              Show SOUL.md identity file
+  /mbti [cmd]        Personality customiser — list|switch TYPE|current|off|rigour on|off|multi …
+  /personality       Alias for /mbti
   /memory            Print memory index (full)
   /compress [focus]  Compress memory into a durable lesson note
   /doctor            Check Python, deps, Ollama backend
@@ -3109,6 +3134,10 @@ CLI
   {py} fable5_offline_agent.py --prompt-gen "agent: rigorous code reviewer"
   {py} fable5_offline_agent.py --prompt-gen list
   {py} fable5_offline_agent.py --automate prompt-gen-quant
+  {py} fable5_offline_agent.py --mbti INTJ
+  {py} fable5_offline_agent.py --mbti ENFP --mbti-rigour
+  {py} fable5_offline_agent.py --mbti off
+  {py} fable5_offline_agent.py --automate mbti-personality-customiser
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -3126,8 +3155,142 @@ Env
   FABLE5_AGENTS  (default agents/ — offline loop briefs for Hermes + Fable)
   FABLE5_ENGINEER_MIN_SCORE  FABLE5_BILEVEL_EVERY  FABLE5_RAG_TOP_K
   FABLE5_WORKFLOWS  FABLE5_WORKSPACE  FABLE5_ALLOW_SHELL  FABLE5_MEMORY  FABLE5_SKILLS
+  FABLE5_MBTI_STATE  (default mbti_state.json — active personality switch)
 """
     )
+
+
+def handle_mbti_command(user_input: str, messages: list[dict]) -> tuple[list[dict], bool]:
+    """
+    Process /mbti or /personality. Returns (messages, handled).
+    Always refreshes system prompt after state changes.
+    """
+    try:
+        from mbti_types import (
+            VALID_TYPES,
+            get_active_type,
+            get_rigour,
+            list_types_table,
+            load_mbti_state,
+            normalize_type,
+            set_active_type,
+            set_rigour,
+        )
+    except ImportError:
+        print(ui("\n❌ mbti_types.py missing — cannot switch personality.\n"))
+        return messages, True
+
+    raw = user_input.strip()
+    low = raw.lower()
+    # Strip command prefix
+    if low.startswith("/personality"):
+        body = raw[len("/personality") :].strip()
+    elif low.startswith("/mbti"):
+        body = raw[len("/mbti") :].strip()
+    else:
+        body = raw
+
+    parts = body.split()
+    cmd = (parts[0].lower() if parts else "") or "help"
+    arg = " ".join(parts[1:]).strip() if len(parts) > 1 else ""
+
+    def _refresh() -> list[dict]:
+        return refresh_chat_system(messages)
+
+    # /mbti INTJ  or  /mbti switch INTJ
+    if cmd in VALID_TYPES or (cmd == "switch" and arg):
+        code = normalize_type(cmd if cmd in VALID_TYPES else arg.split()[0])
+        if not code:
+            print(ui(f"\nUnknown type. Try /mbti list\n"))
+            return messages, True
+        set_active_type(code)
+        messages = _refresh()
+        print(ui(f"\n[MBTI switch → {code} | rigour={'ON' if get_rigour() else 'OFF'}]\n"))
+        return messages, True
+
+    if cmd in {"list", "types", "ls"}:
+        print(ui("\nMBTI personality catalogue (style lenses):\n"))
+        print(list_types_table())
+        print(ui("\nSwitch: /mbti switch INTJ   Clear: /mbti off   Rigour: /mbti rigour on|off\n"))
+        return messages, True
+
+    if cmd in {"current", "status", "show"}:
+        st = load_mbti_state()
+        active = get_active_type(st)
+        print(ui("\nMBTI customiser status"))
+        print(f"  Active type: {active or '(none — SOUL default voice)'}")
+        print(f"  Rigour:      {'ON' if get_rigour(st) else 'OFF'}")
+        print(f"  State file:  mbti_state.json (or FABLE5_MBTI_STATE)")
+        hist = st.get("history") or []
+        if hist:
+            print("  Recent:")
+            for h in hist[-5:]:
+                print(f"    - {h.get('type')} @ {h.get('at', '')[:19]}")
+        print()
+        return messages, True
+
+    if cmd in {"off", "clear", "none", "default", "soul"}:
+        set_active_type(None)
+        messages = _refresh()
+        print(ui("\n[MBTI cleared — SOUL + skills only]\n"))
+        return messages, True
+
+    if cmd in {"rigour", "rigor"}:
+        sub = (arg or "").lower().strip()
+        if sub in {"on", "1", "true", "yes"}:
+            set_rigour(True)
+            messages = _refresh()
+            print(ui("\n[MBTI rigour ON — Fable5 accuracy overlay]\n"))
+        elif sub in {"off", "0", "false", "no"}:
+            set_rigour(False)
+            messages = _refresh()
+            print(ui("\n[MBTI rigour OFF — stronger pure persona flavour]\n"))
+        else:
+            print(ui(f"\nRigour is {'ON' if get_rigour() else 'OFF'}. Use: /mbti rigour on|off\n"))
+        return messages, True
+
+    if cmd == "multi":
+        type_tokens = arg.split()
+        codes = [normalize_type(t) for t in type_tokens]
+        codes = [c for c in codes if c]
+        if len(codes) < 2:
+            print(ui("\nUsage: /mbti multi INTJ ENTP ISFJ\nThen ask your question.\n"))
+            return messages, True
+        set_active_type(codes[0])  # primary active type for status line
+        st = load_mbti_state()
+        st["multi_lens"] = codes
+        from mbti_types import save_mbti_state
+
+        save_mbti_state(st)
+        messages = _refresh()
+        print(ui(f"\n[Multi-lens armed: {', '.join(codes)}]"))
+        print(ui("Ask your question next — separate labelled type sections.\n"))
+        return messages, True
+
+    if cmd in {"help", "?", ""}:
+        active = get_active_type()
+        print(
+            ui(
+                f"""
+MBTI personality customiser (active: {active or 'none'})
+  /mbti list                 All 16 types
+  /mbti switch INTJ          Activate type (or: /mbti ENFP)
+  /mbti current              Show status
+  /mbti off                  Clear persona layer
+  /mbti rigour on|off        Fable5 accuracy overlay
+  /mbti multi INTJ ENTP ISFJ Multi-perspective next answers
+  /personality               Alias for /mbti
+
+CLI:  python fable5_offline_agent.py --mbti INTJ
+Skill: mbti-personality-customiser · catalogue: mbti_types.py
+Style lens only — not a clinical diagnosis. SOUL outranks persona.
+"""
+            )
+        )
+        return messages, True
+
+    print(ui(f"\nUnknown /mbti command {cmd!r}. Try /mbti help\n"))
+    return messages, True
 
 
 def refresh_chat_system(messages: list[dict]) -> list[dict]:
@@ -3616,6 +3779,9 @@ def chat_repl(client, system: str) -> None:
             print(load_soul())
             print()
             continue
+        if low.startswith("/mbti") or low.startswith("/personality"):
+            messages, _ = handle_mbti_command(user_input, messages)
+            continue
         if low.startswith("/compress"):
             focus = user_input[9:].strip() or None
             try:
@@ -3751,17 +3917,39 @@ def chat_repl(client, system: str) -> None:
             continue
 
         # Chat: store clean user text; inject smart RAG only for this call
+        # Optional multi-lens MBTI framing from /mbti multi
+        chat_user = user_input
+        try:
+            from mbti_types import build_multi_perspective_prompt, load_mbti_state, save_mbti_state
+
+            st_m = load_mbti_state()
+            multi = st_m.get("multi_lens") or []
+            if multi and isinstance(multi, list) and len(multi) >= 2:
+                chat_user = build_multi_perspective_prompt(multi, user_input)
+                st_m["multi_lens"] = []  # one-shot unless re-armed
+                save_mbti_state(st_m)
+        except ImportError:
+            pass
+
         rag = retrieve_relevant_memory(user_input, top_k=min(8, RAG_TOP_K), limit_chars=2500)
-        enriched = user_input
+        enriched = chat_user
         if rag and "(no memory yet)" not in rag:
             enriched = (
-                f"{user_input}\n\n---\nRelevant memory (smart RAG, optional):\n{rag}"
+                f"{chat_user}\n\n---\nRelevant memory (smart RAG, optional):\n{rag}"
             )
         messages.append({"role": "user", "content": user_input})
         api_messages = messages[:-1] + [{"role": "user", "content": enriched}]
-        print(ui("\nThinking… (Fable 5 mode)\n"))
+        _t = None
         try:
-            full = stream_chat(client, api_messages, prefix="Fable5: ")
+            from mbti_types import get_active_type as _mbti_active
+
+            _t = _mbti_active()
+        except ImportError:
+            pass
+        prefix = f"Fable5[{_t}]: " if _t else "Fable5: "
+        print(ui(f"\nThinking… (Fable 5 mode{f' · {_t}' if _t else ''})\n"))
+        try:
+            full = stream_chat(client, api_messages, prefix=prefix)
             messages.append({"role": "assistant", "content": full})
         except Exception as e:
             print(ui(f"\n❌ Error: {e}"))
@@ -4024,6 +4212,22 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Check OS, Python, dependencies, and Ollama/API health",
     )
     parser.add_argument(
+        "--mbti",
+        metavar="TYPE",
+        default=None,
+        help="Activate MBTI personality lens (e.g. INTJ, ENFP) or 'off' to clear",
+    )
+    parser.add_argument(
+        "--mbti-rigour",
+        action="store_true",
+        help="Force MBTI Fable5 rigour overlay ON",
+    )
+    parser.add_argument(
+        "--mbti-no-rigour",
+        action="store_true",
+        help="Force MBTI rigour overlay OFF (stronger pure persona)",
+    )
+    parser.add_argument(
         "--ascii",
         action="store_true",
         help="Force ASCII UI (also: set FABLE5_ASCII=1)",
@@ -4052,6 +4256,32 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.roadmap:
         show_roadmap()
         return 0
+
+    # MBTI personality customiser CLI switch (persists to mbti_state.json)
+    if args.mbti is not None:
+        try:
+            from mbti_types import normalize_type, set_active_type, set_rigour
+
+            raw_m = (args.mbti or "").strip()
+            if raw_m.lower() in {"off", "clear", "none", "default", "soul", ""}:
+                set_active_type(None)
+                print(ui("[MBTI cleared]"))
+            else:
+                code = normalize_type(raw_m)
+                if not code:
+                    print(ui(f"✗ Unknown MBTI type {raw_m!r}. Use INTJ…ESFP or off."))
+                    return 1
+                set_active_type(code)
+                print(ui(f"[MBTI → {code}]"))
+            if args.mbti_rigour:
+                set_rigour(True)
+                print(ui("[MBTI rigour ON]"))
+            elif args.mbti_no_rigour:
+                set_rigour(False)
+                print(ui("[MBTI rigour OFF]"))
+        except ImportError:
+            print(ui("✗ mbti_types.py missing"))
+            return 1
 
     if args.scrape:
         knowledge_root()

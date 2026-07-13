@@ -62,6 +62,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **PhysiotherapyExercises kit** | Clinician exercise library + patient booklets ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
+| **MBTI personality customiser** | Full 16-type agent switch (`/mbti` · `--mbti` · `mbti_types.py`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -333,6 +334,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `fitness-companion-agent` | Fitness habit companion + MFP/physio/injury routing |
 | `openstreetmap-contribute-kit` | OSM contribute pipelines (mobile · 3D/CAD · drone · upload) |
 | `inaturalist-flora-fauna-kit` | Native flora/fauna via iNaturalist + Fable/OSM incorporate |
+| `mbti-personality-customiser` | 16-type MBTI agent personality switch + multi-lens |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -643,6 +645,31 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## MBTI personality customiser
+
+Full **agent personality switch** across all **16 Myers-Briggs type lenses** (shared catalogue `mbti_types.py`). Customises tone and cognitive emphasis; **SOUL.md** and domain skills still outrank style. Not a clinical test.
+
+| Control | Example |
+|---------|---------|
+| Chat | `/mbti switch INTJ` · `/mbti list` · `/mbti off` · `/mbti multi ENTP ISFJ` |
+| CLI | `python fable5_offline_agent.py --mbti ENFP` |
+| Rigour | `/mbti rigour on\|off` · `--mbti-rigour` / `--mbti-no-rigour` |
+| Standalone | `python mbti_personality_agent.py` |
+| State | `mbti_state.json` (gitignored) |
+
+```bash
+python fable5_offline_agent.py --mbti INTJ
+python fable5_offline_agent.py --automate mbti-personality-customiser
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/mbti-personality-customiser.md` |
+| Catalogue | `mbti_types.py` |
+| Knowledge | `knowledge/personality/mbti-types.md` |
+| Workflow | `workflows/mbti-personality-customiser.json` |
+| README | `README_MBTI_Personality_Agent.md` |
 
 ## iNaturalist flora & fauna kit
 
@@ -1646,6 +1673,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
+- **MBTI personality customiser** — full 16-type agent switch (`/mbti`, `--mbti`, `mbti_types.py`); style lens only, not diagnosis.
 
 ## License
 
@@ -1706,5 +1734,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | 3D animation dev kit | Cracked Maya/Houdini/C4D, invented school fees/jobs, or multi-GB EXR/blend caches in git |
 | Prompt generator / swarms | Investment advice, live trading, or unreviewed production agents |
 | Math / physics agent | Course credit or professional engineering sign-off |
+| MBTI personality customiser | Clinical diagnosis, hiring decisions, or persona overriding safety/accuracy |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

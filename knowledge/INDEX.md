@@ -30,6 +30,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **media/** | YouTube Live · Adobe · CapCut/Resolve · Krita · Stop Motion · Cloud SM · 3D/CG · Roblox Studio | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md`, `stop-motion-studio.md`, `cloud-stop-motion.md`, `3d-animation-pipeline.md`, `roblox-studio.md` |
 | **physics/** | Solver + dimensional analysis | `solver-framework.md` |
 | **pdf/** | PDF.js + extract hygiene | `pdfjs-and-offline-render.md` |
+| **personality/** | MBTI agent personality customiser catalogue | `mbti-types.md` |
 | **privacy/** | Third-party host maps + privacy design | See table below |
 | **property/** | Property manager framework | `property-manager-framework.md` |
 | **public-safety/** | Emergency / Police / FENZ | `emergency-services-framework.md`, `nz-police-105.md`, `fenz-incident-reports.md` |

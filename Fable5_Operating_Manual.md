@@ -1095,6 +1095,14 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `inaturalist-flora-fauna-kit`.  
 **Not taxonomic advice.** Occurrences on iNat; map features on OSM. No API scrape abuse. Geoprivacy for sensitive taxa.
 
+## 20af. MBTI personality customiser (full agent switch)
+**Trigger:** MBTI, Myers-Briggs, switch personality, INTJ/ENFP mode, `/mbti`, `--mbti`, personality customiser.  
+**Skill:** `mbti-personality-customiser` — **mbti-plan**, **switch-type**, **list-types**, **rigour-toggle**, **multi-lens**, **swarm-map**.  
+**Code:** `mbti_types.py` (16-type catalogue) · state `mbti_state.json` · Fable5 `/mbti` · standalone `mbti_personality_agent.py`.  
+**Knowledge:** `knowledge/personality/mbti-types.md`.  
+**Automation:** `mbti-personality-customiser`.  
+**Style lens only — not clinical diagnosis.** SOUL + accuracy outrank persona. Rigour default ON.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

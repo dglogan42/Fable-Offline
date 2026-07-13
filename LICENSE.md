@@ -85,6 +85,11 @@ Optional local checkouts under `third_party/inaturalist/` (and related API repos
 are **not** part of the shipped Software tree; see `third_party/README.md`. Full
 upstream trees remain the property of their authors and stay gitignored.
 
+Skill `mbti-personality-customiser`, module `mbti_types.py`, and related notes are
+**agent communication style tools** using Myers-Briggs type codes as lenses. They
+are **not** clinical psychological instruments, medical advice, or validated hiring
+tools. Do not treat type switches as diagnoses of real people.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

@@ -1,0 +1,14 @@
+{
+  "name": "mbti-personality-customiser",
+  "description": "MBTI agent personality switch: list types, switch, rigour, multi-lens plan",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill mbti-personality-customiser. Catalogue mbti_types.py. Runtime /mbti and --mbti. Style lens only — not clinical diagnosis. Rigour overlay default on. SOUL boundaries outrank persona."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill mbti-personality-customiser and knowledge/personality/mbti-types.md, produce mbti-plan: (1) verdict — communication/style customiser not a personality test result (2) list or recommend type codes for the user's task if stated (3) exact switch commands: /mbti switch CODE, /mbti off, /mbti rigour on|off, --mbti CODE (4) if multiple types requested use multi-lens section structure (5) note that SOUL + domain skills + accuracy outrank flavour (6) OPEN model consistency. Do not diagnose the user as a type."
+    }
+  ]
+}
