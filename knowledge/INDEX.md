@@ -38,7 +38,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **steam/** | Steam SIM launch for model soak tests | `sim-games-launch.md` |
 | **swarm/** | Offline prompt generator / multi-agent swarm design | `prompt-generator.md` |
 | **windows/** | Licensed Win11 media + DISM/unattend hygiene | `official-media.md`, `dism-unattend-hygiene.md` |
-| **web/** | CSS / design-system fingerprints (orphan OK) | `css-design-fingerprint-helvetica-grey.md`, `css-design-fingerprint-tiktok-ui.md` |
+| **web/** | CSS media kit · fingerprints · Inkstone SPA | `css-styles-media-kit.md`, `css-design-fingerprint-*.md`, `inkstone-app.md` |
 
 ---
 
@@ -66,6 +66,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `tiktok-analytics.md` | TikTok pixel/analytics method (HTML + Network) |
 | `ttcx-hosts.md` | TikTok Creative Exchange shell (pumbaa-rule seed) |
 | `snapchat-web-hosts.md` | Snapchat for Web (web.snapchat.com) seed |
+| `inkstone-hosts.md` | Inkstone SPA (yueimg.com/inkstone) + HiBridge + CF Insights |
 
 ---
 

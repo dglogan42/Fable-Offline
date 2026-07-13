@@ -1,0 +1,14 @@
+{
+  "name": "css-styles-media-kit",
+  "description": "Build a CSS styles media kit: classify, tokens, type/colour/layout, fingerprint match",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: css-styles-media-kit. Catalog: knowledge/web/css-styles-media-kit.md + css-design-fingerprint-*.md. CSS-only is orphan-OK. Do not invent hosts. Split browser chrome vs site brand."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill css-styles-media-kit and knowledge/web/css-styles-media-kit.md plus any matching css-design-fingerprint-*.md (helvetica-grey, tiktok-ui, epic-brutal, firefox-videocontrols), process the user's CSS (or summarize the catalog if no new CSS): (1) classify-css — browser chrome vs first-party product vs multi-brand nav vs orphan vs library (2) kit-from-css full media kit schema: verdict, confidence, token-sheet, typography, colour, layout/shell/nav, components, media queries, a11y, browser-vs-site (3) fingerprint-match against catalog checklists; note Epic *-navigation and Firefox videocontrols if signals match (4) if new system, propose write-fingerprint slug (5) escalate-html if URL needed (6) OPEN. If user asks for design rules only, emit the normative web design rules checklist. Not legal advice. Do not invent organisation without evidence."
+    }
+  ]
+}

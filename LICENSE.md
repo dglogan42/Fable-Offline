@@ -151,19 +151,30 @@ map **Minecraft Education** ([education.minecraft.net](https://education.minecra
 with community technical notes from [Minecraft Wiki](https://minecraft.wiki)
 ([Minecraft Education article](https://minecraft.wiki/w/Minecraft_Education), exclusive features,
 version history). Skill `book-creator-comics-kit` maps **Book Creator** classroom comics
-([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)). Google marks
-remain Google LLC; Minecraft / Minecraft Education marks remain Microsoft / Mojang; Book Creator
-marks remain Tools for Schools, Inc. / Book Creator. Wiki content is third-party community
-documentation — re-verify licensing, prices, and app versions on official vendor pages.
+([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)).
+Skill `inkstone-resource-kit` maps **WebNovel Inkstone** author tooling
+([inkstone.webnovel.com](https://inkstone.webnovel.com/)) and Writers Academy routes.
+Skill `css-styles-media-kit` and notes under `knowledge/web/css-design-fingerprint-*.md`
+document **CSS design-system fingerprints** (e.g. Epic Games multi-product navigation,
+TikTok product UI, Firefox videocontrols, orphan marketing stacks) for research and
+agent operations — not a license to rebrand or reuse proprietary assets.
+Google marks remain Google LLC; Minecraft / Minecraft Education marks remain Microsoft /
+Mojang; Book Creator marks remain Tools for Schools, Inc.; WebNovel / Inkstone, Epic Games,
+TikTok, Mozilla, and other product marks remain their respective owners. Wiki and SPA/CSS
+dumps are incomplete without live verification — re-check licensing, prices, contests, and
+ToS on official pages.
 
 The Software does **not** redistribute Flex images, enrollment tokens, Admin
-console credentials, cracked Minecraft Education clients, or student personal
-data. Full Flex install erases the target disk — user backups are required.
-Prefer certified models and official edu.google.com / education.minecraft.net /
-support paths. Workspace edition pricing, Minecraft Education licensing, free vs
-paid messaging, and compliance claims must be VERIFY LIVE with vendors and
-institutional counsel. Not educational, careers, or legal advice. Do not commit
-student rosters, gamertags, or school secrets (see `.gitignore`).
+console credentials, cracked Minecraft Education clients, student personal data,
+or proprietary font/binary design assets. Full Flex install erases the target
+disk — user backups are required. Prefer certified models and official
+edu.google.com / education.minecraft.net / support paths. Workspace edition
+pricing, Minecraft Education licensing, free vs paid messaging, and compliance
+claims must be VERIFY LIVE with vendors and institutional counsel. CSS
+fingerprints identify *systems* only; they do not grant rights to Epic, TikTok,
+Mozilla, or other brand assets. Not educational, careers, or legal advice. Do
+not commit student rosters, gamertags, school secrets, Inkstone sessions, or
+raw CSS scrapes under `knowledge/web/_local/` (see `.gitignore`).
 
 ### 11. Animation toolkits (2D, stop-motion, 3D)
 

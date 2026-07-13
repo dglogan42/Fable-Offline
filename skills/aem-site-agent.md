@@ -93,13 +93,15 @@ Output:
 
 When the dump is **styles only** (no URL / head scripts):
 
-1. Verdict: **design-system fingerprint only** — CMS **UNKNOWN**  
-2. Capture: font stack, body colour/size, breakpoints, resets  
-3. Write/update `knowledge/web/css-design-fingerprint-*.md`  
+Prefer full skill **`css-styles-media-kit`** (media kit schema + catalog match).
+
+1. Verdict: **design-system fingerprint only** — CMS **UNKNOWN** unless signals bind a known family  
+2. Capture: font stack, body colour/size, breakpoints, resets, tokens, components  
+3. Match/write `knowledge/web/css-design-fingerprint-*.md`  
 4. Do **not** invent privacy hosts or organisation  
 5. Ask for URL or full HTML to bind and escalate to **fingerprint-stack** / **map-aem-privacy**  
 
-Seed example: `knowledge/web/css-design-fingerprint-helvetica-grey.md`.
+Rulebook + catalog: `knowledge/web/css-styles-media-kit.md`.
 
 ---
 

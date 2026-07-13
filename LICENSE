@@ -86,12 +86,14 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    Adobe passwords, stream keys, or heavy media masters. YouTube Live encoder
    notes require valid access; never commit stream keys.
 
-10. ChromeOS Flex, Google for Education, Minecraft Education, Book Creator
-    chromeos-flex-install-prep, google-for-education, minecraft-education-resource-kit
-    (education.minecraft.net + minecraft.wiki), and book-creator-comics-kit
-    (bookcreator.com/features/comics). Official vendor paths only. No Flex
-    images, cracked clients, enrollment tokens, or student PII/books in git.
-    Not educational or legal advice.
+10. ChromeOS Flex, Google for Education, Minecraft Education, Book Creator,
+    Inkstone, and CSS styles media kit
+    chromeos-flex-install-prep, google-for-education, minecraft-education-resource-kit,
+    book-creator-comics-kit, inkstone-resource-kit (WebNovel Inkstone), and
+    css-styles-media-kit (design fingerprints under knowledge/web/). Official
+    vendor paths only. Fingerprints are not a rebrand license. No Flex images,
+    cracked clients, enrollment tokens, student PII, author sessions, or
+    knowledge/web/_local scrapes in public git. Not educational or legal advice.
 
 11. Animation toolkits (2D, stop-motion, 3D) and Roblox Studio
     animation-dev-kit (Krita), stop-motion-dev-kit (Stop Motion Studio and/or

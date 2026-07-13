@@ -1040,6 +1040,21 @@ Free official Win/Mac app; not for Chromebook creation. Keep Studio updated. No 
 **Automation:** `book-creator-comics-kit`.  
 Official Book Creator only. No student PII. Pricing VERIFY LIVE. Hand off via `google-for-education`.
 
+## 20y. Inkstone resource kit (WebNovel author platform)
+**Trigger:** Inkstone, WebNovel author, Writers Academy, inkstone.webnovel.com, WSA contest, yueimg SPA dump.  
+**Skill:** `inkstone-resource-kit` — **ink-plan**, **open-app**, **academy-path**, **read-article**, **novel-scaffold**, **contest-path**, **contract-hygiene**, **host-map**, **hibridge-notes**, **privacy-brief**, **craft-loop**.  
+**Sources:** [inkstone.webnovel.com](https://inkstone.webnovel.com/) · [Writers Academy](https://inkstone.webnovel.com/academy/index) · [example article](https://inkstone.webnovel.com/academy/article/76088391988504901) · CDN shell yueimg.com/inkstone.  
+**Knowledge:** `knowledge/web/inkstone-app.md`, `knowledge/privacy/inkstone-hosts.md`.  
+**Automation:** `inkstone-resource-kit`.  
+Author platform for WebNovel; SPA-loaded academy text. Not publishing/legal advice. No cookies/manuscripts in git.
+
+## 20z. CSS styles media kit
+**Trigger:** CSS dump, design system, fingerprint styles, web design rules, `@media`, Epic navigation CSS, Firefox videocontrols CSS, TikTok UI CSS.  
+**Skill:** `css-styles-media-kit` — **classify-css**, **kit-from-css**, **token-sheet**, **type-system**, **colour-system**, **layout-shell**, **component-map**, **media-rules**, **a11y-rules**, **fingerprint-match**, **fingerprint-merge**, **write-fingerprint**.  
+**Knowledge:** `knowledge/web/css-styles-media-kit.md` · `css-design-fingerprint-*.md`.  
+**Automation:** `css-styles-media-kit`.  
+CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML for hosts.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

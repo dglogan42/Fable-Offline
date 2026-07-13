@@ -9,7 +9,9 @@
 # student rosters / school admin secrets, social chat/snap exports, private RSS
 # URLs with tokens, stream keys, Adobe passwords, heavy creative inbox/exports,
 # soak dumps, animation masters (Krita .kra, Stop Motion Studio + Cloud SM dumps,
-# Blender caches/EXR), bulk generated_prompts/ (ship generator + skill only).
+# Blender caches/EXR), Roblox places, Inkstone/HiBridge sessions, bulk
+# generated_prompts/, local web dump sandboxes (knowledge/web/_local/).
+# Ship curated css-design-fingerprint-*.md + css-styles-media-kit.md only.
 # =============================================================================
 
 # --- Python ---
@@ -192,6 +194,18 @@ knowledge/education/*student*
 # Book Creator student books / tokens
 **/bookcreator*token*
 **/book-creator*student*
+# Inkstone / yueimg hybrid sessions
+**/inkstone*token*
+**/inkstone*cookie*
+**/hibridge*secret*
+# Web design dumps — keep curated fingerprints; ignore local sandboxes
+knowledge/web/_local/
+knowledge/web/*-local*.md
+knowledge/web/**/*-raw.css
+knowledge/web/**/scrape-*.css
+!knowledge/web/css-design-fingerprint-*.md
+!knowledge/web/css-styles-media-kit.md
+!knowledge/web/inkstone-app.md
 knowledge/legal/_local/
 knowledge/legal/matters/
 knowledge/privacy/_local/

@@ -1,0 +1,14 @@
+{
+  "name": "inkstone-resource-kit",
+  "description": "WebNovel Inkstone author platform: open app, Writers Academy, novel scaffold, privacy hosts",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Inkstone: https://inkstone.webnovel.com/ — Academy: https://inkstone.webnovel.com/academy/index — skill inkstone-resource-kit. SPA (yueimg CDN + HiBridge). No session cookies. Not publishing/legal advice. Article bodies need browser/paste."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill inkstone-resource-kit and knowledge/web/inkstone-app.md + knowledge/privacy/inkstone-hosts.md, produce ink-plan for WebNovel Inkstone: (1) verdict — author writing platform for WebNovel (2) open-app https://inkstone.webnovel.com/ sign-in (3) academy-path https://inkstone.webnovel.com/academy/index and if user gave article URL e.g. /academy/article/76088391988504901 explain SPA-loaded content + read-article procedure (do not invent article text) (4) novel-scaffold for a new story (5) contest-path pointer to wsa.webnovel.com / Inkstone contest entry VERIFY LIVE (6) contract-hygiene (7) host-map yueimg/HiBridge/Cloudflare + inkstone.webnovel.com (8) privacy-brief (9) optional craft-loop via Fable hermes (10) OPEN ToS/contest/AI policy. Not legal or income advice. User operates Inkstone HITL."
+    }
+  ]
+}

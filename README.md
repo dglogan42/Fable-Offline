@@ -52,6 +52,9 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Stop / motion dev kit** | Studio + **Cloud Stop Motion** (Chromebook cloud) ([cloudstopmotion.com](https://cloudstopmotion.com/)) |
 | **3D animation dev kit** | Blender-first CG pipeline · optional VFX study map ([MDS seed](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees)) |
 | **Roblox Studio resource kit** | Free Studio setup ([create.roblox.com/docs/studio/setup](https://create.roblox.com/docs/studio/setup)) |
+| **Book Creator comics kit** | Classroom comics ([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)) |
+| **Inkstone resource kit** | WebNovel author platform ([inkstone.webnovel.com](https://inkstone.webnovel.com/)) · Academy · hosts |
+| **CSS styles media kit** | Web design rules + CSS fingerprints (Epic · TikTok · Firefox · orphan) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 
@@ -132,6 +135,7 @@ Fable-Offline/
 | Stop Motion Studio / Cloud SM dumps (`02_sms_project/`, `02_cloud_exports/`) | Local project libraries |
 | Blender `.blend` / EXR / `03_shots/` / caches / FBX·USD·VDB dumps | Local 3D/CG weight |
 | Roblox `.rbxl` / `.rbxm` places · session cookies | Local Studio projects + secrets |
+| Inkstone tokens · `knowledge/web/_local/` CSS scrapes | Sessions + bulk design dumps |
 | `generated_prompts/` bulk dumps | Local LLM prompt-gen output |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
@@ -165,6 +169,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
 | YouTube Live / creative / 2D / stop-mo / 3D / Roblox | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit`, `roblox-studio-resource-kit` |
+| Inkstone SPA / CSS media kit / fingerprints | `knowledge/web/` | `inkstone-resource-kit`, `css-styles-media-kit` |
 | Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
 | Swarm / prompt generator | `knowledge/swarm/` | `prompt-generator` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
@@ -317,6 +322,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `minecraft-education-resource-kit` | Minecraft Education lessons, license, unit scaffold |
 | `roblox-studio-resource-kit` | Roblox Studio install, sysreqs, first place, docs map |
 | `book-creator-comics-kit` | Book Creator classroom comics (panels, bubbles, unit) |
+| `inkstone-resource-kit` | Inkstone SPA hosts, HiBridge, privacy checklist |
+| `css-styles-media-kit` | CSS design media kit + fingerprint catalog match |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
@@ -577,6 +584,54 @@ python fable5_offline_agent.py --automate book-creator-comics-kit
 | Feature page | [bookcreator.com/features/comics](https://bookcreator.com/features/comics/) |
 
 **Notes:** No student books/PII in git. Photo consent. Marketing site may use GTM/Cookiebot/HubSpot/Intercom (`privacy-host-map` if auditing).
+
+## Inkstone resource kit (WebNovel)
+
+**Inkstone** is WebNovel’s **author writing platform** (draft novels, Writers Academy, contests).
+
+| Stage | Focus |
+|-------|--------|
+| Open | [inkstone.webnovel.com](https://inkstone.webnovel.com/) — sign in / sign up |
+| Academy | [Writers Academy](https://inkstone.webnovel.com/academy/index) · articles e.g. [`/academy/article/{id}`](https://inkstone.webnovel.com/academy/article/76088391988504901) (SPA body — open in browser) |
+| Contests | [WSA](https://wsa.webnovel.com/) · submit via Inkstone (VERIFY LIVE deadlines) |
+| CDN / hybrid | Assets on `yueimg.com/inkstone/`; **HiBridge** hybrid bridge |
+| Privacy | `knowledge/privacy/inkstone-hosts.md` |
+
+```bash
+python fable5_offline_agent.py --automate inkstone-resource-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/inkstone-resource-kit.md` |
+| Knowledge | `knowledge/web/inkstone-app.md`, `knowledge/privacy/inkstone-hosts.md` |
+| Workflow | `workflows/inkstone-resource-kit.json` |
+
+**Notes:** Not publishing/legal advice. No session cookies or manuscripts in public git. Academy article text requires live browser or user paste (shell HTML has no body).
+
+## CSS styles media kit
+
+Comprehensive **web design rules** + **CSS fingerprint catalog** for dumps (devtools CSS, design systems, browser chrome vs site brand).
+
+| Stage | Focus |
+|-------|--------|
+| Classify | Browser chrome · product UI · multi-brand nav · orphan · library |
+| Media kit | Tokens · type · colour · layout · components · `@media` · a11y |
+| Catalog | Helvetica grey · TikTok UI · Epic `*-navigation` · Firefox videocontrols |
+| Escalate | URL/HTML → `privacy-host-map` / domain skills |
+
+```bash
+python fable5_offline_agent.py --automate css-styles-media-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/css-styles-media-kit.md` |
+| Rulebook + catalog | `knowledge/web/css-styles-media-kit.md` |
+| Fingerprints | `knowledge/web/css-design-fingerprint-*.md` |
+| Workflow | `workflows/css-styles-media-kit.json` |
+
+**Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
 
 ## 3D animation dev kit (CG · Blender-first)
 
@@ -1454,6 +1509,8 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Minecraft Education resource kit** — official hub + [Minecraft Wiki](https://minecraft.wiki/w/Minecraft_Education) features/sysreqs (re-check license on Microsoft).
 - **Roblox Studio resource kit** — official setup ([create.roblox.com/docs/studio/setup](https://create.roblox.com/docs/studio/setup)); free Win/Mac Studio.
 - **Book Creator comics kit** — classroom comics ([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)).
+- **Inkstone resource kit** — WebNovel author platform + Writers Academy ([inkstone.webnovel.com](https://inkstone.webnovel.com/)).
+- **CSS styles media kit** — web design rules + fingerprint catalog (Epic · TikTok · Firefox · orphan).
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
@@ -1477,7 +1534,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
 9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
-10. ChromeOS Flex / Google for Education / Minecraft Education (official hubs + wiki notes; no student PII)  
+10. Education hubs · Inkstone · CSS fingerprints (official paths; no student PII; fingerprints ≠ rebrand rights)  
 11. Animation toolkits — Krita 2D, Stop Motion Studio / Cloud SM, Blender 3D  
 12. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
 13. Contribution licensing  
@@ -1502,6 +1559,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | ChromeOS Flex / GfE / Minecraft Education | Third-party ISOs, cracked MEE, student PII, invented prices, or compliance guarantees |
 | Roblox Studio | Cracked Studio, Robux scams, session cookies, or huge `.rbxl` in public git |
 | Book Creator comics | Student books/PII in git, cracked accounts, or invented pricing |
+| Inkstone / WebNovel | Session cookies, unpublished manuscripts in git, invented contracts/contest wins, or fake academy article text |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |
