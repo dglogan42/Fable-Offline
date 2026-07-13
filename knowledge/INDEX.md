@@ -11,6 +11,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 
 | Folder | Purpose | Key files |
 |--------|---------|-----------|
+| **ads/** | TikTok Ads Manager + Creative Exchange (TTCX) | `tiktok-ads-create.md`, `tiktok-creative-exchange.md` |
 | **aem/** | Adobe AEM public-site patterns | `aem-patterns.md` |
 | **animals/** | Animal/dog compliance framework | `animal-compliance-framework.md` |
 | **brokers/** | Broker claim snapshots | `ec-markets-regulation.md` |
@@ -58,6 +59,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `uc-arts-pg-hosts.md` | UC Arts postgraduate hub (AEM + multi-analytics) |
 | `wgtn-ac-nz-hosts.md` | Victoria University of Wellington — TikTok Analytics seed |
 | `tiktok-analytics.md` | TikTok pixel/analytics method (HTML + Network) |
+| `ttcx-hosts.md` | TikTok Creative Exchange shell (pumbaa-rule seed) |
 
 ---
 

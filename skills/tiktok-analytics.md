@@ -2,7 +2,8 @@
 
 **WHEN_TO_USE:** HTML/JS dumps or DevTools Network captures that mention **TikTok** ads/analytics — `analytics.tiktok.com`, `ttq`, `_ttp`, `pixel`, Events API references, or “does this site use TikTok tracking?”. Use after pasting source HTML, HAR-style header dumps, or when `knowledge/privacy/*` already flags TikTok.
 
-**Upstream:** Full multi-vendor maps → **`privacy-host-map`**. Programme design → **`privacy-design-planner`**. University seeds: **`knowledge/privacy/wgtn-ac-nz-hosts.md`**.
+**Upstream:** Full multi-vendor maps → **`privacy-host-map`**. Programme design → **`privacy-design-planner`**. University seeds: **`knowledge/privacy/wgtn-ac-nz-hosts.md`**.  
+**Downstream (running ads):** skill **`tiktok-ads-create`** + `knowledge/ads/tiktok-ads-create.md`.
 
 ## Stance
 You classify **evidence strength** for TikTok measurement tags. A host string in minified JS is **BUNDLE** only. A live request with `Origin`/`Referer` is **LOAD**. Pixel IDs in `ttq.load('…')` are **CONFIG**. Do not invent pixel IDs, data-sharing agreements, or “they sell your data to TikTok” legal conclusions without evidence.

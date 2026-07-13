@@ -598,6 +598,13 @@ PURPOSE → privacy-design-planner → privacy-host-map → engineer verify → 
 - Method: `knowledge/privacy/tiktok-analytics.md`  
 - Example LOAD: `knowledge/privacy/wgtn-ac-nz-hosts.md` (`analytics.tiktok.com` from www.wgtn.ac.nz)
 
+### 18.7 TikTok Ads creation + Creative Exchange
+**Trigger:** `/tiktok-ads`, `--tiktok-ads`, Ads Manager, **TTCX** / Partner Exchange.  
+**Skill:** `tiktok-ads-create` — Campaign → Ad group → Ad; **ttcx-brief**; measurement-setup; creative-brief; launch-checklist.  
+**Knowledge:** `knowledge/ads/tiktok-ads-create.md`, `tiktok-creative-exchange.md` · privacy `ttcx-hosts.md` · UI CSS fingerprint.  
+**Automation:** `tiktok-ads-create`.  
+Official: [ads.tiktok.com](https://ads.tiktok.com/) · [Creative Exchange](https://ads.tiktok.com/creativeexchange). Managed accounts for TTCX — VERIFY LIVE. No fraud; user publishes HITL. Not financial/contract advice.
+
 **Not legal advice.** Not a penetration test. Not a DPIA substitute. Network tab beats static guesses.
 
 ---

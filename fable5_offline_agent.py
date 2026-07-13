@@ -417,6 +417,7 @@ def load_system_prompt(
     fit_mode: bool = False,
     outfit_mode: bool = False,
     doc_mode: bool = False,
+    tiktok_ads_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -592,6 +593,28 @@ def load_system_prompt(
         know = read_knowledge_bundle("conservation", limit_chars=8000)
         if know.strip():
             parts.append("\n\n---\n## Local conservation / DOC knowledge\n\n" + know)
+    if tiktok_ads_mode:
+        parts.append(
+            "\n\n---\n## TikTok Ads creation mode\n"
+            "Apply skill **tiktok-ads-create** with knowledge/ads/ (tiktok-ads-create.md, "
+            "tiktok-creative-exchange.md). Structure: Campaign → Ad group → Ad. "
+            "Creative marketplace: TTCX / Partner Exchange (ttcx-brief). Procedures: "
+            "create-campaign-plan, account-setup, measurement-setup (tiktok-analytics), "
+            "audience-plan, creative-brief, ttcx-brief, ad-build, launch-checklist, "
+            "optimise-loop. Official: ads.tiktok.com + creativeexchange. UI: TikTok Text, "
+            "#fe2c55, TTAM. User publishes/spends HITL. Refuse fraud and policy evasion. "
+            "VERIFY LIVE. Not financial or contract advice.\n"
+        )
+        know = read_knowledge_bundle("ads", limit_chars=12000)
+        if know.strip():
+            parts.append("\n\n---\n## Local TikTok / ads knowledge\n\n" + know)
+        tt = read_knowledge_bundle("privacy", limit_chars=4000)
+        # only append if tiktok-related files present in bundle - bundle is whole privacy folder truncated
+        if tt.strip() and "tiktok" in tt.lower():
+            parts.append(
+                "\n\n---\n## Related privacy / pixel notes (excerpt may include other maps)\n\n"
+                + tt[:3500]
+            )
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2127,7 +2150,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | tiktok_ads | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2434,6 +2457,22 @@ def run_automate(
                     prefix="DocMode: ",
                 )
                 results.append("doc → done")
+            elif stype in {"tiktok_ads", "tiktok-ads", "ttads"}:
+                tsys = load_system_prompt(tiktok_ads_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill tiktok-ads-create and knowledge/ads/tiktok-ads-create.md, "
+                    "produce create-campaign-plan. No fraud. User publishes in Ads Manager."
+                )
+                print("\n[TikTok Ads creation]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": tsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="TikTokAds: ",
+                )
+                results.append("tiktok_ads → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2658,7 +2697,7 @@ def print_banner() -> None:
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
         "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
-        "/fit /slay /outfit /doc /pdf /build /automate /loop /help quit\n"
+        "/fit /slay /outfit /doc /tiktok-ads /pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -2683,6 +2722,8 @@ Commands
   /seamly [prompt]   Alias for /outfit
   /doc [prompt]      DOC ranger / Trainee Ranger pathway (knowledge/conservation/)
   /ranger [prompt]   Alias for /doc
+  /tiktok-ads [prompt]  TikTok Ads Manager creation plan (knowledge/ads/)
+  /ttads [prompt]    Alias for /tiktok-ads
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2731,6 +2772,9 @@ CLI
   {py} fable5_offline_agent.py --doc
   {py} fable5_offline_agent.py --doc "pathway-map: how do I become a DOC ranger?"
   {py} fable5_offline_agent.py --automate doc-ranger-pathway
+  {py} fable5_offline_agent.py --tiktok-ads
+  {py} fable5_offline_agent.py --tiktok-ads "conversions campaign for NZ fashion DTC"
+  {py} fable5_offline_agent.py --automate tiktok-ads-create
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -3033,6 +3077,30 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ DOC mode error: {e}\n"))
+            continue
+        if low.startswith("/tiktok-ads") or low.startswith("/ttads"):
+            if low.startswith("/tiktok-ads"):
+                prompt = user_input[11:].strip()
+            else:
+                prompt = user_input[6:].strip()
+            prompt = prompt or (
+                "Using skill tiktok-ads-create and knowledge/ads/tiktok-ads-create.md, "
+                "outline Campaign→Ad group→Ad creation and measurement-setup. "
+                "Point to ads.tiktok.com. No fraud. Not financial advice."
+            )
+            try:
+                tsys = load_system_prompt(tiktok_ads_mode=True)
+                print(ui("\n[TikTok Ads creation]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": tsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="TikTokAds: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ TikTok Ads mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3368,6 +3436,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="DOC ranger / Trainee Ranger pathway (knowledge/conservation/)",
     )
     parser.add_argument(
+        "--tiktok-ads",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="TikTok Ads Manager creation plan (knowledge/ads/)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3497,6 +3573,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.fit is None
             and args.outfit is None
             and args.doc is None
+            and args.tiktok_ads is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3731,6 +3808,25 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": dsys}, {"role": "user", "content": prompt}],
                 prefix="DocMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.tiktok_ads is not None:
+        prompt = (args.tiktok_ads or "").strip() or (
+            "Using skill tiktok-ads-create and knowledge/ads/tiktok-ads-create.md, produce "
+            "create-campaign-plan for a legitimate TikTok Ads Manager campaign: hierarchy, "
+            "measurement-setup, audience-plan, creative-brief, launch-checklist. "
+            "Official: https://ads.tiktok.com/ . Refuse fraud. VERIFY LIVE. Not financial advice."
+        )
+        try:
+            tsys = load_system_prompt(tiktok_ads_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": tsys}, {"role": "user", "content": prompt}],
+                prefix="TikTokAds: ",
             )
             return 0
         except Exception as e:

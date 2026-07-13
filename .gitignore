@@ -217,6 +217,10 @@ knowledge/fashion/**/*measure*
 knowledge/conservation/_local/
 knowledge/conservation/*-local*.md
 knowledge/conservation/*-raw*
+knowledge/ads/_local/
+knowledge/ads/*-local*.md
+knowledge/ads/*pixel*id*
+knowledge/ads/*secret*
 # Seamly / pattern CAD client files
 **/*.sm2d
 **/*.sm2d*

@@ -41,6 +41,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Instagram fit / selfie** | Pick hero fits, makeup, slay shots + captions (`knowledge/social/`) |
 | **Outfit select / create** | Wardrobe picks + **Seamly2D** pattern plans (`knowledge/fashion/`) |
 | **DOC ranger pathway** | NZ Trainee Ranger / conservation career map (`knowledge/conservation/`) |
+| **TikTok Ads create** | Ads Manager campaign plan + pixel hygiene (`knowledge/ads/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -88,8 +89,8 @@ Fable-Offline/
 │   ├── INDEX.md                 # Data catalog
 │   ├── aem/ animals/ brokers/ climate/ culture/
 │   ├── calendar/ education/ health/ legal/ pdf/ privacy/
-│   ├── conservation/ fashion/ macos/ property/ public-safety/ social/
-│   ├── steam/ trade/ urban-planning/ windows/
+│   ├── ads/ conservation/ fashion/ macos/ property/ public-safety/
+│   ├── social/ steam/ trade/ urban-planning/ windows/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
@@ -139,6 +140,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 | DOC ranger careers | `knowledge/conservation/` | `doc-ranger-pathway` |
+| TikTok Ads creation | `knowledge/ads/` | `tiktok-ads-create` |
 
 Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
@@ -215,6 +217,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/fit` · `/slay` · `/ootd` | Instagram selfie / fit / makeup selector |
 | `/outfit` · `/seamly` | Outfit select/create + Seamly2D plan |
 | `/doc` · `/ranger` | DOC ranger / Trainee Ranger pathway |
+| `/tiktok-ads` · `/ttads` | TikTok Ads Manager creation plan |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -262,6 +265,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 | `tiktok-analytics-map` | TikTok Analytics / pixel HTML + Network evidence map |
+| `tiktok-ads-create` | Full Ads Manager campaign plan (structure, pixel, creative, launch) |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
@@ -280,6 +284,36 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
 | `doc-ranger-pathway` | DOC Trainee Ranger / L4 conservation pathway map |
 | `uc-arts-pg-map` | UC Arts postgraduate pathways + apply navigation |
+
+## TikTok Ads creation
+
+Legitimate **TikTok Ads Manager** planning from Fable data (structure + pixel + UI fingerprint). Official: [ads.tiktok.com](https://ads.tiktok.com/).
+
+| Layer | Content |
+|-------|---------|
+| Hierarchy | **Campaign → Ad group → Ad** |
+| Measurement | Pixel / Events (`tiktok-analytics` + VUW publisher LOAD example) |
+| Creative supply | **TTCX** / Partner Exchange marketplace (`tiktok-creative-exchange.md`) |
+| UI | TikTok Text/Display, `#fe2c55`, TTAM CSS fingerprint |
+| In-house creative | Fit/outfit skills as alternative to TTCX partners |
+
+```bash
+python fable5_offline_agent.py --tiktok-ads
+python fable5_offline_agent.py --tiktok-ads "conversions campaign for NZ fashion DTC"
+python fable5_offline_agent.py --automate tiktok-ads-create
+# Chat: /tiktok-ads  /ttads
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/tiktok-ads-create.md` |
+| Knowledge | `knowledge/ads/tiktok-ads-create.md`, `tiktok-creative-exchange.md` |
+| Pixel method | `knowledge/privacy/tiktok-analytics.md` |
+| TTCX privacy seed | `knowledge/privacy/ttcx-hosts.md` |
+| UI fingerprint | `knowledge/web/css-design-fingerprint-tiktok-ui.md` |
+| Workflow | `workflows/tiktok-ads-create.json` |
+
+**Refuse:** ad fraud, fake engagement, policy evasion. User publishes and spends in Ads Manager. **VERIFY LIVE** objectives and limits. Not financial advice.
 
 ## UC Arts postgraduate study
 
@@ -815,7 +849,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `outfit` · `doc` · `pdf` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `outfit` · `doc` · `tiktok_ads` · `pdf` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
@@ -942,7 +976,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--outfit` · `--doc` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--outfit` · `--doc` · `--tiktok-ads` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -1008,6 +1042,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Instagram selfie selector** — fits, makeup, slay picks + captions (not auto-post; not body-shame).
 - **Outfit / Seamly** — wardrobe select + create briefs + Seamly2D pattern plan ([seamly.io/download](https://seamly.io/download/)).
 - **DOC ranger pathway** — Trainee Ranger / L4 conservation map from DOC blog seed (not careers advice).
+- **TikTok Ads create** — Ads Manager campaign planning + pixel hygiene (not fraud; not ROAS guarantees).
 
 ## License
 

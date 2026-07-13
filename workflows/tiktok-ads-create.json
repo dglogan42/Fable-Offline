@@ -1,0 +1,14 @@
+{
+  "name": "tiktok-ads-create",
+  "description": "Plan a legitimate TikTok Ads Manager campaign (structure, measurement, creative, launch checklist)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: tiktok-ads-create. Knowledge: knowledge/ads/tiktok-ads-create.md + tiktok-creative-exchange.md (TTCX). Official: ads.tiktok.com / creativeexchange. No fraud, no auto-publish."
+    },
+    {
+      "type": "tiktok_ads",
+      "prompt": "Using skill tiktok-ads-create and knowledge/ads/ (tiktok-ads-create.md, tiktok-creative-exchange.md) plus knowledge/privacy/tiktok-analytics.md, produce: (1) create-campaign-plan Campaign→Ad group→Ad (2) measurement-setup (3) audience-plan (4) creative-brief for 3 native concepts OR ttcx-brief if they need marketplace partners (VCP/CLP packages, managed-account note, Partner Exchange migration) (5) launch-checklist (6) forbid fraud. Ask for product/URL/geo/budget if missing. VERIFY LIVE. Not financial or contract advice."
+    }
+  ]
+}
