@@ -75,6 +75,7 @@ BILEVEL_EVERY = int(os.environ.get("FABLE5_BILEVEL_EVERY", "3"))
 PROGRAM_FILE = os.environ.get("FABLE5_PROGRAM", "program.md")
 ROADMAP_FILE = os.environ.get("FABLE5_ROADMAP", "ROADMAP.md")
 KNOWLEDGE_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_KNOWLEDGE", "knowledge")))
+AGENTS_DIR = Path(os.path.expanduser(os.environ.get("FABLE5_AGENTS", "agents")))
 # Human-in-the-loop: prompt before high-risk steps (default on for team/shell)
 HITL = os.environ.get("FABLE5_HITL", "1").strip().lower() not in {"0", "false", "no", "off"}
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
@@ -228,6 +229,57 @@ def knowledge_root() -> Path:
     (root / "animals").mkdir(parents=True, exist_ok=True)
     (root / "steam").mkdir(parents=True, exist_ok=True)
     return root
+
+
+def agents_root() -> Path:
+    """Offline loop agent briefing files for Hermes / Fable loops."""
+    root = AGENTS_DIR if AGENTS_DIR.is_absolute() else SCRIPT_DIR / AGENTS_DIR
+    root = root.expanduser().resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    return root
+
+
+def read_agents_brief(
+    *,
+    hermes: bool = False,
+    loop: bool = False,
+    engineer: bool = False,
+    limit_chars: int = 4500,
+) -> str:
+    """
+    Load agent briefing markdown that informs Hermes and Fable loops.
+    Always includes shared offline-loop protocol when present.
+    """
+    root = agents_root()
+    names: list[str] = ["offline-loop-protocol.md", "goal-quality.md", "shared-state.md"]
+    if hermes:
+        names.append("hermes-agent.md")
+    if loop or engineer:
+        names.append("fable-loop-agent.md")
+    if not hermes and not loop and not engineer:
+        # Chat / default: still give shared loop awareness (short)
+        names = ["offline-loop-protocol.md", "goal-quality.md"]
+
+    parts: list[str] = []
+    seen: set[str] = set()
+    for name in names:
+        if name in seen:
+            continue
+        seen.add(name)
+        path = root / name
+        if not path.is_file():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        parts.append(f"### agents/{name}\n{text.strip()}")
+    if not parts:
+        return ""
+    bundle = "\n\n---\n\n".join(parts)
+    if len(bundle) > limit_chars:
+        bundle = bundle[:limit_chars] + "\n\n…[agents brief truncated]…"
+    return bundle
 
 
 def read_knowledge_bundle(subdir: str = "", limit_chars: int = 8000) -> str:
@@ -418,8 +470,10 @@ def load_system_prompt(
     outfit_mode: bool = False,
     doc_mode: bool = False,
     tiktok_ads_mode: bool = False,
+    loop_mode: bool = False,
+    engineer_mode: bool = False,
 ) -> str:
-    """Manual + soul + active skills (+ domain knowledge when relevant)."""
+    """Manual + soul + agent briefs + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
     soul = load_soul()
     skills = read_skills_bundle(limit_chars=5000)
@@ -427,11 +481,26 @@ def load_system_prompt(
         core,
         "\n\n---\n## SOUL.md (identity / steering)\n\n" + soul,
     ]
+    # Offline loop agent pack — informs Hermes, Fable loops, and chat awareness
+    agents_brief = read_agents_brief(
+        hermes=hermes,
+        loop=loop_mode or engineer_mode,
+        engineer=engineer_mode,
+        limit_chars=4500 if (hermes or loop_mode or engineer_mode) else 2200,
+    )
+    if agents_brief.strip():
+        parts.append(
+            "\n\n---\n## Offline loop agents (briefing pack)\n"
+            "Follow agents/*.md protocol when looping, verifying, or stating goals. "
+            "Verifier · state · stop. Maker ≠ grader.\n\n"
+            + agents_brief
+        )
     if hermes:
         parts.append(
             "\n\n---\n## Hermes mode active\n"
             "You are running Hermes-style offline behaviors: soul-steered, RAG-limited memory, "
-            "self-stopping loops, mid-run repair after failed verification, and skill compound.\n"
+            "self-stopping loops, mid-run repair after failed verification, and skill compound. "
+            "Obey agents/hermes-agent.md and agents/offline-loop-protocol.md.\n"
         )
     if broker_mode:
         parts.append(
@@ -676,6 +745,7 @@ def doctor() -> int:
     print(f"  Model:       {MODEL_NAME}")
     print(f"  API base:    {LOCAL_LLM_BASE_URL}")
     print(f"  Memory dir:  {memory_root()}")
+    print(f"  Agents dir:  {agents_root()}")
     print(f"  Skills dir:  {skills_root()}")
     n_skills = len(list_skill_paths())
     print(f"  Skills:      {n_skills} file(s)")
@@ -1616,6 +1686,7 @@ def run_loop(
         loop_preflight_print(goal)
     if hermes:
         print(f"RAG top-K:{RAG_TOP_K}  ·  Soul: {SOUL_FILE}")
+    print(f"Agents:   {agents_root()}")
     print(f"Memory:   {memory_root()}")
     print(f"State:    {loop_state_path()}\n")
 
@@ -1628,6 +1699,12 @@ def run_loop(
     tried: list[str] = []
     failed: list[str] = []
     program = load_program() if engineer else ""
+    agents_cycle = read_agents_brief(
+        hermes=hermes,
+        loop=True,
+        engineer=engineer,
+        limit_chars=3200,
+    )
 
     for cycle in range(1, max_cycles + 1):
         last_cycle = cycle
@@ -1651,6 +1728,7 @@ def run_loop(
             f"CYCLE NUMBER: {cycle} of max {max_cycles}\n"
             f"FAIL STREAK ON SIMILAR UNIT: {fail_streak}\n"
             f"PREVIOUS UNIT: {prev_unit or '(none)'}\n\n"
+            f"OFFLINE LOOP AGENTS (obey protocol):\n{agents_cycle or '(none)'}\n\n"
             f"ACTIVE SKILLS (apply if relevant):\n{skills_ctx or '(none)'}\n\n"
             f"{'RETRIEVED MEMORY (smart RAG)' if (hermes or engineer) else 'MEMORY'}:\n{mem}\n\n"
         )
@@ -2181,7 +2259,7 @@ def run_automate(
                     crit = [c.strip() for c in crit.split(",") if c.strip()]
                 run_loop(
                     client,
-                    load_system_prompt(hermes=True),
+                    load_system_prompt(hermes=True, engineer_mode=True, loop_mode=True),
                     goal,
                     success_condition=step.get("success"),
                     max_cycles=int(step.get("max_cycles", DEFAULT_MAX_CYCLES)),
@@ -2196,7 +2274,7 @@ def run_automate(
                 goal = step.get("goal") or extra_goal or "complete the automated goal"
                 run_loop(
                     client,
-                    load_system_prompt(hermes=True),
+                    load_system_prompt(hermes=True, loop_mode=True),
                     goal,
                     success_condition=step.get("success"),
                     max_cycles=int(step.get("max_cycles", DEFAULT_MAX_CYCLES)),
@@ -2208,7 +2286,7 @@ def run_automate(
                 goal = step.get("goal") or extra_goal or "complete the automated goal"
                 run_loop(
                     client,
-                    system,
+                    load_system_prompt(loop_mode=True),
                     goal,
                     success_condition=step.get("success"),
                     max_cycles=int(step.get("max_cycles", DEFAULT_MAX_CYCLES)),
@@ -2789,6 +2867,7 @@ CLI
 
 Env
   FABLE5_MODEL  FABLE5_SOUL  FABLE5_PROGRAM  FABLE5_ROADMAP  FABLE5_KNOWLEDGE  FABLE5_HITL
+  FABLE5_AGENTS  (default agents/ — offline loop briefs for Hermes + Fable)
   FABLE5_ENGINEER_MIN_SCORE  FABLE5_BILEVEL_EVERY  FABLE5_RAG_TOP_K
   FABLE5_WORKFLOWS  FABLE5_WORKSPACE  FABLE5_ALLOW_SHELL  FABLE5_MEMORY  FABLE5_SKILLS
 """
@@ -3259,7 +3338,7 @@ def chat_repl(client, system: str) -> None:
             try:
                 run_loop(
                     client,
-                    load_system_prompt(hermes=True),
+                    load_system_prompt(hermes=True, engineer_mode=True, loop_mode=True),
                     goal,
                     hermes=True,
                     engineer=True,
@@ -3279,7 +3358,12 @@ def chat_repl(client, system: str) -> None:
                 print("No goal — cancelled.\n")
                 continue
             try:
-                run_loop(client, load_system_prompt(), goal, hermes=False)
+                run_loop(
+                    client,
+                    load_system_prompt(loop_mode=True),
+                    goal,
+                    hermes=False,
+                )
                 messages = refresh_chat_system(messages)
             except Exception as e:
                 print(ui(f"\n❌ Loop error: {e}\n"))
@@ -3928,7 +4012,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         try:
             run_loop(
                 client,
-                load_system_prompt(hermes=True),
+                load_system_prompt(hermes=True, engineer_mode=True, loop_mode=True),
                 args.engineer,
                 success_condition=args.success,
                 max_cycles=args.max_cycles,
@@ -3950,7 +4034,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         try:
             run_loop(
                 client,
-                load_system_prompt(hermes=True),
+                load_system_prompt(hermes=True, loop_mode=True),
                 args.hermes,
                 success_condition=args.success,
                 max_cycles=args.max_cycles,
@@ -3969,7 +4053,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         try:
             run_loop(
                 client,
-                system,
+                load_system_prompt(loop_mode=True),
                 args.loop,
                 success_condition=args.success,
                 max_cycles=args.max_cycles,

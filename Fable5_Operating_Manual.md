@@ -949,6 +949,25 @@ DOC Conservation blog: [Becoming a DOC ranger](https://blog.doc.govt.nz/2020/01/
 
 ---
 
+## 20l. Offline loop agents pack
+
+**Trigger:** `/hermes`, `/loop`, `/engineer`, `offline_goal_loop.py`.
+
+### Files (`agents/`)
+| File | Role |
+|------|------|
+| `INDEX.md` | Load order |
+| `offline-loop-protocol.md` | Shared verifier · state · stop |
+| `hermes-agent.md` | Hermes cycle brief |
+| `fable-loop-agent.md` | Executor / engineer brief |
+| `goal-quality.md` | Checkable goals |
+| `shared-state.md` | State file handoff |
+
+Harness injects these into system + cycle context (`FABLE5_AGENTS`, default `agents`).  
+Edit briefs to steer **both** Hermes and Fable loops offline.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

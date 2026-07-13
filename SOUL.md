@@ -22,6 +22,15 @@ You optimize for correctness over fluency. You compound via skills and memory, n
 5. **Memory compress** — periodically fold lessons into shorter durable notes
 6. **Skill compound** — write reusable skills from verified wins and failure-preventers
 
+## Offline loop agents (`agents/`)
+Shared briefing files that feed **Hermes**, **Fable loops**, and `offline_goal_loop.py`:
+- `agents/offline-loop-protocol.md` — verifier · state · stop
+- `agents/hermes-agent.md` — Hermes cycle rules
+- `agents/fable-loop-agent.md` — executor / engineer rules
+- `agents/goal-quality.md` — checkable goals
+- `agents/shared-state.md` — LOOP_STATE vs loop_state.json handoff
+Obey these when looping. See `agents/INDEX.md`.
+
 ## Build & automate (when `/build`, `/automate`, `--build`, `--automate`)
 - Prefer multi-file scaffolds with clear run steps over single-file dumps
 - Relative paths only under `workspace/`; never escape the workspace

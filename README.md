@@ -84,6 +84,7 @@ Fable-Offline/
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt             # openai + pypdf
 ├── fable5 / fable5.cmd          # Launchers
+├── agents/                      # Offline loop briefs for Hermes + Fable loops
 ├── scripts/                     # install, pdf_extract, ical_parse, rss_share, steam_*
 ├── skills/                      # Agentic skill library (see skills/INDEX.md)
 ├── workflows/                   # Public automation recipes (*.json)
@@ -946,13 +947,26 @@ Inspired by loop-engineering practice (Karpathy-style experiment loops, Cherny-s
 | Behavior | Offline implementation |
 |----------|------------------------|
 | **SOUL.md** | Identity + boundaries loaded every turn |
+| **agents/** | Offline loop briefs (`hermes-agent.md`, protocol, goals, state) |
 | **Smart RAG** | Top-K (`FABLE5_RAG_TOP_K`, default **20**) relevant memory chunks |
 | **Self-stop** | Success / retry ceiling / cycle budget |
 | **Live repair** | On verifier FAIL → strategy patch for the next unit only |
 | **Memory compress** | After multi-cycle Hermes runs → `memory/lessons/compressed-*.md` |
 | **Skills** | Optional self-improve writes reusable procedures |
 
-Edit `SOUL.md` to change persona and stop ethics. Quality of soul ≈ quality of compounding.
+Edit `SOUL.md` to change persona and stop ethics. Edit **`agents/`** to change shared loop protocol for Hermes + Fable + `offline_goal_loop.py`. Quality of soul ≈ quality of compounding.
+
+### Offline loop agents pack
+
+| File | Feeds |
+|------|--------|
+| `agents/offline-loop-protocol.md` | All loops — verifier · state · stop |
+| `agents/hermes-agent.md` | Hermes |
+| `agents/fable-loop-agent.md` | `/loop` · `/engineer` |
+| `agents/goal-quality.md` | Goal writing |
+| `agents/shared-state.md` | `LOOP_STATE` vs `loop_state.json` |
+
+Also: `python offline_goal_loop.py --goal "…"` loads the same pack when present.
 
 ## Self-improvement (skills)
 
@@ -1008,6 +1022,7 @@ Runtime artifacts: `memory/` — **gitignored**.
 | `FABLE5_MANUAL` | `Fable5_Operating_Manual.md` | System prompt path |
 | `FABLE5_API_KEY` | `ollama` | API key (ignored by Ollama) |
 | `FABLE5_STEAM` / `STEAM_EXE` | unset | Path to `steam.exe` (SIM launch / soak scripts) |
+| `FABLE5_AGENTS` | `agents` | Offline loop agent briefing directory |
 
 ```bat
 REM Windows cmd
