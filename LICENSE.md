@@ -138,7 +138,25 @@ packages. Prefer `workspace/creative/` locally (inbox/exports gitignored).
 YouTube Live encoder guidance (Help answer 2907883 family) likewise requires
 valid account access; never commit stream keys.
 
-### 10. Animation toolkits (2D, stop-motion, 3D)
+### 10. ChromeOS Flex and Google for Education
+
+Skill `chromeos-flex-install-prep` and notes under `knowledge/chromeos/` summarise
+**official** [ChromeOS Flex](https://chromeos.google/products/chromeos-flex/) install
+hygiene (USB via Chromebook Recovery Utility, certified models, fleet notes).
+Skill `google-for-education` and `knowledge/education/google-for-education.md` map
+the public [Google for Education](https://edu.google.com/intl/ALL_us/) hub
+(Workspace for Education, Classroom, Chromebooks, Gemini for Education marketing).
+Google marks remain Google LLC.
+
+The Software does **not** redistribute Flex images, enrollment tokens, Admin
+console credentials, or student personal data. Full Flex install erases the
+target disk — user backups are required. Prefer certified models and official
+edu.google.com / support.google.com paths. Workspace edition pricing, free vs
+paid Fundamentals messaging, and compliance (e.g. FERPA marketing claims) must
+be VERIFY LIVE with Google and institutional counsel. Not educational, careers,
+or legal advice. Do not commit student rosters or school secrets (see `.gitignore`).
+
+### 11. Animation toolkits (2D, stop-motion, 3D)
 
 Skills and notes under `knowledge/media/` support **user-operated** animation
 workflows. They do not ship third-party binaries and do not grant licenses to
@@ -147,16 +165,19 @@ those products.
 | Skill | Primary software / source | Notes |
 |-------|---------------------------|--------|
 | `animation-dev-kit` | [Krita](https://krita.org/) · [Animation manual](https://docs.krita.org/en/user_manual/animation.html) | FOSS frame-by-frame; optional FFmpeg |
-| `stop-motion-dev-kit` | [Stop Motion Studio](https://www.stopmotionstudio.com/download/index.html) (Cateater) | Licensed/purchased app; no cracked installs |
+| `stop-motion-dev-kit` | [Stop Motion Studio](https://www.stopmotionstudio.com/download/index.html) · [Cloud Stop Motion](https://cloudstopmotion.com/) | Local Studio and/or browser Chromebook / ChromeOS Flex cloud; no cracked installs; no auto-upload by Fable |
 | `3d-animation-dev-kit` | [Blender](https://www.blender.org/download/) (default) | FOSS CG pipeline; Maya/Houdini/C4D only if user already licensed |
 
 Public **education map** seeds (e.g. [Media Design School 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees))
 are **not** enrollment, careers, or immigration advice. Re-verify fees, entry,
-and rankings live. The Software does **not** authorize cracked DCC tools,
-pirated plugins, or committing multi-GB masters (`.kra`, SMS projects, `.blend`,
-EXR sequences) — keep those under `workspace/creative/` (gitignored).
+and rankings live. **Cloud Stop Motion** stores projects on a third-party
+cloud; school use requires following institution and child-privacy policies
+(COPPA/age rules as applicable). The Software does **not** upload files for
+the user, hold cloud passwords, or authorize cracked DCC tools. Do not commit
+multi-GB masters (`.kra`, SMS projects, cloud exports, `.blend`, EXR) or
+student rosters — keep media under `workspace/creative/` (gitignored).
 
-### 11. Automatic prompt generator and swarm prompts
+### 12. Automatic prompt generator and swarm prompts
 
 `auto_prompt_generator.py`, skill `prompt-generator`, notes under
 `knowledge/swarm/`, Fable CLI `--prompt-gen` / `/prompt-gen`, and workflows
@@ -169,7 +190,7 @@ research process only; they do not execute trades or guarantee alpha. Review
 generated prompts before production or safety-critical use. Do not commit
 secrets, API keys, or private trading parameters into generated prompt dumps.
 
-### 12. Contributions
+### 13. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise

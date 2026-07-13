@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** (swarm/agent system prompts) — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS install prep**, **Steam SIM soak**, **math/physics**, **creative pipelines**, **2D / stop-motion / 3D animation kits** (Krita · Stop Motion Studio · Blender), and a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS / ChromeOS Flex install prep**, **Google for Education**, **Steam SIM soak**, **math/physics**, **creative pipelines**, and **2D / stop-motion / 3D animation kits** (Krita · Stop Motion Studio · [Cloud Stop Motion](https://cloudstopmotion.com/) · Blender), plus a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 **Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE.md) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
@@ -23,7 +23,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
-| **Education** | Credential claim audit · **UC Arts PG** hub map · board pathway hygiene (`knowledge/education/`) |
+| **Education** | Credential claim audit · **UC Arts PG** · **Google for Education** map (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
@@ -38,6 +38,8 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Calendar / mail / meetings** | Google Calendar + **Zoom** web join + **iCal** + meeting prep (`knowledge/calendar/`) |
 | **Windows install prep** | Licensed **Windows 11** media + DISM/unattend hygiene (`knowledge/windows/`) |
 | **macOS install prep** | Apple **bootable installer** / recovery hygiene (`knowledge/macos/`) |
+| **ChromeOS Flex install prep** | Install Flex on PC/Mac via USB ([product](https://chromeos.google/products/chromeos-flex/)) |
+| **Google for Education** | Workspace · Classroom · Chromebooks map ([edu.google.com](https://edu.google.com/intl/ALL_us/)) |
 | **Instagram fit / selfie** | Pick hero fits, makeup, slay shots + captions (`knowledge/social/`) |
 | **Outfit select / create** | Wardrobe picks + **Seamly2D** pattern plans (`knowledge/fashion/`) |
 | **DOC ranger pathway** | NZ Trainee Ranger / conservation career map (`knowledge/conservation/`) |
@@ -47,7 +49,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **YouTube Live encoder** | Studio + RTMP/encoder protocol ([Help 2907883](https://support.google.com/youtube/answer/2907883?hl=en)) |
 | **Creative pipeline builds** | Adobe CC + CapCut + LR/PS + Resolve export recipes (`knowledge/media/`) |
 | **Animation dev kit (Krita)** | Frame-by-frame plan · walk cycle · render/FFmpeg ([Krita manual](https://docs.krita.org/en/user_manual/animation.html)) |
-| **Stop / motion dev kit** | Stop Motion Studio capture → export ([official download](https://www.stopmotionstudio.com/download/index.html)) |
+| **Stop / motion dev kit** | Studio + **Cloud Stop Motion** (Chromebook cloud) ([cloudstopmotion.com](https://cloudstopmotion.com/)) |
 | **3D animation dev kit** | Blender-first CG pipeline · optional VFX study map ([MDS seed](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
@@ -106,7 +108,7 @@ Fable-Offline/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
-├── .gitignore                   # Secrets, creative/anim masters, calendar, soak junk
+├── .gitignore                   # Secrets, school PII, Flex images, creative/anim masters
 └── README.md
 ```
 
@@ -121,9 +123,11 @@ Fable-Offline/
 | `**/*.ics`, Zoom passcodes, secret calendar feeds | Private invites / join secrets |
 | Windows product keys (`knowledge/windows/_local/`) | Licensing secrets |
 | macOS `Install *.app`, `.ipsw`, recovery / FileVault keys | Huge binaries + secrets |
+| ChromeOS Flex `.bin` images, enrollment tokens | Binary dumps + fleet secrets |
+| Student rosters, school admin tokens, GfE secrets | Child/student privacy |
 | Stream keys; Adobe passwords; creative `00_inbox` / `04_exports` media | Secrets + bulk binaries |
 | Krita `.kra` / `03_krita/` / render sequences | Local 2D animation masters |
-| Stop Motion Studio projects / `02_sms_project/` / capture dumps | Local SMS libraries |
+| Stop Motion Studio / Cloud SM dumps (`02_sms_project/`, `02_cloud_exports/`) | Local project libraries |
 | Blender `.blend` / EXR / `03_shots/` / caches / FBX·USD·VDB dumps | Local 3D/CG weight |
 | `generated_prompts/` bulk dumps | Local LLM prompt-gen output |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
@@ -147,13 +151,14 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
-| Education claims / UC Arts PG | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate` |
+| Education claims / UC Arts PG / GfE | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate`, `google-for-education` |
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
 | Calendar / iCal / meetings | `knowledge/calendar/` | `calendar-mail-meetings` |
 | Windows install (licensed) | `knowledge/windows/` | `windows-install-prep` |
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
+| ChromeOS Flex | `knowledge/chromeos/` | `chromeos-flex-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
 | YouTube Live / creative / 2D / stop-mo / 3D | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit` |
@@ -302,7 +307,10 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `youtube-live-encoder-plan` | YouTube Live encoder first-stream plan (Help 2907883) |
 | `creative-pipeline-build` | Adobe CC + CapCut + LR/PS + Resolve export pipeline plan |
 | `animation-dev-kit` | Krita frame-by-frame animation plan (storyboard → render) |
-| `stop-motion-dev-kit` | Stop Motion Studio stop-motion plan (download → capture → export) |
+| `stop-motion-dev-kit` | Stop-motion plan (Studio and/or Cloud SM) |
+| `stop-motion-cloud-chromebook` | Chromebook browser app + cloud project save + export |
+| `chromeos-flex-install-prep` | ChromeOS Flex USB install plan for existing PC/Mac |
+| `google-for-education` | Google for Education hub map (Workspace · Classroom · devices) |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
@@ -403,30 +411,85 @@ python fable5_offline_agent.py --automate animation-dev-kit
 
 **Notes:** Krita keeps frames in memory — split long work. User installs Krita (+ optional FFmpeg). Large `.kra` / sequences stay local (gitignored).
 
-## Stop / motion dev kit (Stop Motion Studio)
+## Stop / motion dev kit (Studio · Cloud · Chromebook)
 
-Physical stop-motion capture plan for **Stop Motion Studio** (Cateater). Official install: [Download](https://www.stopmotionstudio.com/download/index.html).
+Physical stop-motion with two official paths:
+
+| Path | Best for | Entry |
+|------|----------|--------|
+| **Stop Motion Studio** | Native Win/Mac/mobile, offline projects | [Download](https://www.stopmotionstudio.com/download/index.html) |
+| **Cloud Stop Motion** | **Chromebook** / browser, **cloud-stored** projects, schools | [cloudstopmotion.com](https://cloudstopmotion.com/) · [app](https://app.cloudstopmotion.com) |
 
 | Stage | Focus |
 |-------|--------|
-| Install | Studio **2**: Windows 10+ MSIX · macOS 13+ DMG (or App Store); older builds on same page |
-| Rig | Tripod, locked light/exposure, onion skin + guides |
-| Timing | Project **FPS** — start ~**6**, **12+** smoother ([help](https://www.stopmotionstudio.com/help/stopmotion/en/adjust-the-speed-of-your-movie.html)) |
-| Capture | Device / USB / DSLR / remote camera; optional green screen |
-| Export | 1080p/4K video, GIF, **export all images**, project transfer |
-| Package | `workspace/creative/<slug>/` (`02_sms_project/`, `04_exports/`, `notes.md`) |
+| Choose tool | Cloud SM if Chromebook/classroom cloud; Studio if local offline |
+| Chromebook | Chrome → app.cloudstopmotion.com → camera permission → sign-in |
+| Cloud “upload” | Project saves in vendor cloud; confirm on 2nd device; export finished work |
+| School | Org console: users/groups, review, **export finished work** |
+| Rig / FPS | Tripod; start ~**6** FPS, **12+** smoother |
+| Package | `02_cloud_exports/` · `02_sms_project/` · `04_exports/` · `notes.md` |
 
 ```bash
 python fable5_offline_agent.py --automate stop-motion-dev-kit
+python fable5_offline_agent.py --automate stop-motion-cloud-chromebook
 ```
 
 | Resource | Path |
 |----------|------|
 | Skill | `skills/stop-motion-dev-kit.md` |
-| Knowledge | `knowledge/media/stop-motion-studio.md` |
-| Workflow | `workflows/stop-motion-dev-kit.json` |
+| Knowledge | `knowledge/media/stop-motion-studio.md`, `cloud-stop-motion.md` |
+| Workflows | `stop-motion-dev-kit.json`, `stop-motion-cloud-chromebook.json` |
 
-**Notes:** Licensed/purchased app only. User captures and exports HITL. Heavy projects/exports stay local (gitignored). Hybrid draw cleanup → `animation-dev-kit` (Krita).
+**Notes:** Official products only. Fable does **not** auto-upload. User HITL for sign-in, cloud save, export. No student PII in git. Hybrid draw → `animation-dev-kit` (Krita). Need ChromeOS on a PC/Mac first? → `chromeos-flex-install-prep`.
+
+## ChromeOS Flex install prep
+
+Install Google’s **ChromeOS Flex** on existing **PCs and Macs** (cloud-first OS; not a Chromebook purchase). Product: [chromeos.google/products/chromeos-flex](https://chromeos.google/products/chromeos-flex/).
+
+| Stage | Focus |
+|-------|--------|
+| Compat | x86-64, 4 GB RAM, 16 GB storage; [certified models](https://support.google.com/chromeosflex/answer/11513094) only guaranteed |
+| Backup | Full install **erases** the disk |
+| USB | Chromebook Recovery Utility; stick ≥ 8 GB **wiped** ([create installer](https://support.google.com/chromeosflex/answer/11541904)) |
+| Install | [Prepare for installation](https://support.google.com/chromeosflex/answer/11552529) — try USB then install |
+| Fleet | Enterprise/Education Upgrade for Admin enrollment (VERIFY LIVE) |
+| After | Cloud Stop Motion / browser classroom apps on Flex |
+
+```bash
+python fable5_offline_agent.py --automate chromeos-flex-install-prep
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/chromeos-flex-install-prep.md` |
+| Knowledge | `knowledge/chromeos/chromeos-flex.md` |
+| Workflow | `workflows/chromeos-flex-install-prep.json` |
+
+**Refuse:** third-party “Flex ISO” mirrors. Official Google Recovery Utility / Help only.
+
+## Google for Education
+
+School/education stack map from the official hub: [edu.google.com](https://edu.google.com/intl/ALL_us/).
+
+| Pillar | Focus |
+|--------|--------|
+| **Workspace for Education** | Fundamentals (often no-cost) vs paid editions — [compare](https://edu.google.com/intl/ALL_us/workspace-for-education/editions/compare-editions/) |
+| **Classroom** | Courses & assignments — [classroom.google.com](https://classroom.google.com) |
+| **Chromebooks** | Managed devices — [overview](https://edu.google.com/intl/ALL_us/chromebooks/overview/) |
+| **Flex / convert PC** | `chromeos-flex-install-prep` |
+| **Creative class** | Cloud Stop Motion + `stop-motion-dev-kit` |
+
+```bash
+python fable5_offline_agent.py --automate google-for-education
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/google-for-education.md` |
+| Knowledge | `knowledge/education/google-for-education.md` |
+| Workflow | `workflows/google-for-education.json` |
+
+**Notes:** Not legal/compliance advice. No student PII in git. Editions/prices VERIFY LIVE.
 
 ## 3D animation dev kit (CG · Blender-first)
 
@@ -1273,7 +1336,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Agentic engineer path** — 6-month / 12-stage roadmap; multi-agent supervisor; HITL.
 - **Broker mode** — regulation scrapes, claim audit, disciplined retail user model (not advice).
 - **Legal mode** — playbook-driven contract/NDA/vendor triage (not legal advice; attorney review required).
-- **Education mode** — credential/accreditation claim audit + UC Arts PG pathway map (not educational or medical advice).
+- **Education mode** — credential/accreditation claim audit + UC Arts PG pathway map + Google for Education hub map (not educational or medical advice).
 - **Privacy mode** — host maps + design planner for privacy-aware agentic AI (not legal advice).
 - **Urban planner competencies** — GIS-to-stakeholder framework for learning and skill audits (not professional advice).
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
@@ -1298,7 +1361,9 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **YouTube Live encoder** — Studio + encoder setup from Help 2907883 (not stream-key storage).
 - **Creative pipeline builds** — Adobe CC + CapCut + Resolve export recipes (licensed apps only).
 - **Animation dev kit** — Krita frame-by-frame plan from [docs.krita.org animation manual](https://docs.krita.org/en/user_manual/animation.html) (walk cycle, RAM budget, render/FFmpeg).
-- **Stop / motion dev kit** — Stop Motion Studio from [official download](https://www.stopmotionstudio.com/download/index.html) (FPS, onion skin, export, automate recipe).
+- **Stop / motion dev kit** — Stop Motion Studio + [Cloud Stop Motion](https://cloudstopmotion.com/) Chromebook/browser cloud upload/export (automate recipes).
+- **ChromeOS Flex install prep** — official Flex on PC/Mac ([product](https://chromeos.google/products/chromeos-flex/)); USB Recovery Utility; certified models.
+- **Google for Education** — Workspace · Classroom · Chromebooks map ([edu.google.com](https://edu.google.com/intl/ALL_us/)).
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
@@ -1322,9 +1387,10 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
 9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
-10. Animation toolkits — Krita 2D, Stop Motion Studio, Blender 3D (no cracked DCC; not careers/enrollment advice)  
-11. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
-12. Contribution licensing  
+10. ChromeOS Flex / Google for Education (official install & hub map; no student PII)  
+11. Animation toolkits — Krita 2D, Stop Motion Studio / Cloud SM, Blender 3D  
+12. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
+13. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -1343,10 +1409,11 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Calendar / mail / Zoom | Mailbox control, silent send, auto-join, or account takeover |
 | Windows install prep | Piracy, fake “Windows 12” ISOs, cracks, or free product keys |
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
+| ChromeOS Flex / Google for Education | Third-party ISOs, student PII in git, invented edition prices, or compliance guarantees |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |
-| Stop / motion dev kit | Cracked Stop Motion Studio, auto-post, or committing full SMS project libraries |
+| Stop / motion dev kit | Cracked apps, Fable auto-upload, school passwords/PII, or full SMS/cloud libraries in git |
 | 3D animation dev kit | Cracked Maya/Houdini/C4D, invented school fees/jobs, or multi-GB EXR/blend caches in git |
 | Prompt generator / swarms | Investment advice, live trading, or unreviewed production agents |
 | Math / physics agent | Course credit or professional engineering sign-off |

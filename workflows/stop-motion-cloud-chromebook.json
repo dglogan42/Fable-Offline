@@ -1,0 +1,14 @@
+{
+  "name": "stop-motion-cloud-chromebook",
+  "description": "Cloud Stop Motion on Chromebook: browser app, cloud project save, export finished work",
+  "steps": [
+    {
+      "type": "note",
+      "text": "https://cloudstopmotion.com/ · https://app.cloudstopmotion.com — skill stop-motion-dev-kit. Browser/Chromebook; projects in vendor cloud. User HITL sign-in/capture/export. No Fable auto-upload. School admin: org console. No cracks. No student PII in git."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill stop-motion-dev-kit procedures tool-choose, chromebook-setup, cloud-upload, school-org-export, export-package and knowledge/media/cloud-stop-motion.md (+ stop-motion-studio.md only if hybrid; + chromeos-flex-install-prep if device is not yet ChromeOS), produce a Chromebook/ChromeOS-class cloud stop-motion plan: (1) verdict (2) tool-choose — prefer Cloud Stop Motion for Chromebook or ChromeOS Flex; note when Stop Motion Studio is better (3) if user has only Windows/Mac and wants ChromeOS-like: point to chromeos-flex-install-prep + https://chromeos.google/products/chromeos-flex/ then return (4) chromebook-setup: Chrome, camera permission, https://app.cloudstopmotion.com Start Free (5) project-scaffold including 02_cloud_exports/ (6) set-rig for webcam/built-in cam (7) fps-recipe (start ~6 FPS mindset) (8) capture-lab cloud path with onion skin (9) cloud-upload: sign-in saves to vendor cloud; verify on second device; export finished movie; school org console export (10) privacy: no passwords/PII in Fable (11) publish-handoff HITL (12) OPEN. Not legal advice. User HITL."
+    }
+  ]
+}

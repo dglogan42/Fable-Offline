@@ -86,21 +86,28 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    Adobe passwords, stream keys, or heavy media masters. YouTube Live encoder
    notes require valid access; never commit stream keys.
 
-10. Animation toolkits (2D, stop-motion, 3D)
-    animation-dev-kit (Krita), stop-motion-dev-kit (Stop Motion Studio /
-    Cateater official download), and 3d-animation-dev-kit (Blender-first;
-    optional public school course map seeds). No cracked DCC. Not careers or
-    enrollment advice. Do not commit huge .kra / SMS projects / .blend / EXR
-    trees (workspace/creative/ gitignored).
+10. ChromeOS Flex and Google for Education
+    chromeos-flex-install-prep (Flex on PCs/Macs) and google-for-education
+    (edu.google.com Workspace/Classroom/Chromebooks map). Official Google
+    paths only. No Flex images, enrollment tokens, or student PII in git.
+    Not educational or legal advice.
 
-11. Automatic prompt generator and swarm prompts
+11. Animation toolkits (2D, stop-motion, 3D)
+    animation-dev-kit (Krita), stop-motion-dev-kit (Stop Motion Studio and/or
+    Cloud Stop Motion at cloudstopmotion.com for Chromebook/browser cloud
+    projects), and 3d-animation-dev-kit (Blender-first; optional school map
+    seeds). No cracked DCC. No Fable auto-upload. Not careers/enrollment
+    advice. Do not commit huge .kra / SMS / cloud exports / .blend / EXR or
+    student rosters (workspace/creative/ gitignored).
+
+12. Automatic prompt generator and swarm prompts
    auto_prompt_generator.py, skill prompt-generator, knowledge/swarm/, and
    Fable --prompt-gen / /prompt-gen produce local system-prompt markdown for
    multi-agent workflows. Not investment advice. Review generated prompts
    before production use. Do not commit secrets into generated_prompts/ dumps
    (gitignored; ship generator + skill only).
 
-12. Contributions
+13. Contributions
    By submitting contributions to this repository, you agree they are licensed
    under the same MIT License terms as the Software, unless you state otherwise
    in writing with the copyright holders.

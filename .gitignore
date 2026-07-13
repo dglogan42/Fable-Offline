@@ -5,10 +5,11 @@
 # Ship curated markdown skills/knowledge/workflows only.
 # Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
 # Zoom/Google calendar credentials, Windows product keys, macOS recovery keys /
-# full Installer apps / IPSW, social chat/snap exports, private RSS URLs with
-# tokens, stream keys, Adobe passwords, heavy creative inbox/exports, soak dumps,
-# animation masters (Krita .kra, Stop Motion Studio projects, Blender caches/EXR),
-# bulk generated_prompts/ (ship auto_prompt_generator.py + skill, not LLM dumps).
+# full Installer apps / IPSW, ChromeOS Flex installer images / enrollment tokens,
+# student rosters / school admin secrets, social chat/snap exports, private RSS
+# URLs with tokens, stream keys, Adobe passwords, heavy creative inbox/exports,
+# soak dumps, animation masters (Krita .kra, Stop Motion Studio + Cloud SM dumps,
+# Blender caches/EXR), bulk generated_prompts/ (ship generator + skill only).
 # =============================================================================
 
 # --- Python ---
@@ -176,6 +177,11 @@ knowledge/**/*-raw*.txt
 knowledge/brokers/_local/
 knowledge/education/_local/
 knowledge/education/lpu-raw-*.txt
+# School / Google for Education — no rosters or domain secrets
+knowledge/education/*roster*
+knowledge/education/*student*
+!**/*student*.md.example
+**/workspace-for-education*token*
 knowledge/legal/_local/
 knowledge/legal/matters/
 knowledge/privacy/_local/
@@ -260,11 +266,16 @@ workspace/creative/**/*.kra
 workspace/creative/**/*.kra~
 workspace/creative/**/03_krita/**
 workspace/creative/**/04_renders/**
-# Stop Motion Studio project backups + capture dumps
+# Stop Motion Studio + Cloud Stop Motion dumps
 workspace/creative/**/02_sms_project/**
+workspace/creative/**/02_cloud_exports/**
 workspace/creative/**/03_capture_raw/**
 workspace/creative/**/*stop*motion*
 workspace/creative/**/*.sms
+# Never commit school/cloud auth or rosters
+**/cloudstopmotion*token*
+**/cloud-stop-motion*secret*
+**/*student*roster*
 # 3D / Blender (and common DCC interchange) — heavy scenes & caches
 workspace/creative/**/*.blend
 workspace/creative/**/*.blend1
@@ -308,6 +319,12 @@ generated_swarm_prompts/
 **/Install OS X *.app/**
 **/*.ipsw
 **/*createinstallmedia*log*
+# ChromeOS Flex installer images / recovery dumps (use Recovery Utility; do not ship binaries)
+**/chromeos-flex*.bin*
+**/ChromeOSFlex*
+knowledge/chromeos/_local/
+knowledge/chromeos/*-local*.md
+**/enrollment*token*
 # Private calendar exports / invites / Zoom join material
 **/*.ics
 !**/*.ics.example

@@ -1,0 +1,14 @@
+{
+  "name": "google-for-education",
+  "description": "Map Google for Education: Workspace, Classroom, Chromebooks/Flex, handoffs",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Hub: https://edu.google.com/intl/ALL_us/ — skill google-for-education. Official Google paths only. No student PII in Fable. Not legal/compliance advice. Editions and prices VERIFY LIVE."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill google-for-education and knowledge/education/google-for-education.md, produce gfe-plan: (1) verdict for user role (teacher/IT/leader/parent) (2) audience-route with links on https://edu.google.com/intl/ALL_us/ (3) edition-map — Fundamentals vs paid; point to compare-editions; no invented prices (4) classroom-setup if educator — classroom.google.com HITL (5) device-path — Chromebooks overview and/or chromeos-flex-install-prep for PC/Mac conversion (6) admin-checklist if IT (7) privacy-hygiene — no student PII in Fable; FERPA claims VERIFY LIVE (8) creative-class-handoff if media/stop-motion — Cloud Stop Motion + stop-motion-dev-kit (9) get-started-links (10) OPEN. Not educational or legal advice. User operates Google accounts HITL."
+    }
+  ]
+}

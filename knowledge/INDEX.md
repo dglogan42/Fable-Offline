@@ -16,16 +16,17 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **animals/** | Animal/dog compliance framework | `animal-compliance-framework.md` |
 | **brokers/** | Broker claim snapshots | `ec-markets-regulation.md` |
 | **calendar/** | Google Calendar · Zoom · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `meetings-playbook.md` |
+| **chromeos/** | ChromeOS Flex install on PC/Mac | `chromeos-flex.md` |
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
-| **education/** | Credential claims + UC Arts PG hub | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md` |
+| **education/** | Credential claims · UC Arts PG · Google for Education | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **health/** | Health NZ navigation | `healthnz-find-a-service.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
 | **math/** | Deep-explain + theorem frameworks | `deep-explain-framework.md`, `theorem-framework.md` |
-| **media/** | YouTube Live · Adobe · CapCut/Resolve · Krita · Stop Motion · 3D/CG | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md`, `stop-motion-studio.md`, `3d-animation-pipeline.md` |
+| **media/** | YouTube Live · Adobe · CapCut/Resolve · Krita · Stop Motion · Cloud SM · 3D/CG | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md`, `stop-motion-studio.md`, `cloud-stop-motion.md`, `3d-animation-pipeline.md` |
 | **physics/** | Solver + dimensional analysis | `solver-framework.md` |
 | **pdf/** | PDF.js + extract hygiene | `pdfjs-and-offline-render.md` |
 | **privacy/** | Third-party host maps + privacy design | See table below |

@@ -7,11 +7,13 @@
 
 Vendor: **Cateater** (Stop Motion Studio). Not product endorsement. UI and store SKUs change — re-check after updates.
 
+**Browser / Chromebook / cloud projects:** see companion **Cloud Stop Motion** — [cloudstopmotion.com](https://cloudstopmotion.com/) · knowledge `cloud-stop-motion.md` · skill procedures **chromebook-setup**, **cloud-upload**.
+
 ---
 
 ## What it is
 
-Cross-platform **stop-motion** capture + edit app: iPhone/iPad, Mac, Android, Windows, Chromebook, Amazon Fire.  
+Cross-platform **stop-motion** capture + edit app: iPhone/iPad, Mac, Android, Windows, Amazon Fire (and related).  
 Desktop-class frame editor, onion skin, guides, optional DSLR, green screen, audio, titles, share/export.
 
 Vendor messaging highlights **one-time purchase / no monthly subscription** (VERIFY LIVE; free vs Pro may differ by store).  

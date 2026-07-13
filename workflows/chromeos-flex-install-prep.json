@@ -1,0 +1,14 @@
+{
+  "name": "chromeos-flex-install-prep",
+  "description": "Plan ChromeOS Flex USB install on existing PC/Mac (official Google path)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Product: https://chromeos.google/products/chromeos-flex/ — Install: https://support.google.com/chromeosflex/answer/11552529 — skill chromeos-flex-install-prep. Official Recovery Utility only. USB + disk wipe warnings. Certified models list. No third-party ISOs. Not legal advice."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill chromeos-flex-install-prep and knowledge/chromeos/chromeos-flex.md, produce flex-plan: (1) verdict (2) compat-check — x86-64, 4GB RAM, 16GB storage, USB boot; user must check https://support.google.com/chromeosflex/answer/11513094 certified list for their model (3) backup-first — full install erases disk (4) usb-installer via Chromebook Recovery Utility per https://support.google.com/chromeosflex/answer/11541904 (≥8GB USB wiped); refuse random ISO sites (5) install-device high-level try-then-install (6) vs-chromeos differences (no Titan chip, Play/management differences) (7) fleet-manage only if school/business — Enterprise/Education Upgrade for Admin enrollment VERIFY LIVE (8) hand-off-cloud-apps: Cloud Stop Motion + stop-motion-dev-kit chromebook path if classroom animation is the goal (9) OPEN. If user only has ARM Chromebook already, say Flex is for PCs/Macs not replacing Chromebook HW. Not legal advice. User operates Recovery Utility HITL."
+    }
+  ]
+}

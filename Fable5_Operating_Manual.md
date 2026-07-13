@@ -992,13 +992,29 @@ Licensed apps only; presets/templates/export queues = “automation”; no crack
 **Automation:** `animation-dev-kit`.  
 FOSS Krita; frames in RAM — plan short clips. User installs Krita + optional FFmpeg. Hand off to creative pipeline / YouTube skills for publish (HITL).
 
-## 20r. Stop / motion dev kit (Stop Motion Studio)
-**Trigger:** Stop motion, claymation, LEGO short, Stop Motion Studio, onion-skin capture, export all images / GIF / 4K.  
-**Skill:** `stop-motion-dev-kit` — **sm-plan**, **download-install**, **set-rig**, **fps-recipe**, **capture-lab**, **onion-guides**, **camera-setup**, **chroma-key**, **export-package**, **publish-handoff**.  
-**Source:** [Download](https://www.stopmotionstudio.com/download/index.html) · [Help (FPS)](https://www.stopmotionstudio.com/help/stopmotion/en/adjust-the-speed-of-your-movie.html).  
-**Knowledge:** `knowledge/media/stop-motion-studio.md`.  
-**Automation:** `stop-motion-dev-kit`.  
-Official app only (no cracks). Start ~6 FPS; 12+ smoother. User HITL capture/export; publish via other skills.
+## 20r. Stop / motion dev kit (Studio · Cloud Stop Motion · Chromebook)
+**Trigger:** Stop motion, Chromebook, cloud upload/save, claymation, LEGO short, Cloud Stop Motion, onion-skin capture.  
+**Skill:** `stop-motion-dev-kit` — **sm-plan**, **tool-choose**, **chromebook-setup**, **cloud-upload**, **school-org-export**, **download-install**, **set-rig**, **fps-recipe**, **capture-lab**, **export-package**.  
+**Sources:** [Stop Motion Studio download](https://www.stopmotionstudio.com/download/index.html) · [Cloud Stop Motion](https://cloudstopmotion.com/) · [app.cloudstopmotion.com](https://app.cloudstopmotion.com).  
+**Knowledge:** `knowledge/media/stop-motion-studio.md`, `cloud-stop-motion.md`.  
+**Automation:** `stop-motion-dev-kit`, `stop-motion-cloud-chromebook`.  
+Cloud path: browser on Chromebook; projects in vendor cloud; user HITL. Fable does not auto-upload. School org console for export finished work. No cracks; no student PII in git.
+
+## 20t. ChromeOS Flex install prep
+**Trigger:** ChromeOS Flex, install Flex on PC/Mac, Flex USB, certified models, fleet convert Windows to Flex.  
+**Skill:** `chromeos-flex-install-prep` — **flex-plan**, **compat-check**, **backup-first**, **usb-installer**, **install-device**, **vs-chromeos**, **fleet-manage**, **hand-off-cloud-apps**.  
+**Source:** [Product](https://chromeos.google/products/chromeos-flex/) · [Prepare for installation](https://support.google.com/chromeosflex/answer/11552529) · [Create USB](https://support.google.com/chromeosflex/answer/11541904) · [Certified models](https://support.google.com/chromeosflex/answer/11513094).  
+**Knowledge:** `knowledge/chromeos/chromeos-flex.md`.  
+**Automation:** `chromeos-flex-install-prep`.  
+Official Recovery Utility only; full install erases disk. Hand off to Cloud Stop Motion / stop-motion chromebook path when relevant. Not legal advice.
+
+## 20u. Google for Education
+**Trigger:** Google for Education, Workspace for Education, Google Classroom, school Chromebooks, Gemini for Education, edu.google.com.  
+**Skill:** `google-for-education` — **gfe-plan**, **audience-route**, **edition-map**, **classroom-setup**, **device-path**, **admin-checklist**, **privacy-hygiene**, **creative-class-handoff**.  
+**Source:** [edu.google.com](https://edu.google.com/intl/ALL_us/) · [Workspace editions](https://edu.google.com/intl/ALL_us/workspace-for-education/editions/overview/) · [Classroom](https://edu.google.com/intl/ALL_us/workspace-for-education/products/classroom/).  
+**Knowledge:** `knowledge/education/google-for-education.md`.  
+**Automation:** `google-for-education`.  
+Map only; user operates school accounts HITL. No student PII in Fable. Not legal/compliance advice. Hand off Flex + Cloud Stop Motion for device/creative labs.
 
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
