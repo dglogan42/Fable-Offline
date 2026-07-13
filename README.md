@@ -4,8 +4,10 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, and **build/automate** — plus a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, and **build/automate** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, and a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
+
+**Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
 
 | Mode | What it does |
 |------|----------------|
@@ -65,38 +67,62 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 
 ```
 Fable-Offline/
-├── fable5_offline_agent.py      # CLI: chat, team, broker, legal, scrape, build, automate…
+├── fable5_offline_agent.py      # CLI harness (all modes)
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
-├── program.md                   # Loop-engineer constraints (Karpathy-style)
+├── program.md                   # Loop-engineer constraints
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
-├── requirements.txt
+├── requirements.txt             # openai + pypdf
 ├── fable5 / fable5.cmd          # Launchers
-├── scripts/                     # install + platform wrappers
-├── skills/                      # Skill library (broker, legal, edge, loops…)
-├── workflows/                   # Automation recipes (*.json)
-├── knowledge/brokers/           # Curated reg notes (scrapes gitignored)
-├── knowledge/legal/             # playbook.md shipped; matters/_local gitignored
-├── knowledge/education/         # Credential claim notes (e.g. LPU)
-├── knowledge/privacy/           # Third-party host / privacy maps
-├── knowledge/urban-planning/    # Planner competency framework
-├── knowledge/pdf/               # PDF.js notes + extract hygiene
-├── knowledge/climate/           # Climate plans + modelling hygiene
-├── knowledge/trade/             # MPI export + forwarder/exporter framework
-├── knowledge/culture/           # Gallery/exhibition notes + arts framework
-├── knowledge/aem/               # Adobe AEM public-site patterns
-├── knowledge/health/            # Health NZ directory notes
-├── knowledge/public-safety/     # Police / FENZ / emergency framework
-├── knowledge/property/          # Property manager framework
-├── knowledge/animals/           # Animal compliance framework
-├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
-├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
-├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
-├── .gitignore                   # Secrets, memory, scrapes, private legal
+├── scripts/                     # install, pdf_extract, platform wrappers
+├── skills/                      # Agentic skill library (see skills/INDEX.md)
+├── workflows/                   # Public automation recipes (*.json)
+├── knowledge/                   # Curated offline data (see knowledge/INDEX.md)
+│   ├── INDEX.md                 # Data catalog
+│   ├── aem/ animals/ brokers/ climate/ culture/
+│   ├── education/ health/ legal/ pdf/ privacy/
+│   ├── property/ public-safety/ trade/ urban-planning/
+├── workspace/                   # Runtime builds/extracts (gitignored)
+├── memory/                      # Runtime memory (gitignored)
+├── LICENSE                      # MIT © 2026 David Logan + domain notices
+├── .gitignore                   # Secrets, scrapes, PDFs, private knowledge
 └── README.md
 ```
 
-**Do not commit secrets:** `.env`, keys, tokens, raw contract PDFs, and `knowledge/legal/matters/` are gitignored. Ship only the public playbook template and curated notes.
+### What not to commit
+
+| Keep out of git | Why |
+|-----------------|-----|
+| `.env`, keys, tokens, `secrets/` | Credentials |
+| `memory/*`, `workspace/*` | Runtime / local experiments |
+| `knowledge/**/scrape-*`, `*-raw.*`, `*.pdf` | Bulky / sensitive dumps |
+| `knowledge/**/_local/`, `legal/matters/` | Private matter files |
+| Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
+
+Ship only **curated markdown** under `knowledge/` and shared skills/workflows. Full policy: [`.gitignore`](.gitignore) · data index: [`knowledge/INDEX.md`](knowledge/INDEX.md).
+
+## Knowledge data
+
+Offline **domain data** for skills and modes. Always re-verify primary sources before real decisions.
+
+| Domain | Path | Skill(s) |
+|--------|------|----------|
+| Privacy host maps | `knowledge/privacy/` | `privacy-host-map`, `privacy-design-planner` |
+| Urban planning / freight | `knowledge/urban-planning/` | `urban-planner-competencies` |
+| Climate pathways | `knowledge/climate/` | `climate-modeling` |
+| Trade / MPI / export | `knowledge/trade/` | `freight-forwarder-exporter` |
+| Property management | `knowledge/property/` | `property-manager-agent` |
+| Animals / dogs | `knowledge/animals/` | `animal-compliance-agent` |
+| Emergency / safety | `knowledge/public-safety/` | `emergency-services-agent` |
+| Health directory | `knowledge/health/` | `emergency-services-agent` |
+| Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
+| AEM patterns | `knowledge/aem/` | `aem-site-agent` |
+| Brokers | `knowledge/brokers/` | `broker-claim-audit` |
+| Education claims | `knowledge/education/` | `education-claim-audit` |
+| Legal playbook | `knowledge/legal/` | `legal-playbook` |
+| PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
+
+Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
 
 ## Requirements
@@ -534,9 +560,9 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `pdf` · `scrape` · `hitl` · `team`.
 
-Add your own recipes as `workflows/my-job.json`. Private experiments can go in `workflows/_local/` (gitignored).
+Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
 **Shell automation** is **off by default**. Enable carefully:
 
@@ -713,6 +739,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Emergency services (NZ)** — 111/105/Healthline/FENZ routing (not emergency response).
 - **Arts & culture** — exhibition briefs and visitor ops (not ticketing).
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
+- **Knowledge data** — curated offline notes; see [`knowledge/INDEX.md`](knowledge/INDEX.md).
 
 ## License
 
@@ -722,4 +749,25 @@ Copyright © **2026 David Logan**.
 
 You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided the copyright and permission notice are included in all copies or substantial portions of the Software. The Software is provided **“AS IS”**, without warranty of any kind, express or implied.
 
-**Disclaimer:** Broker mode is **not financial advice**. Legal mode is **not legal advice** and does not create an attorney–client relationship. Education mode is **not educational, career, or medical advice**. Privacy mode is **not legal advice** and is not a penetration test or compliance certification. Outputs require human verification (and licensed counsel for legal matters) before real-world use.
+See **[LICENSE](LICENSE)** for the full MIT text plus **additional notices** on:
+
+1. Domain knowledge / skills (not professional advice)  
+2. Third-party website and policy snapshots  
+3. Emergency routing (**call 111** in NZ emergencies)  
+4. Contribution licensing  
+
+### Domain disclaimers (summary)
+
+| Area | Not… |
+|------|------|
+| Broker | Financial advice |
+| Legal | Legal advice / attorney–client relationship |
+| Education | Educational or career advice |
+| Privacy / AEM | Legal advice, pen-test, or compliance certification |
+| Planning / climate | Planning consent or climate-science consultancy |
+| Export / freight | Customs, biosecurity, or brokerage advice |
+| Property / animals | Legal, valuation, veterinary, or agency advice |
+| Emergency / health | Medical advice or emergency response (call **111**) |
+| Arts | Ticketing or rights clearance |
+
+Outputs require **human verification** (and licensed professionals where required) before real-world use.

@@ -71,6 +71,10 @@ api_keys.*
 **/id_ed25519
 *.openai
 *.anthropic
+# Browser-exposed keys sometimes pasted into dumps — keep out of commits
+*maps*api*key*
+# Prefer curated privacy notes; never commit live form posts
+**/private-data/
 
 # --- IDE / editor ---
 .idea/
@@ -124,23 +128,19 @@ models/
 .ollama/
 
 # --- Fable 5 runtime (machine-local; do not commit) ---
-# Loop memory, cycle logs, lessons, HITL/build/automate/self-improve logs, LOOP_STATE
 memory/*
 !memory/.gitkeep
-
-# Build + team outputs (keep directory placeholder)
 workspace/*
 !workspace/.gitkeep
 
-# Skills: ship shared seeds; ignore local drafts / sandboxes
+# Skills / workflows: ship shared seeds; ignore local sandboxes
 skills/*.draft.md
 skills/_local/
 skills/**/__pycache__/
-
-# User-only private workflows (seeded public recipes stay tracked)
 workflows/_local/
 
-# Knowledge: keep curated .md; ignore bulky raw scrapes + private matter files
+# --- Knowledge data policy ---
+# Ship curated *.md only. Ignore scrapes, binaries, private matter.
 knowledge/**/*.html
 knowledge/**/*-raw.html
 knowledge/**/*-raw.txt
@@ -149,6 +149,19 @@ knowledge/**/scrape-*.md
 knowledge/**/scrape-*.txt
 knowledge/**/*.pdf
 knowledge/**/*.docx
+knowledge/**/*.xlsx
+knowledge/**/*.csv
+knowledge/**/_local/
+knowledge/**/matters/
+knowledge/**/*confidential*
+knowledge/**/*-raw*.txt
+knowledge/brokers/_local/
+knowledge/education/_local/
+knowledge/education/lpu-raw-*.txt
+knowledge/legal/_local/
+knowledge/legal/matters/
+knowledge/privacy/_local/
+knowledge/urban-planning/_local/
 knowledge/pdf/_local/
 knowledge/climate/_local/
 knowledge/trade/_local/
@@ -159,32 +172,23 @@ knowledge/public-safety/_local/
 knowledge/property/_local/
 knowledge/animals/_local/
 
-# PDFs and dumped PDF.js viewer bundles (use curated knowledge/pdf notes only)
+# PDFs and dumped PDF.js viewer bundles (curated knowledge/pdf notes only)
 *.pdf
 pdf.mjs
 pdf.min.js
 pdf.worker*.js
 **/pdfjs*.js
 !scripts/pdf_extract.py
-knowledge/legal/_local/
-knowledge/legal/matters/
-knowledge/legal/**/*confidential*
-knowledge/brokers/_local/
-knowledge/education/_local/
-knowledge/education/**/*-raw*.txt
-knowledge/education/lpu-raw-*.txt
-knowledge/privacy/_local/
-knowledge/urban-planning/_local/
-# Dropped empty AEM clientlib stubs / forensic JS dumps (keep curated .md only)
+
+# Empty AEM clientlib stubs / forensic JS dumps
 clientlib-dependencies*.js
 *.lc-d41d8cd98f00b204e9800998ecf8427e-lc.min.js
+**/etc.clientlibs/**
 
-# Optional private soul / program overrides (defaults stay in repo)
+# Optional private soul / program / config overrides
 SOUL.local.md
 soul.local.md
 program.local.md
-
-# Optional local overrides (defaults stay in repo)
 local_config.py
 local_config.json
 .fable5.local.*
