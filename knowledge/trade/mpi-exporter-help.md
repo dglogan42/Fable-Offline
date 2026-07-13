@@ -5,7 +5,7 @@
 **Agency:** Ministry for Primary Industries (MPI)  
 **CMS (meta generator):** Silverstripe CMS 5.4  
 **Captured:** 2026-07-12 (HTML head + partial shell; body dump CSS-heavy)  
-**Skills:** trade/export guidance; `privacy-host-map`; `education-claim-audit` only if marketing overclaims  
+**Skills:** `freight-forwarder-exporter` (mpi-export-path); trade/export guidance; `privacy-host-map`  
 **Not legal, export, or customs advice.** Requirements change by product and destination — use official MPI/NZTE channels for decisions.
 
 ---

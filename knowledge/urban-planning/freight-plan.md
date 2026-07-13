@@ -7,6 +7,12 @@
 
 ---
 
+## Related: commercial export / forwarding
+
+Strategic network planning ≠ booking a container. For shipment execution, Incoterms, docs, and MPI exporter paths use skill **`freight-forwarder-exporter`** and `knowledge/trade/freight-forwarder-exporter.md`.
+
+---
+
 ## Why freight belongs in urban planning
 
 Cities move **people and goods**. Plans that only optimise passenger modes can:

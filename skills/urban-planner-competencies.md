@@ -106,6 +106,7 @@ When using AT **Future Connect** mapping portal (`knowledge/urban-planning/at-fu
 | **Council compliance / enforcement approach** | **map-compliance-policy** |
 | **Open space / sports field capacity programmes** | **map-open-space-capacity** |
 | **Primary sector export help (MPI)** | **map-export-help** (see `knowledge/trade/`) |
+| **Commercial export / forwarding** | hand off to skill **`freight-forwarder-exporter`** (shipment scale) |
 | Short coaching reply | **brief** |
 
 ---

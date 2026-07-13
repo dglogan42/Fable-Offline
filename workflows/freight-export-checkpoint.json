@@ -1,0 +1,26 @@
+{
+  "name": "freight-export-checkpoint",
+  "description": "Export readiness + forwarder/exporter role split + doc checklist — not customs or legal advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill freight-forwarder-exporter. VERIFY LIVE all destination rules. No invented HS codes or freight rates."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill freight-forwarder-exporter and knowledge/trade/freight-forwarder-exporter.md plus mpi-exporter-help.md when NZ primary/food/fibre may apply, produce: (1) verdict first ready/not ready (2) scope card from user info or explicit questions (3) exporter vs forwarder vs broker vs MPI role-split table (4) document matrix (5) shipment or export-readiness checklist (6) Incoterms coaching only if relevant with year (7) official next steps (8) explicit non-claims. Do not invent regulations, HS codes, or rates.",
+      "criteria": [
+        "Verdict first on export readiness",
+        "Role-split table present",
+        "Document matrix or checklist present",
+        "No invented HS codes, duty rates, or freight quotes",
+        "VERIFY LIVE or official sources for regulatory musts",
+        "MPI path referenced if NZ primary/food/fibre in scope",
+        "Not customs/legal advice disclaimer present"
+      ],
+      "min_score": 8,
+      "max_cycles": 5,
+      "self_improve": false
+    }
+  ]
+}

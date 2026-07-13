@@ -627,6 +627,27 @@ Not legal or planning consent advice. Do not invent zoning rules, freight hierar
 
 ---
 
+## 19b. Freight forwarder & exporter agent
+
+**Trigger:** export readiness, Incoterms coaching, shipment checklists, MPI food/fibre export paths, forwarder vs exporter role split.
+
+### Skill
+`freight-forwarder-exporter`: **export-readiness**, **shipment-checklist**, **incoterms-coach**, **doc-pack**, **cost-build**, **mpi-export-path**, **role-split**, **design-export-agent**.
+
+### Knowledge
+- `knowledge/trade/freight-forwarder-exporter.md`  
+- `knowledge/trade/mpi-exporter-help.md`  
+- Strategic networks remain under `knowledge/urban-planning/freight-plan.md` (different scale)
+
+### Automation
+- `freight-export-checkpoint`  
+- Related: `freight-plan-review` (urban strategic freight)
+
+### Boundaries
+Not customs brokerage, biosecurity certification, or freight rate binding. No invented HS codes or rates. HITL before external filings or commercial commitments.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”
@@ -690,6 +711,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Privacy: `--privacy` · `/privacy` · `--automate privacy-design-plan` · knowledge/privacy/
    - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · `--automate freight-plan-review` · knowledge/urban-planning/
    - Climate: skill `climate-modeling` · `--automate climate-plan-review` · knowledge/climate/ · `--pdf` Auckland Climate Plan
+   - Export/forwarder: skill `freight-forwarder-exporter` · `--automate freight-export-checkpoint` · knowledge/trade/
    - PDF: `--pdf file.pdf` · `/pdf` · skill `pdf-render` · `--automate pdf-extract-review`
    - Career path: `ROADMAP.md` · skill `agentic-engineer-roadmap` · `--automate agentic-checkpoint`
 

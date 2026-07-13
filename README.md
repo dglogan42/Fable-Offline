@@ -25,6 +25,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
+| **Export / forwarder** | Export readiness · Incoterms · doc packs · MPI path (`knowledge/trade/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
@@ -76,6 +77,8 @@ Fable-Offline/
 ├── knowledge/urban-planning/    # Planner competency framework
 ├── knowledge/pdf/               # PDF.js notes + extract hygiene
 ├── knowledge/climate/           # Climate plans + modelling hygiene
+├── knowledge/trade/             # MPI export + forwarder/exporter framework
+├── knowledge/culture/           # Gallery/exhibition notes
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -198,7 +201,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `privacy-host-map` | Engineer scored third-party host / privacy map |
 | `privacy-design-plan` | Design planner: architecture, risks, P0–P3, HITL |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
-| `freight-plan-review` | Freight network / freight plan structured review |
+| `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
+| `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
 | `climate-plan-review` | Climate plan + emissions modelling audit |
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 
@@ -330,6 +334,36 @@ python fable5_offline_agent.py --automate freight-plan-review
 Cross-links: programme marketing → `education-claim-audit` / privacy maps; PDFs → `pdf-render`; portal privacy → `knowledge/privacy/at-future-connect-hosts.md`.
 
 **Not legal or planning consent advice.**
+
+## Freight forwarder & exporter agent
+
+Skill **`freight-forwarder-exporter`**: commercial **shipment** scale (vs urban **strategic freight networks**).
+
+| Procedure | Use |
+|-----------|-----|
+| **export-readiness** | Product → destination gap analysis |
+| **shipment-checklist** | Pre-book through POD phases |
+| **incoterms-coach** | Risk/cost split (state Incoterms® year) |
+| **doc-pack** | Invoice, packing list, B/L/AWB, certificates matrix |
+| **cost-build** | Landed skeleton from **user quotes only** |
+| **mpi-export-path** | NZ food & fibre → MPI Exporter Help |
+| **role-split** | Exporter / forwarder / broker / MPI / carrier |
+| **design-export-agent** | Offline agent architecture |
+
+```bash
+python fable5_offline_agent.py --automate freight-export-checkpoint
+# Chat: "export-readiness: honey to Japan, FOB Auckland, no HS yet"
+# Chat: "mpi-export-path for dairy powder"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/freight-forwarder-exporter.md` |
+| Framework | `knowledge/trade/freight-forwarder-exporter.md` |
+| MPI Exporter Help | `knowledge/trade/mpi-exporter-help.md` |
+| Workflow | `workflows/freight-export-checkpoint.json` |
+
+**Not customs, biosecurity, or freight brokerage advice.** No invented HS codes or rates.
 
 ## Climate modeling (Auckland Climate Plan)
 
@@ -563,6 +597,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Urban planner competencies** — GIS-to-stakeholder framework for learning and skill audits (not professional advice).
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
 - **Climate modeling** — pathway/BAU hygiene; Auckland Climate Plan seed (not climate advice).
+- **Freight forwarder / exporter** — readiness, docs, Incoterms, MPI path (not customs advice).
 
 ## License
 

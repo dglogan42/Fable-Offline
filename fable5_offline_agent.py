@@ -219,6 +219,8 @@ def knowledge_root() -> Path:
     (root / "urban-planning").mkdir(parents=True, exist_ok=True)
     (root / "pdf").mkdir(parents=True, exist_ok=True)
     (root / "climate").mkdir(parents=True, exist_ok=True)
+    (root / "trade").mkdir(parents=True, exist_ok=True)
+    (root / "culture").mkdir(parents=True, exist_ok=True)
     return root
 
 
