@@ -102,6 +102,11 @@ from the public Heart of the City Health & Wellbeing directory. They are **not**
 medical advice or an official Heart of the City product. Venue listings remain
 with their owners; book directly and re-verify live.
 
+Skill `knit-natter-social-club` and `knowledge/social/knit-natter-auckland.md` help
+**find or start** local knit-and-chat social clubs. They are **not** booking services
+or medical advice. Event prices, venues, and Meetup/guild details remain with their
+organisers; re-verify live before attending.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

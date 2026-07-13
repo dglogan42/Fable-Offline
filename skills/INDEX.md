@@ -31,6 +31,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **hotc-wellness-retreat-kit**: [Heart of the City CBD wellness retreat brochure](hotc-wellness-retreat-kit.md)
 - **inaturalist-flora-fauna-kit**: [iNaturalist flora & fauna kit (native biota · API · OSM)](inaturalist-flora-fauna-kit.md)
 - **inkstone-resource-kit**: [Inkstone resource kit (yueimg SPA · privacy)](inkstone-resource-kit.md)
+- **knit-natter-social-club**: [Knit & Natter social club (local fibre meetups)](knit-natter-social-club.md)
 - **instagram-selfie-selector**: [Instagram selfie selector (fits · makeup · slay)](instagram-selfie-selector.md)
 - **legal-playbook**: [Legal playbook (contract / NDA / vendor)](legal-playbook.md)
 - **loop-engineer**: [Loop engineer](loop-engineer.md)

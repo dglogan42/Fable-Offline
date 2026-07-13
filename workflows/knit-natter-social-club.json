@@ -1,0 +1,14 @@
+{
+  "name": "knit-natter-social-club",
+  "description": "Local Knit & Natter social club: attend Milford seed, discover groups, or start a suburb club",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill knit-natter-social-club. Seed: 2nd & 4th Tue 5–7pm Nirvana 95 Kitchener Rd Milford, $10 incl drink (VERIFY LIVE wildandwoollyyarns.co.nz). Not a booking agent. Discover Meetup / guilds / Knit World. calendar-mail-meetings for invites."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill knit-natter-social-club and knowledge/social/knit-natter-auckland.md, produce knit-plan: (1) verdict attend vs discover vs start-club (2) if Auckland/Milford: attend-milford with 2nd/4th Tuesday 5–7pm, Nirvana 95 Kitchener Rd, $10 incl drink, VERIFY LIVE listing (3) discover-groups: Meetup knitting Auckland, Handweavers & Spinners Guild, Knit World knit & chat, libraries (4) if founding: start-club 30-day launch + venue checklist (5) schedule-natter calendar notes for 2nd/4th Tuesday pattern (6) welcome-hygiene (7) OPEN prices/venues change. Do not invent host phones or sold-out status."
+    }
+  ]
+}

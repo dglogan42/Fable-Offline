@@ -1125,6 +1125,14 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `hotc-wellness-retreat-kit`.  
 **Not medical advice.** Not an official HOTC package. Book venues HITL.
 
+## 20ai. Knit & Natter social club kit
+**Trigger:** Knit & Natter, knit and chat, crochet meetup, start a knitting group, Milford Nirvana yarn night.  
+**Skill:** `knit-natter-social-club` — **knit-plan**, **attend-milford**, **discover-groups**, **start-club**, **schedule-natter**, **host-runbook**.  
+**Seed:** 2nd & 4th Tue 5–7pm · Nirvana 95 Kitchener Rd Milford · $10 incl drink · [Wild & Woolly listing](https://www.wildandwoollyyarns.co.nz/products/knit-natter-2026).  
+**Knowledge:** `knowledge/social/knit-natter-auckland.md`, `knowledge/privacy/knit-natter-hosts.md`.  
+**Automation:** `knit-natter-social-club`.  
+**Not a booking agent.** VERIFY LIVE. Discover Meetup / guilds / Knit World. Calendar via `calendar-mail-meetings`.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

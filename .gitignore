@@ -76,6 +76,11 @@ mbti_state.json
 workspace/education/tedx-pathways/**
 !workspace/education/tedx-pathways/.gitkeep
 **/tedx*transcript*full*
+# Knit & Natter — private member lists / host contacts
+knowledge/social/_local/
+workspace/social/knit-natter/**
+!workspace/social/knit-natter/.gitkeep
+**/meetup*member*export*
 
 # --- Secrets & local env ---
 .env

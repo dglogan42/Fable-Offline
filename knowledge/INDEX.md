@@ -34,7 +34,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **privacy/** | Third-party host maps + privacy design | See table below |
 | **property/** | Property manager framework | `property-manager-framework.md` |
 | **public-safety/** | Emergency / Police / FENZ | `emergency-services-framework.md`, `nz-police-105.md`, `fenz-incident-reports.md` |
-| **social/** | Instagram fits · Snapchat Web · RSS share | `instagram-selfie-playbook.md`, `snapchat-web-feed.md`, `rss-share.md` |
+| **social/** | Instagram fits · Snapchat Web · RSS · Knit & Natter clubs | `instagram-selfie-playbook.md`, `snapchat-web-feed.md`, `rss-share.md`, `knit-natter-auckland.md` |
 | **trade/** | Export + freight forwarder | `freight-forwarder-exporter.md`, `mpi-exporter-help.md` |
 | **urban-planning/** | Planner competencies, freight, AC programmes | `competencies.md`, `freight-plan.md`, … |
 | **steam/** | Steam SIM launch for model soak tests | `sim-games-launch.md` |
@@ -76,6 +76,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `inaturalist-hosts.md` | iNaturalist.org / API / forum / static (flora-fauna kit) |
 | `tedx-youtube-hosts.md` | TEDx Talks / TED / TED-Ed YouTube + web watch surfaces |
 | `heartofthecity-hosts.md` | Heart of the City (Auckland CBD directory) wellness pages |
+| `knit-natter-hosts.md` | Yarn shop / Meetup / Facebook Knit & Natter discovery seeds |
 
 ---
 
