@@ -56,6 +56,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `zoom-hosts.md` | Zoom Web Client join (`app.zoom.us/wc/join`) seed map |
 | `doc-blog-hosts.md` | DOC Conservation blog (WordPress/Jetpack) |
 | `uc-arts-pg-hosts.md` | UC Arts postgraduate hub (AEM + multi-analytics) |
+| `wgtn-ac-nz-hosts.md` | Victoria University of Wellington — TikTok Analytics seed |
 
 ---
 

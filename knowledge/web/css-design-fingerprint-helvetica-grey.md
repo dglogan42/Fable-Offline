@@ -120,10 +120,16 @@ Stack + flex shell **still do not identify** a CMS.
 - Notes: matches samples 1–2 flex+Helvetica grey shell
 ```
 
+### Candidate (not bound)
+
+Network capture from the same workstream shows **TikTok Analytics** loading with `Origin`/`Referer` **https://www.wgtn.ac.nz/** — see `knowledge/privacy/wgtn-ac-nz-hosts.md`.  
+That **does not** prove this CSS came from VUW; only a same-page CSS extract + URL would bind. Status: **candidate only**.
+
 ---
 
 ## Cross-links
 
 - AEM path fingerprints: `knowledge/aem/aem-patterns.md`  
 - Procedure: `aem-site-agent` → **fingerprint-css**  
+- VUW TikTok tracker seed: `knowledge/privacy/wgtn-ac-nz-hosts.md`  
 - Full host maps: `knowledge/privacy/`  
