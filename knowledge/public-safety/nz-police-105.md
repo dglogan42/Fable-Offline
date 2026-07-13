@@ -5,7 +5,7 @@
 **Drupal node:** `/node/66454`  
 **Captured:** 2026-07-12  
 **CMS:** Drupal 11 (theme `bs_barrio_police`)  
-**Skills:** public-safety navigation; `privacy-host-map`  
+**Skills:** `emergency-services-agent`, `privacy-host-map`  
 **Not legal advice.** Not a substitute for emergency response.
 
 ---

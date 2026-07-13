@@ -4,7 +4,8 @@
 
 **Upstream planner:** For multi-step review programmes, agent architecture, or phased roadmaps, use **`privacy-design-planner`** first (or after the first host map).  
 **AEM pages:** use **`aem-site-agent`** for clientlib/data-layer fingerprints, then this skill for host classification.  
-**Arts/gallery SPAs:** use **`arts-culture-agent`** for exhibition content; this skill for trackers.
+**Arts/gallery SPAs:** use **`arts-culture-agent`** for exhibition content; this skill for trackers.  
+**Police / Fire / Health safety sites:** use **`emergency-services-agent`** for channel routing; this skill for trackers.
 
 ## Stance
 A host in a minified JS string is **not** proof of a live network call. Classify every third party by **how it appears** (LOAD / CONFIG / CLICK / BUNDLE). Treat impressive privacy policies as **claims** until the page’s actual processors match. Apply Section 4 (re-derive): do not invent cookies, retention periods, or consent behaviour without evidence.

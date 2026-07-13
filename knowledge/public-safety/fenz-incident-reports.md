@@ -6,7 +6,7 @@
 **CMS:** Silverstripe CMS 5.4  
 **Page type:** `IncidentReportLandingPage`  
 **Captured:** 2026-07-12  
-**Skills:** public-safety navigation; `privacy-host-map`  
+**Skills:** `emergency-services-agent`, `privacy-host-map`  
 **Not emergency advice.** For fire/medical/police emergency in NZ: call **111** and ask for the right service.
 
 ---

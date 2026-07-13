@@ -14,6 +14,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **climate-modeling**: [Climate modeling (pathways, inventory, hazards)](climate-modeling.md)
 - **edge-vs-luck**: [Edge vs luck (Fooled by Randomness)](edge-vs-luck.md)
 - **education-claim-audit**: [Education & credential claim audit](education-claim-audit.md)
+- **emergency-services-agent**: [Emergency services agent (NZ)](emergency-services-agent.md)
 - **freight-forwarder-exporter**: [Freight forwarder & exporter agent](freight-forwarder-exporter.md)
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
 - **legal-playbook**: [Legal playbook (contract / NDA / vendor)](legal-playbook.md)

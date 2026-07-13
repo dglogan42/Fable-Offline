@@ -1,0 +1,25 @@
+{
+  "name": "emergency-route-check",
+  "description": "Route to 111/105/Healthline/FENZ/Health NZ official channels — not emergency response",
+  "steps": [
+    {
+      "type": "note",
+      "text": "If life/safety threat or unclear emergency: Call 111 first. Skill emergency-services-agent."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill emergency-services-agent and knowledge/public-safety/emergency-services-framework.md plus nz-police-105.md, fenz-incident-reports.md, and knowledge/health/healthnz-find-a-service.md as relevant, produce: (1) primary action first (111/105/Healthline/official URL) (2) one-sentence why (3) secondary steps only after primary (4) official links (5) privacy note if HTML stack mentioned (6) explicit non-claims. Never discourage 111 when urgency is unclear. Do not invent wait times or take reports.",
+      "criteria": [
+        "Primary action is 111 when urgency unclear or emergency language present",
+        "105 vs 111 distinguished for police non-emergency",
+        "FENZ or Health NZ referenced only when in scope",
+        "No invented phone numbers beyond 111/105 published patterns",
+        "Not medical/legal/emergency-response advice disclaimer",
+        "No collection of incident PII into recommendations"
+      ],
+      "min_score": 9,
+      "max_cycles": 3,
+      "self_improve": false
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 **Title:** Find a service  
 **Agency:** Health New Zealand | Te Whatu Ora  
 **Captured:** 2026-07-12  
-**Skills:** health navigation (directory only); `privacy-host-map`  
+**Skills:** `emergency-services-agent` (health-find-service), health navigation (directory only); `privacy-host-map`  
 **Not medical advice.** Not a substitute for emergency care. For life-threatening emergencies call **111**. For 24/7 health advice: **Healthline**.
 
 ---

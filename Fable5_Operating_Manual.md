@@ -648,6 +648,29 @@ Not customs brokerage, biosecurity certification, or freight rate binding. No in
 
 ---
 
+## 20a. Emergency services agent (NZ)
+
+**Trigger:** 111/105, Police non-emergency, FENZ, Healthline, Find a service, escape plans, safety routing.
+
+### Skill
+`emergency-services-agent`: **route-emergency**, **police-105**, **fenz-guide**, **health-find-service**, **escape-plan**, **map-safety-privacy**, **design-emergency-agent**.
+
+### Hard gate
+Unclear or life-threatening → **Call 111** first.
+
+### Knowledge
+- `knowledge/public-safety/emergency-services-framework.md`  
+- `knowledge/public-safety/nz-police-105.md`  
+- `knowledge/public-safety/fenz-incident-reports.md`  
+- `knowledge/health/healthnz-find-a-service.md`  
+
+### Automation
+- `emergency-route-check` (min score 9)
+
+**Not medical/legal/emergency-response advice.** Do not take reports.
+
+---
+
 ## 20b. Arts & culture agent
 
 **Trigger:** exhibitions, galleries, visitor FAQs, timed tickets, content warnings.
@@ -749,6 +772,7 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · `--automate freight-plan-review` · knowledge/urban-planning/
    - Climate: skill `climate-modeling` · `--automate climate-plan-review` · knowledge/climate/ · `--pdf` Auckland Climate Plan
    - Export/forwarder: skill `freight-forwarder-exporter` · `--automate freight-export-checkpoint` · knowledge/trade/
+   - Emergency NZ: skill `emergency-services-agent` · `--automate emergency-route-check` · knowledge/public-safety/
    - Arts: skill `arts-culture-agent` · `--automate arts-exhibition-brief` · knowledge/culture/
    - AEM: skill `aem-site-agent` · `--automate aem-page-audit` · knowledge/aem/
    - PDF: `--pdf file.pdf` · `/pdf` · skill `pdf-render` · `--automate pdf-extract-review`

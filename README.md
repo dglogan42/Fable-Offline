@@ -26,6 +26,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
 | **Export / forwarder** | Export readiness · Incoterms · doc packs · MPI path (`knowledge/trade/`) |
+| **Emergency services (NZ)** | 111/105 routing · FENZ · Health NZ finder (`knowledge/public-safety/`) |
 | **Arts & culture** | Exhibition briefs · visitor ops · content warnings (`knowledge/culture/`) |
 | **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
@@ -208,6 +209,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
+| `emergency-route-check` | 111/105/Healthline/FENZ/Health NZ routing (min score 9) |
 | `arts-exhibition-brief` | Exhibition/visitor brief (arts-culture-agent) |
 | `aem-page-audit` | AEM fingerprint + clientlibs + privacy map |
 | `climate-plan-review` | Climate plan + emissions modelling audit |
@@ -371,6 +373,33 @@ python fable5_offline_agent.py --automate freight-export-checkpoint
 | Workflow | `workflows/freight-export-checkpoint.json` |
 
 **Not customs, biosecurity, or freight brokerage advice.** No invented HS codes or rates.
+
+## Emergency services agent (NZ)
+
+Skill **`emergency-services-agent`**: hard-gate routing to official channels.
+
+| Procedure | Use |
+|-----------|-----|
+| **route-emergency** | 111 first when danger/unclear |
+| **police-105** | Non-emergency Police |
+| **fenz-guide** | Fire incidents + escape plan education |
+| **health-find-service** | Health NZ directory / Healthline |
+| **escape-plan** | FENZ 3-step home fire plan |
+| **map-safety-privacy** | Trackers on safety sites |
+
+```bash
+python fable5_offline_agent.py --automate emergency-route-check
+# Chat: "Is 105 or 111 for a car broken into yesterday?"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/emergency-services-agent.md` |
+| Framework | `knowledge/public-safety/emergency-services-framework.md` |
+| Seeds | `nz-police-105.md`, `fenz-incident-reports.md`, `health/healthnz-find-a-service.md` |
+| Workflow | `workflows/emergency-route-check.json` |
+
+**In emergency call 111.** Not medical/legal advice. Agents do not take reports.
 
 ## Arts & culture agent
 
@@ -641,6 +670,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
 - **Climate modeling** — pathway/BAU hygiene; Auckland Climate Plan seed (not climate advice).
 - **Freight forwarder / exporter** — readiness, docs, Incoterms, MPI path (not customs advice).
+- **Emergency services (NZ)** — 111/105/Healthline/FENZ routing (not emergency response).
 - **Arts & culture** — exhibition briefs and visitor ops (not ticketing).
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
 
