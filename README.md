@@ -26,6 +26,8 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
 | **Export / forwarder** | Export readiness · Incoterms · doc packs · MPI path (`knowledge/trade/`) |
+| **Property manager** | Rates · tenancy ops · maintenance · consents navigation (`knowledge/property/`) |
+| **Animal compliance** | Dogs/animals bylaws · complaints · pets in rentals (`knowledge/animals/`) |
 | **Emergency services (NZ)** | 111/105 routing · FENZ · Health NZ finder (`knowledge/public-safety/`) |
 | **Arts & culture** | Exhibition briefs · visitor ops · content warnings (`knowledge/culture/`) |
 | **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
@@ -84,7 +86,9 @@ Fable-Offline/
 ├── knowledge/culture/           # Gallery/exhibition notes + arts framework
 ├── knowledge/aem/               # Adobe AEM public-site patterns
 ├── knowledge/health/            # Health NZ directory notes
-├── knowledge/public-safety/     # Police / FENZ notes
+├── knowledge/public-safety/     # Police / FENZ / emergency framework
+├── knowledge/property/          # Property manager framework
+├── knowledge/animals/           # Animal compliance framework
 ├── workspace/                   # Build + team outputs (gitignored; .gitkeep)
 ├── memory/                      # Runtime memory / HITL logs (gitignored; .gitkeep)
 ├── LICENSE                      # MIT — Copyright (c) 2026 David Logan
@@ -209,6 +213,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
+| `property-manager-checkpoint` | Property intake + tenancy/maintenance checklist |
+| `animal-compliance-checkpoint` | Animal/dog compliance checklist + routing |
 | `emergency-route-check` | 111/105/Healthline/FENZ/Health NZ routing (min score 9) |
 | `arts-exhibition-brief` | Exhibition/visitor brief (arts-culture-agent) |
 | `aem-page-audit` | AEM fingerprint + clientlibs + privacy map |
@@ -373,6 +379,38 @@ python fable5_offline_agent.py --automate freight-export-checkpoint
 | Workflow | `workflows/freight-export-checkpoint.json` |
 
 **Not customs, biosecurity, or freight brokerage advice.** No invented HS codes or rates.
+
+## Property manager agent
+
+Skill **`property-manager-agent`**: property intake, rates/valuations navigation, tenancy ops checklists, maintenance, consents/compliance handoffs, incident routing.
+
+```bash
+python fable5_offline_agent.py --automate property-manager-checkpoint
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/property-manager-agent.md` |
+| Framework | `knowledge/property/property-manager-framework.md` |
+| Workflow | `workflows/property-manager-checkpoint.json` |
+
+**Not legal, valuation, or real-estate agency advice.**
+
+## Animal compliance agent
+
+Skill **`animal-compliance-agent`**: owner checklists, complaint routing, attack/incident routing (111 when danger), pets in property, council bylaw navigation, MPI animal/export adjacency.
+
+```bash
+python fable5_offline_agent.py --automate animal-compliance-checkpoint
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/animal-compliance-agent.md` |
+| Framework | `knowledge/animals/animal-compliance-framework.md` |
+| Workflow | `workflows/animal-compliance-checkpoint.json` |
+
+**Danger from animal → call 111.** Not legal or veterinary advice.
 
 ## Emergency services agent (NZ)
 
@@ -670,6 +708,8 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **PDF render** — offline pypdf extract + PDF.js identification (not a cloud document API).
 - **Climate modeling** — pathway/BAU hygiene; Auckland Climate Plan seed (not climate advice).
 - **Freight forwarder / exporter** — readiness, docs, Incoterms, MPI path (not customs advice).
+- **Property manager** — tenancy/ops checklists (not legal or valuation advice).
+- **Animal compliance** — dog/animal bylaw navigation (not veterinary or legal advice).
 - **Emergency services (NZ)** — 111/105/Healthline/FENZ routing (not emergency response).
 - **Arts & culture** — exhibition briefs and visitor ops (not ticketing).
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).

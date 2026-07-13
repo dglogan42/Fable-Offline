@@ -1,0 +1,24 @@
+{
+  "name": "animal-compliance-checkpoint",
+  "description": "Animal/dog compliance checklist and routing — not legal or veterinary advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill animal-compliance-agent. Danger/attack → 111. No invented fines or seizures."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill animal-compliance-agent and knowledge/animals/animal-compliance-framework.md, produce: (1) primary route (111 vs council animal control vs MPI vs tenancy) (2) owner-checklist or complaint-route as fits (3) jurisdiction named or asked (4) rental/property notes if relevant (5) explicit non-claims. Do not invent bylaw fine schedules or veterinary treatment.",
+      "criteria": [
+        "111 used when danger/attack language present",
+        "Council vs MPI path distinguished when relevant",
+        "Checklist or complaint steps present",
+        "No invented fines or legal outcomes",
+        "Not legal/veterinary advice disclaimer"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

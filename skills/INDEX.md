@@ -7,6 +7,7 @@ Loaded into context on every run so the system compounds without retraining weig
 
 - **aem-site-agent**: [Adobe Experience Manager (AEM) site agent](aem-site-agent.md)
 - **agentic-engineer-roadmap**: [Agentic engineer roadmap (6 months)](agentic-engineer-roadmap.md)
+- **animal-compliance-agent**: [Animal compliance agent](animal-compliance-agent.md)
 - **arts-culture-agent**: [Arts & culture agent](arts-culture-agent.md)
 - **broker-claim-audit**: [Broker claim audit (marketing vs evidence)](broker-claim-audit.md)
 - **broker-user-model**: [Broker user model (disciplined retail CFD client)](broker-user-model.md)
@@ -22,5 +23,6 @@ Loaded into context on every run so the system compounds without retraining weig
 - **pdf-render**: [PDF render & extract (offline)](pdf-render.md)
 - **privacy-design-planner**: [Privacy design planner (agentic AI)](privacy-design-planner.md)
 - **privacy-host-map**: [Privacy & third-party host map](privacy-host-map.md)
+- **property-manager-agent**: [Property manager agent](property-manager-agent.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
 - **urban-planner-competencies**: [Urban planner competencies](urban-planner-competencies.md)

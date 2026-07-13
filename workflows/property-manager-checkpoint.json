@@ -1,0 +1,25 @@
+{
+  "name": "property-manager-checkpoint",
+  "description": "Property intake + tenancy/maintenance/compliance checklist — not legal or valuation advice",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill property-manager-agent. No invented rates, rents, or eviction rulings. Emergencies → 111."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill property-manager-agent and knowledge/property/property-manager-framework.md, produce: (1) verdict on ops gaps (2) property-intake card (3) relevant checklists (tenancy and/or maintenance and/or consents) (4) official channel list for the jurisdiction (5) handoff to animal-compliance or emergency-services if needed (6) explicit non-claims. Do not invent valuation or legal outcomes.",
+      "criteria": [
+        "Verdict first on gaps",
+        "Intake or checklist present",
+        "Official channels named as verify-live",
+        "No invented rates, rents, or legal rulings",
+        "Emergency routing correct if safety issue present",
+        "Not legal/valuation advice disclaimer"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

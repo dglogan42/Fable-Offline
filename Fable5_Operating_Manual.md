@@ -648,6 +648,42 @@ Not customs brokerage, biosecurity certification, or freight rate binding. No in
 
 ---
 
+## 19c. Property manager agent
+
+**Trigger:** rates, tenancy ops, maintenance, consents navigation, landlord/PM checklists.
+
+### Skill
+`property-manager-agent`: **property-intake**, **rates-valuations**, **tenancy-ops**, **maintenance-plan**, **consents-compliance**, **property-incident**, **design-pm-agent**.
+
+### Knowledge
+- `knowledge/property/property-manager-framework.md`  
+- Cross: AC compliance policy, emergency-services, animal-compliance  
+
+### Automation
+- `property-manager-checkpoint`  
+
+**Not legal, valuation, or real-estate agency advice.**
+
+---
+
+## 19d. Animal compliance agent
+
+**Trigger:** dogs/animals registration, bylaws, complaints, pets in rentals, MPI animal export adjacency.
+
+### Skill
+`animal-compliance-agent`: **owner-checklist**, **complaint-route**, **incident-animal**, **pets-in-property**, **map-animal-bylaw**, **mpi-animal-path**, **design-animal-agent**.
+
+### Knowledge
+- `knowledge/animals/animal-compliance-framework.md`  
+
+### Automation
+- `animal-compliance-checkpoint`  
+
+**Hard gate:** person in danger from animal → **111**.  
+**Not legal or veterinary advice.**
+
+---
+
 ## 20a. Emergency services agent (NZ)
 
 **Trigger:** 111/105, Police non-emergency, FENZ, Healthline, Find a service, escape plans, safety routing.
@@ -772,6 +808,8 @@ spent. Otherwise end the cycle cleanly for the next run.
    - Urban planning: skill `urban-planner-competencies` · `--automate urban-planner-checkpoint` · `--automate freight-plan-review` · knowledge/urban-planning/
    - Climate: skill `climate-modeling` · `--automate climate-plan-review` · knowledge/climate/ · `--pdf` Auckland Climate Plan
    - Export/forwarder: skill `freight-forwarder-exporter` · `--automate freight-export-checkpoint` · knowledge/trade/
+   - Property: skill `property-manager-agent` · `--automate property-manager-checkpoint` · knowledge/property/
+   - Animals: skill `animal-compliance-agent` · `--automate animal-compliance-checkpoint` · knowledge/animals/
    - Emergency NZ: skill `emergency-services-agent` · `--automate emergency-route-check` · knowledge/public-safety/
    - Arts: skill `arts-culture-agent` · `--automate arts-exhibition-brief` · knowledge/culture/
    - AEM: skill `aem-site-agent` · `--automate aem-page-audit` · knowledge/aem/
