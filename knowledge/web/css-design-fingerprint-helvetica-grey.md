@@ -1,19 +1,29 @@
 # CSS design-system fingerprint — Helvetica Neue / grey body (orphan)
 
-**Skill:** `aem-site-agent` (visual/CSS fingerprint procedure) · `privacy-host-map` (when full HTML arrives)  
-**Origin:** User-supplied **CSS-only** extract (no URL, no HTML head).  
+**Skill:** `aem-site-agent` (**fingerprint-css**) · `privacy-host-map` (when full HTML arrives)  
+**Origin:** User-supplied **CSS-only** extracts (no URL, no HTML head).  
 **Site identity:** **UNKNOWN** — do not attribute to a named organisation until a URL or full dump is linked.  
+**Samples:** 2 CSS dumps (same family; second adds layout/smoothing).  
 **Not a full site map.** Not enough for privacy hosts, programmes, or content pathways.
 
 ---
 
 ## Verdict
 
-Light **typography / base reset** fingerprint only. Useful later for “does this CSS match site X?” matching. **No scripts, no hosts, no content** in the sample.
+**Same design-system family** as the first orphan sample (match checklist **5/5** on shared rules). Second dump **enriches** body layout: full-height **column flex** shell + font smoothing. Still **CSS-only** — CMS and organisation remain **UNKNOWN**.
 
 ---
 
-## Captured signals
+## Sample log
+
+| # | What arrived | Delta |
+|---|--------------|--------|
+| 1 | Reset + type + breakpoints + hide utility | Baseline |
+| 2 | Same type/breakpoints/reset + **body flex column** + **min-height 100%** + **font-smoothing** | Confirms sticky full-page column layout pattern |
+
+---
+
+## Captured signals (merged)
 
 ### Reset / box model
 | Rule | Notes |
@@ -23,11 +33,15 @@ Light **typography / base reset** fingerprint only. Useful later for “does thi
 | `html { line-height: 1.15; -webkit-text-size-adjust: 100%; }` | Normalize-ish root |
 | `html { font-size: inherit; }` | Root size inherits |
 
-### Hidden utility
-| Rule | Notes |
-|------|--------|
-| `element { display: none; visibility: hidden; }` | Generic hide (selector may be tool-anonymised as `element`) |
-| Inline-ish zero box | `width: 0px; height: 0px` on some element |
+### Body layout shell (sample 2)
+| Property | Value |
+|----------|--------|
+| `margin` | `0` (also on body) |
+| `display` | `flex` (+ webkit/ms prefixes) |
+| `flex-direction` | `column` |
+| `min-height` | `100%` |
+
+**Reading:** App-shell style page: column flex from top to bottom, at least full viewport height (often pairs with sticky footer patterns — footer not in dump).
 
 ### Body type system
 | Property | Value |
@@ -37,14 +51,22 @@ Light **typography / base reset** fingerprint only. Useful later for “does thi
 | `font-size` (mid breakpoint) | `.95rem` |
 | `line-height` | `1.6` |
 | `color` | `#424242` (mid grey) |
+| `-webkit-font-smoothing` | `antialiased` (sample 2) |
+| `-moz-osx-font-smoothing` | `grayscale` (sample 2) |
 
-### Breakpoints (from sample)
+### Breakpoints
 | Query | Effect |
 |-------|--------|
 | `max-width: 60em` and `min-width: 45em` | body → `.95rem` |
 | `max-width: 60rem` and `min-width: 45rem` | same (em/rem dual media) |
 
-**Interpretation:** tablet-ish band between ~45–60 (em/rem) slightly reduces body size; desktop base is 1.125rem (~18px if root 16px).
+**Interpretation:** tablet-ish band ~45–60 (em/rem) slightly reduces body size; desktop base 1.125rem (~18px if root 16px).
+
+### Other
+| Rule | Notes |
+|------|--------|
+| `element { }` | Empty rule in sample 2 (devtools anonymised selector) |
+| Sample 1 hide utility | `display: none; visibility: hidden` + 0×0 box — not repeated in sample 2 |
 
 ---
 
@@ -52,49 +74,50 @@ Light **typography / base reset** fingerprint only. Useful later for “does thi
 
 | Face | Common association |
 |------|---------------------|
-| Helvetica Neue | Apple / neo-grotesque default on many marketing sites |
-| Segoe WP | Windows Phone / older Microsoft web stacks (uncommon on modern greenfield) |
-| Nimbus Sans L | Free Helvetica-like (often Linux / open stacks) |
+| Helvetica Neue | Neo-grotesque / marketing defaults |
+| Segoe WP | Older Microsoft / WP web stacks |
+| Nimbus Sans L | Free Helvetica-like (often open/Linux stacks) |
 | Helvetica, Arial | Fallbacks |
 
-Stack alone **does not identify** a CMS (could be custom, Drupal, WP, etc.).
+Stack + flex shell **still do not identify** a CMS.
 
 ---
 
-## What is missing (need next dump)
+## Match checklist (this family)
+
+| # | Signal | Sample 1 | Sample 2 |
+|---|--------|----------|----------|
+| 1 | Font stack order incl. Segoe WP + Nimbus Sans L | yes | yes |
+| 2 | Body colour `#424242` | yes | yes |
+| 3 | 1.125rem / .95rem mid | yes | yes |
+| 4 | Breakpoints ~45–60 em **and** rem | yes | yes |
+| 5 | `*` reset + universal border-box | yes | yes |
+| 6 | Body flex column + min-height 100% | — | yes |
+| 7 | Font smoothing antialiased/grayscale | — | yes |
+
+**3+ of 1–5** → possible same family; **5/5 + 6–7** → strong same-family confidence without a URL.
+
+---
+
+## What is still missing
 
 | Needed | Why |
 |--------|-----|
 | URL / `<title>` | Bind fingerprint to a property |
 | Full `<head>` | Scripts → privacy host map |
 | Main content HTML | Knowledge pathways |
-| `etc.clientlibs` / generator meta | CMS class (AEM vs other) |
-
----
-
-## Match checklist (when comparing another page)
-
-Score loosely (yes/no):
-
-1. Same body font stack order (incl. Segoe WP + Nimbus Sans L)  
-2. Body colour ≈ `#424242`  
-3. Body size 1.125rem with ~.95rem mid breakpoint  
-4. Breakpoints near 45 / 60 em or rem  
-5. Global `*` margin/padding 0 + universal border-box  
-
-**3+ yes** → possible same design system family; still confirm with URL.
+| CMS paths / meta | AEM vs WP vs custom |
 
 ---
 
 ## Attach later
-
-When origin is known, add:
 
 ```markdown
 ## Bound site
 - URL:
 - Date verified:
 - Confidence: low | medium | high
+- Notes: matches samples 1–2 flex+Helvetica grey shell
 ```
 
 ---
@@ -102,4 +125,5 @@ When origin is known, add:
 ## Cross-links
 
 - AEM path fingerprints: `knowledge/aem/aem-patterns.md`  
+- Procedure: `aem-site-agent` → **fingerprint-css**  
 - Full host maps: `knowledge/privacy/`  
