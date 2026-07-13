@@ -90,6 +90,12 @@ Skill `mbti-personality-customiser`, module `mbti_types.py`, and related notes a
 are **not** clinical psychological instruments, medical advice, or validated hiring
 tools. Do not treat type switches as diagnoses of real people.
 
+Skill `tedx-learning-pathways` and `knowledge/education/tedx-learning-pathways.md`
+help **curate learning pathways** from the public TEDx Talks YouTube library and
+related TED/TED-Ed surfaces. They are **not** educational credentials, scientific
+peer review, or medical advice. TEDx events are independently organized; talk
+content remains the property of rights holders. Do not scrape or rehost videos.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

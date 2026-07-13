@@ -49,7 +49,8 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    precise sensitive-taxa coordinates. Optional third_party/inaturalist mirrors
    are local-only (gitignored); see third_party/README.md.
    mbti-personality-customiser / mbti_types.py are style lenses only — not clinical
-   diagnosis or hiring tools.
+   diagnosis or hiring tools. tedx-learning-pathways curates public TEDx/YouTube
+   links only — not credentials; do not scrape or rehost videos.
 
 4. Steam, games, and local soak tests
    Scripts such as scripts/steam_launch.py and scripts/steam_sim_soak.py, and

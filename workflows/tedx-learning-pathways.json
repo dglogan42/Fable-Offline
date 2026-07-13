@@ -1,0 +1,14 @@
+{
+  "name": "tedx-learning-pathways",
+  "description": "Curate TEDx Talks YouTube library into learning pathways with Fable skill handoffs",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill tedx-learning-pathways. Library: youtube.com/user/TEDxTalks / @TEDx. Not a degree. No video scrape/rehost. TEDx quality varies. Claims need primary sources for high stakes."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill tedx-learning-pathways and knowledge/education/tedx-learning-pathways.md, produce tedx-plan: (1) verdict — curated pathway from TEDx YouTube library, not academic credit (2) channel-contrast TEDx vs TED vs TED-Ed (3) choose pathway P1–P8 or custom from user goal (4) build-pathway with 3–7 talks (use seed watch URLs only when listed; else search cues + VERIFY LIVE) (5) active-watch protocol per talk (6) skill-handoff into Fable skills (7) claim-check for health/money/science claims (8) write-knowledge scaffold workspace/education/tedx-pathways/ (9) host-map if privacy asked (10) OPEN copyright and quality variance. Do not invent view counts or scrape the channel."
+    }
+  ]
+}

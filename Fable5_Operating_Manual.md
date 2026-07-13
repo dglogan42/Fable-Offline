@@ -1103,6 +1103,14 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `mbti-personality-customiser`.  
 **Style lens only — not clinical diagnosis.** SOUL + accuracy outrank persona. Rigour default ON.
 
+## 20ag. TEDx Talks → learning pathways
+**Trigger:** TEDx Talks YouTube library, youtube.com/user/TEDxTalks, @TEDx, learning pathway from TEDx, TED vs TEDx curriculum.  
+**Skill:** `tedx-learning-pathways` — **tedx-plan**, **build-pathway**, **active-watch**, **skill-handoff**, **claim-check**, **library-map**.  
+**Sources:** [TEDxTalks on YouTube](https://www.youtube.com/user/TEDxTalks) · [ted.com/tedx](https://www.ted.com/tedx).  
+**Knowledge:** `knowledge/education/tedx-learning-pathways.md`, `knowledge/privacy/tedx-youtube-hosts.md`.  
+**Automation:** `tedx-learning-pathways`.  
+**Not a degree.** Curate short pathways; no video scrape/rehost. Claims need primary sources for high stakes.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

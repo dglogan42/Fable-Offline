@@ -66,6 +66,10 @@ pip-delete-this-directory.txt
 # MBTI personality customiser state (local active type + optional chat restore)
 mbti_state.json
 **/mbti_state.json
+# TEDx / education pathway notes may include private reflections
+workspace/education/tedx-pathways/**
+!workspace/education/tedx-pathways/.gitkeep
+**/tedx*transcript*full*
 
 # --- Secrets & local env ---
 .env

@@ -63,6 +63,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 | **MBTI personality customiser** | Full 16-type agent switch (`/mbti` · `--mbti` · `mbti_types.py`) |
+| **TEDx learning pathways** | Curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) library into study spines |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -335,6 +336,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `openstreetmap-contribute-kit` | OSM contribute pipelines (mobile · 3D/CAD · drone · upload) |
 | `inaturalist-flora-fauna-kit` | Native flora/fauna via iNaturalist + Fable/OSM incorporate |
 | `mbti-personality-customiser` | 16-type MBTI agent personality switch + multi-lens |
+| `tedx-learning-pathways` | TEDx YouTube library → learning pathways + skill handoffs |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -645,6 +647,28 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## TEDx Talks → learning pathways
+
+Curate the public **[TEDx Talks](https://www.youtube.com/user/TEDxTalks)** YouTube library into short **learning pathways** (meta-learning, creativity, communication, systems, leadership, science literacy, wellbeing, local) — not a full channel mirror.
+
+| Stage | Focus |
+|-------|--------|
+| Library | Browse Popular / search / playlists on YouTube (HITL) |
+| Pathway | 3–7 talks + reflection + 48h practice |
+| Handoff | Map ideas into Fable skills (agents, creative, privacy, climate…) |
+| Hygiene | TEDx ≠ degree; claims need primary sources; no rehost |
+
+```bash
+python fable5_offline_agent.py --automate tedx-learning-pathways
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/tedx-learning-pathways.md` |
+| Knowledge | `knowledge/education/tedx-learning-pathways.md` |
+| Privacy | `knowledge/privacy/tedx-youtube-hosts.md` |
+| Workflow | `workflows/tedx-learning-pathways.json` |
 
 ## MBTI personality customiser
 
@@ -1674,6 +1698,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
 - **MBTI personality customiser** — full 16-type agent switch (`/mbti`, `--mbti`, `mbti_types.py`); style lens only, not diagnosis.
+- **TEDx learning pathways** — curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) into study spines + Fable skill handoffs (not a degree; no video rehost).
 
 ## License
 
@@ -1735,5 +1760,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Prompt generator / swarms | Investment advice, live trading, or unreviewed production agents |
 | Math / physics agent | Course credit or professional engineering sign-off |
 | MBTI personality customiser | Clinical diagnosis, hiring decisions, or persona overriding safety/accuracy |
+| TEDx learning pathways | Treating TEDx as academic credit, medical advice, channel scrape, or video rehost |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.
