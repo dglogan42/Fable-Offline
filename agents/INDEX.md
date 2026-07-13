@@ -10,6 +10,7 @@ They are loaded into system / cycle context so makers, verifiers, and autonomous
 | `fable-loop-agent.md` | `/loop` · `/engineer` · chat loops | Executor/maker + engineer rules |
 | `goal-quality.md` | Humans + agents | How to write goals that loops can finish |
 | `shared-state.md` | All runners | `LOOP_STATE.md`, `loop_state.json`, memory handoff |
+| `math-physics-agent.md` | STEM loops | deep-explain / theorem / physics cycle tips |
 
 ## Load order (harness)
 

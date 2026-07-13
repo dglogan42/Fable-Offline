@@ -46,6 +46,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **RSS share** | Build/share **RSS 2.0** feeds (`scripts/rss_share.py`) |
 | **YouTube Live encoder** | Studio + RTMP/encoder protocol ([Help 2907883](https://support.google.com/youtube/answer/2907883?hl=en)) |
 | **Creative pipeline builds** | Adobe CC + CapCut + LR/PS + Resolve export recipes (`knowledge/media/`) |
+| **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -146,6 +147,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
 | YouTube Live / creative builds | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds` |
+| Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 | DOC ranger careers | `knowledge/conservation/` | `doc-ranger-pathway` |
 | TikTok Ads creation | `knowledge/ads/` | `tiktok-ads-create` |
@@ -226,6 +228,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/outfit` · `/seamly` | Outfit select/create + Seamly2D plan |
 | `/doc` · `/ranger` | DOC ranger / Trainee Ranger pathway |
 | `/tiktok-ads` · `/ttads` | TikTok Ads Manager creation plan |
+| `/deep-explain [topic]` | Bottom-up math/physics lesson (durable md) |
+| `/theorem [claim]` | Formal theorem + proof structure |
+| `/physics [problem]` | Physics solve + dimensional analysis gate |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -278,6 +283,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `rss-share-build` | Compose channel JSON + RSS 2.0 feed.xml share pack |
 | `youtube-live-encoder-plan` | YouTube Live encoder first-stream plan (Help 2907883) |
 | `creative-pipeline-build` | Adobe CC + CapCut + LR/PS + Resolve export pipeline plan |
+| `math-deep-explain` | Bottom-up durable math/physics lesson |
+| `physics-solve` | Physics problem with dimensions gate |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
@@ -296,6 +303,35 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
 | `doc-ranger-pathway` | DOC Trainee Ranger / L4 conservation pathway map |
 | `uc-arts-pg-map` | UC Arts postgraduate pathways + apply navigation |
+
+## Math & physics agent (deep-explain · theorem · solver)
+
+Offline STEM skills for coding/AI agents: structured lessons, proofs, and dimensional analysis — saved as **markdown artifacts** (not lost in chat).
+
+| Command | Procedure |
+|---------|-----------|
+| `/deep-explain` · `--deep-explain` | Bottom-up lesson |
+| `/theorem` · `--theorem` | Statement + proof structure |
+| `/physics` · `--physics` | Solve with **dimensions gate** |
+
+```bash
+python fable5_offline_agent.py --deep-explain "Fourier series intuition"
+python fable5_offline_agent.py --theorem "intermediate value theorem"
+python fable5_offline_agent.py --physics "projectile with air resistance neglected"
+python fable5_offline_agent.py --automate math-deep-explain
+python fable5_offline_agent.py --automate physics-solve
+# Hermes: section-per-cycle durable lesson
+python fable5_offline_agent.py --hermes "deep-explain Lagrange multipliers into workspace/lessons/"
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/math-physics-agent.md` |
+| Knowledge | `knowledge/math/`, `knowledge/physics/` |
+| Agent brief | `agents/math-physics-agent.md` |
+| Workflows | `math-deep-explain`, `physics-solve` |
+
+Lessons: `workspace/lessons/` or `memory/lessons/` for Hermes RAG.
 
 ## Creative pipeline builds (Adobe · CapCut · Resolve)
 
@@ -954,7 +990,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `outfit` · `doc` · `tiktok_ads` · `pdf` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `outfit` · `doc` · `tiktok_ads` · `math` · `pdf` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
@@ -1018,6 +1054,7 @@ Edit `SOUL.md` to change persona and stop ethics. Edit **`agents/`** to change s
 | `agents/fable-loop-agent.md` | `/loop` · `/engineer` |
 | `agents/goal-quality.md` | Goal writing |
 | `agents/shared-state.md` | `LOOP_STATE` vs `loop_state.json` |
+| `agents/math-physics-agent.md` | STEM deep-explain / theorem / physics loops |
 
 Also: `python offline_goal_loop.py --goal "…"` loads the same pack when present.
 
@@ -1095,7 +1132,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--outfit` · `--doc` · `--tiktok-ads` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--outfit` · `--doc` · `--tiktok-ads` · `--deep-explain` · `--theorem` · `--physics` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -1166,6 +1203,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **RSS share** — RSS 2.0 feed build/share (`scripts/rss_share.py`; pull syndication).
 - **YouTube Live encoder** — Studio + encoder setup from Help 2907883 (not stream-key storage).
 - **Creative pipeline builds** — Adobe CC + CapCut + Resolve export recipes (licensed apps only).
+- **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 
 ## License
 

@@ -1,0 +1,14 @@
+{
+  "name": "physics-solve",
+  "description": "Physics problem solve with dimensional analysis gate",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: math-physics-agent. knowledge/physics/solver-framework.md. Slash: /physics"
+    },
+    {
+      "type": "math",
+      "prompt": "Using skill math-physics-agent procedure physics-solve and knowledge/physics/solver-framework.md, solve the user's problem (or ask for full problem statement). Mandatory dimensions/units gate before final answer. Name governing principles. Limit-case check. Suggest durable markdown path under workspace/lessons/. Not professional engineering sign-off."
+    }
+  ]
+}

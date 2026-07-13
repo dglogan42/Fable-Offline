@@ -957,6 +957,14 @@ DOC Conservation blog: [Becoming a DOC ranger](https://blog.doc.govt.nz/2020/01/
 **Automation:** `youtube-live-encoder-plan`.  
 Never commit stream keys. First enable may take up to 24 hours. User operates Studio + encoder.
 
+## 20o. Math & physics agent
+**Trigger:** `/deep-explain`, `/theorem`, `/physics`, STEM Hermes goals.  
+**Skill:** `math-physics-agent` — **deep-explain**, **theorem**, **physics-solve**, **dim-check**, **write-lesson**.  
+**Knowledge:** `knowledge/math/*`, `knowledge/physics/solver-framework.md`.  
+**Agents:** `agents/math-physics-agent.md`.  
+**Automation:** `math-deep-explain`, `physics-solve`.  
+Durable lessons → `workspace/lessons/` or `memory/lessons/`. Dimensional gate required for physics. Not course credit.
+
 ## 20n. Creative pipeline builds (Adobe · CapCut · Resolve)
 **Trigger:** Creative Cloud desktop, Photoshop/Lightroom batch, CapCut, DaVinci Resolve Deliver.  
 **Skill:** `creative-pipeline-builds` — **pipeline-plan**, **cc-desktop-setup**, **lightroom-build**, **photoshop-build**, **capcut-build**, **resolve-build**.  

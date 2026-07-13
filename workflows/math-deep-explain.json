@@ -1,0 +1,14 @@
+{
+  "name": "math-deep-explain",
+  "description": "Bottom-up math lesson as durable markdown (deep-explain procedure)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: math-physics-agent. Save lesson to workspace/lessons/ when done. Slash: /deep-explain"
+    },
+    {
+      "type": "math",
+      "prompt": "Using skill math-physics-agent procedure deep-explain and knowledge/math/deep-explain-framework.md, produce a full bottom-up lesson on the user's topic (or ask for the topic). Include objective, prerequisites, intuition, formal development, mini-example, mistakes, exercises. Suggest workspace/lessons/ path. Not a substitute for course credit."
+    }
+  ]
+}

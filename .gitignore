@@ -251,6 +251,11 @@ workspace/creative/**/*.drp
 workspace/creative/**/*.prproj
 !workspace/creative/**/notes.md
 !workspace/creative/**/05_presets/**/*.md
+
+# Math/physics lesson drafts may live under workspace/lessons (allowed)
+# Keep private homework solutions out of public commits if sensitive:
+knowledge/math/_local/
+knowledge/physics/_local/
 # Seamly / pattern CAD client files
 **/*.sm2d
 **/*.sm2d*

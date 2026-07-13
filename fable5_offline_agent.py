@@ -472,6 +472,7 @@ def load_system_prompt(
     tiktok_ads_mode: bool = False,
     loop_mode: bool = False,
     engineer_mode: bool = False,
+    math_mode: bool = False,
 ) -> str:
     """Manual + soul + agent briefs + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -684,6 +685,30 @@ def load_system_prompt(
                 "\n\n---\n## Related privacy / pixel notes (excerpt may include other maps)\n\n"
                 + tt[:3500]
             )
+    if math_mode:
+        parts.append(
+            "\n\n---\n## Math / physics agent mode\n"
+            "Apply skill **math-physics-agent**. Procedures: deep-explain, theorem, "
+            "physics-solve, dim-check, write-lesson. Prefer durable markdown under "
+            "workspace/lessons/ or memory/lessons/. Re-derive; define symbols; "
+            "dimensional analysis gate for physics. Not course credit or PE stamp. "
+            "Slash intents: /deep-explain /theorem /physics.\n"
+        )
+        m = read_knowledge_bundle("math", limit_chars=5000)
+        if m.strip():
+            parts.append("\n\n---\n## Local math frameworks\n\n" + m)
+        p = read_knowledge_bundle("physics", limit_chars=4000)
+        if p.strip():
+            parts.append("\n\n---\n## Local physics frameworks\n\n" + p)
+        stem = agents_root() / "math-physics-agent.md"
+        if stem.is_file():
+            try:
+                parts.append(
+                    "\n\n---\n## agents/math-physics-agent.md\n\n"
+                    + stem.read_text(encoding="utf-8")[:2500]
+                )
+            except OSError:
+                pass
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2228,7 +2253,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | tiktok_ads | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | tiktok_ads | math | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2551,6 +2576,22 @@ def run_automate(
                     prefix="TikTokAds: ",
                 )
                 results.append("tiktok_ads → done")
+            elif stype in {"math", "physics", "theorem", "deep-explain", "deep_explain"}:
+                msys = load_system_prompt(math_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill math-physics-agent, run deep-explain or physics-solve "
+                    "as appropriate. Durable lesson structure. Dimensions gate for physics."
+                )
+                print("\n[math / physics agent]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": msys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="MathPhys: ",
+                )
+                results.append("math → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2775,7 +2816,8 @@ def print_banner() -> None:
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
         "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
-        "/fit /slay /outfit /doc /tiktok-ads /pdf /build /automate /loop /help quit\n"
+        "/fit /slay /outfit /doc /tiktok-ads /deep-explain /theorem /physics "
+        "/pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -2802,6 +2844,9 @@ Commands
   /ranger [prompt]   Alias for /doc
   /tiktok-ads [prompt]  TikTok Ads Manager creation plan (knowledge/ads/)
   /ttads [prompt]    Alias for /tiktok-ads
+  /deep-explain [topic]  Bottom-up math/physics lesson (durable markdown)
+  /theorem [claim]   Formal theorem + proof structure
+  /physics [problem] Physics solve with dimensional analysis gate
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2853,6 +2898,11 @@ CLI
   {py} fable5_offline_agent.py --tiktok-ads
   {py} fable5_offline_agent.py --tiktok-ads "conversions campaign for NZ fashion DTC"
   {py} fable5_offline_agent.py --automate tiktok-ads-create
+  {py} fable5_offline_agent.py --deep-explain "eigenvalues from first principles"
+  {py} fable5_offline_agent.py --theorem "fundamental theorem of calculus"
+  {py} fable5_offline_agent.py --physics "block on incline with friction"
+  {py} fable5_offline_agent.py --automate math-deep-explain
+  {py} fable5_offline_agent.py --automate physics-solve
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -3180,6 +3230,73 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ TikTok Ads mode error: {e}\n"))
+            continue
+        if (
+            low.startswith("/deep-explain")
+            or low.startswith("/deepexplain")
+            or low.startswith("/theorem")
+            or low.startswith("/physics")
+            or low.startswith("/math")
+        ):
+            if low.startswith("/deep-explain"):
+                rest = user_input[len("/deep-explain") :].strip()
+                kind = "deep-explain"
+            elif low.startswith("/deepexplain"):
+                rest = user_input[len("/deepexplain") :].strip()
+                kind = "deep-explain"
+            elif low.startswith("/theorem"):
+                rest = user_input[len("/theorem") :].strip()
+                kind = "theorem"
+            elif low.startswith("/physics"):
+                rest = user_input[len("/physics") :].strip()
+                kind = "physics-solve"
+            else:
+                rest = user_input[len("/math") :].strip()
+                kind = "deep-explain"
+            if kind == "deep-explain":
+                prompt = rest or (
+                    "Using skill math-physics-agent procedure deep-explain, ask for a topic "
+                    "if none, then produce a full bottom-up lesson. Suggest workspace/lessons/ path."
+                )
+                if rest:
+                    prompt = (
+                        "Using skill math-physics-agent procedure deep-explain and "
+                        "knowledge/math/deep-explain-framework.md, produce a durable lesson on:\n\n"
+                        + rest
+                    )
+            elif kind == "theorem":
+                prompt = rest or (
+                    "Using skill math-physics-agent procedure theorem, ask for a statement "
+                    "if none, then formal statement + proof structure."
+                )
+                if rest:
+                    prompt = (
+                        "Using skill math-physics-agent procedure theorem and "
+                        "knowledge/math/theorem-framework.md, treat this claim:\n\n" + rest
+                    )
+            else:
+                prompt = rest or (
+                    "Using skill math-physics-agent procedure physics-solve, ask for the full "
+                    "problem if none. Mandatory dimensional analysis gate."
+                )
+                if rest:
+                    prompt = (
+                        "Using skill math-physics-agent procedure physics-solve and "
+                        "knowledge/physics/solver-framework.md, solve:\n\n" + rest
+                    )
+            try:
+                msys = load_system_prompt(math_mode=True)
+                print(ui("\n[math / physics agent]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": msys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="MathPhys: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Math/physics mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3528,6 +3645,30 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="TikTok Ads Manager creation plan (knowledge/ads/)",
     )
     parser.add_argument(
+        "--deep-explain",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="TOPIC",
+        help="Bottom-up math/physics lesson (math-physics-agent deep-explain)",
+    )
+    parser.add_argument(
+        "--theorem",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="CLAIM",
+        help="Formal theorem + proof structure (math-physics-agent)",
+    )
+    parser.add_argument(
+        "--physics",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROBLEM",
+        help="Physics solve with dimensional analysis (math-physics-agent)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3658,6 +3799,9 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.outfit is None
             and args.doc is None
             and args.tiktok_ads is None
+            and args.deep_explain is None
+            and args.theorem is None
+            and args.physics is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3911,6 +4055,66 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": tsys}, {"role": "user", "content": prompt}],
                 prefix="TikTokAds: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.deep_explain is not None:
+        topic = (args.deep_explain or "").strip()
+        prompt = (
+            "Using skill math-physics-agent procedure deep-explain and "
+            "knowledge/math/deep-explain-framework.md, produce a full bottom-up lesson"
+            + (f" on:\n\n{topic}" if topic else ". Ask for a topic if none was given.")
+            + "\n\nSuggest saving to workspace/lessons/. Not course credit."
+        )
+        try:
+            msys = load_system_prompt(math_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": msys}, {"role": "user", "content": prompt}],
+                prefix="MathPhys: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.theorem is not None:
+        claim = (args.theorem or "").strip()
+        prompt = (
+            "Using skill math-physics-agent procedure theorem and "
+            "knowledge/math/theorem-framework.md, produce formal statement + proof structure"
+            + (f" for:\n\n{claim}" if claim else ". Ask for the claim if none was given.")
+            + "\n\nMark OPEN gaps. Suggest workspace/lessons/ path."
+        )
+        try:
+            msys = load_system_prompt(math_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": msys}, {"role": "user", "content": prompt}],
+                prefix="MathPhys: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.physics is not None:
+        problem = (args.physics or "").strip()
+        prompt = (
+            "Using skill math-physics-agent procedure physics-solve and "
+            "knowledge/physics/solver-framework.md, solve with mandatory dimensional analysis gate"
+            + (f":\n\n{problem}" if problem else ". Ask for the full problem statement.")
+            + "\n\nNot professional engineering sign-off."
+        )
+        try:
+            msys = load_system_prompt(math_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": msys}, {"role": "user", "content": prompt}],
+                prefix="MathPhys: ",
             )
             return 0
         except Exception as e:
