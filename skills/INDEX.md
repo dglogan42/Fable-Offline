@@ -19,6 +19,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **emergency-services-agent**: [Emergency services agent (NZ)](emergency-services-agent.md)
 - **freight-forwarder-exporter**: [Freight forwarder & exporter agent](freight-forwarder-exporter.md)
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
+- **instagram-selfie-selector**: [Instagram selfie selector (fits · makeup · slay)](instagram-selfie-selector.md)
 - **legal-playbook**: [Legal playbook (contract / NDA / vendor)](legal-playbook.md)
 - **loop-engineer**: [Loop engineer](loop-engineer.md)
 - **macos-install-prep**: [macOS install prep (Apple bootable installer)](macos-install-prep.md)

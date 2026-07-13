@@ -841,6 +841,23 @@ User **CLICK** → [https://support.apple.com/en-nz/101578](https://support.appl
 
 ---
 
+## 20h. Instagram selfie selector (fits · makeup · slay)
+
+**Trigger:** `/fit`, `/slay`, `/ootd`, `--fit`, “which selfie”, OOTD, GRWM, makeup look for Instagram.
+
+### Skill
+`instagram-selfie-selector`: **select-hero**, **fit-check**, **makeup-check**, **slay-score**, **caption-pack**, **format-fit**, **post-safety**, **carousel-plan**.
+
+### Knowledge
+- `knowledge/social/instagram-selfie-playbook.md`
+
+### Automation
+- `instagram-fit-select` (workflow step: `fit` / `slay` / `instagram`)
+
+**Tone:** hype-honest, no body shame, no viral guarantees. User posts manually. Privacy crop for IDs/people. Refuse sexualisation of minors.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

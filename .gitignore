@@ -201,6 +201,16 @@ knowledge/macos/*-local*.md
 knowledge/macos/*recovery*key*
 knowledge/macos/*FileVault*
 knowledge/macos/*apple*id*
+knowledge/social/_local/
+knowledge/social/*-local*.md
+# Personal photo dumps / private drafts (keep curated playbook)
+knowledge/social/photos/
+knowledge/social/drafts/
+knowledge/social/**/*.jpg
+knowledge/social/**/*.jpeg
+knowledge/social/**/*.png
+knowledge/social/**/*.heic
+knowledge/social/**/*.webp
 # Do not commit full macOS Installer apps, raw USB dumps, or firmware images
 **/Install macOS *.app/**
 **/Install OS X *.app/**

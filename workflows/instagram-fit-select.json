@@ -1,0 +1,14 @@
+{
+  "name": "instagram-fit-select",
+  "description": "Pick a hero selfie/fit/makeup shot for Instagram + caption pack (user posts manually)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill: instagram-selfie-selector. User describes options A/B/C or pastes notes. No auto-post to Instagram. Privacy first."
+    },
+    {
+      "type": "fit",
+      "prompt": "Using skill instagram-selfie-selector and knowledge/social/instagram-selfie-playbook.md: if the user listed multiple looks, run select-hero + slay-score; if outfit-heavy fit-check; if glam-heavy makeup-check. Always include caption-pack (3 captions, alt text, light hashtags) and post-safety. Tone: hype-honest, no body shame, no fake viral claims. If no options given, ask for goal (feed/Story/Reel), vibe, and 2–5 labeled options. User posts manually in Instagram."
+    }
+  ]
+}

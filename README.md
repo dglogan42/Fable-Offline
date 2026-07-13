@@ -38,6 +38,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Calendar / mail / meetings** | Google Calendar + **Zoom** web join + **iCal** + meeting prep (`knowledge/calendar/`) |
 | **Windows install prep** | Licensed **Windows 11** media + DISM/unattend hygiene (`knowledge/windows/`) |
 | **macOS install prep** | Apple **bootable installer** / recovery hygiene (`knowledge/macos/`) |
+| **Instagram fit / selfie** | Pick hero fits, makeup, slay shots + captions (`knowledge/social/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -85,7 +86,7 @@ Fable-Offline/
 │   ├── INDEX.md                 # Data catalog
 │   ├── aem/ animals/ brokers/ climate/ culture/
 │   ├── calendar/ education/ health/ legal/ pdf/ privacy/
-│   ├── macos/ property/ public-safety/ steam/ trade/ urban-planning/ windows/
+│   ├── macos/ property/ public-safety/ social/ steam/ trade/ urban-planning/ windows/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
@@ -132,6 +133,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Calendar / iCal / meetings | `knowledge/calendar/` | `calendar-mail-meetings` |
 | Windows install (licensed) | `knowledge/windows/` | `windows-install-prep` |
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
+| Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 
 Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
@@ -205,6 +207,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/meetings` · `/mail` | Aliases for `/calendar` |
 | `/windows [prompt]` | Licensed Windows 11 install / DISM hygiene |
 | `/macos [prompt]` | Apple-licensed macOS bootable installer / recovery |
+| `/fit` · `/slay` · `/ootd` | Instagram selfie / fit / makeup selector |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -265,6 +268,26 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `calendar-meeting-prep` | Meeting prep + Google Calendar / Zoom join / iCal / mail drafts |
 | `windows-install-prep` | Licensed Win11 media plan + optional DISM/unattend outline |
 | `macos-install-prep` | Apple bootable installer (101578) + recovery method chooser |
+| `instagram-fit-select` | Hero fit/selfie pick + caption pack + post-safety |
+
+## Instagram selfie selector (fits · makeup · slay)
+
+Hype-honest creative direction: rank selfies and OOTDs, check makeup cohesion, draft captions. **You** post in the Instagram app — Fable does not auto-publish.
+
+```bash
+python fable5_offline_agent.py --fit
+python fable5_offline_agent.py --fit "A blazer mirror fit vs B soft glam close-up — feed hero?"
+python fable5_offline_agent.py --automate instagram-fit-select
+# Chat: /fit  /slay  /ootd  /selfie
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/instagram-selfie-selector.md` |
+| Knowledge | `knowledge/social/instagram-selfie-playbook.md` |
+| Workflow | `workflows/instagram-fit-select.json` |
+
+Procedures: **select-hero**, **fit-check**, **makeup-check**, **slay-score**, **caption-pack**, **post-safety**. No body shame, no fake viral claims, privacy crops for IDs/other people.
 
 ## Windows install prep (licensed)
 
@@ -695,7 +718,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `pdf` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `windows` · `macos` · `fit` · `pdf` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
@@ -822,7 +845,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--windows` · `--macos` · `--fit` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -885,6 +908,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Calendar / mail / meetings** — Google Calendar + Zoom web join + iCal parse + meeting prep (not a mail/Zoom client; draft + checklist only).
 - **Windows install prep** — licensed Win11 media + DISM/unattend hygiene (not piracy; no fake Windows 12).
 - **macOS install prep** — Apple bootable installer / recovery (101578; not Hackintosh or cracked media).
+- **Instagram selfie selector** — fits, makeup, slay picks + captions (not auto-post; not body-shame).
 
 ## License
 

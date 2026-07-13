@@ -414,6 +414,7 @@ def load_system_prompt(
     calendar_mode: bool = False,
     windows_mode: bool = False,
     macos_mode: bool = False,
+    fit_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -540,6 +541,18 @@ def load_system_prompt(
         know = read_knowledge_bundle("macos", limit_chars=9000)
         if know.strip():
             parts.append("\n\n---\n## Local macOS install knowledge\n\n" + know)
+    if fit_mode:
+        parts.append(
+            "\n\n---\n## Instagram selfie / fit / makeup selector mode\n"
+            "Apply skill **instagram-selfie-selector**. Hype-honest creative direction for the "
+            "user's own photos: select-hero, fit-check, makeup-check, slay-score, caption-pack, "
+            "format-fit, post-safety. No body shame. No fake viral guarantees. No auto-post to "
+            "Instagram. Privacy: crop IDs, non-consenting people, sensitive locations. "
+            "Refuse content that sexualises minors. Not medical or mental-health care.\n"
+        )
+        know = read_knowledge_bundle("social", limit_chars=6000)
+        if know.strip():
+            parts.append("\n\n---\n## Local social / fit knowledge\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2075,7 +2088,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | macos | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | fit | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2334,6 +2347,22 @@ def run_automate(
                     prefix="MacOSMode: ",
                 )
                 results.append("macos → done")
+            elif stype in {"fit", "slay", "instagram"}:
+                fsys = load_system_prompt(fit_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill instagram-selfie-selector, help pick a hero fit/selfie "
+                    "and draft caption-pack + post-safety. User posts manually."
+                )
+                print("\n[instagram fit / selfie selector]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": fsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="FitMode: ",
+                )
+                results.append("fit → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2557,8 +2586,8 @@ def print_banner() -> None:
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
-        "Commands: /team /broker /legal /education /privacy /calendar /windows /macos /pdf "
-        "/build /automate /loop /help quit\n"
+        "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
+        "/fit /slay /pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -2577,6 +2606,8 @@ Commands
   /meetings [prompt] Alias for /calendar
   /windows [prompt]  Licensed Windows 11 install / DISM hygiene (knowledge/windows/)
   /macos [prompt]    Apple-licensed macOS bootable installer / recovery (knowledge/macos/)
+  /fit [prompt]      Instagram selfie / fit / makeup selector (knowledge/social/)
+  /slay [prompt]     Alias for /fit
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2616,6 +2647,9 @@ CLI
   {py} fable5_offline_agent.py --macos
   {py} fable5_offline_agent.py --macos "bootable-installer-plan for Sequoia USB"
   {py} fable5_offline_agent.py --automate macos-install-prep
+  {py} fable5_offline_agent.py --fit
+  {py} fable5_offline_agent.py --fit "A black blazer fit vs B soft glam mirror selfie — feed post"
+  {py} fable5_offline_agent.py --automate instagram-fit-select
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -2833,6 +2867,39 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ macOS mode error: {e}\n"))
+            continue
+        if (
+            low.startswith("/fit")
+            or low.startswith("/slay")
+            or low.startswith("/ootd")
+            or low.startswith("/selfie")
+        ):
+            if low.startswith("/fit"):
+                prompt = user_input[4:].strip()
+            elif low.startswith("/slay"):
+                prompt = user_input[5:].strip()
+            elif low.startswith("/ootd"):
+                prompt = user_input[5:].strip()
+            else:
+                prompt = user_input[7:].strip()
+            prompt = prompt or (
+                "Using skill instagram-selfie-selector, explain select-hero / fit-check / "
+                "makeup-check and ask for 2–5 labeled photo options plus goal (feed/Story/Reel). "
+                "Hype-honest. No body shame. User posts manually."
+            )
+            try:
+                fsys = load_system_prompt(fit_mode=True)
+                print(ui("\n[instagram fit / selfie selector]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": fsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="FitMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Fit mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3144,6 +3211,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Apple-licensed macOS bootable installer / recovery (knowledge/macos/)",
     )
     parser.add_argument(
+        "--fit",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Instagram selfie / fit / makeup selector (knowledge/social/)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3270,6 +3345,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.calendar is None
             and args.windows is None
             and args.macos is None
+            and args.fit is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3445,6 +3521,25 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": msys}, {"role": "user", "content": prompt}],
                 prefix="MacOSMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.fit is not None:
+        prompt = (args.fit or "").strip() or (
+            "Using skill instagram-selfie-selector and knowledge/social/instagram-selfie-playbook.md, "
+            "explain how to run select-hero for fits/makeup/selfies and ask for labeled options. "
+            "Include a sample caption-pack structure and post-safety checklist. "
+            "Hype-honest, no body shame, no viral guarantees. User posts manually on Instagram."
+        )
+        try:
+            fsys = load_system_prompt(fit_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": fsys}, {"role": "user", "content": prompt}],
+                prefix="FitMode: ",
             )
             return 0
         except Exception as e:
