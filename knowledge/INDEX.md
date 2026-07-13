@@ -14,6 +14,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **aem/** | Adobe AEM public-site patterns | `aem-patterns.md` |
 | **animals/** | Animal/dog compliance framework | `animal-compliance-framework.md` |
 | **brokers/** | Broker claim snapshots | `ec-markets-regulation.md` |
+| **calendar/** | Google Calendar · Zoom · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `meetings-playbook.md` |
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
 | **education/** | Credential claim audits | `lpu-credential-claims.md` |
@@ -45,6 +46,8 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `healthnz-find-a-service-hosts.md` | Health NZ Find a service |
 | `nz-police-105-hosts.md` | NZ Police 105 |
 | `fenz-incident-reports-hosts.md` | FENZ incident reports |
+| `google-calendar-hosts.md` | Google Calendar / Meet / mail seed map |
+| `zoom-hosts.md` | Zoom Web Client join (`app.zoom.us/wc/join`) seed map |
 
 ---
 

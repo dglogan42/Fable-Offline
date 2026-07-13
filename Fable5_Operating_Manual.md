@@ -764,6 +764,41 @@ SimCity 4 Deluxe **appid 24780** — `python scripts/steam_launch.py 24780`
 
 ---
 
+## 20e. Calendar · mail · meetings (Google / Zoom / iCal)
+
+**Trigger:** `/calendar`, `/meetings`, `/mail`, `--calendar`, `--ical`, Google Calendar, Zoom, invites, agendas.
+
+### Skill
+`calendar-mail-meetings`: **parse-ical**, **meeting-prep**, **meeting-notes**, **mail-draft**, **schedule-hygiene**, **gcal-guide**, **join-zoom**, **map-calendar-privacy**.
+
+### Google Calendar
+User **CLICK** → [https://calendar.google.com/](https://calendar.google.com/). No authenticated scrape. Offline bridge: export **.ics** or paste VCALENDAR.
+
+### Zoom Web Client
+User **CLICK** → [https://app.zoom.us/wc/join](https://app.zoom.us/wc/join) (or invite `zoom.us/j/…`). Procedure **join-zoom**. Never auto-join; mask passcodes.
+
+### Tools
+```bash
+python scripts/ical_parse.py invite.ics
+python fable5_offline_agent.py --ical invite.ics
+python fable5_offline_agent.py --calendar "meeting-prep: …"
+python fable5_offline_agent.py --automate calendar-meeting-prep
+```
+
+### Knowledge
+- `knowledge/calendar/ical-and-google.md`
+- `knowledge/calendar/zoom-web-join.md`
+- `knowledge/calendar/meetings-playbook.md`
+- `knowledge/privacy/google-calendar-hosts.md`
+- `knowledge/privacy/zoom-hosts.md`
+
+### Automation
+- `calendar-meeting-prep` (workflow step type: `calendar`)
+
+**Draft only.** User sends mail / creates events / joins Zoom. Never commit OAuth tokens, Zoom passcodes, or secret iCal feed URLs.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

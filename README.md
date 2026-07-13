@@ -4,10 +4,10 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, and **build/automate** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, and a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, and **build/automate** — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Steam SIM soak**, and a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
-**Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
+**Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE.md) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
 
 | Mode | What it does |
 |------|----------------|
@@ -35,6 +35,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **AEM site agent** | Adobe AEM fingerprints · clientlibs · AC privacy patterns (`knowledge/aem/`) |
 | **PDF** | Offline extract (pypdf) · structure · PDF.js identification (`knowledge/pdf/`) |
 | **Steam SIM soak** | Launch SimCity 4 (etc.) + **measure Ollama latency** under load (`knowledge/steam/`) |
+| **Calendar / mail / meetings** | Google Calendar + **Zoom** web join + **iCal** + meeting prep (`knowledge/calendar/`) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -75,13 +76,13 @@ Fable-Offline/
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt             # openai + pypdf
 ├── fable5 / fable5.cmd          # Launchers
-├── scripts/                     # install, pdf_extract, steam_launch, steam_sim_soak
+├── scripts/                     # install, pdf_extract, ical_parse, steam_launch, steam_sim_soak
 ├── skills/                      # Agentic skill library (see skills/INDEX.md)
 ├── workflows/                   # Public automation recipes (*.json)
 ├── knowledge/                   # Curated offline data (see knowledge/INDEX.md)
 │   ├── INDEX.md                 # Data catalog
 │   ├── aem/ animals/ brokers/ climate/ culture/
-│   ├── education/ health/ legal/ pdf/ privacy/
+│   ├── calendar/ education/ health/ legal/ pdf/ privacy/
 │   ├── property/ public-safety/ steam/ trade/ urban-planning/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
@@ -98,6 +99,7 @@ Fable-Offline/
 | `memory/*`, `workspace/*` | Runtime / local experiments |
 | `knowledge/**/scrape-*`, `*-raw.*`, `*.pdf` | Bulky / sensitive dumps |
 | `knowledge/**/_local/`, `legal/matters/` | Private matter files |
+| `**/*.ics`, Zoom passcodes, secret calendar feeds | Private invites / join secrets |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
 Ship only **curated markdown** under `knowledge/` and shared skills/workflows. Full policy: [`.gitignore`](.gitignore) · data index: [`knowledge/INDEX.md`](knowledge/INDEX.md).
@@ -123,6 +125,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
+| Calendar / iCal / meetings | `knowledge/calendar/` | `calendar-mail-meetings` |
 
 Full file list: **[`knowledge/INDEX.md`](knowledge/INDEX.md)**.
 
@@ -192,6 +195,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `/legal [prompt]` | Legal playbook: contract / NDA / vendor / brief / respond |
 | `/education [prompt]` | Education/credential claim audit (local knowledge) |
 | `/privacy [prompt]` | Third-party host / privacy map (local knowledge) |
+| `/calendar [prompt]` | Calendar / iCal / mail / meetings (`calendar-mail-meetings`) |
+| `/meetings` · `/mail` | Aliases for `/calendar` |
 | `/pdf <path>` | Extract PDF text (pypdf) + structure with `pdf-render` |
 | `/scrape <url>` | Fetch page text into `knowledge/brokers/` |
 | `/build <goal>` | Scaffold multi-file project under `workspace/` |
@@ -249,6 +254,40 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `climate-plan-review` | Climate plan + emissions modelling audit |
 | `pdf-extract-review` | Structure/review a PDF text extract (skill pdf-render) |
 | `steam-sim-perf-check` | Plan Steam SIM launch + model perf notes (SC4 app 24780) |
+| `calendar-meeting-prep` | Meeting prep + Google Calendar / Zoom join / iCal / mail drafts |
+
+## Calendar · mail · meetings (Google / Zoom / iCal)
+
+Offline help for **Google Calendar**, **Zoom Web Client**, **iCalendar (.ics)**, **mail invites**, and **meeting prep/notes**.
+
+| Surface | User CLICK | Agent |
+|---------|------------|--------|
+| Google Calendar | [calendar.google.com](https://calendar.google.com/) | Prep, drafts, no auth scrape |
+| Zoom web join | [app.zoom.us/wc/join](https://app.zoom.us/wc/join) | **join-zoom** checklist; never auto-join |
+| Google Meet | `meet.google.com/…` | Flag as CLICK from invites |
+
+```bash
+# Mode
+python fable5_offline_agent.py --calendar
+python fable5_offline_agent.py --calendar "join-zoom: checklist for web client"
+python fable5_offline_agent.py --calendar "meeting-prep: design review Fri 10:00 NZST"
+# Chat: /calendar  /meetings  /mail
+
+# Parse a local invite export (flags zoom.us / meet.google.com links)
+python scripts/ical_parse.py path/to/invite.ics
+python fable5_offline_agent.py --ical path/to/invite.ics
+python fable5_offline_agent.py --automate calendar-meeting-prep
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/calendar-mail-meetings.md` |
+| Knowledge | `knowledge/calendar/ical-and-google.md`, `zoom-web-join.md`, `meetings-playbook.md` |
+| Privacy seeds | `knowledge/privacy/google-calendar-hosts.md`, `zoom-hosts.md` |
+| Parser | `scripts/ical_parse.py` |
+| Workflow | `workflows/calendar-meeting-prep.json` |
+
+**Draft only** — user sends mail, creates events, and joins Zoom/Meet. Keep secret iCal feeds, OAuth tokens, and Zoom passcodes out of git (`knowledge/calendar/_local/`, `.ics` ignored).
 
 ## Steam SIM launch & Ollama soak
 
@@ -596,7 +635,7 @@ Supervisor pattern: **research** → **writer** → **critic** (separate grader,
   --criteria "Verdict label correct,Sample/OOS honest,Multiple testing named,Survivorship/costs,What would change mind,Risk of belief now"
 ```
 
-Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `pdf` · `scrape` · `hitl` · `team`.
+Workflow step types: `build` · `engineer` · `hermes` · `loop` · `improve` · `compress` · `llm` · `shell` · `note` · `broker` · `legal` · `education` · `privacy` · `calendar` · `pdf` · `scrape` · `hitl` · `team`.
 
 Add your own recipes as `workflows/my-job.json`. Private experiments go in `workflows/_local/` (gitignored).
 
@@ -723,7 +762,7 @@ export FABLE5_MODEL=qwen2.5:7b
 ./fable5 --hermes "your goal"
 ```
 
-**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
+**CLI flags:** `--model` · `--roadmap` · `--team` · `--broker` · `--legal` · `--education` · `--privacy` · `--calendar` · `--ical` · `--pdf` · `--pdf-pages` · `--pdf-out` · `--scrape` · `--scrape-dir` · `--format` · `--build` · `--automate` · `--engineer` · `--criteria` · `--min-score` · `--loop` · `--hermes` · `--improve` · `--compress-memory` · `--doctor` · `--ascii`
 
 ## Troubleshooting
 
@@ -742,6 +781,7 @@ python fable5_offline_agent.py --doctor
 | Slow first reply / cycle | Model loading into RAM/VRAM — expected |
 | Slow chat while a SIM runs | Expected under load; run `python scripts/steam_sim_soak.py` for A/B TTFT |
 | Steam not found | Set `FABLE5_STEAM` / `STEAM_EXE`, or install Steam; default also checks `D:\Steam\steam.exe` |
+| Need Zoom / calendar help | `--calendar` / `/calendar`; web join [app.zoom.us/wc/join](https://app.zoom.us/wc/join); parse invites with `--ical` |
 
 ## When to use it
 
@@ -780,6 +820,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **AEM site agent** — public AEM fingerprints and clientlib hygiene (not pen-test).
 - **Knowledge data** — curated offline notes; see [`knowledge/INDEX.md`](knowledge/INDEX.md).
 - **Steam SIM soak** — launch owned Steam SIMs + measure Ollama latency (not a game bot; no DRM bypass).
+- **Calendar / mail / meetings** — Google Calendar + Zoom web join + iCal parse + meeting prep (not a mail/Zoom client; draft + checklist only).
 
 ## License
 
@@ -795,7 +836,8 @@ See **[LICENSE.md](LICENSE.md)** for the full MIT text plus **additional notices
 2. Third-party website and policy snapshots  
 3. Emergency routing (**call 111** in NZ emergencies)  
 4. Steam / games (ownership required; not a bot or DRM bypass)  
-5. Contribution licensing  
+5. Calendar / mail / Zoom (local iCal + drafts; user CLICK join only)  
+6. Contribution licensing  
 
 ### Domain disclaimers (summary)
 
@@ -811,5 +853,6 @@ See **[LICENSE.md](LICENSE.md)** for the full MIT text plus **additional notices
 | Emergency / health | Medical advice or emergency response (call **111**) |
 | Arts | Ticketing or rights clearance |
 | Steam SIM soak | Game automation, multiplayer cheating, or DRM bypass |
+| Calendar / mail / Zoom | Mailbox control, silent send, auto-join, or account takeover |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

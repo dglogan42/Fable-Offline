@@ -1,0 +1,14 @@
+{
+  "name": "calendar-meeting-prep",
+  "description": "Meeting prep + optional iCal parse using calendar-mail-meetings skill",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Google Calendar: https://calendar.google.com/ · Zoom web join: https://app.zoom.us/wc/join — local .ics via python scripts/ical_parse.py invite.ics. Skill: calendar-mail-meetings (join-zoom)."
+    },
+    {
+      "type": "calendar",
+      "prompt": "Using skill calendar-mail-meetings and knowledge/calendar/ (ical-and-google.md, zoom-web-join.md, meetings-playbook.md), produce: (1) verdict ready/needs-info (2) meeting-prep agenda with time boxes (3) plain-text block to paste into Google Calendar description (4) if Zoom: join-zoom checklist pointing at https://app.zoom.us/wc/join — mask passcodes (5) optional draft .ics skeleton (6) mail-draft invite subject+body (7) privacy: no secret iCal URLs, OAuth tokens, or Zoom pwd in git. If no meeting details were provided, ask for title, time+tz, attendees, video link (Meet/Zoom), and goal. Not legal advice."
+    }
+  ]
+}

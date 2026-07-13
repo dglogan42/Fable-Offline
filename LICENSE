@@ -50,7 +50,16 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    Valve and the respective publishers/developers. Launch only software you
    are licensed to run.
 
-5. Contributions
+5. Calendar, mail, meetings, and Zoom
+   knowledge/calendar/, skill calendar-mail-meetings, and scripts/ical_parse.py
+   support local iCalendar files, meeting prep, draft mail, and join checklists.
+   Google Calendar (calendar.google.com), Meet, and related services remain
+   Google's property. Zoom Web Client (app.zoom.us/wc/join) and related services
+   remain Zoom's property. The Software does not auto-join meetings or send
+   mail. Do not commit OAuth tokens, app passwords, Zoom passcodes, or secret
+   calendar feed URLs. Prefer knowledge/calendar/_local/ for private material.
+
+6. Contributions
    By submitting contributions to this repository, you agree they are licensed
    under the same MIT License terms as the Software, unless you state otherwise
    in writing with the copyright holders.

@@ -1,6 +1,10 @@
 # =============================================================================
 # Fable 5 Offline Agent — .gitignore (Windows / macOS / Linux)
 # https://github.com/dglogan42/Fable-Offline
+#
+# Ship curated markdown skills/knowledge/workflows only.
+# Keep out: secrets, runtime memory/workspace, scrapes, PDFs, private .ics,
+# Zoom/Google calendar credentials, local soak dumps.
 # =============================================================================
 
 # --- Python ---
@@ -182,6 +186,17 @@ knowledge/animals/_local/
 knowledge/steam/_local/
 knowledge/steam/*-local*.md
 knowledge/steam/appids.local.*
+knowledge/calendar/_local/
+knowledge/calendar/*-local*.md
+knowledge/calendar/*secret*
+knowledge/calendar/*passcode*
+knowledge/calendar/*meeting-id*
+# Private calendar exports / invites / Zoom join material
+**/*.ics
+!**/*.ics.example
+!knowledge/calendar/**/*.ics.example
+*.zoom.json
+zoom-join*.txt
 
 # PDFs and dumped PDF.js viewer bundles (curated knowledge/pdf notes only)
 *.pdf

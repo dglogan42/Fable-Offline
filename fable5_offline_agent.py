@@ -365,6 +365,44 @@ def extract_pdf_to_markdown(
     return out_path
 
 
+def parse_ics_to_markdown(
+    ics_path: Path,
+    *,
+    out_path: Optional[Path] = None,
+) -> Path:
+    """Parse local .ics to markdown under workspace/ (skill calendar-mail-meetings)."""
+    scripts_dir = SCRIPT_DIR / "scripts"
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+    try:
+        from ical_parse import parse_ics, to_markdown  # type: ignore
+    except ImportError as e:
+        raise RuntimeError(
+            "Could not import scripts/ical_parse.py — ensure the file exists"
+        ) from e
+
+    ics_path = ics_path.expanduser().resolve()
+    if not ics_path.is_file():
+        raise FileNotFoundError(f"iCal file not found: {ics_path}")
+
+    text = ics_path.read_text(encoding="utf-8", errors="replace")
+    cal = parse_ics(text)
+    md = to_markdown(cal, str(ics_path))
+
+    if out_path is None:
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+        slug = re.sub(r"[^\w\-]+", "-", ics_path.stem.lower())[:40].strip("-") or "ical"
+        out_dir = workspace_root() / f"ical-{slug}-{stamp}"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / "summary.md"
+    else:
+        out_path = out_path.expanduser()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    out_path.write_text(md, encoding="utf-8", newline="\n")
+    return out_path
+
+
 def load_system_prompt(
     *,
     hermes: bool = False,
@@ -373,6 +411,7 @@ def load_system_prompt(
     education_mode: bool = False,
     privacy_mode: bool = False,
     pdf_mode: bool = False,
+    calendar_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -442,6 +481,35 @@ def load_system_prompt(
         know = read_knowledge_bundle("pdf", limit_chars=4000)
         if know.strip():
             parts.append("\n\n---\n## Local PDF knowledge\n\n" + know)
+    if calendar_mode:
+        parts.append(
+            "\n\n---\n## Calendar / mail / meetings mode\n"
+            "Apply skill **calendar-mail-meetings**. Google Calendar UI is "
+            "https://calendar.google.com/ (user CLICK — no authenticated scrape). "
+            "Zoom Web Client join is https://app.zoom.us/wc/join (user CLICK — never auto-join). "
+            "Prefer local .ics via scripts/ical_parse.py or pasted VCALENDAR. "
+            "Procedures: parse-ical, meeting-prep, meeting-notes, mail-draft, schedule-hygiene, "
+            "gcal-guide, join-zoom, map-calendar-privacy. Draft mail/events only; user sends, "
+            "creates, or joins. Never store OAuth tokens, app passwords, Zoom passcodes, or "
+            "secret iCal feed URLs in git. Not legal advice. Not a mail or Zoom client.\n"
+        )
+        know = read_knowledge_bundle("calendar", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local calendar / meetings knowledge\n\n" + know)
+        for label, rel in (
+            ("Google Calendar seed", "google-calendar-hosts.md"),
+            ("Zoom seed", "zoom-hosts.md"),
+        ):
+            host_path = knowledge_root() / "privacy" / rel
+            if not host_path.is_file():
+                continue
+            try:
+                host_txt = host_path.read_text(encoding="utf-8", errors="replace")
+                if len(host_txt) > 2500:
+                    host_txt = host_txt[:2500] + "\n\n…[truncated]"
+                parts.append(f"\n\n---\n## Privacy host map ({label})\n\n" + host_txt)
+            except OSError:
+                pass
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -1977,7 +2045,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2172,6 +2240,36 @@ def run_automate(
                     prefix="PdfMode: ",
                 )
                 results.append("pdf → done")
+            elif stype == "calendar":
+                ics_rel = step.get("path") or step.get("ics") or step.get("ical")
+                extract_note = ""
+                if ics_rel:
+                    try:
+                        p = parse_ics_to_markdown(Path(ics_rel))
+                        print(ui(f"  ✓ iCal parse → {p}"))
+                        extract_note = p.read_text(encoding="utf-8")[:12000]
+                        results.append(f"ical parse → {p.name}")
+                    except Exception as e:
+                        print(ui(f"  ✗ iCal parse failed: {e}"))
+                        results.append(f"ical FAIL → {e}")
+                csys = load_system_prompt(calendar_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill calendar-mail-meetings and knowledge/calendar/, run meeting-prep "
+                    "or parse-ical as appropriate. Google Calendar: https://calendar.google.com/ "
+                    "(user CLICK). Not legal advice."
+                )
+                if extract_note:
+                    prompt = prompt + "\n\n---\n## iCal summary\n\n" + extract_note
+                print("\n[calendar / mail / meetings]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": csys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="CalendarMode: ",
+                )
+                results.append("calendar → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2394,7 +2492,10 @@ def print_banner() -> None:
     print(ui(f"Platform: {PLATFORM_LABEL}  ·  Model: {MODEL_NAME}"))
     print(f"Manual:   {_resolve(SYSTEM_PROMPT_FILE).name}  ·  Soul: {SOUL_FILE}")
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
-    print("Commands: /team /broker /legal /education /privacy /pdf /build /automate /loop /help quit\n")
+    print(
+        "Commands: /team /broker /legal /education /privacy /calendar /pdf "
+        "/build /automate /loop /help quit\n"
+    )
 
 
 def print_help() -> None:
@@ -2408,6 +2509,8 @@ Commands
   /legal [prompt]    Legal playbook: contract/NDA/vendor/brief/respond (knowledge/legal/)
   /education [prompt] Education/credential claim audit (knowledge/education/)
   /privacy [prompt]  Privacy host map + design planner (knowledge/privacy/)
+  /calendar [prompt] Calendar / iCal / mail / meetings (knowledge/calendar/)
+  /meetings [prompt] Alias for /calendar
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2438,12 +2541,16 @@ CLI
   {py} fable5_offline_agent.py --legal "Review this NDA: [paste]"
   {py} fable5_offline_agent.py --education
   {py} fable5_offline_agent.py --privacy
+  {py} fable5_offline_agent.py --calendar
+  {py} fable5_offline_agent.py --calendar "meeting-prep: sprint review tomorrow 10:00 NZST"
+  {py} fable5_offline_agent.py --ical path/to/invite.ics
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
   {py} fable5_offline_agent.py --automate lpu-full-audit
   {py} fable5_offline_agent.py --automate privacy-host-map
   {py} fable5_offline_agent.py --automate privacy-design-plan
+  {py} fable5_offline_agent.py --automate calendar-meeting-prep
   {py} fable5_offline_agent.py --pdf path/to/file.pdf
   {py} fable5_offline_agent.py --automate pdf-extract-review
   {py} fable5_offline_agent.py --build "tiny flask hello app"
@@ -2584,6 +2691,32 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Privacy mode error: {e}\n"))
+            continue
+        if low.startswith("/calendar") or low.startswith("/meetings") or low.startswith("/mail"):
+            if low.startswith("/calendar"):
+                prompt = user_input[9:].strip()
+            elif low.startswith("/meetings"):
+                prompt = user_input[9:].strip()
+            else:
+                prompt = user_input[5:].strip()
+            prompt = prompt or (
+                "Using skill calendar-mail-meetings and knowledge/calendar/, explain procedures "
+                "(parse-ical, meeting-prep, meeting-notes, mail-draft, gcal-guide) and Google Calendar "
+                "at https://calendar.google.com/ as user CLICK. Prefer local .ics. Not legal advice."
+            )
+            try:
+                csys = load_system_prompt(calendar_mode=True)
+                print(ui("\n[calendar / mail / meetings]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": csys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="CalendarMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Calendar mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -2866,6 +2999,19 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Privacy host map + design planner using knowledge/privacy/",
     )
     parser.add_argument(
+        "--calendar",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="Calendar / iCal / mail / meetings mode (knowledge/calendar/)",
+    )
+    parser.add_argument(
+        "--ical",
+        metavar="PATH",
+        help="Parse local .ics to workspace/ markdown, then calendar-mail-meetings review",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -2989,6 +3135,8 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.legal is None
             and args.education is None
             and args.privacy is None
+            and args.calendar is None
+            and not args.ical
             and not args.automate
             and not args.team
         ):
@@ -3073,6 +3221,55 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": psys}, {"role": "user", "content": prompt}],
                 prefix="PrivacyMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.ical:
+        try:
+            out = parse_ics_to_markdown(Path(args.ical))
+            print(ui(f"✓ iCal parse → {out}"))
+            extract = out.read_text(encoding="utf-8")
+            extract_for_model = (
+                extract if len(extract) <= 14000 else extract[:14000] + "\n\n…[truncated]"
+            )
+            csys = load_system_prompt(calendar_mode=True)
+            stream_chat(
+                client,
+                [
+                    {"role": "system", "content": csys},
+                    {
+                        "role": "user",
+                        "content": (
+                            "Using skill calendar-mail-meetings procedure parse-ical, summarise "
+                            "this offline iCal extract. Flag conference links as CLICK. Suggest "
+                            "meeting-prep or mail-draft next steps. Do not invent attendees or times.\n\n"
+                            + extract_for_model
+                        ),
+                    },
+                ],
+                prefix="CalendarMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ iCal error: {e}"))
+            return 1
+
+    if args.calendar is not None:
+        prompt = (args.calendar or "").strip() or (
+            "Using skill calendar-mail-meetings and knowledge/calendar/ "
+            "(ical-and-google.md, meetings-playbook.md), list procedures and how to use "
+            "Google Calendar at https://calendar.google.com/ with local .ics offline. "
+            "If the user stated a meeting, run meeting-prep. Not legal advice."
+        )
+        try:
+            csys = load_system_prompt(calendar_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": csys}, {"role": "user", "content": prompt}],
+                prefix="CalendarMode: ",
             )
             return 0
         except Exception as e:
