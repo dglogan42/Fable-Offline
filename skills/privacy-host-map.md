@@ -177,6 +177,7 @@ If `knowledge/privacy/` contains notes (e.g. `akl-libraries-third-party-hosts.md
 | Sports field programme | `ac-sports-field-programme-hosts.md` | GTM-MCLW6DXF **+ Clarity + Hotjar + GA4 gtag + YouTube + Qualtrics** |
 | AAG Forever Tomorrow | `aag-forever-tomorrow-hosts.md` | React SPA, **GTM-KCGVLXLM**, **Meta Pixel**, Securiti, reCAPTCHA, Sentry, YouTube/Vimeo, Stackla |
 | MPI Exporter Help | `mpi-exporter-help-hosts.md` | Silverstripe 5.4, Swiftype meta; dump incomplete — re-scan Network |
+| Health NZ Find a service | `healthnz-find-a-service-hosts.md` | Silverstripe 6.2, **GTM-NQDRN6WT**, **Hotjar 3700571**, **Mapbox pk.**, geolocation, Reoako, WR Shield CSS |
 
 Empty AEM stub pattern: `clientlib-dependencies…d41d8cd9…` (0 bytes).
 
