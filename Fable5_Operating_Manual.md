@@ -1032,6 +1032,14 @@ Prefer official for licensing; wiki for exclusive features (Agent, borders, Clas
 **Automation:** `roblox-studio-resource-kit`.  
 Free official Win/Mac app; not for Chromebook creation. Keep Studio updated. No cracked clients; no account cookies in git.
 
+## 20x. Book Creator comics kit
+**Trigger:** Book Creator, classroom comics, panels, speech bubbles, bookcreator.com/features/comics.  
+**Skill:** `book-creator-comics-kit` — **bc-plan**, **account-path**, **comic-workflow**, **panel-recipe**, **bubble-style-recipe**, **unit-scaffold**, **share-handoff**, **privacy-brief**.  
+**Source:** [Make comics with Book Creator](https://bookcreator.com/features/comics/) · [app.bookcreator.com](https://app.bookcreator.com).  
+**Knowledge:** `knowledge/education/book-creator-comics.md`.  
+**Automation:** `book-creator-comics-kit`.  
+Official Book Creator only. No student PII. Pricing VERIFY LIVE. Hand off via `google-for-education`.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

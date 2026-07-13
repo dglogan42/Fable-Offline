@@ -165,6 +165,8 @@ For stop-motion / media units on school Chrome devices:
 
 For **Minecraft Education** units: skill **`minecraft-education-resource-kit`** · [education.minecraft.net](https://education.minecraft.net/en-us) — assign briefs via Classroom; license via Microsoft education (VERIFY LIVE).
 
+For **Book Creator comics** units: skill **`book-creator-comics-kit`** · [bookcreator.com/features/comics](https://bookcreator.com/features/comics/) · app [app.bookcreator.com](https://app.bookcreator.com).
+
 Calendar/Meet for critique sessions: `calendar-mail-meetings`.
 
 ---

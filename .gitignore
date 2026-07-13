@@ -189,6 +189,9 @@ knowledge/education/*student*
 **/*gamertag*roster*
 **/MEE*license*
 **/educommunity*cookie*
+# Book Creator student books / tokens
+**/bookcreator*token*
+**/book-creator*student*
 knowledge/legal/_local/
 knowledge/legal/matters/
 knowledge/privacy/_local/

@@ -23,7 +23,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
 | **Legal** | Contract / NDA / vendor playbook · GREEN/YELLOW/RED flags · briefs & draft responds (`knowledge/legal/`) |
-| **Education** | Credential audit · **UC Arts PG** · **Google for Education** · **Minecraft Education** kit (`knowledge/education/`) |
+| **Education** | Credential audit · **UC Arts PG** · **Google for Education** · **Minecraft Education** · **Book Creator comics** (`knowledge/education/`) |
 | **Privacy** | Host maps + **design planner** for privacy-aware agentic AI (`knowledge/privacy/`) |
 | **Urban planning** | Competencies + **freight plan** module · Future Connect · skill audits (`knowledge/urban-planning/`) |
 | **Climate** | Pathway/BAU modelling hygiene · Auckland Climate Plan seed (`knowledge/climate/`) |
@@ -154,7 +154,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
-| Education claims / UC Arts PG / GfE / Minecraft Edu | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate`, `google-for-education`, `minecraft-education-resource-kit` |
+| Education claims / UC Arts PG / GfE / Minecraft / comics | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate`, `google-for-education`, `minecraft-education-resource-kit`, `book-creator-comics-kit` |
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
@@ -316,6 +316,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `google-for-education` | Google for Education hub map (Workspace · Classroom · devices) |
 | `minecraft-education-resource-kit` | Minecraft Education lessons, license, unit scaffold |
 | `roblox-studio-resource-kit` | Roblox Studio install, sysreqs, first place, docs map |
+| `book-creator-comics-kit` | Book Creator classroom comics (panels, bubbles, unit) |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
@@ -552,6 +553,30 @@ python fable5_offline_agent.py --automate roblox-studio-resource-kit
 | Docs hub | [create.roblox.com/docs/studio](https://create.roblox.com/docs/studio) |
 
 **Refuse:** cracked Studio, Robux scams, account cookie theft. Large `.rbxl` places stay local (gitignored).
+
+## Book Creator comics kit
+
+Classroom **comics** with [Book Creator](https://bookcreator.com/features/comics/) — panels, stickers, speech bubbles, comic styles.
+
+| Stage | Focus |
+|-------|--------|
+| Account | [app.bookcreator.com](https://app.bookcreator.com) · teacher sign-in · [pricing](https://bookcreator.com/pricing/) VERIFY LIVE |
+| Build | Panels → camera/photos → stickers → captions/speech bubbles → styles/SFX |
+| Pedagogy | Comics as writing/visual literacy ([classroom blog](https://bookcreator.com/blog/2015/11/how-can-we-use-comics-in-the-classroom/)) |
+| Assign | `google-for-education` (Classroom) |
+
+```bash
+python fable5_offline_agent.py --automate book-creator-comics-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/book-creator-comics-kit.md` |
+| Knowledge | `knowledge/education/book-creator-comics.md` |
+| Workflow | `workflows/book-creator-comics-kit.json` |
+| Feature page | [bookcreator.com/features/comics](https://bookcreator.com/features/comics/) |
+
+**Notes:** No student books/PII in git. Photo consent. Marketing site may use GTM/Cookiebot/HubSpot/Intercom (`privacy-host-map` if auditing).
 
 ## 3D animation dev kit (CG · Blender-first)
 
@@ -1428,6 +1453,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Google for Education** — Workspace · Classroom · Chromebooks map ([edu.google.com](https://edu.google.com/intl/ALL_us/)).
 - **Minecraft Education resource kit** — official hub + [Minecraft Wiki](https://minecraft.wiki/w/Minecraft_Education) features/sysreqs (re-check license on Microsoft).
 - **Roblox Studio resource kit** — official setup ([create.roblox.com/docs/studio/setup](https://create.roblox.com/docs/studio/setup)); free Win/Mac Studio.
+- **Book Creator comics kit** — classroom comics ([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)).
 - **3D animation dev kit** — Blender-first CG pipeline + optional [MDS 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees) study map (not careers advice).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
@@ -1475,6 +1501,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
 | ChromeOS Flex / GfE / Minecraft Education | Third-party ISOs, cracked MEE, student PII, invented prices, or compliance guarantees |
 | Roblox Studio | Cracked Studio, Robux scams, session cookies, or huge `.rbxl` in public git |
+| Book Creator comics | Student books/PII in git, cracked accounts, or invented pricing |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
 | Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |

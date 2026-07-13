@@ -11,6 +11,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **animation-dev-kit**: [Animation dev kit (Krita frame-by-frame)](animation-dev-kit.md)
 - **animal-compliance-agent**: [Animal compliance agent](animal-compliance-agent.md)
 - **arts-culture-agent**: [Arts & culture agent](arts-culture-agent.md)
+- **book-creator-comics-kit**: [Book Creator comics kit (classroom)](book-creator-comics-kit.md)
 - **broker-claim-audit**: [Broker claim audit (marketing vs evidence)](broker-claim-audit.md)
 - **broker-user-model**: [Broker user model (disciplined retail CFD client)](broker-user-model.md)
 - **build-and-automate**: [Build and automate (offline)](build-and-automate.md)

@@ -150,9 +150,11 @@ Skill `minecraft-education-resource-kit` and `knowledge/education/minecraft-educ
 map **Minecraft Education** ([education.minecraft.net](https://education.minecraft.net/en-us))
 with community technical notes from [Minecraft Wiki](https://minecraft.wiki)
 ([Minecraft Education article](https://minecraft.wiki/w/Minecraft_Education), exclusive features,
-version history). Google marks remain Google LLC; Minecraft / Minecraft Education marks remain
-Microsoft / Mojang. Wiki content is third-party community documentation — re-verify licensing,
-prices, country availability, and app versions on official Microsoft pages before procurement.
+version history). Skill `book-creator-comics-kit` maps **Book Creator** classroom comics
+([bookcreator.com/features/comics](https://bookcreator.com/features/comics/)). Google marks
+remain Google LLC; Minecraft / Minecraft Education marks remain Microsoft / Mojang; Book Creator
+marks remain Tools for Schools, Inc. / Book Creator. Wiki content is third-party community
+documentation — re-verify licensing, prices, and app versions on official vendor pages.
 
 The Software does **not** redistribute Flex images, enrollment tokens, Admin
 console credentials, cracked Minecraft Education clients, or student personal

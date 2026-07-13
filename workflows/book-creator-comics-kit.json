@@ -1,0 +1,14 @@
+{
+  "name": "book-creator-comics-kit",
+  "description": "Plan Book Creator classroom comics: panels, bubbles, unit scaffold, share",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Feature: https://bookcreator.com/features/comics/ — App: https://app.bookcreator.com — skill book-creator-comics-kit. Official Book Creator only. No student PII. Pricing VERIFY LIVE. Not educational advice."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill book-creator-comics-kit and knowledge/education/book-creator-comics.md (from bookcreator.com/features/comics), produce bc-plan: (1) verdict (2) account-path — free teacher sign-in https://app.bookcreator.com/sign-in/teacher ; schools/pricing VERIFY LIVE (3) comic-workflow: panels → camera/photos → stickers → speech bubbles/captions → comic styles/SFX stickers (4) panel-recipe and bubble-style-recipe (5) unit-scaffold for classroom comics as writing/visual literacy (6) why-comics pedagogy link to blog (7) share-handoff via google-for-education Classroom (8) privacy-brief — Cookiebot/GTM/HubSpot/Intercom on marketing site; photo consent (9) OPEN. Not educational advice. User operates Book Creator HITL."
+    }
+  ]
+}
