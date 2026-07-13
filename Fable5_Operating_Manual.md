@@ -949,6 +949,14 @@ DOC Conservation blog: [Becoming a DOC ranger](https://blog.doc.govt.nz/2020/01/
 
 ---
 
+## 20m. YouTube live encoder
+**Trigger:** YouTube Live, RTMP, OBS, stream key, encoder, Studio Go live.  
+**Skill:** `youtube-live-encoder` — **live-encoder-plan**, **enable-live**, **connect-go-live**, **key-hygiene**, **schedule-stream**.  
+**Source:** [support.google.com/youtube/answer/2907883](https://support.google.com/youtube/answer/2907883?hl=en).  
+**Knowledge:** `knowledge/media/youtube-live-encoder.md`.  
+**Automation:** `youtube-live-encoder-plan`.  
+Never commit stream keys. First enable may take up to 24 hours. User operates Studio + encoder.
+
 ## 20l. Offline loop agents pack
 
 **Trigger:** `/hermes`, `/loop`, `/engineer`, `offline_goal_loop.py`.

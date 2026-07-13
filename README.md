@@ -44,6 +44,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **TikTok Ads create** | Ads Manager campaign plan + pixel hygiene (`knowledge/ads/`) |
 | **Snapchat Web feed** | Desktop Chat feed protocol (`web.snapchat.com`) |
 | **RSS share** | Build/share **RSS 2.0** feeds (`scripts/rss_share.py`) |
+| **YouTube Live encoder** | Studio + RTMP/encoder protocol ([Help 2907883](https://support.google.com/youtube/answer/2907883?hl=en)) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -142,6 +143,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
+| YouTube Live encoder | `knowledge/media/` | `youtube-live-encoder` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
 | DOC ranger careers | `knowledge/conservation/` | `doc-ranger-pathway` |
 | TikTok Ads creation | `knowledge/ads/` | `tiktok-ads-create` |
@@ -272,6 +274,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `tiktok-ads-create` | Full Ads Manager campaign plan (structure, pixel, creative, launch) |
 | `snapchat-web-session` | Snapchat for Web login + Chat feed + call/snap protocol |
 | `rss-share-build` | Compose channel JSON + RSS 2.0 feed.xml share pack |
+| `youtube-live-encoder-plan` | YouTube Live encoder first-stream plan (Help 2907883) |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
 | `freight-plan-review` | Freight network / freight plan structured review (urban scale) |
 | `freight-export-checkpoint` | Export readiness + forwarder/exporter doc checklist |
@@ -290,6 +293,29 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `outfit-seamly-plan` | Outfit brief + Seamly2D project plan ([download](https://seamly.io/download/)) |
 | `doc-ranger-pathway` | DOC Trainee Ranger / L4 conservation pathway map |
 | `uc-arts-pg-map` | UC Arts postgraduate pathways + apply navigation |
+
+## YouTube Live with an encoder
+
+Official protocol: [Create a YouTube live stream with an encoder](https://support.google.com/youtube/answer/2907883?hl=en).
+
+| Step | Action |
+|------|--------|
+| 1 | Enable live (first time up to **24 hours**) |
+| 2 | Install encoder (OBS, Streamlabs, hardware, … — third-party) |
+| 3 | Connect cams/mics |
+| 4 | Studio → CREATE → Go live → Stream URL + **stream key** → encoder → start |
+
+```bash
+python fable5_offline_agent.py --automate youtube-live-encoder-plan
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/youtube-live-encoder.md` |
+| Knowledge | `knowledge/media/youtube-live-encoder.md` |
+| Workflow | `workflows/youtube-live-encoder-plan.json` |
+
+**Never commit stream keys.** Defaults for privacy (public/private) depend on age band — set deliberately.
 
 ## RSS share
 
@@ -1111,6 +1137,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **TikTok Ads create** — Ads Manager campaign planning + pixel hygiene (not fraud; not ROAS guarantees).
 - **Snapchat Web feed** — official web.snapchat.com Chat/call/snap protocol (not a scraper).
 - **RSS share** — RSS 2.0 feed build/share (`scripts/rss_share.py`; pull syndication).
+- **YouTube Live encoder** — Studio + encoder setup from Help 2907883 (not stream-key storage).
 
 ## License
 

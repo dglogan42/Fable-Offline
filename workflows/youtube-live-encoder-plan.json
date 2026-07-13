@@ -1,0 +1,14 @@
+{
+  "name": "youtube-live-encoder-plan",
+  "description": "Plan a YouTube Live encoder stream from official Help 2907883",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Official: https://support.google.com/youtube/answer/2907883?hl=en — skill youtube-live-encoder. Never store stream keys in git."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill youtube-live-encoder and knowledge/media/youtube-live-encoder.md (source support.google.com/youtube/answer/2907883), produce live-encoder-plan: (1) verdict (2) enable-live note (up to 24h first time) (3) choose-encoder class (4) connect-hardware checklist (5) Studio CREATE→Go live→Stream URL/key steps (6) key-hygiene (7) schedule vs instant (8) end-archive under 12h. If user named a use case (game/pro/mobile), tailor. VERIFY LIVE UI. Not a product endorsement. Never invent or ask them to paste the stream key into chat if avoidable."
+    }
+  ]
+}

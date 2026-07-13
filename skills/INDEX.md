@@ -38,3 +38,4 @@ Loaded into context on every run so the system compounds without retraining weig
 - **uc-arts-postgraduate**: [UC Arts postgraduate study (Canterbury)](uc-arts-postgraduate.md)
 - **urban-planner-competencies**: [Urban planner competencies](urban-planner-competencies.md)
 - **windows-install-prep**: [Windows install prep (licensed · DISM hygiene)](windows-install-prep.md)
+- **youtube-live-encoder**: [YouTube live stream with encoder](youtube-live-encoder.md)

@@ -229,6 +229,10 @@ knowledge/ads/_local/
 knowledge/ads/*-local*.md
 knowledge/ads/*pixel*id*
 knowledge/ads/*secret*
+knowledge/media/_local/
+knowledge/media/*-local*.md
+knowledge/media/*stream*key*
+**/*stream*key*
 # Seamly / pattern CAD client files
 **/*.sm2d
 **/*.sm2d*
