@@ -7,6 +7,7 @@
 # Zoom/Google calendar credentials, Windows product keys, macOS recovery keys /
 # full Installer apps / IPSW, social chat/snap exports, private RSS URLs with
 # tokens, stream keys, Adobe passwords, heavy creative inbox/exports, soak dumps,
+# animation masters (Krita .kra, Stop Motion Studio projects, Blender caches/EXR),
 # bulk generated_prompts/ (ship auto_prompt_generator.py + skill, not LLM dumps).
 # =============================================================================
 
@@ -234,10 +235,12 @@ knowledge/media/_local/
 knowledge/media/*-local*.md
 knowledge/media/*stream*key*
 **/*stream*key*
-# Heavy media masters (export packages stay local)
+# --- Creative / animation media (ship curated notes only) ---
+# Adobe / NLE / camera masters (export packages stay local)
 workspace/creative/**/00_inbox/**
 workspace/creative/**/01_selects/**
 workspace/creative/**/04_exports/**
+workspace/creative/**/06_exports/**
 workspace/creative/**/*.psd
 workspace/creative/**/*.psb
 workspace/creative/**/*.dng
@@ -248,25 +251,37 @@ workspace/creative/**/*.arw
 workspace/creative/**/*.mov
 workspace/creative/**/*.mp4
 workspace/creative/**/*.mxf
+workspace/creative/**/*.webm
+workspace/creative/**/*.gif
 workspace/creative/**/*.drp
 workspace/creative/**/*.prproj
-# Krita animation masters + sequence dumps (curated notes.md OK)
+# Krita 2D animation masters + sequence dumps
 workspace/creative/**/*.kra
 workspace/creative/**/*.kra~
 workspace/creative/**/03_krita/**
 workspace/creative/**/04_renders/**
-# Stop Motion Studio project backups + capture dumps (curated notes.md OK)
+# Stop Motion Studio project backups + capture dumps
 workspace/creative/**/02_sms_project/**
 workspace/creative/**/03_capture_raw/**
 workspace/creative/**/*stop*motion*
 workspace/creative/**/*.sms
-# 3D / Blender caches and heavy scenes (curated notes.md OK)
+# 3D / Blender (and common DCC interchange) — heavy scenes & caches
+workspace/creative/**/*.blend
 workspace/creative/**/*.blend1
 workspace/creative/**/*.blend2
-workspace/creative/**/04_renders/**
+workspace/creative/**/02_assets/**
 workspace/creative/**/03_shots/**
+workspace/creative/**/04_renders/**
+workspace/creative/**/05_comp/**
 workspace/creative/**/*_cache*/
 workspace/creative/**/*.exr
+workspace/creative/**/*.abc
+workspace/creative/**/*.fbx
+workspace/creative/**/*.usd
+workspace/creative/**/*.usda
+workspace/creative/**/*.usdc
+workspace/creative/**/*.vdb
+# Allow small curated notes/presets only
 !workspace/creative/**/notes.md
 !workspace/creative/**/05_presets/**/*.md
 !workspace/creative/**/07_presets/**/*.md

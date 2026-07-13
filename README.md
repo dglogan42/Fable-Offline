@@ -4,7 +4,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#platforms)
 [![Python](https://img.shields.io/badge/python-3.10%2B-yellow.svg)](#requirements)
 
-Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** (swarm/agent system prompts) — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS install prep**, **Steam SIM soak**, **math/physics**, and a **6-month agentic engineer roadmap**.  
+Local, **no-cloud** agent for **reasoning**, **loops**, **multi-agent teams**, **Hermes**, **self-improving skills**, **build/automate**, and an **offline prompt generator** (swarm/agent system prompts) — plus domain skills for **privacy**, **planning**, **trade**, **property**, **animals**, **emergency routing (NZ)**, **arts**, **AEM**, **PDF**, **calendar / Zoom / iCal**, **Windows / macOS install prep**, **Steam SIM soak**, **math/physics**, **creative pipelines**, **2D / stop-motion / 3D animation kits** (Krita · Stop Motion Studio · Blender), and a **6-month agentic engineer roadmap**.  
 Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default: [Ollama](https://ollama.com)).
 
 **Data:** curated offline notes live under [`knowledge/`](knowledge/INDEX.md) (see that index). **License:** [MIT](LICENSE.md) © 2026 David Logan — Software **AS IS**; domain notes are not professional advice.
@@ -106,7 +106,7 @@ Fable-Offline/
 ├── workspace/                   # Runtime builds/extracts (gitignored)
 ├── memory/                      # Runtime memory (gitignored)
 ├── LICENSE · LICENSE.md         # MIT © 2026 David Logan + domain notices
-├── .gitignore                   # Secrets, OS install media, calendar, soak junk
+├── .gitignore                   # Secrets, creative/anim masters, calendar, soak junk
 └── README.md
 ```
 
@@ -122,7 +122,9 @@ Fable-Offline/
 | Windows product keys (`knowledge/windows/_local/`) | Licensing secrets |
 | macOS `Install *.app`, `.ipsw`, recovery / FileVault keys | Huge binaries + secrets |
 | Stream keys; Adobe passwords; creative `00_inbox` / `04_exports` media | Secrets + bulk binaries |
-| Heavy `.kra` / animation PNG sequences under `workspace/creative/` | Local Krita masters + renders |
+| Krita `.kra` / `03_krita/` / render sequences | Local 2D animation masters |
+| Stop Motion Studio projects / `02_sms_project/` / capture dumps | Local SMS libraries |
+| Blender `.blend` / EXR / `03_shots/` / caches / FBX·USD·VDB dumps | Local 3D/CG weight |
 | `generated_prompts/` bulk dumps | Local LLM prompt-gen output |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
@@ -1320,8 +1322,9 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 7. macOS install ([101578](https://support.apple.com/en-nz/101578) `createinstallmedia` only; no Hackintosh/piracy)  
 8. Social / RSS / Snapchat Web (no scrape; user-owned feeds only)  
 9. Creative apps / pipeline builds (licensed Adobe·CapCut·Resolve only; no cracks)  
-10. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
-11. Contribution licensing  
+10. Animation toolkits — Krita 2D, Stop Motion Studio, Blender 3D (no cracked DCC; not careers/enrollment advice)  
+11. Automatic prompt generator / swarm prompts (not investment advice; review before use)  
+12. Contribution licensing  
 
 ### Domain disclaimers (summary)
 

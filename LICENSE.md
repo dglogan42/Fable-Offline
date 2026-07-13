@@ -138,7 +138,25 @@ packages. Prefer `workspace/creative/` locally (inbox/exports gitignored).
 YouTube Live encoder guidance (Help answer 2907883 family) likewise requires
 valid account access; never commit stream keys.
 
-### 10. Automatic prompt generator and swarm prompts
+### 10. Animation toolkits (2D, stop-motion, 3D)
+
+Skills and notes under `knowledge/media/` support **user-operated** animation
+workflows. They do not ship third-party binaries and do not grant licenses to
+those products.
+
+| Skill | Primary software / source | Notes |
+|-------|---------------------------|--------|
+| `animation-dev-kit` | [Krita](https://krita.org/) · [Animation manual](https://docs.krita.org/en/user_manual/animation.html) | FOSS frame-by-frame; optional FFmpeg |
+| `stop-motion-dev-kit` | [Stop Motion Studio](https://www.stopmotionstudio.com/download/index.html) (Cateater) | Licensed/purchased app; no cracked installs |
+| `3d-animation-dev-kit` | [Blender](https://www.blender.org/download/) (default) | FOSS CG pipeline; Maya/Houdini/C4D only if user already licensed |
+
+Public **education map** seeds (e.g. [Media Design School 3D Animation & VFX](https://www.mediadesignschool.com/courses/3d-animation-vfx-courses-degrees))
+are **not** enrollment, careers, or immigration advice. Re-verify fees, entry,
+and rankings live. The Software does **not** authorize cracked DCC tools,
+pirated plugins, or committing multi-GB masters (`.kra`, SMS projects, `.blend`,
+EXR sequences) — keep those under `workspace/creative/` (gitignored).
+
+### 11. Automatic prompt generator and swarm prompts
 
 `auto_prompt_generator.py`, skill `prompt-generator`, notes under
 `knowledge/swarm/`, Fable CLI `--prompt-gen` / `/prompt-gen`, and workflows
@@ -151,7 +169,7 @@ research process only; they do not execute trades or guarantee alpha. Review
 generated prompts before production or safety-critical use. Do not commit
 secrets, API keys, or private trading parameters into generated prompt dumps.
 
-### 11. Contributions
+### 12. Contributions
 
 By submitting contributions to this repository, you agree they are licensed
 under the same MIT License terms as the Software, unless you state otherwise
