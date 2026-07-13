@@ -178,6 +178,7 @@ If `knowledge/privacy/` contains notes (e.g. `akl-libraries-third-party-hosts.md
 | AAG Forever Tomorrow | `aag-forever-tomorrow-hosts.md` | React SPA, **GTM-KCGVLXLM**, **Meta Pixel**, Securiti, reCAPTCHA, Sentry, YouTube/Vimeo, Stackla |
 | MPI Exporter Help | `mpi-exporter-help-hosts.md` | Silverstripe 5.4, Swiftype meta; dump incomplete — re-scan Network |
 | Health NZ Find a service | `healthnz-find-a-service-hosts.md` | Silverstripe 6.2, **GTM-NQDRN6WT**, **Hotjar 3700571**, **Mapbox pk.**, geolocation, Reoako, WR Shield CSS |
+| NZ Police 105 | `nz-police-105-hosts.md` | Drupal 11, **GA4 G-D3P3CRCCXE** (ad personalization off), FB app_id, forms.police.govt.nz |
 
 Empty AEM stub pattern: `clientlib-dependencies…d41d8cd9…` (0 bytes).
 
