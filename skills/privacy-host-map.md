@@ -169,12 +169,13 @@ When asked to persist:
 
 If `knowledge/privacy/` contains notes (e.g. `akl-libraries-third-party-hosts.md`), **use them** and cite filenames. Still mark live re-verification as required when hashes/IDs may have changed.
 
-### Worked examples (Auckland Council family)
+### Worked examples (Auckland public sector / CCO family)
 | Page | Snapshot | Notable tags |
 |------|----------|--------------|
 | Libraries catalogue | `akl-libraries-third-party-hosts.md` | GTM-TDX29C, Coveo ac-lib, Shielded |
 | Compliance Policy | `ac-compliance-policy-hosts.md` | GTM-MCLW6DXF, Coveo ac-web, Shielded |
 | Sports field programme | `ac-sports-field-programme-hosts.md` | GTM-MCLW6DXF **+ Clarity + Hotjar + GA4 gtag + YouTube + Qualtrics** |
+| AAG Forever Tomorrow | `aag-forever-tomorrow-hosts.md` | React SPA, **GTM-KCGVLXLM**, **Meta Pixel**, Securiti, reCAPTCHA, Sentry, YouTube/Vimeo, Stackla |
 
 Empty AEM stub pattern: `clientlib-dependencies…d41d8cd9…` (0 bytes).
 
