@@ -63,6 +63,7 @@ You analyse **AEM page architecture and client-side surface area**, not Adobe Cl
 | Intent | Procedure |
 |--------|-----------|
 | Confirm AEM vs other CMS | **fingerprint-stack** |
+| CSS-only design system (no HTML) | **fingerprint-css** |
 | Inventory clientlibs & real JS | **map-clientlibs** |
 | Empty stub / hash hygiene | **audit-empty-clientlib** |
 | Data layer / analytics surface | **map-datalayer** |
@@ -85,6 +86,20 @@ Output:
 3. Companion tags seen (GTM ID, Launch, Coveo org)  
 4. Content type (policy, project, library catalogue, …)  
 5. Suggested knowledge path  
+
+---
+
+## fingerprint-css
+
+When the dump is **styles only** (no URL / head scripts):
+
+1. Verdict: **design-system fingerprint only** — CMS **UNKNOWN**  
+2. Capture: font stack, body colour/size, breakpoints, resets  
+3. Write/update `knowledge/web/css-design-fingerprint-*.md`  
+4. Do **not** invent privacy hosts or organisation  
+5. Ask for URL or full HTML to bind and escalate to **fingerprint-stack** / **map-aem-privacy**  
+
+Seed example: `knowledge/web/css-design-fingerprint-helvetica-grey.md`.
 
 ---
 

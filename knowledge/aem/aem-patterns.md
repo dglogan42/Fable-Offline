@@ -18,6 +18,16 @@
 | `assets.adobedtm.com` + `_satellite.pageBottom()` | Adobe Launch |
 | `content/dam/` | DAM assets |
 
+### CSS-only design fingerprints (no CMS assumed)
+
+When the dump is **styles only**, store under `knowledge/web/` and do **not** invent a host map.
+
+| Fingerprint note | Signals |
+|------------------|---------|
+| `knowledge/web/css-design-fingerprint-helvetica-grey.md` | Helvetica Neue + Segoe WP + Nimbus Sans L; body `#424242`; 1.125rem / .95rem mid; 45–60 em/rem breakpoints; `*` reset + border-box |
+
+**Origin for that sample is UNKNOWN** until a URL is bound.
+
 ---
 
 ## Typical clientlib roles (AC)

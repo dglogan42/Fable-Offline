@@ -32,6 +32,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **urban-planning/** | Planner competencies, freight, AC programmes | `competencies.md`, `freight-plan.md`, … |
 | **steam/** | Steam SIM launch for model soak tests | `sim-games-launch.md` |
 | **windows/** | Licensed Win11 media + DISM/unattend hygiene | `official-media.md`, `dism-unattend-hygiene.md` |
+| **web/** | CSS / design-system fingerprints (orphan OK) | `css-design-fingerprint-helvetica-grey.md` |
 
 ---
 
