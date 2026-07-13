@@ -984,6 +984,14 @@ Prefer stronger local models for generation quality. Handoff into `/hermes`, `/t
 **Automation:** `creative-pipeline-build`.  
 Licensed apps only; presets/templates/export queues = “automation”; no cracks. User HITL.
 
+## 20q. Animation dev kit (Krita)
+**Trigger:** Krita animation, walk cycle, onion skin, storyboard/animatic, frame-by-frame, Render Animation / FFmpeg.  
+**Skill:** `animation-dev-kit` — **anim-plan**, **workspace-setup**, **storyboard-animatic**, **memory-budget**, **walkcycle-lab**, **timeline-hygiene**, **onion-setup**, **transform-mask-move**, **render-export**, **ffmpeg-link**, **backup-policy**.  
+**Source:** [Animation with Krita](https://docs.krita.org/en/user_manual/animation.html) · [Render Animation](https://docs.krita.org/en/reference_manual/render_animation.html).  
+**Knowledge:** `knowledge/media/krita-animation.md`.  
+**Automation:** `animation-dev-kit`.  
+FOSS Krita; frames in RAM — plan short clips. User installs Krita + optional FFmpeg. Hand off to creative pipeline / YouTube skills for publish (HITL).
+
 ## 20l. Offline loop agents pack
 
 **Trigger:** `/hermes`, `/loop`, `/engineer`, `offline_goal_loop.py`.

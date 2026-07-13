@@ -76,6 +76,7 @@ Resolve Free vs Studio: feature gates — VERIFY LIVE Blackmagic docs.
 | 15–30s teaser | CapCut |
 | 5–10 min film | Resolve |
 | Live Q&A | `youtube-live-encoder` |
+| Frame-by-frame 2D | `animation-dev-kit` (Krita) |
 | Feed announce | `rss-share` |
 
 ---

@@ -46,6 +46,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **RSS share** | Build/share **RSS 2.0** feeds (`scripts/rss_share.py`) |
 | **YouTube Live encoder** | Studio + RTMP/encoder protocol ([Help 2907883](https://support.google.com/youtube/answer/2907883?hl=en)) |
 | **Creative pipeline builds** | Adobe CC + CapCut + LR/PS + Resolve export recipes (`knowledge/media/`) |
+| **Animation dev kit (Krita)** | Frame-by-frame plan · walk cycle · render/FFmpeg ([Krita manual](https://docs.krita.org/en/user_manual/animation.html)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
 
@@ -119,6 +120,7 @@ Fable-Offline/
 | Windows product keys (`knowledge/windows/_local/`) | Licensing secrets |
 | macOS `Install *.app`, `.ipsw`, recovery / FileVault keys | Huge binaries + secrets |
 | Stream keys; Adobe passwords; creative `00_inbox` / `04_exports` media | Secrets + bulk binaries |
+| Heavy `.kra` / animation PNG sequences under `workspace/creative/` | Local Krita masters + renders |
 | `generated_prompts/` bulk dumps | Local LLM prompt-gen output |
 | Empty AEM `clientlib-dependencies…d41d8cd9…js` | Forensic noise |
 
@@ -150,7 +152,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | macOS install (Apple) | `knowledge/macos/` | `macos-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
-| YouTube Live / creative builds | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds` |
+| YouTube Live / creative / Krita anim | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit` |
 | Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
 | Swarm / prompt generator | `knowledge/swarm/` | `prompt-generator` |
 | Outfit / Seamly CAD | `knowledge/fashion/` | `outfit-selector-create` |
@@ -295,6 +297,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `rss-share-build` | Compose channel JSON + RSS 2.0 feed.xml share pack |
 | `youtube-live-encoder-plan` | YouTube Live encoder first-stream plan (Help 2907883) |
 | `creative-pipeline-build` | Adobe CC + CapCut + LR/PS + Resolve export pipeline plan |
+| `animation-dev-kit` | Krita frame-by-frame animation plan (storyboard → render) |
 | `math-deep-explain` | Bottom-up durable math/physics lesson |
 | `physics-solve` | Physics problem with dimensions gate |
 | `urban-planner-checkpoint` | Four-area competency audit + 90-day growth task |
@@ -368,6 +371,31 @@ python fable5_offline_agent.py --automate creative-pipeline-build
 | Workflow | `workflows/creative-pipeline-build.json` |
 
 **Refuse:** GenP/cracks. User runs apps. Hand off publish to YouTube Live / TikTok / IG / RSS skills.
+
+## Animation dev kit (Krita)
+
+Frame-by-frame raster animation plan from the official Krita manual: [Animation with Krita](https://docs.krita.org/en/user_manual/animation.html).
+
+| Stage | Focus |
+|-------|--------|
+| Workspace | Window → Workspace → **Animation** (Timeline, Onion Skin, Curves, Storyboard) |
+| Plan | Script → storyboard → animatic (external NLE) → clips ≤ ~10s @ ~12 fps for beginners |
+| Produce | Keyframes, holds, inbetweens; pin layers; watch **RAM** |
+| Export | File → **Render Animation** (PNG sequence ± video/FFmpeg) |
+| Package | `workspace/creative/<slug>/` (`03_krita/`, `04_renders/`, `notes.md`) |
+
+```bash
+python fable5_offline_agent.py --automate animation-dev-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/animation-dev-kit.md` |
+| Knowledge | `knowledge/media/krita-animation.md` |
+| Workflow | `workflows/animation-dev-kit.json` |
+| Render docs | [Render Animation](https://docs.krita.org/en/reference_manual/render_animation.html) |
+
+**Notes:** Krita keeps frames in memory — split long work. User installs Krita (+ optional FFmpeg). Large `.kra` / sequences stay local (gitignored).
 
 ## YouTube Live with an encoder
 
@@ -1215,6 +1243,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **RSS share** — RSS 2.0 feed build/share (`scripts/rss_share.py`; pull syndication).
 - **YouTube Live encoder** — Studio + encoder setup from Help 2907883 (not stream-key storage).
 - **Creative pipeline builds** — Adobe CC + CapCut + Resolve export recipes (licensed apps only).
+- **Animation dev kit** — Krita frame-by-frame plan from [docs.krita.org animation manual](https://docs.krita.org/en/user_manual/animation.html) (walk cycle, RAM budget, render/FFmpeg).
 - **Math / physics agent** — deep-explain, theorem, dimensional solver; durable lessons for Hermes/Fable.
 - **Offline prompt generator** — `auto_prompt_generator.py` + `/prompt-gen` → swarm/agent system prompts in `generated_prompts/` (handoff to Hermes/team).
 
@@ -1259,6 +1288,7 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | macOS install prep | Hackintosh, cracked installers, or Activation Lock theft |
 | Snapchat Web / RSS | Feed scrape, credential theft, or tokenized private feed URLs in git |
 | Creative pipeline builds | Cracked Adobe/CapCut/Resolve, GenP, or committing raw media masters |
+| Animation dev kit (Krita) | Auto-running Krita, cracked apps, or committing huge `.kra`/PNG sequences |
 | Prompt generator / swarms | Investment advice, live trading, or unreviewed production agents |
 | Math / physics agent | Course credit or professional engineering sign-off |
 

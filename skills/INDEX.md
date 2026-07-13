@@ -7,6 +7,7 @@ Loaded into context on every run so the system compounds without retraining weig
 
 - **aem-site-agent**: [Adobe Experience Manager (AEM) site agent](aem-site-agent.md)
 - **agentic-engineer-roadmap**: [Agentic engineer roadmap (6 months)](agentic-engineer-roadmap.md)
+- **animation-dev-kit**: [Animation dev kit (Krita frame-by-frame)](animation-dev-kit.md)
 - **animal-compliance-agent**: [Animal compliance agent](animal-compliance-agent.md)
 - **arts-culture-agent**: [Arts & culture agent](arts-culture-agent.md)
 - **broker-claim-audit**: [Broker claim audit (marketing vs evidence)](broker-claim-audit.md)

@@ -250,6 +250,11 @@ workspace/creative/**/*.mp4
 workspace/creative/**/*.mxf
 workspace/creative/**/*.drp
 workspace/creative/**/*.prproj
+# Krita animation masters + sequence dumps (curated notes.md OK)
+workspace/creative/**/*.kra
+workspace/creative/**/*.kra~
+workspace/creative/**/03_krita/**
+workspace/creative/**/04_renders/**
 !workspace/creative/**/notes.md
 !workspace/creative/**/05_presets/**/*.md
 

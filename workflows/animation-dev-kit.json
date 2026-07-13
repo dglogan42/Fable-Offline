@@ -1,0 +1,14 @@
+{
+  "name": "animation-dev-kit",
+  "description": "Plan a Krita frame-by-frame animation build (storyboard → clip → render)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Source: https://docs.krita.org/en/user_manual/animation.html — skill animation-dev-kit. FOSS Krita; user installs app + optional FFmpeg. No cracked software. Large .kra/renders stay local (gitignored)."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill animation-dev-kit and knowledge/media/krita-animation.md (Krita Animation with Krita manual), produce anim-plan: (1) verdict on feasibility given length/fps/res if known (2) workspace-setup (Animation workspace + dockers) (3) project-scaffold under workspace/creative/<slug>/ (4) storyboard-animatic clip split (beginners ~12 fps, clips ≤~10s) (5) memory-budget checklist (6) either walkcycle-lab steps if learning or timeline-hygiene + onion-setup + layer-pin for production (7) render-export + ffmpeg-link notes from Render Animation docs (8) backup-policy (Incremental Backup) (9) publish-handoff to creative-pipeline / YouTube skills (10) OPEN — VERIFY LIVE docs.krita.org. If user goal unclear, ask: learning walk cycle vs multi-shot scene vs export-only. User operates Krita HITL. Not legal advice."
+    }
+  ]
+}
