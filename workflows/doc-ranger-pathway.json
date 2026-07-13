@@ -1,0 +1,14 @@
+{
+  "name": "doc-ranger-pathway",
+  "description": "Map DOC ranger / Trainee Ranger pathways from curated DOC blog + official careers links",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Seed: https://blog.doc.govt.nz/2020/01/29/becoming-a-doc-ranger-2/ — skill doc-ranger-pathway. VERIFY LIVE doc.govt.nz/careers and provider pages."
+    },
+    {
+      "type": "doc",
+      "prompt": "Using skill doc-ranger-pathway and knowledge/conservation/doc-ranger-pathway.md, produce pathway-map: (1) verdict (2) L4 Conservation Operations / Trainee Ranger Kaitiaki Whenua path with NMIT and Toi Ohomai as 2020-cited providers — mark VERIFY LIVE (3) limited vacancies, no job guarantee (4) volunteer and other DOC career routes (5) bookmark DOC careers + careers.govt.nz (6) short Georgia case as illustration only. Not careers advice."
+    }
+  ]
+}

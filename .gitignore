@@ -214,6 +214,9 @@ knowledge/social/**/*.webp
 knowledge/fashion/_local/
 knowledge/fashion/*-local*.md
 knowledge/fashion/**/*measure*
+knowledge/conservation/_local/
+knowledge/conservation/*-local*.md
+knowledge/conservation/*-raw*
 # Seamly / pattern CAD client files
 **/*.sm2d
 **/*.sm2d*

@@ -16,6 +16,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **brokers/** | Broker claim snapshots | `ec-markets-regulation.md` |
 | **calendar/** | Google Calendar · Zoom · iCal · mail · meetings | `ical-and-google.md`, `zoom-web-join.md`, `meetings-playbook.md` |
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
+| **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
 | **education/** | Credential claim audits | `lpu-credential-claims.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
@@ -52,6 +53,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `fenz-incident-reports-hosts.md` | FENZ incident reports |
 | `google-calendar-hosts.md` | Google Calendar / Meet / mail seed map |
 | `zoom-hosts.md` | Zoom Web Client join (`app.zoom.us/wc/join`) seed map |
+| `doc-blog-hosts.md` | DOC Conservation blog (WordPress/Jetpack) |
 
 ---
 

@@ -879,6 +879,27 @@ Bridge finished looks to **instagram-selfie-selector**. No body shame; no commer
 
 ---
 
+## 20j. DOC ranger pathway (NZ)
+
+**Trigger:** `/doc`, `/ranger`, `--doc`, “become a DOC ranger”, Trainee Ranger, Kaitiaki Whenua.
+
+### Skill
+`doc-ranger-pathway`: **pathway-map**, **trainee-ranger-plan**, **volunteer-routes**, **apply-checklist**, **doc-public-faq**.
+
+### Seed
+DOC Conservation blog: [Becoming a DOC ranger](https://blog.doc.govt.nz/2020/01/29/becoming-a-doc-ranger-2/) (29 Jan 2020) → `knowledge/conservation/doc-ranger-pathway.md`.
+
+### Knowledge
+- `knowledge/conservation/doc-ranger-pathway.md`
+- `knowledge/privacy/doc-blog-hosts.md`
+
+### Automation
+- `doc-ranger-pathway` (step: `doc` / `ranger` / `conservation`)
+
+**VERIFY LIVE** [doc.govt.nz/careers](https://www.doc.govt.nz/careers/). Not a job guarantee. Not careers advice.
+
+---
+
 ## 20. PDF render & extract (offline)
 
 **Trigger:** `/pdf`, `--pdf`, PDF files, Mozilla PDF.js dumps, “summarise this PDF.”

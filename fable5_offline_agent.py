@@ -416,6 +416,7 @@ def load_system_prompt(
     macos_mode: bool = False,
     fit_mode: bool = False,
     outfit_mode: bool = False,
+    doc_mode: bool = False,
 ) -> str:
     """Manual + soul + active skills (+ domain knowledge when relevant)."""
     core = load_manual_core()
@@ -573,6 +574,19 @@ def load_system_prompt(
         know = read_knowledge_bundle("fashion", limit_chars=8000)
         if know.strip():
             parts.append("\n\n---\n## Local fashion / Seamly knowledge\n\n" + know)
+    if doc_mode:
+        parts.append(
+            "\n\n---\n## DOC ranger pathway mode (NZ conservation careers)\n"
+            "Apply skill **doc-ranger-pathway**. Use knowledge/conservation/doc-ranger-pathway.md "
+            "(DOC blog seed 2020 Becoming a DOC ranger). Procedures: pathway-map, "
+            "trainee-ranger-plan, volunteer-routes, apply-checklist, doc-public-faq. "
+            "Trainee Ranger / L4 Conservation Operations is one path — limited vacancies, "
+            "no job guarantee. VERIFY LIVE doc.govt.nz/careers and provider pages. "
+            "Not careers or immigration advice. Not DOC recruitment.\n"
+        )
+        know = read_knowledge_bundle("conservation", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local conservation / DOC knowledge\n\n" + know)
     if skills.strip():
         parts.append(
             "\n\n---\n## Active skills (self-improved library)\n"
@@ -2108,7 +2122,7 @@ def run_automate(
     """
     AUTOMATE behavior: run a multi-step workflow recipe (JSON).
     Steps: build | hermes | loop | improve | compress | shell | note | llm |
-           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | pdf | scrape | hitl | team | engineer
+           broker | legal | education | privacy | calendar | windows | macos | fit | outfit | doc | pdf | scrape | hitl | team | engineer
     """
     wf = load_workflow(workflow_name)
     name = wf.get("name", workflow_name)
@@ -2399,6 +2413,22 @@ def run_automate(
                     prefix="OutfitMode: ",
                 )
                 results.append("outfit → done")
+            elif stype in {"doc", "ranger", "conservation"}:
+                dsys = load_system_prompt(doc_mode=True)
+                prompt = step.get("prompt") or (
+                    "Using skill doc-ranger-pathway and knowledge/conservation/, run pathway-map "
+                    "for becoming a DOC ranger. VERIFY LIVE. Not careers advice."
+                )
+                print("\n[DOC ranger pathway]\n")
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": dsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="DocMode: ",
+                )
+                results.append("doc → done")
             elif stype == "hitl":
                 action = step.get("action") or step.get("text") or "continue workflow"
                 if not hitl_approve(action, step.get("detail", "")):
@@ -2623,7 +2653,7 @@ def print_banner() -> None:
     print(f"Skills:   {len(list_skill_paths())}  ·  Shell: {'on' if ALLOW_SHELL else 'off'}  ·  HITL: {'on' if HITL else 'off'}")
     print(
         "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
-        "/fit /slay /outfit /pdf /build /automate /loop /help quit\n"
+        "/fit /slay /outfit /doc /pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -2646,6 +2676,8 @@ Commands
   /slay [prompt]     Alias for /fit
   /outfit [prompt]   Outfit select/create + Seamly2D plan (knowledge/fashion/)
   /seamly [prompt]   Alias for /outfit
+  /doc [prompt]      DOC ranger / Trainee Ranger pathway (knowledge/conservation/)
+  /ranger [prompt]   Alias for /doc
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
   /scrape <url>      Fetch URL text into knowledge/ (default brokers/; --scrape-dir)
   /build <goal>      BUILD multi-file scaffold under workspace/
@@ -2691,6 +2723,9 @@ CLI
   {py} fable5_offline_agent.py --outfit
   {py} fable5_offline_agent.py --outfit "create skirt pattern brief for Seamly"
   {py} fable5_offline_agent.py --automate outfit-seamly-plan
+  {py} fable5_offline_agent.py --doc
+  {py} fable5_offline_agent.py --doc "pathway-map: how do I become a DOC ranger?"
+  {py} fable5_offline_agent.py --automate doc-ranger-pathway
   {py} fable5_offline_agent.py --scrape https://www.lifestyleprescription.tv/accreditation --scrape-dir education
   {py} fable5_offline_agent.py --automate broker-full-audit
   {py} fable5_offline_agent.py --automate legal-contract-review
@@ -2967,6 +3002,32 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ Outfit mode error: {e}\n"))
+            continue
+        if low.startswith("/doc") or low.startswith("/ranger") or low.startswith("/conservation"):
+            if low.startswith("/doc"):
+                prompt = user_input[4:].strip()
+            elif low.startswith("/ranger"):
+                prompt = user_input[7:].strip()
+            else:
+                prompt = user_input[14:].strip()
+            prompt = prompt or (
+                "Using skill doc-ranger-pathway and knowledge/conservation/doc-ranger-pathway.md, "
+                "run pathway-map for becoming a DOC ranger. Note 2020 blog seed; VERIFY LIVE "
+                "doc.govt.nz/careers. Not careers advice."
+            )
+            try:
+                dsys = load_system_prompt(doc_mode=True)
+                print(ui("\n[DOC ranger pathway]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": dsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="DocMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ DOC mode error: {e}\n"))
             continue
         if low.startswith("/pdf"):
             rest = user_input[4:].strip()
@@ -3294,6 +3355,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Outfit select/create + Seamly2D plan (knowledge/fashion/; seamly.io/download)",
     )
     parser.add_argument(
+        "--doc",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PROMPT",
+        help="DOC ranger / Trainee Ranger pathway (knowledge/conservation/)",
+    )
+    parser.add_argument(
         "--pdf",
         metavar="PATH",
         help="Extract text from local PDF (pypdf) to workspace/, then structure with pdf-render",
@@ -3422,6 +3491,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             and args.macos is None
             and args.fit is None
             and args.outfit is None
+            and args.doc is None
             and not args.ical
             and not args.automate
             and not args.team
@@ -3637,6 +3707,25 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": osys}, {"role": "user", "content": prompt}],
                 prefix="OutfitMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.doc is not None:
+        prompt = (args.doc or "").strip() or (
+            "Using skill doc-ranger-pathway and knowledge/conservation/doc-ranger-pathway.md "
+            "(DOC Conservation blog seed: Becoming a DOC ranger, Jan 2020), produce pathway-map. "
+            "L4 Conservation Operations / Trainee Ranger is one path; vacancies limited; "
+            "VERIFY LIVE https://www.doc.govt.nz/careers/ . Not careers advice."
+        )
+        try:
+            dsys = load_system_prompt(doc_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": dsys}, {"role": "user", "content": prompt}],
+                prefix="DocMode: ",
             )
             return 0
         except Exception as e:
