@@ -29,7 +29,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
 | **math/** | Deep-explain + theorem frameworks | `deep-explain-framework.md`, `theorem-framework.md` |
-| **media/** | YouTube Live · Adobe · CapCut/Resolve · Krita · Stop Motion · Cloud SM · 3D/CG · Roblox Studio | `youtube-live-encoder.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md`, `stop-motion-studio.md`, `cloud-stop-motion.md`, `3d-animation-pipeline.md`, `roblox-studio.md` |
+| **media/** | YouTube Live · VTube Studio · Adobe · CapCut/Resolve · Krita · Stop Motion · 3D/CG · Roblox | `youtube-live-encoder.md`, `vtube-studio.md`, `adobe-cc-desktop.md`, `creative-pipeline-builds.md`, `krita-animation.md`, `stop-motion-studio.md`, `cloud-stop-motion.md`, `3d-animation-pipeline.md`, `roblox-studio.md` |
 | **physics/** | Solver + dimensional analysis | `solver-framework.md` |
 | **pdf/** | PDF.js + extract hygiene | `pdfjs-and-offline-render.md` |
 | **personality/** | MBTI agent personality customiser catalogue | `mbti-types.md` |
@@ -82,6 +82,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `sportauckland-grx-hosts.md` | Sport Auckland Green Prescription (Sporty CMS, GA, ads) |
 | `tabletop-bgg-hosts.md` | BoardGameGeek + tabletop retail discovery seeds |
 | `ddlc-plus-hosts.md` | ddlc.plus marketing (Webflow, GA, stores) |
+| `vtube-studio-hosts.md` | VTube Studio / denchisoft.com (WP, Steam, Discord) |
 
 ---
 

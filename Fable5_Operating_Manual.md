@@ -1167,6 +1167,14 @@ Shortlist by players/time/vibe. VERIFY LIVE ranks and Auckland stock (Whitcoulls
 **Automation:** `highschool-play-scripter`.  
 **Original scripts only.** HS default G/T. Not official DDLC. No game dialogue paste. Self-harm themes restricted.
 
+## 20an. VTube Studio resource kit
+**Trigger:** VTube Studio, VTS, Live2D vtuber, DenchiSoft, face tracking, Twitch VTS.  
+**Skill:** `vtube-studio-resource-kit` — **vts-plan**, **sys-check**, **install-vts**, **first-track**, **item-system**, **twitch-hook**, **collab-setup**, **stream-handoff**.  
+**Source:** [denchisoft.com](https://denchisoft.com/) HTML dump.  
+**Knowledge:** `knowledge/media/vtube-studio.md`, `knowledge/privacy/vtube-studio-hosts.md`.  
+**Automation:** `vtube-studio-resource-kit`.  
+Official VTS only (Steam 1325860 / mobile). Licensed Live2D models. No cracks or stream keys in git.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

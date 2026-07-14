@@ -70,6 +70,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Tabletop board & card games** | Session match + BGG + Auckland retail seeds |
 | **Manga/anime fanfic prompts** | Script scaffolds + HOTD-style onset module (original only) |
 | **High school play scripter** | Literature-club stage scripts; DDLC Plus marketing inspiration only |
+| **VTube Studio kit** | Live2D VTubing app ([denchisoft.com](https://denchisoft.com/)) · tracking · stream handoff |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -182,7 +183,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | ChromeOS Flex | `knowledge/chromeos/` | `chromeos-flex-install-prep` |
 | Instagram fits / selfies | `knowledge/social/` | `instagram-selfie-selector` |
 | Snapchat for Web | `knowledge/social/` | `snapchat-web-feed` |
-| YouTube Live / creative / 2D / stop-mo / 3D / Roblox | `knowledge/media/` | `youtube-live-encoder`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit`, `roblox-studio-resource-kit` |
+| YouTube Live / VTube / creative / 2D / stop-mo / 3D / Roblox | `knowledge/media/` | `youtube-live-encoder`, `vtube-studio-resource-kit`, `creative-pipeline-builds`, `animation-dev-kit`, `stop-motion-dev-kit`, `3d-animation-dev-kit`, `roblox-studio-resource-kit` |
 | Inkstone SPA / CSS media kit / fingerprints | `knowledge/web/` | `inkstone-resource-kit`, `css-styles-media-kit` |
 | Math / physics lessons | `knowledge/math/`, `physics/` | `math-physics-agent` |
 | Swarm / prompt generator | `knowledge/swarm/` | `prompt-generator` |
@@ -349,6 +350,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `tabletop-board-card-games-kit` | Tabletop matchmaking · BGG · Auckland shops |
 | `manga-anime-fanfic-prompt-kit` | Fanfic / manga / anime script prompt generator |
 | `highschool-play-scripter` | HS literature-club play · DDLC-inspired · school-safe modes |
+| `vtube-studio-resource-kit` | VTube Studio Live2D tracking · Twitch · collab · OBS handoff |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -659,6 +661,21 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## VTube Studio resource kit
+
+[VTube Studio](https://denchisoft.com/) — Live2D VTuber app: face/hand tracking, items, Twitch hooks, Steam collab, plugins. Steam app **1325860**; iOS (Face ID/A12+) · Android (ARCore).
+
+```bash
+python fable5_offline_agent.py --automate vtube-studio-resource-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/vtube-studio-resource-kit.md` |
+| Knowledge | `knowledge/media/vtube-studio.md` |
+| Privacy | `knowledge/privacy/vtube-studio-hosts.md` |
+| Workflow | `workflows/vtube-studio-resource-kit.json` |
 
 ## High school play scripter (literature club)
 
@@ -1821,6 +1838,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Tabletop board & card games** — session match + BGG + Auckland retail seeds (not stock guarantees).
 - **Manga/anime fanfic prompts** — original script scaffolds; HOTD *Last Day* public lore only (no novel piracy).
 - **High school play scripter** — literature-club stage scaffolds from [ddlc.plus](https://ddlc.plus) themes; original only; HS-safe modes.
+- **VTube Studio kit** — Live2D VTubing setup from [denchisoft.com](https://denchisoft.com/); licensed models only; no stream keys in git.
 
 ## License
 
@@ -1889,5 +1907,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Tabletop board & card games | Invented BGG ranks, fake shelf stock, or pirated rulebooks |
 | Manga/anime fanfic prompts | Copyrighted novel/manga paste, pirated rare LN scans, or NSFW of minors |
 | High school play scripter | Official DDLC script paste, graphic self-harm for school shows, or claiming Serenity Forge license |
+| VTube Studio | Cracked VTS, pirated Live2D models, or stream/Twitch tokens in git |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

@@ -63,5 +63,6 @@ Loaded into context on every run so the system compounds without retraining weig
 - **tiktok-analytics**: [TikTok Analytics / Pixel (HTML + Network)](tiktok-analytics.md)
 - **uc-arts-postgraduate**: [UC Arts postgraduate study (Canterbury)](uc-arts-postgraduate.md)
 - **urban-planner-competencies**: [Urban planner competencies](urban-planner-competencies.md)
+- **vtube-studio-resource-kit**: [VTube Studio resource kit (Live2D · tracking · stream)](vtube-studio-resource-kit.md)
 - **windows-install-prep**: [Windows install prep (licensed · DISM hygiene)](windows-install-prep.md)
 - **youtube-live-encoder**: [YouTube live stream with encoder](youtube-live-encoder.md)

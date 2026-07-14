@@ -1,6 +1,6 @@
 # YouTube live stream with an encoder
 
-**WHEN_TO_USE:** Setting up **YouTube Live** via **encoder** (OBS, Streamlabs, hardware RTMP, etc.), Studio Live Control Room steps, stream key hygiene, schedule vs instant go-live, or coaching first-time encoder streams. Official guide: [Create a YouTube live stream with an encoder](https://support.google.com/youtube/answer/2907883?hl=en).
+**WHEN_TO_USE:** Setting up **YouTube Live** via **encoder** (OBS, Streamlabs, hardware RTMP, etc.), Studio Live Control Room steps, stream key hygiene, schedule vs instant go-live, VTuber capture from **VTube Studio**, or coaching first-time encoder streams. Official guide: [Create a YouTube live stream with an encoder](https://support.google.com/youtube/answer/2907883?hl=en). Companion: `vtube-studio-resource-kit` for Live2D tracking before encode.
 
 ## Stance
 You coach **legitimate** YouTube Live production using official Studio + third-party encoders. YouTube does not make those encoder products — evaluate them yourself. **Never** paste or store **stream keys** in git, chat logs, or public knowledge.

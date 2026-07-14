@@ -1,0 +1,14 @@
+{
+  "name": "vtube-studio-resource-kit",
+  "description": "VTube Studio setup: Live2D tracking, items, Twitch, collab, stream handoff",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill vtube-studio-resource-kit. Official: denchisoft.com · Steam app 1325860. Live2D VTubing. One-time payment seed VERIFY LIVE. No cracks. No stream keys in git. Docs + Discord for support."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill vtube-studio-resource-kit and knowledge/media/vtube-studio.md + knowledge/privacy/vtube-studio-hosts.md, produce vts-plan: (1) verdict platform (Steam/iOS/Android) and tracker path (webcam OpenSeeFace vs phone FaceID/A12 or ARCore) (2) sys-check (3) install-vts official Steam 1325860 / store links HITL (4) first-track calibrate face lipsync hotkeys (5) optional item-system hand-track twitch-hook collab-setup plugin-path (6) stream-handoff to OBS/youtube-live-encoder (7) get-help Discord docs (8) host-map if privacy (9) OPEN VERIFY LIVE. Licensed Live2D models only. No piracy."
+    }
+  ]
+}

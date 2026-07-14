@@ -128,6 +128,10 @@ stage plays. Doki Doki Literature Club / Plus marks remain with Dan Salvato LLC 
 Serenity Forge LLC. Do not paste official game scripts; school productions must
 follow local content policy.
 
+Skill `vtube-studio-resource-kit` and `knowledge/media/vtube-studio.md` describe the
+**VTube Studio** app (DenchiSoft). Software and Live2D model rights remain with their
+owners. Use licensed software and models only; do not commit stream keys or OAuth tokens.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

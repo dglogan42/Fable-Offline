@@ -91,6 +91,11 @@ workspace/creative/fanfic-prompts/**
 workspace/creative/highschool-play/**
 !workspace/creative/highschool-play/.gitkeep
 knowledge/creative/_local/
+# VTube Studio — no model binaries / secrets
+workspace/media/vtube-studio/**
+!workspace/media/vtube-studio/.gitkeep
+**/vtube*token*
+**/vts*api*key*
 
 # --- Secrets & local env ---
 .env
