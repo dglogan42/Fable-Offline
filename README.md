@@ -20,6 +20,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Automate** | Multi-step JSON recipes in `workflows/` (build → hermes → improve → …) |
 | **Engineer** | **Loop like an engineer**: purpose once · PLAN→DO→VERIFY · **LOOP_STATE** · stop gates · optional bilevel |
 | **Team** | Multi-agent supervisor: **research → write → critic** (HITL optional) |
+| **Communicator** | Propose → critique → refine → synthesize with reusable lessons written to `skills/commune-*.md` |
 | **Roadmap** | 6-month agentic engineer path (`ROADMAP.md`) — build real things, order matters |
 | **Edge audit** | **Fooled by Randomness** protocol: separate real edge from luck |
 | **Broker** | Scrape reg/marketing pages · **broker user model** · claim audit (`knowledge/brokers/`) |
@@ -109,6 +110,7 @@ Cross-platform: UTF-8 consoles, `pathlib` paths, `~` expansion, LF memory files,
 ```
 Fable-Offline/
 ├── fable5_offline_agent.py      # CLI harness (all modes)
+├── fable5_communicators.py      # Communicator mode: propose/critique/refine/synthesize
 ├── auto_prompt_generator.py     # Offline swarm/agent system-prompt generator
 ├── Fable5_Operating_Manual.md   # System prompt (full method)
 ├── SOUL.md                      # Identity / steering
@@ -116,7 +118,7 @@ Fable-Offline/
 ├── ROADMAP.md                   # 6-month agentic engineer curriculum
 ├── requirements.txt             # openai + pypdf
 ├── fable5 / fable5.cmd          # Launchers
-├── agents/                      # Offline loop briefs for Hermes + Fable loops
+├── agents/                      # Offline loop briefs for Hermes + Fable loops + communicator personas
 ├── scripts/                     # install, pdf_extract, ical_parse, rss_share, steam_*
 ├── skills/                      # Agentic skill library (see skills/INDEX.md)
 ├── workflows/                   # Public automation recipes (*.json)
@@ -140,6 +142,7 @@ Fable-Offline/
 |-----------------|-----|
 | `.env`, keys, tokens, `secrets/` | Credentials |
 | `memory/*`, `workspace/*` | Runtime / local experiments |
+| `memory/communicator_sessions/`, `skills/commune-*.md` | Local communicator transcripts and generated skill notes |
 | `knowledge/**/scrape-*`, `*-raw.*`, `*.pdf` | Bulky / sensitive dumps |
 | `knowledge/**/_local/`, `legal/matters/` | Private matter files |
 | `**/*.ics`, Zoom passcodes, secret calendar feeds | Private invites / join secrets |
@@ -242,6 +245,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 .\fable5.cmd --automate daily-review
 .\fable5.cmd --engineer "Ship a decision memo" --criteria "Verdict first,Three risks,Numbers checked"
 .\fable5.cmd --hermes "Re-derive: revenue $4.0M to $4.2M is a 20% gain"
+.\fable5.cmd --commune "How should our agents log decisions?"
 
 # macOS / Linux
 ./fable5
@@ -250,6 +254,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 ./fable5 --automate engineer-memo
 ./fable5 --engineer "Ship a decision memo" --min-score 8
 ./fable5 --hermes "Re-derive: revenue $4.0M to $4.2M is a 20% gain"
+./fable5 --commune "How should our agents log decisions?"
 ```
 
 ## Chat commands

@@ -82,6 +82,13 @@ PROMPT_GEN_DIR = Path(
 )
 # Human-in-the-loop: prompt before high-risk steps (default on for team/shell)
 HITL = os.environ.get("FABLE5_HITL", "1").strip().lower() not in {"0", "false", "no", "off"}
+# Enable automatic MBTI feedback-loop injection in main loop execution (default on)
+AUTO_MBTI_FEEDBACK = os.environ.get("FABLE5_AUTO_MBTI_FEEDBACK", "1").strip().lower() not in {
+    "0",
+    "false",
+    "no",
+    "off",
+}
 # Set FABLE5_ASCII=1 to force ASCII UI (legacy Windows consoles)
 USE_ASCII = os.environ.get("FABLE5_ASCII", "").strip() in {"1", "true", "yes"}
 # ===============================================
@@ -1844,6 +1851,42 @@ def loop_preflight_print(goal: str) -> None:
     print(ui("  Three make-or-break parts: VERIFIER · STATE · STOP\n"))
 
 
+def maybe_append_mbti_feedback_prompt(
+    prompt: str,
+    *,
+    topic: Optional[str] = None,
+    cycle: int = 1,
+    randomize: bool = True,
+    seed: Optional[int] = None,
+) -> str:
+    """Append an MBTI feedback-loop instruction to the loop prompt when appropriate."""
+    topic = (topic or "").strip() or "Refine the current plan with diverse MBTI perspectives"
+    try:
+        from mbti_types import build_feedback_loop_prompt
+
+        feedback_prompt = build_feedback_loop_prompt(
+            topic,
+            rounds=max(2, min(4, cycle)),
+            randomize=randomize,
+            seed=seed if seed is not None else cycle,
+        )
+        header = (
+            "\n\n---\n## MBTI feedback loop (automatic)\n"
+            "Use the MBTI lens as a variability source for critique and refinement. "
+            "Do not change facts; vary perspective, then synthesize the strongest points.\n"
+        )
+        return f"{prompt}{header}{feedback_prompt}"
+    except Exception:
+        return prompt
+
+
+def resolve_mbti_feedback_enabled(*, env_enabled: bool = AUTO_MBTI_FEEDBACK, cli_override: Optional[bool] = None) -> bool:
+    """Resolve whether automatic MBTI feedback injection should be enabled for this run."""
+    if cli_override is not None:
+        return cli_override
+    return bool(env_enabled)
+
+
 def run_loop(
     client,
     system: str,
@@ -1940,6 +1983,14 @@ def run_loop(
             f"ACTIVE SKILLS (apply if relevant):\n{skills_ctx or '(none)'}\n\n"
             f"{'RETRIEVED MEMORY (smart RAG)' if (hermes or engineer) else 'MEMORY'}:\n{mem}\n\n"
         )
+        if AUTO_MBTI_FEEDBACK:
+            exec_user = maybe_append_mbti_feedback_prompt(
+                exec_user,
+                topic=goal,
+                cycle=cycle,
+                randomize=True,
+                seed=cycle,
+            )
         if engineer:
             exec_user += f"PROGRAM.MD (constraints):\n{program[:3000]}\n\n"
             exec_user += f"LOOP_STATE (what already tried — do not repeat blindly):\n{state}\n\n"
@@ -4247,17 +4298,43 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Force MBTI rigour overlay OFF (stronger pure persona)",
     )
     parser.add_argument(
+        "--mbti-feedback",
+        metavar="TOPIC",
+        help="Run a randomized MBTI feedback loop using different agent lenses",
+    )
+    parser.add_argument(
+        "--mbti-feedback-rounds",
+        type=int,
+        default=3,
+        metavar="N",
+        help="Number of rounds for --mbti-feedback",
+    )
+    parser.add_argument(
+        "--mbti-feedback-agents",
+        default="",
+        help="Optional comma-separated MBTI types for --mbti-feedback",
+    )
+    parser.add_argument(
+        "--no-mbti-feedback",
+        action="store_true",
+        help="Disable automatic MBTI feedback-loop injection for this run",
+    )
+    parser.add_argument(
         "--ascii",
         action="store_true",
         help="Force ASCII UI (also: set FABLE5_ASCII=1)",
     )
     args = parser.parse_args(argv)
 
-    global MODEL_NAME, USE_ASCII
+    global MODEL_NAME, USE_ASCII, AUTO_MBTI_FEEDBACK
     if args.model:
         MODEL_NAME = args.model
     if args.ascii:
         USE_ASCII = True
+    AUTO_MBTI_FEEDBACK = resolve_mbti_feedback_enabled(
+        env_enabled=AUTO_MBTI_FEEDBACK,
+        cli_override=False if args.no_mbti_feedback else None,
+    )
 
     try:
         os.chdir(SCRIPT_DIR)
@@ -4271,6 +4348,26 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.doctor:
         return doctor()
+
+    if args.mbti_feedback is not None:
+        try:
+            from mbti_types import build_feedback_loop_prompt
+
+            topic = (args.mbti_feedback or "").strip() or "Refine a plan using diverse MBTI perspectives"
+            agent_types = [t.strip() for t in args.mbti_feedback_agents.split(",") if t.strip()] if args.mbti_feedback_agents else []
+            prompt = build_feedback_loop_prompt(
+                topic,
+                agent_types=agent_types or None,
+                rounds=args.mbti_feedback_rounds,
+                randomize=not bool(agent_types),
+                seed=None,
+            )
+            print(ui(f"\n[MBTI feedback loop] {topic}\n"))
+            print(ui(prompt))
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
 
     if args.roadmap:
         show_roadmap()

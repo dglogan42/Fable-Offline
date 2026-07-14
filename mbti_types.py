@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import os
+import random
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
@@ -403,3 +404,60 @@ def build_multi_perspective_prompt(types: list[str], question: str) -> str:
         + "\n".join(sections)
         + f"\n\n## Question\n{question.strip()}\n"
     )
+
+
+def sample_mbti_types(count: int = 3, *, rng: Optional[random.Random] = None) -> list[str]:
+    """Sample a shuffled subset of MBTI types for feedback-loop experiments."""
+    if count <= 0:
+        return []
+    pool = sorted(VALID_TYPES)
+    if rng is None:
+        rng = random.Random()
+    selected = list(pool)
+    rng.shuffle(selected)
+    return selected[: min(count, len(selected))]
+
+
+def build_feedback_loop_prompt(
+    topic: str,
+    *,
+    agent_types: Optional[list[str]] = None,
+    rounds: int = 3,
+    randomize: bool = False,
+    seed: Optional[int] = None,
+) -> str:
+    """Construct a prompt for an MBTI-driven feedback loop with optional randomization."""
+    normalized_types = [normalize_type(t) or t for t in (agent_types or [])]
+    if not normalized_types:
+        if randomize:
+            rng = random.Random(seed)
+            agent_types = sample_mbti_types(3, rng=rng)
+        else:
+            agent_types = ["INTJ", "ENFP", "ISFJ"]
+    else:
+        agent_types = normalized_types
+
+    if randomize and not agent_types:
+        agent_types = ["INTJ", "ENFP", "ISFJ"]
+
+    lines = [
+        f"Topic: {topic}",
+        "",
+        "Run a feedback loop where each agent contributes one perspective and then the next agent critiques or refines it.",
+        "Use the MBTI lens as the variability source rather than changing facts.",
+        f"Rounds: {max(1, rounds)}",
+        "",
+    ]
+    for index, code in enumerate(agent_types, start=1):
+        lines.append(f"Agent {index}: {code}")
+    lines.append("")
+    lines.append("For each round:")
+    lines.append("1. Start with a proposed answer or plan.")
+    lines.append("2. Let the next agent challenge the weakest assumption or blind spot.")
+    lines.append("3. Refine the proposal using the critique.")
+    lines.append("4. Finish with a synthesized response that preserves the strongest insights.")
+    lines.append("")
+    lines.append(f"Round 1 of {max(1, rounds)}: propose an initial response.")
+    lines.append(f"Round 2 of {max(1, rounds)}: critique and refine the response.")
+    lines.append(f"Round 3 of {max(1, rounds)}: synthesize the strongest insights.")
+    return "\n".join(lines)

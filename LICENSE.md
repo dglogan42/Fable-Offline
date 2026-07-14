@@ -34,7 +34,11 @@ it is not financial, investment, legal, medical, planning, customs,
 biosecurity, veterinary, real-estate, or emergency-response advice, and it
 does not create a professional-client relationship.
 
-### 2. Third-party content
+### 2. Communicator-mode outputs
+
+Outputs produced by the communicator mode (`--commune`) — including session transcripts under `memory/communicator_sessions/` and generated lesson files under `skills/commune-*.md` — are local learning artifacts. Review them for sensitive or proprietary content before sharing, and do not commit secrets, private meeting notes, or user-supplied confidential material into those files.
+
+### 3. Third-party content
 
 Snapshots that summarise public websites, policies, or PDFs (including
 government and institutional materials) remain the property of their
