@@ -24,6 +24,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **geo/** | OpenStreetMap · iNaturalist flora/fauna | `openstreetmap-contribute.md`, `inaturalist-flora-fauna.md` |
 | **health/** | Health NZ · GRx · fitness companion · MFP · physio · CBD wellness | `fitness-companion-framework.md`, `healthnz-find-a-service.md`, `sport-auckland-green-prescription.md`, `myfitnesspal.md`, `physiotherapy-exercises.md`, `auckland-cbd-wellness-retreat.md` |
+| **hobbies/** | Tabletop board & card games | `tabletop-board-card-games.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
 | **math/** | Deep-explain + theorem frameworks | `deep-explain-framework.md`, `theorem-framework.md` |
@@ -78,6 +79,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `heartofthecity-hosts.md` | Heart of the City (Auckland CBD directory) wellness pages |
 | `knit-natter-hosts.md` | Yarn shop / Meetup / Facebook Knit & Natter discovery seeds |
 | `sportauckland-grx-hosts.md` | Sport Auckland Green Prescription (Sporty CMS, GA, ads) |
+| `tabletop-bgg-hosts.md` | BoardGameGeek + tabletop retail discovery seeds |
 
 ---
 

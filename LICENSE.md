@@ -112,6 +112,10 @@ describe the public **Green Prescription (GRx)** service pages from Sport Auckla
 They are **not** medical advice or a substitute for emergency care (call **111**).
 Do not store clinical referral data or decide eligibility as the agent of record.
 
+Skill `tabletop-board-card-games-kit` and `knowledge/hobbies/tabletop-board-card-games.md`
+help match **tabletop board and card games** and point to BoardGameGeek and retailers.
+Game titles and trademarks remain with their publishers; do not pirate rules or claim live stock.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

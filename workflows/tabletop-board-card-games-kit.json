@@ -1,0 +1,14 @@
+{
+  "name": "tabletop-board-card-games-kit",
+  "description": "Tabletop board/card games: match session, BGG explore, Auckland retail seeds",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill tabletop-board-card-games-kit. Lanes: 2p (7 Wonders Duel, Jaipur), small-box (Point Salad, Scout), party (What Do You Meme?, Am I The Ass?). Discover: boardgamegeek.com. Auckland retail seeds: Whitcoulls, Toyworld, Card Merchant WestCity, Bea Games. VERIFY LIVE stock/rankings. No piracy, no invented ranks."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill tabletop-board-card-games-kit and knowledge/hobbies/tabletop-board-card-games.md, produce tt-plan: (1) verdict style lane from player count/time/vibe (2) match-session shortlist max 5 with why each fits (3) seed titles where relevant: 7 Wonders Duel, Jaipur, Point Salad, Scout, What Do You Meme?, Am I The Ass? (4) bgg-explore steps on boardgamegeek.com (5) if Auckland/Long Bay: akl-retail Whitcoulls/Toyworld/Card Merchant/Bea Games VERIFY LIVE stock (6) teach-night if new group (7) OPEN rankings and stock change. Do not invent BGG ranks or store inventory."
+    }
+  ]
+}

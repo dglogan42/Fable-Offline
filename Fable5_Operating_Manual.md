@@ -1141,6 +1141,14 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `green-prescription-grx-kit`.  
 **Not medical advice.** Free referral/self-refer service. West/North → Harbour Sport. No clinical PII in git. Emergency: **111**.
 
+## 20ak. Tabletop board & card games kit
+**Trigger:** board games, card games, tabletop, BGG, game night, 7 Wonders Duel, Jaipur, party games, Auckland game shop.  
+**Skill:** `tabletop-board-card-games-kit` — **tt-plan**, **match-session**, **bgg-explore**, **duel-lane**, **smallbox-lane**, **party-lane**, **akl-retail**.  
+**Sources:** Hobby overview seed + [BoardGameGeek](https://boardgamegeek.com/).  
+**Knowledge:** `knowledge/hobbies/tabletop-board-card-games.md`, `knowledge/privacy/tabletop-bgg-hosts.md`.  
+**Automation:** `tabletop-board-card-games-kit`.  
+Shortlist by players/time/vibe. VERIFY LIVE ranks and Auckland stock (Whitcoulls, Toyworld, Card Merchant, Bea Games). No piracy.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

@@ -55,6 +55,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **snapchat-web-feed**: [Snapchat for Web feed protocol](snapchat-web-feed.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)
 - **stop-motion-dev-kit**: [Stop / motion dev kit (Stop Motion Studio)](stop-motion-dev-kit.md)
+- **tabletop-board-card-games-kit**: [Tabletop board & card games kit (BGG · Auckland retail)](tabletop-board-card-games-kit.md)
 - **tiktok-ads-create**: [TikTok Ads creation (Ads Manager)](tiktok-ads-create.md)
 - **tedx-learning-pathways**: [TEDx Talks library → learning pathways](tedx-learning-pathways.md)
 - **tiktok-analytics**: [TikTok Analytics / Pixel (HTML + Network)](tiktok-analytics.md)

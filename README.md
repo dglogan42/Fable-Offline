@@ -67,6 +67,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **HOTC wellness retreat kit** | Auckland CBD self-care brochure ([Health & Wellbeing](https://heartofthecity.co.nz/health-wellbeing)) |
 | **Knit & Natter social club** | Local fibre meetups + start-a-club blueprint (Milford seed) |
 | **Green Prescription (GRx)** | Free Sport Auckland lifestyle support ([GRx page](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)) |
+| **Tabletop board & card games** | Session match + BGG + Auckland retail seeds |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -343,6 +344,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `hotc-wellness-retreat-kit` | Auckland CBD wellness retreat itinerary + PPTX brochure |
 | `knit-natter-social-club` | Knit & Natter local clubs · attend / discover / start |
 | `green-prescription-grx-kit` | Sport Auckland Green Prescription free GRx navigation |
+| `tabletop-board-card-games-kit` | Tabletop matchmaking · BGG · Auckland shops |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -653,6 +655,21 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## Tabletop board & card games kit
+
+Match **player count / time / vibe** to style lanes (2p strategy, small-box card, party), seed titles (7 Wonders Duel, Jaipur, Point Salad, Scout, What Do You Meme?, Am I The Ass?), explore [BoardGameGeek](https://boardgamegeek.com/), and check Auckland/Long Bay retail seeds (Whitcoulls, Toyworld, Card Merchant WestCity, Bea Games).
+
+```bash
+python fable5_offline_agent.py --automate tabletop-board-card-games-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/tabletop-board-card-games-kit.md` |
+| Knowledge | `knowledge/hobbies/tabletop-board-card-games.md` |
+| Privacy | `knowledge/privacy/tabletop-bgg-hosts.md` |
+| Workflow | `workflows/tabletop-board-card-games-kit.json` |
 
 ## Green Prescription (GRx) — Sport Auckland
 
@@ -1759,6 +1776,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **HOTC wellness retreat kit** — Auckland CBD self-care brochure from [heartofthecity.co.nz/health-wellbeing](https://heartofthecity.co.nz/health-wellbeing); not medical advice.
 - **Knit & Natter social club** — local fibre meetups + start-club blueprint (Milford Nirvana seed; VERIFY LIVE).
 - **Green Prescription (GRx)** — Sport Auckland free lifestyle support navigation ([GRx](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)); not medical advice.
+- **Tabletop board & card games** — session match + BGG + Auckland retail seeds (not stock guarantees).
 
 ## License
 
@@ -1824,5 +1842,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | HOTC wellness retreat | Medical prescriptions, inventing HOTC package pricing, or booking as agent of record |
 | Knit & Natter social club | Invented host phones/prices, scraping Meetup member lists, or booking as merchant of record |
 | Green Prescription GRx | Clinical decisions, invented eligibility, referral PII in git, or replacing 111/GP care |
+| Tabletop board & card games | Invented BGG ranks, fake shelf stock, or pirated rulebooks |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

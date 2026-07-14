@@ -81,6 +81,10 @@ knowledge/social/_local/
 workspace/social/knit-natter/**
 !workspace/social/knit-natter/.gitkeep
 **/meetup*member*export*
+# Tabletop — optional personal collection notes
+workspace/hobbies/tabletop/**
+!workspace/hobbies/tabletop/.gitkeep
+knowledge/hobbies/_local/
 
 # --- Secrets & local env ---
 .env
