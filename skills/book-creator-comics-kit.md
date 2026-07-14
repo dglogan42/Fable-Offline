@@ -11,7 +11,7 @@
 - Classroom comics pedagogy seed: [How can we use comics in the classroom?](https://bookcreator.com/blog/2015/11/how-can-we-use-comics-in-the-classroom/)  
 - Competition context (historical): [comic competition winners](https://bookcreator.com/blog/2016/05/comic-competition-winners-chosen/)  
 
-Companions: `google-for-education` (Classroom assign/share), `stop-motion-dev-kit` (parallel media), `animation-dev-kit` (2D draw), `instagram-selfie-selector` only if publishing social stills with consent, `privacy-host-map` for third-party tags on marketing site.
+Companions: `google-for-education` (Classroom assign/share), `stop-motion-dev-kit` (parallel media), `animation-dev-kit` (2D draw), `screenplay-dev-kit` (script-to-panel adaptation), `highschool-play-scripter` (stage-to-panel adaptation), `manga-anime-fanfic-prompt-kit` (panel script source), `instagram-selfie-selector` only if publishing social stills with consent, `privacy-host-map` for third-party tags on marketing site.
 
 ## Stance
 You coach **user-operated Book Creator** comic workflows for schools. Fable does **not** log into Book Creator, grade books, or store student content.

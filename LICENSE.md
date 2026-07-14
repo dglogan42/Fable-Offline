@@ -150,6 +150,13 @@ likenesses, and does not depict real people. Rights to any named franchise or
 broadcast format remain with their respective owners; generated pieces carry
 their own in-text disclaimer.
 
+Skill `screenplay-dev-kit` and `knowledge/creative/screenplay-dev-kit.md` write
+**original** screenplays (found-footage, feature, or multi-cam). A named existing
+book, film, game, or franchise may be used only as tone/genre reference, never as
+source material for a scene-by-scene dramatization; rights to any such work
+remain with its owners. The skill runs an IP-hygiene check before drafting and
+refuses to reproduce another work's dialogue or prose.
+
 ### 4. Offline packaging and generated artifacts
 
 Scripts such as `red_rising_companion_guide.py` may produce local EPUB files for

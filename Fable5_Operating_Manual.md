@@ -1184,6 +1184,14 @@ Official VTS only (Steam 1325860 / mobile). Licensed Live2D models. No cracks or
 **Automation:** `robotics-functionality-tester`.  
 **Not safety certification.** E-stop outranks software Foundations. Maker ≠ grader on eval suites.
 
+## 20ap. Screenplay dev kit (found-footage · feature · multi-cam)
+**Trigger:** write a screenplay, found-footage script, shooting draft, Blair Witch-style investigation horror, adapt this into a screenplay.
+**Skill:** `screenplay-dev-kit` — **screenplay-plan**, **ip-hygiene-check**, **foundfootage-structure**, **feature-structure**, **multicam-structure**, **medium-adapt**, **scene-format**, **draft-assembly**.
+**Knowledge:** `knowledge/creative/screenplay-dev-kit.md`.
+**Automation:** `screenplay-dev-kit`.
+**Integration:** cross-talks with `highschool-play-scripter`, `book-creator-comics-kit`, `manga-anime-fanfic-prompt-kit`, `broadcast-musical-mashup-kit` via shared `workspace/creative/<slug>/` handoff — see root `INTEGRATION.md`.
+**Original screenplays only.** IP-hygiene check runs before any drafting. No scene-by-scene dramatization of an identifiable existing copyrighted work.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

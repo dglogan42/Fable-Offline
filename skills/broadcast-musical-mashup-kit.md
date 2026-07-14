@@ -2,7 +2,7 @@
 
 **WHEN_TO_USE:** User wants an **IP-themed musical, parody stage show, or genre-mashup script** — e.g. "a Disney musical for SportsCenter", "a Broadway parody of [format]", recasting one franchise's storytelling *bones* onto an unrelated setting or broadcast format. Triggers: "musical for X", "[franchise]-themed [thing]", parody stage script, mashup libretto, fan-tribute number set.
 
-Companions: `highschool-play-scripter` (school-safe stage IP hygiene, same shape), `book-creator-comics-kit` (classroom pages), `manga-anime-fanfic-prompt-kit` (scene prompts), `css-styles-media-kit` (design tokens for the artifact), `privacy-host-map`.
+Companions: `highschool-play-scripter` (school-safe stage IP hygiene, same shape), `book-creator-comics-kit` (classroom pages), `manga-anime-fanfic-prompt-kit` (scene prompts), `screenplay-dev-kit` (trope-map reused as screenplay structure), `css-styles-media-kit` (design tokens for the artifact), `privacy-host-map`.
 
 ## Stance
 

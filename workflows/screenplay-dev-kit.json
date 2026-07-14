@@ -1,0 +1,14 @@
+{
+  "name": "screenplay-dev-kit",
+  "description": "Original screenplay dev: IP-hygiene check, found-footage/feature/multi-cam structure, full draft assembly",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill screenplay-dev-kit. ORIGINAL screenplays only — never a scene-by-scene dramatization of an existing copyrighted book/film/game. A named work may only be used as genre/tone reference. Run ip-hygiene-check before drafting. Formats: foundfootage-structure (Blair Witch model), feature-structure (three-act), multicam-structure (sitcom)."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill screenplay-dev-kit and knowledge/creative/screenplay-dev-kit.md, produce screenplay-plan: (1) ip-hygiene-check verdict — flag and offer fully-original / loose-homage / different-premise paths if the brief tracks an existing copyrighted work (2) structure choice with rationale: foundfootage-structure (disclaimer card, cold open, Act 1 setup + screen-insert evidence, Act 2 descent + escalation-toolkit, Act 3 crisis + separation, epilogue text cards) or feature-structure (three-act) or multicam-structure (cold open/A-B plot/tag) (3) cast-crew sized to format (4) full draft or requested act via draft-assembly, using scene-format conventions (sluglines, capture-medium tags, SCREEN INSERT blocks, O.S./V.O.) (5) write-knowledge path under workspace/creative/<slug>/ (6) OPEN follow-ups. Never reproduce another work's dialogue/prose verbatim. No real private individuals depicted."
+    }
+  ]
+}

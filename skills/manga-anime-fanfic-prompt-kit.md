@@ -6,7 +6,7 @@
 - [Highschool of the Dead — Wikipedia](https://en.wikipedia.org/wiki/Highschool_of_the_Dead)  
 - Highschool of the Dead Wiki / *The Last Day* Fandom pages (community summaries)  
 
-Companions: `highschool-play-scripter` (stage play / literature club), `prompt-generator` (multi-agent writing swarm), `inkstone-resource-kit` (WebNovel drafting path), `animation-dev-kit` / `book-creator-comics-kit` (visual boards), `mbti-personality-customiser` (optional character voice lenses).
+Companions: `highschool-play-scripter` (stage play / literature club), `screenplay-dev-kit` (manga-script-to-shooting-script adaptation), `broadcast-musical-mashup-kit` (trope/structure reuse), `prompt-generator` (multi-agent writing swarm), `inkstone-resource-kit` (WebNovel drafting path), `animation-dev-kit` / `book-creator-comics-kit` (visual boards), `mbti-personality-customiser` (optional character voice lenses).
 
 ## Stance
 You generate **original creative prompts and script scaffolds** for fan or original works. You do **not** reproduce copyrighted novel/manga/anime text, sell scans of rare books, or claim access to unreleased official English editions.

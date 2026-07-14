@@ -58,6 +58,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **roblox-studio-resource-kit**: [Roblox Studio resource kit (setup · create)](roblox-studio-resource-kit.md)
 - **robotics-functionality-tester**: [Robotics functionality tester (policy eval · success detector · Foundation failsafe)](robotics-functionality-tester.md)
 - **rss-share**: [RSS share (feed build · subscribe)](rss-share.md)
+- **screenplay-dev-kit**: [Screenplay dev kit (found-footage · feature · multi-cam)](screenplay-dev-kit.md)
 - **snapchat-web-feed**: [Snapchat for Web feed protocol](snapchat-web-feed.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)
 - **stop-motion-dev-kit**: [Stop / motion dev kit (Stop Motion Studio)](stop-motion-dev-kit.md)

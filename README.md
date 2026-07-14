@@ -181,6 +181,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
 | Brokers | `knowledge/brokers/` | `broker-claim-audit` |
 | Education claims / UC Arts PG / GfE / Minecraft / comics | `knowledge/education/` | `education-claim-audit`, `uc-arts-postgraduate`, `google-for-education`, `minecraft-education-resource-kit`, `book-creator-comics-kit` |
+| Creative writing: screenplay / fanfic / HS play | `knowledge/creative/` | `screenplay-dev-kit`, `manga-anime-fanfic-prompt-kit`, `highschool-play-scripter` |
 | Legal playbook | `knowledge/legal/` | `legal-playbook` |
 | PDF extract hygiene | `knowledge/pdf/` | `pdf-render` |
 | Steam SIM launch / soak | `knowledge/steam/` | `steam-sim-launch` |
@@ -359,6 +360,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `tabletop-board-card-games-kit` | Tabletop matchmaking · BGG · Auckland shops |
 | `manga-anime-fanfic-prompt-kit` | Fanfic / manga / anime script prompt generator |
 | `highschool-play-scripter` | HS literature-club play · DDLC-inspired · school-safe modes |
+| `screenplay-dev-kit` | Original screenplay dev: found-footage, feature, multi-cam structures |
 | `vtube-studio-resource-kit` | VTube Studio Live2D tracking · Twitch · collab · OBS handoff |
 | `robotics-functionality-tester` | Robot policy eval · success detector · failsafe · safety gate |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
@@ -753,6 +755,22 @@ python fable5_offline_agent.py --automate manga-anime-fanfic-prompt-kit
 | Knowledge | `knowledge/creative/manga-anime-fanfic-prompts.md` |
 | Offline scaffolder | `scripts/manga_fanfic_prompt.py` |
 | Workflow | `workflows/manga-anime-fanfic-prompt-kit.json` |
+
+## Screenplay dev kit (found-footage · feature · multi-cam)
+
+Write **original** screenplays: found-footage/first-person investigation horror (Blair Witch–style recovered footage — disclaimer card, cold open, screen-insert evidence, escalation toolkit, ambiguous crisis), traditional three-act features, or sitcom/multi-cam scripts. Always runs an **ip-hygiene-check** first — a premise that tracks an existing copyrighted book/film/game gets flagged and redirected to a fully-original or loose-homage path before any drafting starts. Can adapt a premise seeded by a companion creative skill (stage play, comic, manga script, parody musical) into screenplay form via **medium-adapt**.
+
+```bash
+python fable5_offline_agent.py --automate screenplay-dev-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/screenplay-dev-kit.md` |
+| Knowledge | `knowledge/creative/screenplay-dev-kit.md` |
+| Workflow | `workflows/screenplay-dev-kit.json` |
+
+**Notes:** No scene-by-scene dramatization of an identifiable existing copyrighted work. No verbatim/near-verbatim reproduction of another work's dialogue or prose. Ambiguity in found-footage horror endings is intentional — not a gap to fill in. See root `INTEGRATION.md` for how this skill cross-talks with the other creative-writing skills.
 
 ## Tabletop board & card games kit
 

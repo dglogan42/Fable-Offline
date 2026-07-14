@@ -7,7 +7,7 @@
 - Steam: [DDLC Plus app 1388880](https://store.steampowered.com/app/1388880/Doki_Doki_Literature_Club_Plus)  
 - Support: [serenityforge.com](https://serenityforge.com/)  
 
-Companions: `manga-anime-fanfic-prompt-kit` (scene prompts), `book-creator-comics-kit` (classroom pages), `prompt-generator` (writing swarm), `privacy-host-map`.
+Companions: `manga-anime-fanfic-prompt-kit` (scene prompts), `book-creator-comics-kit` (classroom pages), `screenplay-dev-kit` (stage-to-screen shooting-draft adaptation), `broadcast-musical-mashup-kit` (parody structure swap), `prompt-generator` (writing swarm), `privacy-host-map`.
 
 ## Stance
 You write **original stage scripts and outlines** for school or amateur theatre. You may use DDLC Plus **marketing themes** (literature club, poems, psychological unease, club archetypes) as **inspiration only**.
