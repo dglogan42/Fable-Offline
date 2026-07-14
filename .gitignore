@@ -88,6 +88,8 @@ knowledge/hobbies/_local/
 # Fanfic drafts may be sensitive / rights-bearing
 workspace/creative/fanfic-prompts/**
 !workspace/creative/fanfic-prompts/.gitkeep
+workspace/creative/highschool-play/**
+!workspace/creative/highschool-play/.gitkeep
 knowledge/creative/_local/
 
 # --- Secrets & local env ---

@@ -1,0 +1,14 @@
+{
+  "name": "highschool-play-scripter",
+  "description": "High school literature-club stage play scaffold; DDLC Plus marketing themes as inspiration only",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill highschool-play-scripter. Source marketing: ddlc.plus (DDLC Plus). ORIGINAL stage scripts only — no game dialogue. High school default content MODE G or T. Psychological horror restricted. Not official DDLC. Rights: Dan Salvato LLC & Serenity Forge LLC."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill highschool-play-scripter and knowledge/creative/ddlc-plus-highschool-play.md, produce play-plan: (1) verdict original school play not official DDLC (2) content-mode G or T by default for high school; only M if adult/approved (3) one-act or two-act outline with renamed archetypes (not canon names unless user insists + rights note) (4) sample scene-draft original dialogue (5) poem-bank 3 original poems (6) cw-sheet for program (7) cast-set (8) optional product-map if they ask about buying Plus (9) OPEN school policy. Never paste DDLC game script. Never glamorize self-harm."
+    }
+  ]
+}

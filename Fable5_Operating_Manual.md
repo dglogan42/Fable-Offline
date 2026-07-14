@@ -1158,6 +1158,15 @@ Shortlist by players/time/vibe. VERIFY LIVE ranks and Auckland stock (Whitcoulls
 **Automation:** `manga-anime-fanfic-prompt-kit`.  
 **Original prompts only** — no copyrighted novel/manga text; no piracy of rare LN.
 
+## 20am. High school play scripter (DDLC Plus–inspired)
+**Trigger:** high school play, literature club stage script, DDLC Plus, school drama poems, psychological theatre for stage.  
+**Skill:** `highschool-play-scripter` — **play-plan**, **content-mode**, **one-act**, **scene-draft**, **poem-bank**, **cw-sheet**.  
+**Source:** [ddlc.plus](https://ddlc.plus) marketing HTML dump.  
+**Knowledge:** `knowledge/creative/ddlc-plus-highschool-play.md`, `knowledge/privacy/ddlc-plus-hosts.md`.  
+**Script:** `python scripts/highschool_play_script.py one-act|two-act|scene|poems|cw --content-mode G|T|M`.  
+**Automation:** `highschool-play-scripter`.  
+**Original scripts only.** HS default G/T. Not official DDLC. No game dialogue paste. Self-harm themes restricted.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

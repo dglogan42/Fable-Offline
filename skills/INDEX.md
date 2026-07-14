@@ -29,6 +29,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **google-for-education**: [Google for Education (Workspace · Classroom · Chromebooks)](google-for-education.md)
 - **green-prescription-grx-kit**: [Green Prescription GRx (Sport Auckland)](green-prescription-grx-kit.md)
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
+- **highschool-play-scripter**: [High school play scripter (lit club · DDLC-inspired)](highschool-play-scripter.md)
 - **hotc-wellness-retreat-kit**: [Heart of the City CBD wellness retreat brochure](hotc-wellness-retreat-kit.md)
 - **inaturalist-flora-fauna-kit**: [iNaturalist flora & fauna kit (native biota · API · OSM)](inaturalist-flora-fauna-kit.md)
 - **inkstone-resource-kit**: [Inkstone resource kit (yueimg SPA · privacy)](inkstone-resource-kit.md)

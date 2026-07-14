@@ -122,6 +122,12 @@ prompts and script scaffolds. Franchise marks (e.g. Highschool of the Dead) rema
 with their rightsholders. Do not reproduce commercial novel/manga text or pirate
 rare light novels.
 
+Skill `highschool-play-scripter`, `scripts/highschool_play_script.py`, and
+`knowledge/creative/ddlc-plus-highschool-play.md` scaffold **original** high-school
+stage plays. Doki Doki Literature Club / Plus marks remain with Dan Salvato LLC and
+Serenity Forge LLC. Do not paste official game scripts; school productions must
+follow local content policy.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

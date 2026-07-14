@@ -69,6 +69,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Green Prescription (GRx)** | Free Sport Auckland lifestyle support ([GRx page](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)) |
 | **Tabletop board & card games** | Session match + BGG + Auckland retail seeds |
 | **Manga/anime fanfic prompts** | Script scaffolds + HOTD-style onset module (original only) |
+| **High school play scripter** | Literature-club stage scripts; DDLC Plus marketing inspiration only |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -347,6 +348,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `green-prescription-grx-kit` | Sport Auckland Green Prescription free GRx navigation |
 | `tabletop-board-card-games-kit` | Tabletop matchmaking · BGG · Auckland shops |
 | `manga-anime-fanfic-prompt-kit` | Fanfic / manga / anime script prompt generator |
+| `highschool-play-scripter` | HS literature-club play · DDLC-inspired · school-safe modes |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -657,6 +659,25 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## High school play scripter (literature club)
+
+Original **stage plays** for school drama: literature club, poems, friendship — optionally **inspired by** [Doki Doki Literature Club Plus](https://ddlc.plus) marketing themes (psychological horror dating-sim surface). **Not** an official DDLC adaptation; no game dialogue. High school default content modes **G/T**.
+
+```bash
+python scripts/highschool_play_script.py one-act --content-mode G
+python scripts/highschool_play_script.py scene --content-mode T
+python scripts/highschool_play_script.py poems
+python fable5_offline_agent.py --automate highschool-play-scripter
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/highschool-play-scripter.md` |
+| Knowledge | `knowledge/creative/ddlc-plus-highschool-play.md` |
+| Privacy | `knowledge/privacy/ddlc-plus-hosts.md` |
+| Script | `scripts/highschool_play_script.py` |
+| Workflow | `workflows/highschool-play-scripter.json` |
 
 ## Manga / anime fanfic prompt generator
 
@@ -1799,6 +1820,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Green Prescription (GRx)** — Sport Auckland free lifestyle support navigation ([GRx](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)); not medical advice.
 - **Tabletop board & card games** — session match + BGG + Auckland retail seeds (not stock guarantees).
 - **Manga/anime fanfic prompts** — original script scaffolds; HOTD *Last Day* public lore only (no novel piracy).
+- **High school play scripter** — literature-club stage scaffolds from [ddlc.plus](https://ddlc.plus) themes; original only; HS-safe modes.
 
 ## License
 
@@ -1866,5 +1888,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Green Prescription GRx | Clinical decisions, invented eligibility, referral PII in git, or replacing 111/GP care |
 | Tabletop board & card games | Invented BGG ranks, fake shelf stock, or pirated rulebooks |
 | Manga/anime fanfic prompts | Copyrighted novel/manga paste, pirated rare LN scans, or NSFW of minors |
+| High school play scripter | Official DDLC script paste, graphic self-harm for school shows, or claiming Serenity Forge license |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.
