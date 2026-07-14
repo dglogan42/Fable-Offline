@@ -1149,6 +1149,15 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `tabletop-board-card-games-kit`.  
 Shortlist by players/time/vibe. VERIFY LIVE ranks and Auckland stock (Whitcoulls, Toyworld, Card Merchant, Bea Games). No piracy.
 
+## 20al. Manga / anime fanfic prompt kit
+**Trigger:** fanfic prompt, manga script, anime episode outline, HOTD The Last Day, zombie school first hours, light novel chapter brief.  
+**Skill:** `manga-anime-fanfic-prompt-kit` — **fanfic-plan**, **gen-prompt**, **manga-script**, **episode-beats**, **onset-module**, **prompt-batch**.  
+**Seed lore:** *Highschool of the Dead: The Last Day* public facts only (rare JP LN; no official EN).  
+**Knowledge:** `knowledge/creative/manga-anime-fanfic-prompts.md`.  
+**Script:** `python scripts/manga_fanfic_prompt.py oneshot|manga|episode|onset|batch`.  
+**Automation:** `manga-anime-fanfic-prompt-kit`.  
+**Original prompts only** — no copyrighted novel/manga text; no piracy of rare LN.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

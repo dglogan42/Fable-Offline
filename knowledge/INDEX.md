@@ -20,6 +20,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **climate/** | Climate plan + modelling hygiene | `auckland-climate-plan.md`, `climate-modeling.md` |
 | **conservation/** | DOC ranger / Trainee Ranger pathways | `doc-ranger-pathway.md` |
 | **culture/** | Arts/exhibitions | `arts-culture-framework.md`, `aag-forever-tomorrow.md` |
+| **creative/** | Manga/anime fanfic prompts · scripting scaffolds | `manga-anime-fanfic-prompts.md` |
 | **education/** | Credential claims · UC Arts PG · GfE · Minecraft Edu · Book Creator · TEDx pathways | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md`, `minecraft-education.md`, `book-creator-comics.md`, `tedx-learning-pathways.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **geo/** | OpenStreetMap · iNaturalist flora/fauna | `openstreetmap-contribute.md`, `inaturalist-flora-fauna.md` |

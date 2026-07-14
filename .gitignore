@@ -85,6 +85,10 @@ workspace/social/knit-natter/**
 workspace/hobbies/tabletop/**
 !workspace/hobbies/tabletop/.gitkeep
 knowledge/hobbies/_local/
+# Fanfic drafts may be sensitive / rights-bearing
+workspace/creative/fanfic-prompts/**
+!workspace/creative/fanfic-prompts/.gitkeep
+knowledge/creative/_local/
 
 # --- Secrets & local env ---
 .env

@@ -2,7 +2,8 @@
 
 **WHEN_TO_USE:** User wants **system prompts for multi-agent swarms** or a specialized agent without writing them by hand — **`/prompt-gen`**, **`--prompt-gen`**, `/automate prompt-gen-*`, or “generate agent prompts offline.”
 
-Companion: `auto_prompt_generator.py` (Ollama/OpenAI-compatible). Output: `generated_prompts/` (or `FABLE5_PROMPT_GEN_DIR`).
+Companion: `auto_prompt_generator.py` (Ollama/OpenAI-compatible). Output: `generated_prompts/` (or `FABLE5_PROMPT_GEN_DIR`).  
+Creative writing prompts: skill **`manga-anime-fanfic-prompt-kit`** + `scripts/manga_fanfic_prompt.py` (offline scaffolds; no novel piracy).
 
 ## Stance
 You design **specialized, handoff-ready** agent prompts. Each agent has **one job**, clear **I/O contracts**, **self-verification**, **stopping conditions**, and **Fable5 rigour** (re-derive, label guesses, attack conclusions). Prefer **maker ≠ checker** across the swarm.

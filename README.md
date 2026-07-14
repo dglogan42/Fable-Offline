@@ -68,6 +68,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Knit & Natter social club** | Local fibre meetups + start-a-club blueprint (Milford seed) |
 | **Green Prescription (GRx)** | Free Sport Auckland lifestyle support ([GRx page](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)) |
 | **Tabletop board & card games** | Session match + BGG + Auckland retail seeds |
+| **Manga/anime fanfic prompts** | Script scaffolds + HOTD-style onset module (original only) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -345,6 +346,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `knit-natter-social-club` | Knit & Natter local clubs · attend / discover / start |
 | `green-prescription-grx-kit` | Sport Auckland Green Prescription free GRx navigation |
 | `tabletop-board-card-games-kit` | Tabletop matchmaking · BGG · Auckland shops |
+| `manga-anime-fanfic-prompt-kit` | Fanfic / manga / anime script prompt generator |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -655,6 +657,25 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## Manga / anime fanfic prompt generator
+
+Generate **original** fanfiction prompts, **manga panel scripts**, **anime episode beat sheets**, and **first-hours outbreak** modules. Public lore seed: *Highschool of the Dead: The Last Day* (rare JP side LN — first hours of pandemic; Takashi/Rei focus; **no official English**; do not pirate).
+
+```bash
+python scripts/manga_fanfic_prompt.py oneshot
+python scripts/manga_fanfic_prompt.py manga --pages 8
+python scripts/manga_fanfic_prompt.py onset
+python scripts/manga_fanfic_prompt.py batch --n 5
+python fable5_offline_agent.py --automate manga-anime-fanfic-prompt-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/manga-anime-fanfic-prompt-kit.md` |
+| Knowledge | `knowledge/creative/manga-anime-fanfic-prompts.md` |
+| Offline scaffolder | `scripts/manga_fanfic_prompt.py` |
+| Workflow | `workflows/manga-anime-fanfic-prompt-kit.json` |
 
 ## Tabletop board & card games kit
 
@@ -1777,6 +1798,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Knit & Natter social club** — local fibre meetups + start-club blueprint (Milford Nirvana seed; VERIFY LIVE).
 - **Green Prescription (GRx)** — Sport Auckland free lifestyle support navigation ([GRx](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)); not medical advice.
 - **Tabletop board & card games** — session match + BGG + Auckland retail seeds (not stock guarantees).
+- **Manga/anime fanfic prompts** — original script scaffolds; HOTD *Last Day* public lore only (no novel piracy).
 
 ## License
 
@@ -1843,5 +1865,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Knit & Natter social club | Invented host phones/prices, scraping Meetup member lists, or booking as merchant of record |
 | Green Prescription GRx | Clinical decisions, invented eligibility, referral PII in git, or replacing 111/GP care |
 | Tabletop board & card games | Invented BGG ranks, fake shelf stock, or pirated rulebooks |
+| Manga/anime fanfic prompts | Copyrighted novel/manga paste, pirated rare LN scans, or NSFW of minors |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

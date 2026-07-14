@@ -14,7 +14,7 @@
 
 **Shell / CDN evidence (prior HTML dump):** SPA assets under `https://www.yueimg.com/inkstone/` · HiBridge `noah2.yueimg.com` · Cloudflare Insights.
 
-Companions: `privacy-host-map`, `prompt-generator` (system prompts for writing agents — optional), `book-creator-comics-kit` (different classroom tool), `rss-share` only for user-owned feeds.
+Companions: `manga-anime-fanfic-prompt-kit` (outline/scene prompts before draft), `privacy-host-map`, `prompt-generator` (system prompts for writing agents — optional), `book-creator-comics-kit` (different classroom tool), `rss-share` only for user-owned feeds.
 
 ## Stance
 Inkstone is **WebNovel’s free author tool** for drafting, managing, and submitting online novels (platform marketing: “Become the Next Top Writer”). Fable coaches **workflow hygiene and academy reading paths** — it does **not** log into Inkstone, submit contracts, scrape chapter text, or guarantee rankings/income.

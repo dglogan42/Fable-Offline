@@ -116,6 +116,12 @@ Skill `tabletop-board-card-games-kit` and `knowledge/hobbies/tabletop-board-card
 help match **tabletop board and card games** and point to BoardGameGeek and retailers.
 Game titles and trademarks remain with their publishers; do not pirate rules or claim live stock.
 
+Skill `manga-anime-fanfic-prompt-kit`, `scripts/manga_fanfic_prompt.py`, and
+`knowledge/creative/manga-anime-fanfic-prompts.md` generate **original** creative
+prompts and script scaffolds. Franchise marks (e.g. Highschool of the Dead) remain
+with their rightsholders. Do not reproduce commercial novel/manga text or pirate
+rare light novels.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

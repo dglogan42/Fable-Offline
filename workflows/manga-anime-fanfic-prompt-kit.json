@@ -1,0 +1,14 @@
+{
+  "name": "manga-anime-fanfic-prompt-kit",
+  "description": "Generate manga/anime fanfic prompts and script scaffolds (HOTD-style onset optional)",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill manga-anime-fanfic-prompt-kit. Original prompts only — no copyrighted novel/manga text. HOTD The Last Day = public first-hours outbreak seed only. Formats: prose oneshot, manga panels, anime episode beats, LN chapter. Handoff: inkstone, prompt-generator swarm."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill manga-anime-fanfic-prompt-kit and knowledge/creative/manga-anime-fanfic-prompts.md, produce fanfic-plan then gen-prompt (or manga-script / episode-beats if user asked for script): (1) verdict format + OC/AU risk note (2) rights-hygiene — no The Last Day prose copy; limited JP LN, no official EN seed (3) if outbreak/school-survival: onset-module 2–4 beats with ORIGINAL school/dialogue (4) one copy-paste-ready prompt or panel script (5) optional prompt-batch of 5 variants (6) swarm-handoff one-liner (7) OPEN wiki VERIFY LIVE. Never invent official English publication of The Last Day. Never paste copyrighted text."
+    }
+  ]
+}
