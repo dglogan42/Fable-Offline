@@ -3993,6 +3993,25 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Multi-agent supervisor: research → write → critic",
     )
     parser.add_argument(
+        "--commune",
+        nargs="?",
+        const="",
+        metavar="TOPIC",
+        help="Run a communicator session: agents propose, critique, refine, and synthesize",
+    )
+    parser.add_argument(
+        "--commune-rounds",
+        type=int,
+        default=5,
+        metavar="N",
+        help="Number of critique/refinement rounds for --commune (default: 5)",
+    )
+    parser.add_argument(
+        "--commune-agents",
+        default="proposer,challenger,synthesizer",
+        help="Comma-separated roster for --commune",
+    )
+    parser.add_argument(
         "--format",
         default="report",
         help="Output format for --team (default: report)",
@@ -4705,6 +4724,30 @@ def main(argv: Optional[list[str]] = None) -> int:
             raise
         except Exception as e:
             print(ui(f"\n❌ PDF error: {e}"))
+            return 1
+
+    if args.commune is not None:
+        try:
+            from fable5_communicators import run_communicator_session
+
+            topic = (args.commune or "").strip() or "How should our agents learn from each other?"
+            result = run_communicator_session(
+                topic,
+                client=client,
+                rounds=args.commune_rounds,
+                agent_names=[n.strip() for n in args.commune_agents.split(",") if n.strip()],
+                system_core=system,
+                self_improve=DEFAULT_SELF_IMPROVE and not args.no_self_improve,
+                hitl=HITL,
+            )
+            print(ui("\n" + result.transcript_markdown()))
+            if result.memory_path:
+                print(ui(f"\nTranscript saved: {result.memory_path}"))
+            if result.skill_path:
+                print(ui(f"New skill written: {result.skill_path}"))
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
             return 1
 
     if args.team:
