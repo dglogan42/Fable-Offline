@@ -66,6 +66,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **TEDx learning pathways** | Curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) library into study spines |
 | **HOTC wellness retreat kit** | Auckland CBD self-care brochure ([Health & Wellbeing](https://heartofthecity.co.nz/health-wellbeing)) |
 | **Knit & Natter social club** | Local fibre meetups + start-a-club blueprint (Milford seed) |
+| **Green Prescription (GRx)** | Free Sport Auckland lifestyle support ([GRx page](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -163,7 +164,7 @@ Offline **domain data** for skills and modes. Always re-verify primary sources b
 | Property management | `knowledge/property/` | `property-manager-agent` |
 | Animals / dogs | `knowledge/animals/` | `animal-compliance-agent` |
 | Emergency / safety | `knowledge/public-safety/` | `emergency-services-agent` |
-| Health directory / fitness companion / MFP / physio | `knowledge/health/` | `fitness-companion-agent`, `emergency-services-agent`, `myfitnesspal-resource-kit`, `physiotherapy-exercises-resource-kit` |
+| Health directory / GRx / fitness companion / MFP / physio | `knowledge/health/` | `green-prescription-grx-kit`, `fitness-companion-agent`, `emergency-services-agent`, `myfitnesspal-resource-kit`, `physiotherapy-exercises-resource-kit` |
 | OpenStreetMap + iNaturalist biota | `knowledge/geo/` | `openstreetmap-contribute-kit`, `inaturalist-flora-fauna-kit` |
 | Arts / exhibitions | `knowledge/culture/` | `arts-culture-agent` |
 | AEM patterns | `knowledge/aem/` | `aem-site-agent` |
@@ -341,6 +342,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `tedx-learning-pathways` | TEDx YouTube library → learning pathways + skill handoffs |
 | `hotc-wellness-retreat-kit` | Auckland CBD wellness retreat itinerary + PPTX brochure |
 | `knit-natter-social-club` | Knit & Natter local clubs · attend / discover / start |
+| `green-prescription-grx-kit` | Sport Auckland Green Prescription free GRx navigation |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -651,6 +653,23 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## Green Prescription (GRx) — Sport Auckland
+
+Free **referral-based** health & wellbeing support (activity, eating habits, long-term condition lifestyle, maternal, mental wellbeing support) for Central/East Auckland & Counties Manukau via [Sport Auckland GRx](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx). Self-refer CTA + clinician eReferrals (CareSelect / Care Connect / Concerto). West/North → [Harbour Sport](https://harboursport.co.nz/).
+
+```bash
+python fable5_offline_agent.py --automate green-prescription-grx-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/green-prescription-grx-kit.md` |
+| Knowledge | `knowledge/health/sport-auckland-green-prescription.md` |
+| Privacy | `knowledge/privacy/sportauckland-grx-hosts.md` |
+| Workflow | `workflows/green-prescription-grx-kit.json` |
+
+**Not medical advice.** Emergency: **111**.
 
 ## Knit & Natter social club (local fibre meetups)
 
@@ -1739,6 +1758,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **TEDx learning pathways** — curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) into study spines + Fable skill handoffs (not a degree; no video rehost).
 - **HOTC wellness retreat kit** — Auckland CBD self-care brochure from [heartofthecity.co.nz/health-wellbeing](https://heartofthecity.co.nz/health-wellbeing); not medical advice.
 - **Knit & Natter social club** — local fibre meetups + start-club blueprint (Milford Nirvana seed; VERIFY LIVE).
+- **Green Prescription (GRx)** — Sport Auckland free lifestyle support navigation ([GRx](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx)); not medical advice.
 
 ## License
 
@@ -1803,5 +1823,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | TEDx learning pathways | Treating TEDx as academic credit, medical advice, channel scrape, or video rehost |
 | HOTC wellness retreat | Medical prescriptions, inventing HOTC package pricing, or booking as agent of record |
 | Knit & Natter social club | Invented host phones/prices, scraping Meetup member lists, or booking as merchant of record |
+| Green Prescription GRx | Clinical decisions, invented eligibility, referral PII in git, or replacing 111/GP care |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

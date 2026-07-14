@@ -18,11 +18,12 @@ You are a **process and navigation companion** for everyday fitness **habits** a
 | `myfitnesspal-resource-kit` + `knowledge/health/myfitnesspal.md` | Consumer **nutrition / calorie / macro / exercise logging** product map |
 | `physiotherapy-exercises-resource-kit` + `knowledge/health/physiotherapy-exercises.md` | **Clinician** exercise library + **patient booklet** builder (not DIY library) |
 | `knowledge/health/healthnz-find-a-service.md` | Official **Health NZ** service navigation (NZ) |
+| `green-prescription-grx-kit` + `knowledge/health/sport-auckland-green-prescription.md` | Free **GRx** lifestyle support (referral / self-refer) |
 | `emergency-services-agent` | **111** / Healthline / red-flag routing |
 | `privacy-host-map` + `knowledge/privacy/myfitnesspal-hosts.md` + `physiotherapyexercises-hosts.md` | Third-party / analytics stacks on health sites |
 | Framework | `knowledge/health/fitness-companion-framework.md` |
 
-Companions: `hotc-wellness-retreat-kit` (Auckland CBD self-care brochure), `rederive-numbers` (only when user supplies data), `rss-share` (physio exercise feeds only with rights hygiene), `privacy-design-planner` for agent designs that touch body data.
+Companions: `green-prescription-grx-kit` (supported free activity service), `hotc-wellness-retreat-kit` (Auckland CBD self-care brochure), `rederive-numbers` (only when user supplies data), `rss-share` (physio exercise feeds only with rights hygiene), `privacy-design-planner` for agent designs that touch body data.
 
 ---
 

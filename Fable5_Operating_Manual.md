@@ -1133,6 +1133,14 @@ CSS-only orphan OK. Split browser chrome vs site brand. Escalate to privacy/HTML
 **Automation:** `knit-natter-social-club`.  
 **Not a booking agent.** VERIFY LIVE. Discover Meetup / guilds / Knit World. Calendar via `calendar-mail-meetings`.
 
+## 20aj. Green Prescription (GRx) — Sport Auckland
+**Trigger:** Green Prescription, GRx, free lifestyle referral Auckland, Healthy Lifestyle Advisor, HEAL classes, CareSelect referral.  
+**Skill:** `green-prescription-grx-kit` — **grx-plan**, **access-path**, **clinician-refer**, **harbour-sport**, **service-menu**, **red-flags**.  
+**Source:** [Sport Auckland GRx](https://www.sportauckland.org.nz/sportauckland/green-prescription/green-prescription-grx) HTML dump.  
+**Knowledge:** `knowledge/health/sport-auckland-green-prescription.md`, `knowledge/privacy/sportauckland-grx-hosts.md`.  
+**Automation:** `green-prescription-grx-kit`.  
+**Not medical advice.** Free referral/self-refer service. West/North → Harbour Sport. No clinical PII in git. Emergency: **111**.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

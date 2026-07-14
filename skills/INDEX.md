@@ -27,6 +27,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **fitness-companion-agent**: [Fitness companion agent (habits · MFP · physio route)](fitness-companion-agent.md)
 - **freight-forwarder-exporter**: [Freight forwarder & exporter agent](freight-forwarder-exporter.md)
 - **google-for-education**: [Google for Education (Workspace · Classroom · Chromebooks)](google-for-education.md)
+- **green-prescription-grx-kit**: [Green Prescription GRx (Sport Auckland)](green-prescription-grx-kit.md)
 - **hermes-loop**: [Hermes loop (offline)](hermes-loop.md)
 - **hotc-wellness-retreat-kit**: [Heart of the City CBD wellness retreat brochure](hotc-wellness-retreat-kit.md)
 - **inaturalist-flora-fauna-kit**: [iNaturalist flora & fauna kit (native biota · API · OSM)](inaturalist-flora-fauna-kit.md)

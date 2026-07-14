@@ -107,6 +107,11 @@ Skill `knit-natter-social-club` and `knowledge/social/knit-natter-auckland.md` h
 or medical advice. Event prices, venues, and Meetup/guild details remain with their
 organisers; re-verify live before attending.
 
+Skill `green-prescription-grx-kit` and `knowledge/health/sport-auckland-green-prescription.md`
+describe the public **Green Prescription (GRx)** service pages from Sport Auckland.
+They are **not** medical advice or a substitute for emergency care (call **111**).
+Do not store clinical referral data or decide eligibility as the agent of record.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

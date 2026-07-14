@@ -354,11 +354,14 @@ workspace/creative/**/*.rbxmx
 knowledge/math/_local/
 knowledge/physics/_local/
 knowledge/swarm/_local/
-# MyFitnessPal / physio / fitness companion — no diary/patient material
+# MyFitnessPal / physio / fitness companion / GRx — no diary/patient material
 knowledge/health/_local/
 knowledge/health/*diary*
 knowledge/health/*myfitnesspal*secret*
 knowledge/health/*patient*booklet*
+knowledge/health/*grx*referral*
+workspace/health/green-prescription/**
+!workspace/health/green-prescription/.gitkeep
 **/mfp*session*
 **/myfitnesspal*cookie*
 **/physiotherapyexercises*export*

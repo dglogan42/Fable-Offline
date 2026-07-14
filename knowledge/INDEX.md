@@ -23,7 +23,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **education/** | Credential claims · UC Arts PG · GfE · Minecraft Edu · Book Creator · TEDx pathways | `lpu-credential-claims.md`, `uc-arts-postgraduate-study.md`, `google-for-education.md`, `minecraft-education.md`, `book-creator-comics.md`, `tedx-learning-pathways.md` |
 | **fashion/** | Outfit select/create + Seamly2D CAD | `seamly-outfit-workflow.md`, `outfit-selector-create.md` |
 | **geo/** | OpenStreetMap · iNaturalist flora/fauna | `openstreetmap-contribute.md`, `inaturalist-flora-fauna.md` |
-| **health/** | Health NZ · fitness companion · MFP · physio · CBD wellness retreat | `fitness-companion-framework.md`, `healthnz-find-a-service.md`, `myfitnesspal.md`, `physiotherapy-exercises.md`, `auckland-cbd-wellness-retreat.md` |
+| **health/** | Health NZ · GRx · fitness companion · MFP · physio · CBD wellness | `fitness-companion-framework.md`, `healthnz-find-a-service.md`, `sport-auckland-green-prescription.md`, `myfitnesspal.md`, `physiotherapy-exercises.md`, `auckland-cbd-wellness-retreat.md` |
 | **legal/** | Org negotiation playbook | `playbook.md` |
 | **macos/** | Apple macOS bootable installer + recovery | `bootable-installer.md`, `reinstall-and-recovery.md` |
 | **math/** | Deep-explain + theorem frameworks | `deep-explain-framework.md`, `theorem-framework.md` |
@@ -77,6 +77,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `tedx-youtube-hosts.md` | TEDx Talks / TED / TED-Ed YouTube + web watch surfaces |
 | `heartofthecity-hosts.md` | Heart of the City (Auckland CBD directory) wellness pages |
 | `knit-natter-hosts.md` | Yarn shop / Meetup / Facebook Knit & Natter discovery seeds |
+| `sportauckland-grx-hosts.md` | Sport Auckland Green Prescription (Sporty CMS, GA, ads) |
 
 ---
 

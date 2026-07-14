@@ -1,0 +1,14 @@
+{
+  "name": "green-prescription-grx-kit",
+  "description": "Sport Auckland Green Prescription (GRx): free referral lifestyle support navigation",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill green-prescription-grx-kit. URL: sportauckland.org.nz green-prescription-grx. FREE referral-based GRx. Central/East + Counties Manukau = Sport Auckland; West/North = Harbour Sport. NOT medical advice. Self-refer + clinician eReferrals HITL. Emergency: 111."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill green-prescription-grx-kit and knowledge/health/sport-auckland-green-prescription.md + knowledge/privacy/sportauckland-grx-hosts.md, produce grx-plan: (1) verdict — free GRx lifestyle support not diagnosis/treatment (2) suitability-map from page criteria only (3) geography: Sport Auckland vs Harbour Sport for West/North (4) access-path self-refer CTA and clinician CareSelect/Care Connect/Concerto/HIP paths (5) service-menu Advisor up to 3 months, groups, aqua, HEAL online, maternal, Active Families, SMS, translation (6) locations seed list (7) red-flags 111/Healthline (8) host-map if privacy (9) contrast consumer apps vs GRx (10) OPEN VERIFY LIVE forms. Not medical advice. No clinical PII in git."
+    }
+  ]
+}
