@@ -203,7 +203,7 @@ h1, h2 { color: #8B0000; }
 """
         epub.writestr("OEBPS/styles.css", css)
 
-    print(f"✅ Created: {output_path_obj}")
+    print(f"Created: {output_path_obj}")
     print("You can open this in any EPUB reader (Apple Books, Kindle, Calibre, etc.)")
     return str(output_path_obj)
 
