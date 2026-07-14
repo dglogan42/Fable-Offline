@@ -139,7 +139,15 @@ Physical robots require trained operators and lab safety procedures.
 *Foundation*-style dual-layer language is a **teaching metaphor** only; rights in Asimov’s
 works remain with their owners — Fable does not claim endorsement or reproduce long prose.
 
-### 4. Steam, games, and local soak tests
+### 4. Offline packaging and generated artifacts
+
+Scripts such as `red_rising_companion_guide.py` may produce local EPUB files for
+offline reading and archival. Generated EPUBs and other local build artifacts in
+`artifacts/` or the repository root are considered machine-local output and are
+not part of the shipped source tree. Do not commit private or sensitive content
+into generated books, and do not republish third-party material without rights.
+
+### 5. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,
 and notes under `knowledge/steam/`, are helpers for launching games the user
@@ -151,7 +159,7 @@ unauthorised access. Steam, individual games, trademarks, and related
 software remain the property of Valve Corporation and the respective
 publishers/developers. Launch only software you are licensed to run.
 
-### 5. Calendar, mail, meetings, Zoom, and Teams
+### 6. Calendar, mail, meetings, Zoom, and Teams
 
 Notes under `knowledge/calendar/`, skill `calendar-mail-meetings`, and
 `scripts/ical_parse.py` help with **local** iCalendar (`.ics`) files, meeting
@@ -174,7 +182,7 @@ Do **not** commit OAuth tokens, app passwords, Zoom/Teams passcodes or `pwd=`
 query values, secret iCal feed URLs, or full mailbox exports. Prefer
 `knowledge/calendar/_local/` (gitignored) for private material.
 
-### 6. Windows install media and imaging
+### 7. Windows install media and imaging
 
 Skill `windows-install-prep` and notes under `knowledge/windows/` support
 **licensed** Windows 11 deployment hygiene (official Media Creation Tool / ISO
@@ -186,7 +194,7 @@ Microsoft installation media without rights, or rebranding Windows as a fake
 product (including nonexistent “Windows 12 Professional” consumer builds).
 Do not commit product keys or autounattend secrets.
 
-### 7. macOS install media
+### 8. macOS install media
 
 Skill `macos-install-prep` and notes under `knowledge/macos/` summarise
 **Apple-published** guidance for bootable installers — notably support document
@@ -201,7 +209,7 @@ Do not commit full `Install macOS *.app` bundles, IPSW images, FileVault or
 recovery keys, or Apple ID credentials. Re-verify live Apple Support after each
 macOS release; command tables go stale.
 
-### 8. Social clients, feeds, and RSS
+### 9. Social clients, feeds, and RSS
 
 Skills such as `snapchat-web-feed`, `rss-share`, `instagram-selfie-selector`,
 and related notes under `knowledge/social/` support **legitimate** use of
@@ -216,7 +224,7 @@ session hijacking, or automated abuse of Snapchat or other social platforms.
 entitled to publish. Do not republish third-party full-text content without
 rights, and do not commit private feed URLs that embed secrets.
 
-### 9. Creative desktop apps and pipeline builds
+### 10. Creative desktop apps and pipeline builds
 
 Skill `creative-pipeline-builds` and notes under `knowledge/media/` describe
 **licensed** workflows using Adobe Creative Cloud (including the
@@ -233,7 +241,7 @@ packages. Prefer `workspace/creative/` locally (inbox/exports gitignored).
 YouTube Live encoder guidance (Help answer 2907883 family) likewise requires
 valid account access; never commit stream keys.
 
-### 10. ChromeOS Flex and Google for Education
+### 11. ChromeOS Flex and Google for Education
 
 Skill `chromeos-flex-install-prep` and notes under `knowledge/chromeos/` summarise
 **official** [ChromeOS Flex](https://chromeos.google/products/chromeos-flex/) install

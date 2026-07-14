@@ -63,6 +63,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **PhysiotherapyExercises kit** | Clinician exercise library + patient booklets ([physiotherapyexercises.com](https://www.physiotherapyexercises.com/)) |
 | **Math / physics agent** | `/deep-explain` · `/theorem` · `/physics` · durable lessons |
 | **Prompt generator** | Offline swarm/agent system prompts → `generated_prompts/` |
+| **EPUB packaging** | Build offline EPUBs from `.py`, `.epub`, and text resources via `red_rising_companion_guide.py` |
 | **MBTI personality customiser** | Full 16-type agent switch (`/mbti` · `--mbti` · `mbti_types.py`) |
 | **TEDx learning pathways** | Curate [TEDx Talks](https://www.youtube.com/user/TEDxTalks) library into study spines |
 | **HOTC wellness retreat kit** | Auckland CBD self-care brochure ([Health & Wellbeing](https://heartofthecity.co.nz/health-wellbeing)) |
