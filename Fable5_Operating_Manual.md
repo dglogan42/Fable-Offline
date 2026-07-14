@@ -1175,6 +1175,15 @@ Shortlist by players/time/vibe. VERIFY LIVE ranks and Auckland stock (Whitcoulls
 **Automation:** `vtube-studio-resource-kit`.  
 Official VTS only (Steam 1325860 / mobile). Licensed Live2D models. No cracks or stream keys in git.
 
+## 20ao. Robotics functionality tester
+**Trigger:** robot policy eval, success detector, Instance evals, manipulation regression suite, robot smoke test, dual failsafe / Foundation-pattern contingency.  
+**Skill:** `robotics-functionality-tester` — **rft-plan**, **success-detector**, **failsafe**, **task-suite**, **smoke-l0**, **regress-l4**, **safety-gate**, **eval-report**.  
+**Seed:** [Instance launch](https://x.com/clairemao78/status/2076780816760438784) · [YC launch](https://www.ycombinator.com/launches/RPi-instance-automated-evaluation-for-robot-policies-starting-with-the-success-detector).  
+**Failsafe metaphor:** Asimov *Foundation* dual layers (F1 primary · F2 independent · crisis ladder · Terminus vault) — concepts only.  
+**Knowledge:** `knowledge/robotics/functionality-tester.md`, `knowledge/privacy/instance-robotics-hosts.md`.  
+**Automation:** `robotics-functionality-tester`.  
+**Not safety certification.** E-stop outranks software Foundations. Maker ≠ grader on eval suites.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

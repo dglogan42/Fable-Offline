@@ -1,0 +1,14 @@
+{
+  "name": "robotics-functionality-tester",
+  "description": "Robot policy functionality eval: success detectors, task suites, safety gate, reports",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill robotics-functionality-tester. Seed: Instance automated robot policy evals / success detector (Claire Mao @clairemao78, YC S26). Failsafe metaphor: Foundation dual layers (F1 primary detector, F2 independent, crisis ladder, Terminus vault) — concepts only, not PE cert. NOT safety certification. E-stop outranks software failsafes. Maker ≠ grader."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill robotics-functionality-tester and knowledge/robotics/functionality-tester.md, produce rft-plan: (1) verdict sim vs HIL vs real scope (2) safety-gate checklist (3) success-detector draft with pass/fail/timeout as Foundation-1 (4) failsafe card: Foundation-2 independent judge, crisis ladder (C-DET-FP, C-RATE-CLIFF, C-SAFE, C-TOOL-DOWN, C-SIMREAL, C-DRIFT), Terminus vault paths (5) task-suite 3–10 tasks with N trials (6) levels L0 smoke through L2 minimum (7) eval-report skeleton including F1/F2 agreement and failsafe-hold (8) if product question: product-map Instance/success-detector from public launch only VERIFY LIVE (9) OPEN lab SOP and hardware. Never disable safety systems. Never invent Instance API. No long Foundation copyrighted prose — metaphor only."
+    }
+  ]
+}

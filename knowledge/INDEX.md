@@ -35,6 +35,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | **personality/** | MBTI agent personality customiser catalogue | `mbti-types.md` |
 | **privacy/** | Third-party host maps + privacy design | See table below |
 | **property/** | Property manager framework | `property-manager-framework.md` |
+| **robotics/** | Robot policy eval · success detectors · Foundation failsafe · functionality testing | `functionality-tester.md` |
 | **public-safety/** | Emergency / Police / FENZ | `emergency-services-framework.md`, `nz-police-105.md`, `fenz-incident-reports.md` |
 | **social/** | Instagram fits · Snapchat Web · RSS · Knit & Natter clubs | `instagram-selfie-playbook.md`, `snapchat-web-feed.md`, `rss-share.md`, `knit-natter-auckland.md` |
 | **trade/** | Export + freight forwarder | `freight-forwarder-exporter.md`, `mpi-exporter-help.md` |
@@ -83,6 +84,7 @@ Prefer these over inventing figures. Re-verify live sources before real decision
 | `tabletop-bgg-hosts.md` | BoardGameGeek + tabletop retail discovery seeds |
 | `ddlc-plus-hosts.md` | ddlc.plus marketing (Webflow, GA, stores) |
 | `vtube-studio-hosts.md` | VTube Studio / denchisoft.com (WP, Steam, Discord) |
+| `instance-robotics-hosts.md` | Instance robot-policy eval launch surfaces (X, YC) |
 
 ---
 

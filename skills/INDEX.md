@@ -53,6 +53,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **property-manager-agent**: [Property manager agent](property-manager-agent.md)
 - **rederive-numbers**: [Re-derive numbers](rederive-numbers.md)
 - **roblox-studio-resource-kit**: [Roblox Studio resource kit (setup · create)](roblox-studio-resource-kit.md)
+- **robotics-functionality-tester**: [Robotics functionality tester (policy eval · success detector · Foundation failsafe)](robotics-functionality-tester.md)
 - **rss-share**: [RSS share (feed build · subscribe)](rss-share.md)
 - **snapchat-web-feed**: [Snapchat for Web feed protocol](snapchat-web-feed.md)
 - **steam-sim-launch**: [Steam SIM launch (model perf test)](steam-sim-launch.md)

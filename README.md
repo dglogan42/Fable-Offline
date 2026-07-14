@@ -71,6 +71,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Manga/anime fanfic prompts** | Script scaffolds + HOTD-style onset module (original only) |
 | **High school play scripter** | Literature-club stage scripts; DDLC Plus marketing inspiration only |
 | **VTube Studio kit** | Live2D VTubing app ([denchisoft.com](https://denchisoft.com/)) · tracking · stream handoff |
+| **Robotics functionality tester** | Policy eval · success detectors · Foundation failsafe ([Instance launch seed](https://x.com/clairemao78/status/2076780816760438784)) |
 
 Once a local model is loaded, everything stays offline — no API keys, no usage meters.  
 The *system* around the model improves (soul, memory, skills, workflows), not the model weights.
@@ -351,6 +352,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `manga-anime-fanfic-prompt-kit` | Fanfic / manga / anime script prompt generator |
 | `highschool-play-scripter` | HS literature-club play · DDLC-inspired · school-safe modes |
 | `vtube-studio-resource-kit` | VTube Studio Live2D tracking · Twitch · collab · OBS handoff |
+| `robotics-functionality-tester` | Robot policy eval · success detector · failsafe · safety gate |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
 | `physiotherapy-exercises-resource-kit` | Physio exercise DB + patient booklet workflow |
 | `3d-animation-dev-kit` | Blender-first 3D/VFX plan (+ optional formal study map) |
@@ -661,6 +663,23 @@ python fable5_offline_agent.py --automate css-styles-media-kit
 | Workflow | `workflows/css-styles-media-kit.json` |
 
 **Notes:** CSS-only is orphan-OK. Do not invent hosts. Split Firefox videocontrols from site CSS.
+
+## Robotics functionality tester
+
+Design **robot policy evaluation**: success detectors, **Foundation-pattern failsafes** (primary + independent second judge, crisis ladder, offline Terminus vault), task suites, L0–L4 ladder, safety gates, and reports. Seeded by **Instance** automated evals ([launch post](https://x.com/clairemao78/status/2076780816760438784), [YC launch](https://www.ycombinator.com/launches/RPi-instance-automated-evaluation-for-robot-policies-starting-with-the-success-detector)); failsafe structure mapped from *Foundation* concepts (not PE cert, not long book text).
+
+```bash
+python fable5_offline_agent.py --automate robotics-functionality-tester
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/robotics-functionality-tester.md` |
+| Knowledge | `knowledge/robotics/functionality-tester.md` |
+| Privacy | `knowledge/privacy/instance-robotics-hosts.md` |
+| Workflow | `workflows/robotics-functionality-tester.json` |
+
+**Not safety certification.** Real robots need e-stop and human operators. E-stop outranks software failsafes.
 
 ## VTube Studio resource kit
 
@@ -1839,6 +1858,7 @@ Skip this stack for casual chat when speed matters more than rigor.
 - **Manga/anime fanfic prompts** — original script scaffolds; HOTD *Last Day* public lore only (no novel piracy).
 - **High school play scripter** — literature-club stage scaffolds from [ddlc.plus](https://ddlc.plus) themes; original only; HS-safe modes.
 - **VTube Studio kit** — Live2D VTubing setup from [denchisoft.com](https://denchisoft.com/); licensed models only; no stream keys in git.
+- **Robotics functionality tester** — policy eval / success detectors / Foundation-pattern failsafe (Instance launch seed); not safety cert.
 
 ## License
 
@@ -1908,5 +1928,6 @@ See **[LICENSE.md](LICENSE.md)** (and plain [`LICENSE`](LICENSE)) for the full M
 | Manga/anime fanfic prompts | Copyrighted novel/manga paste, pirated rare LN scans, or NSFW of minors |
 | High school play scripter | Official DDLC script paste, graphic self-harm for school shows, or claiming Serenity Forge license |
 | VTube Studio | Cracked VTS, pirated Live2D models, or stream/Twitch tokens in git |
+| Robotics functionality tester | Disabling e-stop, fake cert claims, inventing Instance APIs, or using fiction as PE sign-off |
 
 Outputs require **human verification** (and licensed professionals where required) before real-world use.

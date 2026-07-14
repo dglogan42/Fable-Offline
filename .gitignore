@@ -96,6 +96,9 @@ workspace/media/vtube-studio/**
 !workspace/media/vtube-studio/.gitkeep
 **/vtube*token*
 **/vts*api*key*
+# Robotics eval — large videos/logs local
+workspace/robotics/evals/results/**
+knowledge/robotics/_local/
 
 # --- Secrets & local env ---
 .env

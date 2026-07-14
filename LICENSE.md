@@ -132,6 +132,13 @@ Skill `vtube-studio-resource-kit` and `knowledge/media/vtube-studio.md` describe
 **VTube Studio** app (DenchiSoft). Software and Live2D model rights remain with their
 owners. Use licensed software and models only; do not commit stream keys or OAuth tokens.
 
+Skill `robotics-functionality-tester` and `knowledge/robotics/functionality-tester.md`
+help design **robot policy evaluation** (success detectors, task suites, dual failsafes).
+They are **not** functional-safety certification or professional engineering sign-off.
+Physical robots require trained operators and lab safety procedures.
+*Foundation*-style dual-layer language is a **teaching metaphor** only; rights in Asimov’s
+works remain with their owners — Fable does not claim endorsement or reproduce long prose.
+
 ### 4. Steam, games, and local soak tests
 
 Scripts such as `scripts/steam_launch.py` and `scripts/steam_sim_soak.py`,

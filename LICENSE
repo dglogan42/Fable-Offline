@@ -60,6 +60,9 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    not copyrighted novel/manga text or rare LN piracy. highschool-play-scripter is
    for original stage scripts only — not official DDLC dialogue. vtube-studio-resource-kit
    requires licensed VTS and Live2D models; no cracks or stream keys in git.
+   robotics-functionality-tester is not safety certification; e-stop and human
+   operators remain mandatory for real robots. Foundation dual-failsafe language
+   is a teaching metaphor only (Asimov rights remain with owners).
 
 4. Steam, games, and local soak tests
    Scripts such as scripts/steam_launch.py and scripts/steam_sim_soak.py, and
