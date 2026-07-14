@@ -90,6 +90,8 @@ workspace/creative/fanfic-prompts/**
 !workspace/creative/fanfic-prompts/.gitkeep
 workspace/creative/highschool-play/**
 !workspace/creative/highschool-play/.gitkeep
+workspace/creative/broadcast-musical/**
+!workspace/creative/broadcast-musical/.gitkeep
 knowledge/creative/_local/
 # VTube Studio — no model binaries / secrets
 workspace/media/vtube-studio/**

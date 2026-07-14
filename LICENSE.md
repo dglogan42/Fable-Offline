@@ -143,6 +143,13 @@ Physical robots require trained operators and lab safety procedures.
 *Foundation*-style dual-layer language is a **teaching metaphor** only; rights in Asimov’s
 works remain with their owners — Fable does not claim endorsement or reproduce long prose.
 
+Skill `broadcast-musical-mashup-kit` writes **original** parody musical scripts and
+lyrics using a named franchise's storytelling structure and tropes as inspiration
+only. It does not reproduce copyrighted song lyrics, dialogue, or character
+likenesses, and does not depict real people. Rights to any named franchise or
+broadcast format remain with their respective owners; generated pieces carry
+their own in-text disclaimer.
+
 ### 4. Offline packaging and generated artifacts
 
 Scripts such as `red_rising_companion_guide.py` may produce local EPUB files for

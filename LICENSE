@@ -63,6 +63,9 @@ ADDITIONAL NOTICES (do not limit the MIT grant above)
    robotics-functionality-tester is not safety certification; e-stop and human
    operators remain mandatory for real robots. Foundation dual-failsafe language
    is a teaching metaphor only (Asimov rights remain with owners).
+   broadcast-musical-mashup-kit is for original parody scripts only — franchise
+   tropes/structure as inspiration, never reproduced lyrics, dialogue, or real
+   people; rights to any named franchise remain with their owners.
 
 4. Steam, games, and local soak tests
    Scripts such as scripts/steam_launch.py and scripts/steam_sim_soak.py, and

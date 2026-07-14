@@ -723,6 +723,18 @@ python fable5_offline_agent.py --automate highschool-play-scripter
 | Script | `scripts/highschool_play_script.py` |
 | Workflow | `workflows/highschool-play-scripter.json` |
 
+## Broadcast musical mashup kit (IP-trope parody scripts)
+
+Write **original** parody musicals that borrow a named franchise's storytelling *structure* — opening ensemble, "I Want" song, villain number, rivals-to-allies duet, reprise finale — and recast it onto an unrelated setting the user names (a broadcast desk, a kitchen, a courtroom). Invented cast, invented lyrics; never reproduced text, never a real person depicted. Prompt-driven only today (no CLI flag or `--automate` recipe yet):
+
+```text
+Using skill broadcast-musical-mashup-kit, write a [franchise]-style musical for [setting].
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/broadcast-musical-mashup-kit.md` |
+
 ## Manga / anime fanfic prompt generator
 
 Generate **original** fanfiction prompts, **manga panel scripts**, **anime episode beat sheets**, and **first-hours outbreak** modules. Public lore seed: *Highschool of the Dead: The Last Day* (rare JP side LN — first hours of pandemic; Takashi/Rei focus; **no official English**; do not pirate).
