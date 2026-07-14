@@ -15,6 +15,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **broker-claim-audit**: [Broker claim audit (marketing vs evidence)](broker-claim-audit.md)
 - **broker-user-model**: [Broker user model (disciplined retail CFD client)](broker-user-model.md)
 - **build-and-automate**: [Build and automate (offline)](build-and-automate.md)
+- **capability-mesh**: [Capability mesh (interconnected skills)](capability-mesh.md)
 - **calendar-mail-meetings**: [Calendar · iCal · mail · meetings (Google Calendar)](calendar-mail-meetings.md)
 - **chromeos-flex-install-prep**: [ChromeOS Flex install prep (PC/Mac → cloud OS)](chromeos-flex-install-prep.md)
 - **climate-modeling**: [Climate modeling (pathways, inventory, hazards)](climate-modeling.md)

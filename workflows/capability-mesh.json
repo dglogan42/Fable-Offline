@@ -1,0 +1,24 @@
+{
+  "name": "capability-mesh",
+  "description": "Design an interconnected set of specialist skills that communicate via explicit handoffs and verification gates.",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Start with a capability mesh brief. Each skill remains useful on its own and also participates in a larger workflow."
+    },
+    {
+      "type": "engineer",
+      "goal": "Using skill capability-mesh, propose a small interconnected capability network for a privacy-aware agent workflow. Include at least four skills, a handoff contract for each step, and a verification gate. Keep the plan modular and reusable.",
+      "criteria": [
+        "At least four named skills",
+        "Each skill has a standalone trigger",
+        "Each handoff includes input/output and next skill",
+        "Verification gate is explicit",
+        "Artifact paths or durable notes are specified"
+      ],
+      "min_score": 8,
+      "max_cycles": 4,
+      "self_improve": false
+    }
+  ]
+}

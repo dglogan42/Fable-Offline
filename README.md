@@ -14,6 +14,7 @@ Runs on **Windows · macOS · Linux** against any OpenAI-compatible API (default
 | **Chat** | Fable 5 Operating Manual: re-derive numbers, label guesses, attack your own answer, verdict first |
 | **Loop** | Goal cycles: executor → **fresh-context verifier** → memory → stop rules (**maker ≠ grader**) |
 | **Self-improve** | Reflect → propose **skills** → grade in fresh context → write `skills/` (system compounds; **weights do not**) |
+| **Capability mesh** | Interconnected specialists with explicit handoffs, contracts, and verification gates |
 | **Hermes** | Soul-steered loop: **SOUL.md** · smart RAG (top-K memory) · self-stop · live repair · memory compress |
 | **Build** | Multi-file project scaffold under `workspace/build-*/` (PLAN + FILE blocks) |
 | **Automate** | Multi-step JSON recipes in `workflows/` (build → hermes → improve → …) |
