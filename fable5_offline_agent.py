@@ -583,6 +583,40 @@ def parse_ics_to_markdown(
     return out_path
 
 
+def build_robotics_context(
+    topic: str,
+    *,
+    include_engineer: bool = True,
+    include_education: bool = False,
+    include_health: bool = False,
+    include_physics: bool = True,
+    include_data: bool = True,
+    include_reasoning: bool = True,
+) -> str:
+    """Build a cross-domain robotics prompt context for engineer/education/health/physics/data work."""
+    parts = [
+        "\n\n---\n## Robotics integration mode\n",
+        "Treat this as a full robotics orchestration request that can span engineering design, "
+        "education scaffolding, health/safety constraints, physics modeling, data/calculation, "
+        "and deep reasoning. Be rigorous and evidence-based.\n",
+        f"Topic: {topic.strip() or 'robotics system design'}\n",
+    ]
+    if include_engineer:
+        parts.append("- Use engineer-style planning and verification loops, including clear milestones and checks.\n")
+    if include_education:
+        parts.append("- Include educational scaffolding and explain the domain in an accessible way.\n")
+    if include_health:
+        parts.append("- Consider health/safety implications, human factors, and safe operating boundaries.\n")
+    if include_physics:
+        parts.append("- Ground the work in physics modeling, dimensional analysis, and measurable constraints.\n")
+    if include_data:
+        parts.append("- Use data, calculations, metrics, and evaluation criteria where appropriate.\n")
+    if include_reasoning:
+        parts.append("- Apply deep reasoning: state assumptions, identify failure modes, and reason from first principles.\n")
+    parts.append("- Favor verifiable steps, explicit tradeoffs, and safe fallback plans.\n")
+    return "".join(parts)
+
+
 def load_system_prompt(
     *,
     hermes: bool = False,
@@ -602,6 +636,7 @@ def load_system_prompt(
     engineer_mode: bool = False,
     math_mode: bool = False,
     prompt_gen_mode: bool = False,
+    robotics_mode: bool = False,
     mbti_type: Optional[str] = None,
     mbti_rigour: Optional[bool] = None,
     mbti_mode: bool = False,
@@ -859,6 +894,22 @@ def load_system_prompt(
                     "\n\n---\n## agents/math-physics-agent.md\n\n"
                     + stem.read_text(encoding="utf-8")[:2500]
                 )
+            except OSError:
+                pass
+    if robotics_mode:
+        parts.append(
+            "\n\n---\n## Robotics integration mode\n"
+            "Apply the robotics functionality tester and cross-domain engineering playbook. "
+            "Use the robotics skill to structure evaluation, safety, physics, and system design. "
+            "If relevant, combine this with engineer, education, health, physics, and data reasoning."
+        )
+        know = read_knowledge_bundle("robotics", limit_chars=8000)
+        if know.strip():
+            parts.append("\n\n---\n## Local robotics knowledge\n\n" + know)
+        skill_path = skills_root() / "robotics-functionality-tester.md"
+        if skill_path.is_file():
+            try:
+                parts.append("\n\n---\n## skills/robotics-functionality-tester.md\n\n" + skill_path.read_text(encoding="utf-8")[:2500])
             except OSError:
                 pass
     if prompt_gen_mode:
@@ -3090,7 +3141,7 @@ def print_banner() -> None:
     print(
         "Commands: /team /broker /legal /education /privacy /calendar /windows /macos "
         "/fit /slay /outfit /doc /tiktok-ads /deep-explain /theorem /physics "
-        "/prompt-gen /pdf /build /automate /loop /help quit\n"
+        "/robotics /prompt-gen /pdf /build /automate /loop /help quit\n"
     )
 
 
@@ -3120,6 +3171,7 @@ Commands
   /deep-explain [topic]  Bottom-up math/physics lesson (durable markdown)
   /theorem [claim]   Formal theorem + proof structure
   /physics [problem] Physics solve with dimensional analysis gate
+  /robotics [topic]  Full robotics integration across engineer/education/health/physics/data/deep reasoning
   /prompt-gen [spec] Offline swarm/agent prompt generator → generated_prompts/
   /prompts           Alias: list generated prompts (/prompt-gen list)
   /pdf <path>        Extract PDF text (pypdf) then structure with skill pdf-render
@@ -3178,6 +3230,7 @@ CLI
   {py} fable5_offline_agent.py --deep-explain "eigenvalues from first principles"
   {py} fable5_offline_agent.py --theorem "fundamental theorem of calculus"
   {py} fable5_offline_agent.py --physics "block on incline with friction"
+  {py} fable5_offline_agent.py --robotics "design a rehab robot arm"
   {py} fable5_offline_agent.py --automate math-deep-explain
   {py} fable5_offline_agent.py --automate physics-solve
   {py} fable5_offline_agent.py --prompt-gen quant
@@ -3650,6 +3703,26 @@ def chat_repl(client, system: str) -> None:
                 )
             except Exception as e:
                 print(ui(f"\n❌ TikTok Ads mode error: {e}\n"))
+            continue
+        if low.startswith("/robotics"):
+            prompt = user_input[len("/robotics") :].strip() or (
+                "Design a robust robotics workflow that spans engineering, education, "
+                "health/safety, physics modeling, data evaluation, and deep reasoning. "
+                "Prefer verifiable steps, fail-safe logic, and measurable criteria."
+            )
+            try:
+                rsys = load_system_prompt(robotics_mode=True)
+                print(ui("\n[robotics integration]\n"))
+                stream_chat(
+                    client,
+                    [
+                        {"role": "system", "content": rsys},
+                        {"role": "user", "content": prompt},
+                    ],
+                    prefix="RoboticsMode: ",
+                )
+            except Exception as e:
+                print(ui(f"\n❌ Robotics mode error: {e}\n"))
             continue
         if (
             low.startswith("/deep-explain")
@@ -4190,6 +4263,14 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Physics solve with dimensional analysis (math-physics-agent)",
     )
     parser.add_argument(
+        "--robotics",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="TOPIC",
+        help="Full robotics integration across engineer, education, health, physics, data, and deep reasoning",
+    )
+    parser.add_argument(
         "--prompt-gen",
         nargs="?",
         const="help",
@@ -4457,6 +4538,24 @@ def main(argv: Optional[list[str]] = None) -> int:
                 client,
                 [{"role": "system", "content": bsys}, {"role": "user", "content": prompt}],
                 prefix="BrokerMode: ",
+            )
+            return 0
+        except Exception as e:
+            print(ui(f"\n❌ Error: {e}"))
+            return 1
+
+    if args.robotics is not None:
+        prompt = (args.robotics or "").strip() or (
+            "Design a robust robotics workflow covering engineering, education, health/safety, "
+            "physics modeling, data evaluation, and deep reasoning. Prefer verifiable steps, "
+            "fail-safe logic, and measurable criteria."
+        )
+        try:
+            rsys = load_system_prompt(robotics_mode=True)
+            stream_chat(
+                client,
+                [{"role": "system", "content": rsys}, {"role": "user", "content": prompt}],
+                prefix="RoboticsMode: ",
             )
             return 0
         except Exception as e:
