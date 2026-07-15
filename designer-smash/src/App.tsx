@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Analytics } from '@vercel/analytics/react';
 
 function useMidnightCountdown() {
   const [remaining, setRemaining] = useState(getRemaining());
@@ -208,6 +209,7 @@ export default function App() {
         </nav>
         <p>&copy; 2026 Designer Smash. Built and deployed via GitHub.</p>
       </footer>
+      <Analytics />
     </>
   );
 }
