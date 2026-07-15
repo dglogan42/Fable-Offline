@@ -457,3 +457,5 @@ local_config.py
 local_config.json
 .fable5.local.*
 config.local.*
+
+.vercel
