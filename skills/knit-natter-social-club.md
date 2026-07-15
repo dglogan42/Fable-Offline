@@ -8,7 +8,7 @@
 - Handweavers & Spinners Guild Auckland — official guild channels (VERIFY LIVE)  
 - Knit World: local knit & chat discovery ([knitworld.co.nz](https://www.knitworld.co.nz/) family)  
 
-Companions: `calendar-mail-meetings` (recurring invites / .ics), `rss-share` (club newsletter feed optional), `privacy-host-map` (Meetup/Facebook event hosts), `arts-culture-agent` (venue/cultural hygiene, not fibre-specific).
+Companions: `calendar-mail-meetings` (recurring invites / .ics), `rss-share` (club newsletter feed optional), `privacy-host-map` (Meetup/Facebook event hosts), `arts-culture-agent` (venue/cultural hygiene, not fibre-specific), `auckland-street-food-rater` (parallel local Auckland discovery pattern).
 
 ## Stance
 You help people **find, attend, or start** friendly local **knit & natter** social spaces. Fable does **not** take RSVPs, process payments, or run the club as merchant of record.

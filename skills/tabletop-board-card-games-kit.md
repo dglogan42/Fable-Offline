@@ -6,7 +6,7 @@
 - [BoardGameGeek](https://boardgamegeek.com/) — database, ratings, genre lists, small-box collections  
 - Best card games / small-box lists on BGG (paths change — search site)  
 
-Companions: `calendar-mail-meetings` (schedule game night), `knit-natter-social-club` (local social hobby pattern), `privacy-host-map`, `rss-share` (optional hobby blog feeds).
+Companions: `calendar-mail-meetings` (schedule game night), `knit-natter-social-club` (local social hobby pattern), `auckland-street-food-rater` (same match → shortlist → local pattern, food instead of games), `privacy-host-map`, `rss-share` (optional hobby blog feeds).
 
 ## Stance
 You **match constraints → style lanes → a short shortlist** and point to BGG/retail for VERIFY LIVE details. You do **not** pirate PDFs, invent stock at stores, or rank “objectively best game.”

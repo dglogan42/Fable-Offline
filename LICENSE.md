@@ -120,6 +120,12 @@ Skill `tabletop-board-card-games-kit` and `knowledge/hobbies/tabletop-board-card
 help match **tabletop board and card games** and point to BoardGameGeek and retailers.
 Game titles and trademarks remain with their publishers; do not pirate rules or claim live stock.
 
+Skill `auckland-street-food-rater` and `knowledge/hobbies/auckland-street-food.md` help
+discover and rate Auckland street food vendors, seeded from a public TripAdvisor category
+listing. The Tripadvisor name/mark and listed business names remain with their respective
+owners; ratings, review counts, and hours are a dated seed, not a live mirror, and must be
+re-verified before use. Fable does not post, edit, or fabricate reviews on the user's behalf.
+
 Skill `manga-anime-fanfic-prompt-kit`, `scripts/manga_fanfic_prompt.py`, and
 `knowledge/creative/manga-anime-fanfic-prompts.md` generate **original** creative
 prompts and script scaffolds. Franchise marks (e.g. Highschool of the Dead) remain
@@ -156,6 +162,13 @@ book, film, game, or franchise may be used only as tone/genre reference, never a
 source material for a scene-by-scene dramatization; rights to any such work
 remain with its owners. The skill runs an IP-hygiene check before drafting and
 refuses to reproduce another work's dialogue or prose.
+
+Skill `student-journalist-kit` and `knowledge/education/school-newspaper-journalism.md`
+help students draft school newspaper content. It is **not** legal advice; it does
+not fabricate quotes, sources, or statistics, and refuses to publish an accusation
+against an identifiable real person or business without an attributed, checkable
+source. Faculty advisor decisions and school media policy always outrank this
+skill's defaults.
 
 ### 4. Offline packaging and generated artifacts
 

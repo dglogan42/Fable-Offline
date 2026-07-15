@@ -358,9 +358,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 | `knit-natter-social-club` | Knit & Natter local clubs · attend / discover / start |
 | `green-prescription-grx-kit` | Sport Auckland Green Prescription free GRx navigation |
 | `tabletop-board-card-games-kit` | Tabletop matchmaking · BGG · Auckland shops |
+| `auckland-street-food-rater` | Auckland street food discovery · TripAdvisor seed · rating rubric |
 | `manga-anime-fanfic-prompt-kit` | Fanfic / manga / anime script prompt generator |
 | `highschool-play-scripter` | HS literature-club play · DDLC-inspired · school-safe modes |
 | `screenplay-dev-kit` | Original screenplay dev: found-footage, feature, multi-cam structures |
+| `student-journalist-kit` | School newspaper: content-mode gate, drafts, source fact-check |
 | `vtube-studio-resource-kit` | VTube Studio Live2D tracking · Twitch · collab · OBS handoff |
 | `robotics-functionality-tester` | Robot policy eval · success detector · failsafe · safety gate |
 | `myfitnesspal-resource-kit` | MyFitnessPal product + privacy host map |
@@ -725,6 +727,22 @@ python fable5_offline_agent.py --automate highschool-play-scripter
 | Script | `scripts/highschool_play_script.py` |
 | Workflow | `workflows/highschool-play-scripter.json` |
 
+## Student journalist kit (school newspaper)
+
+Write and edit **school newspaper content**: news articles (inverted pyramid), editorials, features, interview question banks, headlines/captions, and an edition plan — gated by a **content-mode** (G/T) policy check and a **fact-check** pass before anything naming a real person ships. Refuses to launder an unattributed accusation into "alleged" phrasing; flags it and asks for a source instead.
+
+```bash
+python fable5_offline_agent.py --automate student-journalist-kit
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/student-journalist-kit.md` |
+| Knowledge | `knowledge/education/school-newspaper-journalism.md` |
+| Workflow | `workflows/student-journalist-kit.json` |
+
+**Notes:** Not legal advice; NZ pieces should mind the Defamation Act 2013 and Privacy Act 2020. Faculty advisor and school media policy always outrank this skill's defaults. No fabricated quotes/sources, no plagiarism, no doxxing.
+
 ## Broadcast musical mashup kit (IP-trope parody scripts)
 
 Write **original** parody musicals that borrow a named franchise's storytelling *structure* — opening ensemble, "I Want" song, villain number, rivals-to-allies duet, reprise finale — and recast it onto an unrelated setting the user names (a broadcast desk, a kitchen, a courtroom). Invented cast, invented lyrics; never reproduced text, never a real person depicted. Prompt-driven only today (no CLI flag or `--automate` recipe yet):
@@ -786,6 +804,23 @@ python fable5_offline_agent.py --automate tabletop-board-card-games-kit
 | Knowledge | `knowledge/hobbies/tabletop-board-card-games.md` |
 | Privacy | `knowledge/privacy/tabletop-bgg-hosts.md` |
 | Workflow | `workflows/tabletop-board-card-games-kit.json` |
+
+## Auckland street food resource rater
+
+Discover, shortlist, and **rate** Auckland street food / quick-bite vendors — food trucks, stalls, bakeries — seeded from [TripAdvisor's Street Food in Auckland listing](https://www.tripadvisor.co.nz/Restaurants-g1811027-c10686-Auckland_North_Island.html) (`g1811027-c10686`). Filters by budget, area, and dietary need; builds a personal weighted rating rubric (taste/value/speed/seating/vibe) instead of generating fake reviews; groups multi-stop crawls by neighbourhood.
+
+```bash
+python fable5_offline_agent.py --automate auckland-street-food-rater
+```
+
+| Resource | Path |
+|----------|------|
+| Skill | `skills/auckland-street-food-rater.md` |
+| Knowledge | `knowledge/hobbies/auckland-street-food.md` |
+| Privacy | `knowledge/privacy/tripadvisor-hosts.md` |
+| Workflow | `workflows/auckland-street-food-rater.json` |
+
+**Notes:** Ratings/review counts/hours are a dated seed, not a live cache — VERIFY LIVE before relying on them. No fabricated reviews. Not food-safety certification.
 
 ## Green Prescription (GRx) — Sport Auckland
 

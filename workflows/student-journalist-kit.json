@@ -1,0 +1,14 @@
+{
+  "name": "student-journalist-kit",
+  "description": "School newspaper edition plan: content-mode gate, story pitches, drafts, fact-check before publish",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill student-journalist-kit. No fabricated quotes/sources/statistics. No accusation against an identifiable real person or business without an attributed, checkable source and advisor sign-off in content-mode T. No plagiarism, no doxxing. Faculty advisor and school policy always outrank this skill's defaults."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill student-journalist-kit and knowledge/education/school-newspaper-journalism.md, produce issue-plan: (1) verdict on edition scope (2) content-mode decision — G for routine school-life coverage, T with advisor sign-off for anything naming a real person negatively; if the brief includes an unattributed accusation, stop and ask for the source instead of drafting (3) story-pitch entries per section (4) requested draft via news-draft (inverted pyramid + attribution) / editorial-draft (labeled opinion, no personal targeting) / feature-draft (5) headline-caption pair if needed (6) fact-check checklist result for any piece naming a real person (7) layout-handoff (8) OPEN — advisor approval, deadline, distribution."
+    }
+  ]
+}

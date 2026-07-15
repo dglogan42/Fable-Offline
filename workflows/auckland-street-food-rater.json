@@ -1,0 +1,14 @@
+{
+  "name": "auckland-street-food-rater",
+  "description": "Auckland street food discovery: TripAdvisor c10686 seed, shortlist, rating rubric, route plan",
+  "steps": [
+    {
+      "type": "note",
+      "text": "Skill auckland-street-food-rater. Source: TripAdvisor Street Food in Auckland (g1811027-c10686) — seed data only, VERIFY LIVE ratings/hours/status. No fabricated reviews. No wholesale scraping. Not food-safety certification."
+    },
+    {
+      "type": "llm",
+      "prompt": "Using skill auckland-street-food-rater and knowledge/hobbies/auckland-street-food.md, produce street-plan: (1) verdict — shortlist ready or need more constraints (budget, area, dietary, meal type, stop count) (2) filter-match shortlist capped at six, with reasons, preferring higher review-count vendors over thin-sample 5.0s (3) rate-rubric table ready for the user to fill in on-site (4) route-plan if 2+ stops, grouping by area and flagging any Waiheke ferry leg (5) dietary-filter notes if dietary needs given (6) verify-live reminder — ratings/hours/open-closed status drift constantly (7) OPEN. Never invent vendors outside the seed/live listing. Never generate or imply real customer reviews."
+    }
+  ]
+}

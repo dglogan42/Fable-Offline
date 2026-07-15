@@ -1192,6 +1192,21 @@ Official VTS only (Steam 1325860 / mobile). Licensed Live2D models. No cracks or
 **Integration:** cross-talks with `highschool-play-scripter`, `book-creator-comics-kit`, `manga-anime-fanfic-prompt-kit`, `broadcast-musical-mashup-kit` via shared `workspace/creative/<slug>/` handoff — see root `INTEGRATION.md`.
 **Original screenplays only.** IP-hygiene check runs before any drafting. No scene-by-scene dramatization of an identifiable existing copyrighted work.
 
+## 20aq. Auckland street food resource rater
+**Trigger:** Auckland street food, food truck near me Auckland, quick bites Auckland, cheap eats Auckland, rate this food stall.
+**Skill:** `auckland-street-food-rater` — **street-plan**, **rate-rubric**, **filter-match**, **route-plan**, **compare-table**, **dietary-filter**, **visit-log**.
+**Source:** [TripAdvisor Street Food in Auckland](https://www.tripadvisor.co.nz/Restaurants-g1811027-c10686-Auckland_North_Island.html) (`g1811027-c10686`) — dated seed, VERIFY LIVE.
+**Knowledge:** `knowledge/hobbies/auckland-street-food.md`, `knowledge/privacy/tripadvisor-hosts.md`.
+**Automation:** `auckland-street-food-rater`.
+**Not food-safety certification.** No fabricated reviews. Ratings/hours/status VERIFY LIVE before relying on them.
+
+## 20ar. Student journalist kit (school newspaper)
+**Trigger:** school newspaper, student journalist, write a news article for class, editorial for the paper, interview questions for a story, school press style guide.
+**Skill:** `student-journalist-kit` — **issue-plan**, **content-mode**, **story-pitch**, **interview-prep**, **news-draft**, **editorial-draft**, **feature-draft**, **fact-check**, **corrections**.
+**Knowledge:** `knowledge/education/school-newspaper-journalism.md`.
+**Automation:** `student-journalist-kit`.
+**Not legal advice.** NZ: Defamation Act 2013, Privacy Act 2020 for minors. Faculty advisor and school media policy outrank this skill's defaults. No fabricated quotes/sources; no accusation against a real identifiable person/business without an attributed source and advisor sign-off.
+
 ## 20s. 3D animation dev kit (CG · Blender-first)
 **Trigger:** 3D animation, VFX, Blender, character rig, Cycles/EEVEE, CG short, Media Design School 3D Animation & VFX.  
 **Skill:** `3d-animation-dev-kit` — **cg-plan**, **blender-install**, **shot-budget**, **hello-shot**, **asset/anim/render/finish-pass**, **edu-map**, **portfolio-pack**.  

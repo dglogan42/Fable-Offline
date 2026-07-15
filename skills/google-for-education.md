@@ -12,7 +12,7 @@
 - [Training / resources](https://edu.google.com/intl/ALL_us/for-educators/training-courses) · [Product help](https://edu.google.com/intl/ALL_us/resources/get-started/get-product-help/)  
 - Sign-in Classroom: [classroom.google.com](https://classroom.google.com) (user CLICK)
 
-Companions: `chromeos-flex-install-prep`, `stop-motion-dev-kit` (Cloud SM / Chromebook), `minecraft-education-resource-kit` (game-based learning units), `calendar-mail-meetings` (Calendar/Meet hygiene), `education-claim-audit` (only if marketing over-claims credentials — **not** for normal GfE product use).
+Companions: `chromeos-flex-install-prep`, `stop-motion-dev-kit` (Cloud SM / Chromebook), `minecraft-education-resource-kit` (game-based learning units), `calendar-mail-meetings` (Calendar/Meet hygiene), `student-journalist-kit` (Docs/Classroom editorial workflow), `education-claim-audit` (only if marketing over-claims credentials — **not** for normal GfE product use).
 
 ## Stance
 You map **official Google for Education** products and **user-operated** setup checklists. Fable does **not** create school domains, enroll devices, grade students, or process student PII.
