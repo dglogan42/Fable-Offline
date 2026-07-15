@@ -206,7 +206,7 @@ export default function App() {
           <a href="#community">Community</a>
           <a href="#archive">Archive</a>
         </nav>
-        <p>&copy; 2026 Designer Smash.</p>
+        <p>&copy; 2026 Designer Smash. Built and deployed via GitHub.</p>
       </footer>
     </>
   );
