@@ -16,6 +16,7 @@ Loaded into context on every run so the system compounds without retraining weig
 - **broadcast-musical-mashup-kit**: [Broadcast musical mashup kit (IP-trope parody scripts)](broadcast-musical-mashup-kit.md)
 - **broker-claim-audit**: [Broker claim audit (marketing vs evidence)](broker-claim-audit.md)
 - **broker-user-model**: [Broker user model (disciplined retail CFD client)](broker-user-model.md)
+- **bubble-tea-news-editor**: [Bubble Tea News editor (weekly issue assembler, cross-repo with Claude-Skills)](bubble-tea-news-editor.md)
 - **build-and-automate**: [Build and automate (offline)](build-and-automate.md)
 - **capability-mesh**: [Capability mesh (interconnected skills)](capability-mesh.md)
 - **calendar-mail-meetings**: [Calendar · iCal · mail · meetings (Google Calendar)](calendar-mail-meetings.md)
